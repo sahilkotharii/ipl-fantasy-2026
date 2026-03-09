@@ -196,15 +196,17 @@
             margin-bottom: 8px;
         }
         .cf-flag-box {
-            width: 36px;
-            height: 24px;
-            background: #fff;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid rgba(0,0,0,0.2);
-            font-size: 16px;
             margin-bottom: 5px;
+        }
+        .cf-team-logo {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
         .cf-tier-star {
             font-size: 1.5rem;
@@ -220,8 +222,13 @@
             position: relative;
         }
         .cf-avatar {
-            font-size: 7rem;
-            line-height: 1;
+            width: 120px;
+            height: 120px;
+            background-color: rgba(0,0,0,0.1); /* Placeholder background */
+            border-radius: 50%; /* Make it round if needed, or remove for cutout images */
+            display: flex;
+            align-items: center;
+            justify-content: center;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
         }
 
@@ -362,19 +369,19 @@
     </div>
 
     <div class="search-wrap">
-        <span class="search-icon">🔍</span>
+        <span class="search-icon">⚲</span>
         <input type="text" class="search-bar" id="search-bar" placeholder="Search players…" oninput="applyFilters()">
     </div>
 
     <div class="filter-row">
         <button class="filter-btn active" onclick="setFilter('ALL',this)">All</button>
-        <button class="filter-btn" onclick="setFilter('BAT',this)">🏏 Bat</button>
-        <button class="filter-btn" onclick="setFilter('BOWL',this)">🎳 Bowl</button>
-        <button class="filter-btn" onclick="setFilter('AR',this)">⚡ All-R</button>
-        <button class="filter-btn" onclick="setFilter('WK',this)">🧤 WK</button>
-        <button class="filter-btn" onclick="setFilter('GOLD',this)">🥇 Gold</button>
-        <button class="filter-btn" onclick="setFilter('SILVER',this)">🥈 Silver</button>
-        <button class="filter-btn" onclick="setFilter('BRONZE',this)">🥉 Bronze</button>
+        <button class="filter-btn" onclick="setFilter('BAT',this)">Bat</button>
+        <button class="filter-btn" onclick="setFilter('BOWL',this)">Bowl</button>
+        <button class="filter-btn" onclick="setFilter('AR',this)">All-R</button>
+        <button class="filter-btn" onclick="setFilter('WK',this)">WK</button>
+        <button class="filter-btn" onclick="setFilter('GOLD',this)">Gold</button>
+        <button class="filter-btn" onclick="setFilter('SILVER',this)">Silver</button>
+        <button class="filter-btn" onclick="setFilter('BRONZE',this)">Bronze</button>
     </div>
 
     <div class="card">
@@ -394,11 +401,11 @@
     </div>
 
     <nav class="bottom-nav">
-        <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span>Home</a>
-        <a href="squad.html" class="nav-item"><span class="nav-icon">🛡️</span>Squad</a>
-        <a href="players.html" class="nav-item active"><span class="nav-icon">🃏</span>Cards</a>
-        <a href="stats.html" class="nav-item"><span class="nav-icon">📊</span>Stats</a>
-        <a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span>Settings</a>
+        <a href="dashboard.html" class="nav-item"><span class="nav-icon">H</span>Home</a>
+        <a href="squad.html" class="nav-item"><span class="nav-icon">S</span>Squad</a>
+        <a href="players.html" class="nav-item active"><span class="nav-icon">C</span>Cards</a>
+        <a href="stats.html" class="nav-item"><span class="nav-icon">T</span>Stats</a>
+        <a href="settings.html" class="nav-item"><span class="nav-icon">M</span>Settings</a>
     </nav>
 
     <script>
@@ -414,26 +421,26 @@
         // ─── THEME ────────────────────────────────────────
         const savedTheme = localStorage.getItem("theme") || "dark";
         document.documentElement.setAttribute("data-theme", savedTheme);
-        document.getElementById("theme-icon").textContent = savedTheme === "dark" ? "☀️" : "🌙";
+        document.getElementById("theme-icon").textContent = savedTheme === "dark" ? "Light" : "Dark";
         function toggleTheme() {
             const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
             document.documentElement.setAttribute("data-theme", next);
             localStorage.setItem("theme", next);
-            document.getElementById("theme-icon").textContent = next === "dark" ? "☀️" : "🌙";
+            document.getElementById("theme-icon").textContent = next === "dark" ? "Light" : "Dark";
         }
 
-        // ─── TEAM MAP ─────────────────────────────────────
+        // ─── TEAM MAP (Update with your actual image paths) ─────────────────────────────────────
         const TEAMS = {
-            'MI':   { color:'#004BA0', color2:'#1a6fd4', emoji:'🔵' },
-            'CSK':  { color:'#d4860a', color2:'#f5a623', emoji:'🟡' },
-            'RCB':  { color:'#c0001a', color2:'#ff1a35', emoji:'🔴' },
-            'KKR':  { color:'#3A225D', color2:'#6b3aaa', emoji:'🟣' },
-            'DC':   { color:'#17479E', color2:'#2a5fc0', emoji:'🔷' },
-            'PBKS': { color:'#c41920', color2:'#ED1F27', emoji:'🦁' },
-            'RR':   { color:'#254AA5', color2:'#f542b3', emoji:'💗' },
-            'SRH':  { color:'#d44a10', color2:'#F7591A', emoji:'🟠' },
-            'GT':   { color:'#1B2133', color2:'#3a5a9a', emoji:'🔷' },
-            'LSG':  { color:'#1d6b42', color2:'#5ec48a', emoji:'🟢' },
+            'MI':   { color:'#004BA0', color2:'#1a6fd4', logo:'logos/mi.png' },
+            'CSK':  { color:'#d4860a', color2:'#f5a623', logo:'logos/csk.png' },
+            'RCB':  { color:'#c0001a', color2:'#ff1a35', logo:'logos/rcb.png' },
+            'KKR':  { color:'#3A225D', color2:'#6b3aaa', logo:'logos/kkr.png' },
+            'DC':   { color:'#17479E', color2:'#2a5fc0', logo:'logos/dc.png' },
+            'PBKS': { color:'#c41920', color2:'#ED1F27', logo:'logos/pbks.png' },
+            'RR':   { color:'#254AA5', color2:'#f542b3', logo:'logos/rr.png' },
+            'SRH':  { color:'#d44a10', color2:'#F7591A', logo:'logos/srh.png' },
+            'GT':   { color:'#1B2133', color2:'#3a5a9a', logo:'logos/gt.png' },
+            'LSG':  { color:'#1d6b42', color2:'#5ec48a', logo:'logos/lsg.png' },
         };
 
         function getTeam(name) {
@@ -441,7 +448,7 @@
             for (const key of Object.keys(TEAMS)) {
                 if (n.includes(key)) return { abbr: key, ...TEAMS[key] };
             }
-            return { abbr: (n.slice(0,3) || 'IPL'), color:'#444', color2:'#666', emoji:'🏏' };
+            return { abbr: (n.slice(0,3) || 'IPL'), color:'#444', color2:'#666', logo:'logos/default.png' };
         }
 
         // ─── TIERS ────────────────────────────────────────
@@ -587,18 +594,22 @@
             scene.className = `card-scene tier-${tier}-card`;
             document.getElementById('card-flip').className = 'card-flip';
 
-            // FRONT (FIFA Layout)
+            // FRONT (FIFA Layout with Image Logo)
             document.getElementById('card-front').innerHTML = `
                 <div class="cf-inner">
                     <div class="cf-top">
                         <div class="cf-top-left">
                             <div class="cf-rating">${rating}</div>
                             <div class="cf-role">${role}</div>
-                            <div class="cf-flag-box">${team.emoji}</div>
+                            <div class="cf-flag-box">
+                                <img src="${team.logo}" alt="${team.abbr}" class="cf-team-logo">
+                            </div>
                             <div class="cf-tier-star">★</div>
                         </div>
                         <div class="cf-top-right">
-                            <div class="cf-avatar">👤</div>
+                            <div class="cf-avatar">
+                                P
+                            </div>
                         </div>
                     </div>
 
