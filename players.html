@@ -121,12 +121,13 @@
         .cf-inner { position: relative; z-index: 3; display: flex; flex-direction: column; height: 100%; }
         .cf-top { position: relative; height: 55%; width: 100%; padding: 12% 10% 0; display: flex; }
         
-        /* Stack rating, role, flag, team */
+        /* Stack rating, role, team */
         .cf-top-left { width: 35%; display: flex; flex-direction: column; align-items: center; z-index: 5; }
-        .cf-rating { font-family: var(--font-display); font-size: 3.8rem; line-height: 0.85; }
-        .cf-role { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.05em; margin-bottom: 8px; }
-        .cf-flag { width: 36px; height: 24px; object-fit: cover; border-radius: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-bottom: 6px; }
-        .cf-team-logo { width: 38px; height: 38px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+        .cf-rating { font-family: var(--font-display); font-size: 3.8rem; line-height: 0.85; margin-bottom: -2px; }
+        .cf-role { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.05em; margin-bottom: 12px; }
+        
+        /* Bigger Team Logo! */
+        .cf-team-logo { width: 56px; height: 56px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
 
         /* Portrait aligns to right/bottom */
         .cf-top-right {
@@ -379,23 +380,18 @@
             const name   = p['Player Name'] || '';
             const isCap  = myCap === name && p['Sold To'] === myTeam;
             
-            // ─── START AUTOMATIC IMAGE FETCHING LOGIC ───
-            // Default image path generation: "Virat Kohli" -> "virat-kohli"
+            // ─── AUTOMATIC IMAGE FETCHING LOGIC ───
             let imgName = name.trim().toLowerCase().replace(/\s+/g, '-');
 
-            // FUZZY MATCHING BLOCK
-            // Use this block to manually map names from your sheet that don't perfectly match the image filename
+            // Use this map for tricky names (like Suryakumar Yadav)
             const trickyNamesMap = {
-                // "Name in Sheet": "GitHub_Image_Filename_No_Ext"
-                "Suryakumar Yadav": "surya-kumar-yadav", // Mapped based on your screenshot!
-                "MS Dhoni": "ms-dhoni",
-                // Add more tricky ones here if needed
+                "Suryakumar Yadav": "surya-kumar-yadav", 
+                "MS Dhoni": "ms-dhoni"
             };
 
             if (trickyNamesMap[name]) {
                 imgName = trickyNamesMap[name];
             }
-            // ─── END AUTOMATIC IMAGE FETCHING LOGIC ───
 
             const runs    = parseInt(p['Runs'])     || 0;
             const wkts    = parseInt(p['Wickets'])  || 0;
@@ -412,14 +408,13 @@
             scene.className = `card-scene tier-${tier}-card`;
             document.getElementById('card-flip').className = 'card-flip';
 
-            // FRONT - FIFA STYLE WITH AUTOMATIC IMAGE PATH
+            // FRONT - FIFA STYLE (Flag removed, bigger team logo, exact 'players' path)
             document.getElementById('card-front').innerHTML = `
                 <div class="cf-inner">
                     <div class="cf-top">
                         <div class="cf-top-left">
                             <div class="cf-rating">${rating}</div>
                             <div class="cf-role">${role}</div>
-                            <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" class="cf-flag" alt="IND">
                             <img src="${team.logo}" alt="${team.abbr}" class="cf-team-logo">
                         </div>
                         <div class="cf-top-right">
