@@ -5,102 +5,279 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dashboard | IPL Fantasy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root{--accent:#FF6B35;--accent-soft:rgba(255,107,53,0.15);--radius-card:22px;--font-main:'Outfit',sans-serif;--font-mono:'DM Mono',monospace;--transition:0.25s cubic-bezier(0.4,0,0.2,1);--nav-h:74px;}
-        [data-theme="dark"]{--bg:#080d14;--bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(30,60,100,.45) 0%,transparent 55%),radial-gradient(ellipse at 80% 90%,rgba(20,40,70,.35) 0%,transparent 55%),#080d14;--glass-bg:rgba(255,255,255,.04);--glass-border:rgba(255,255,255,.08);--glass-shadow:0 8px 40px rgba(0,0,0,.45);--nav-bg:rgba(8,13,20,.88);--text-primary:#f0f2f5;--text-secondary:rgba(240,242,245,.5);--text-muted:rgba(240,242,245,.28);--divider:rgba(255,255,255,.06);--rank-bg:rgba(255,255,255,.06);--my-row:rgba(255,107,53,.08);--toggle-bg:rgba(255,255,255,.06);}
-        [data-theme="light"]{--bg:#f0ece6;--bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(255,200,150,.2) 0%,transparent 55%),#f0ece6;--glass-bg:rgba(255,255,255,.55);--glass-border:rgba(255,255,255,.85);--glass-shadow:0 8px 40px rgba(0,0,0,.09);--nav-bg:rgba(240,236,230,.9);--text-primary:#1a1a2e;--text-secondary:rgba(26,26,46,.55);--text-muted:rgba(26,26,46,.32);--divider:rgba(0,0,0,.07);--rank-bg:rgba(0,0,0,.05);--my-row:rgba(255,107,53,.07);--toggle-bg:rgba(0,0,0,.06);}
-        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-        body{font-family:var(--font-main);background:var(--bg-mesh);background-color:var(--bg);min-height:100vh;color:var(--text-primary);padding-bottom:calc(var(--nav-h)+20px);transition:background-color var(--transition),color var(--transition);}
-        .topbar{display:flex;justify-content:space-between;align-items:flex-start;padding:28px 20px 12px;}
-        .topbar-left .greeting{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:3px;}
-        .topbar-left h1{font-size:22px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:220px;}
-        .theme-btn{width:38px;height:38px;border-radius:50%;background:var(--toggle-bg);border:1px solid var(--glass-border);color:var(--text-primary);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);transition:all var(--transition);}
-        .theme-btn:active{transform:scale(.9);}
-        .section-label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);padding:0 20px;margin-bottom:10px;margin-top:4px;}
-        .card{background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);box-shadow:var(--glass-shadow);border-radius:var(--radius-card);margin:0 16px 20px;overflow:hidden;}
-        .card-header{padding:16px 20px 14px;border-bottom:1px solid var(--divider);display:flex;justify-content:space-between;align-items:center;}
-        .card-header h3{font-size:16px;font-weight:600;}
-        .live-dot{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:500;color:#4ade80;}
-        .live-dot::before{content:'';width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 1.6s ease-in-out infinite;}
-        @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
-        .lb-row{display:flex;align-items:center;padding:13px 20px;border-bottom:1px solid var(--divider);gap:14px;animation:fadeIn .3s ease both;}
-        .lb-row:last-child{border-bottom:none;}
-        .lb-row:nth-child(1){animation-delay:.05s;}.lb-row:nth-child(2){animation-delay:.1s;}.lb-row:nth-child(3){animation-delay:.15s;}
-        .lb-row.is-me{background:var(--my-row);}
-        .rank-badge{width:28px;height:28px;border-radius:8px;background:var(--rank-bg);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--text-secondary);flex-shrink:0;}
-        .rank-badge.gold{background:rgba(255,196,0,.15);color:#ffc400;}
-        .rank-badge.silver{background:rgba(180,180,200,.15);color:#b4b4c8;}
-        .rank-badge.bronze{background:rgba(200,130,80,.15);color:#c88250;}
-        .lb-team{flex:1;font-size:15px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-        .lb-points{font-family:var(--font-mono);font-size:15px;font-weight:500;color:var(--accent);flex-shrink:0;}
+        :root {
+            --accent: #FF6B35;
+            --accent-soft: rgba(255,107,53,0.14);
+            --accent-glow: rgba(255,107,53,0.22);
+            --font-main: 'Outfit', sans-serif;
+            --font-display: 'Bebas Neue', cursive;
+            --font-mono: 'DM Mono', monospace;
+            --transition: 0.24s cubic-bezier(0.4,0,0.2,1);
+            --nav-h: 68px;
+            --nav-bottom: 14px;
+            --radius: 20px;
+        }
+        [data-theme="dark"] {
+            --bg: #070c13;
+            --surface: rgba(255,255,255,0.035);
+            --surface2: rgba(255,255,255,0.06);
+            --border: rgba(255,255,255,0.07);
+            --border2: rgba(255,255,255,0.13);
+            --nav-bg: rgba(7,12,19,0.94);
+            --text-1: #eef1f5;
+            --text-2: rgba(238,241,245,0.52);
+            --text-3: rgba(238,241,245,0.28);
+            --divider: rgba(255,255,255,0.055);
+            --my-row: rgba(255,107,53,0.09);
+            --toggle: rgba(255,255,255,0.07);
+            --gold: #f5c842; --silver: #b4bcc8; --bronze: #c8845a;
+            --gold-bg: rgba(245,200,66,0.12); --silver-bg: rgba(180,188,200,0.1); --bronze-bg: rgba(200,132,90,0.12);
+            --hero-grad: linear-gradient(145deg, rgba(255,107,53,0.16) 0%, rgba(255,107,53,0.03) 60%, transparent 100%);
+        }
+        [data-theme="light"] {
+            --bg: #f2ede7;
+            --surface: rgba(255,255,255,0.65);
+            --surface2: rgba(255,255,255,0.92);
+            --border: rgba(0,0,0,0.07);
+            --border2: rgba(0,0,0,0.13);
+            --nav-bg: rgba(242,237,231,0.95);
+            --text-1: #17202e;
+            --text-2: rgba(23,32,46,0.56);
+            --text-3: rgba(23,32,46,0.34);
+            --divider: rgba(0,0,0,0.065);
+            --my-row: rgba(255,107,53,0.07);
+            --toggle: rgba(0,0,0,0.06);
+            --gold: #c89a00; --silver: #7a8494; --bronze: #a05a2c;
+            --gold-bg: rgba(200,154,0,0.1); --silver-bg: rgba(122,132,148,0.1); --bronze-bg: rgba(160,90,44,0.1);
+            --hero-grad: linear-gradient(145deg, rgba(255,107,53,0.1) 0%, transparent 70%);
+        }
 
-        /* CAPS */
-        .caps-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--divider);}
-        .cap-card{padding:18px 16px;background:var(--glass-bg);}
-        .cap-emoji{font-size:26px;margin-bottom:10px;display:block;}
-        .cap-title{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px;}
-        .cap-title.orange{color:#ff6b35;}.cap-title.purple{color:#a855f7;}
-        .cap-player{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-        .cap-team{font-size:11px;color:var(--text-secondary);margin-bottom:8px;}
-        .cap-value{font-family:var(--font-mono);font-size:22px;font-weight:500;}
-        .cap-value.orange{color:#ff6b35;}.cap-value.purple{color:#a855f7;}
-        .cap-unit{font-size:11px;color:var(--text-muted);margin-left:2px;}
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--font-main);
+            background: var(--bg);
+            min-height: 100vh;
+            color: var(--text-1);
+            padding-bottom: calc(var(--nav-h) + var(--nav-bottom) + 28px);
+            transition: background var(--transition), color var(--transition);
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background:
+                radial-gradient(ellipse 90% 55% at 10% -5%, rgba(255,107,53,0.11) 0%, transparent 55%),
+                radial-gradient(ellipse 60% 50% at 90% 95%, rgba(25,55,110,0.4) 0%, transparent 55%),
+                radial-gradient(ellipse 35% 25% at 65% 25%, rgba(50,90,190,0.07) 0%, transparent 50%);
+            pointer-events: none; z-index: 0;
+        }
+        body > * { position: relative; z-index: 1; }
 
-        /* LEADERS */
-        .leaders-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--divider);}
-        .leader-cell{background:var(--glass-bg);padding:16px 14px;}
-        .leader-icon{font-size:20px;margin-bottom:8px;display:block;}
-        .leader-val{font-family:var(--font-mono);font-size:20px;font-weight:500;color:var(--text-primary);margin-bottom:3px;}
-        .leader-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:4px;}
-        .leader-name{font-size:12px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+        /* ── TOPBAR ──────────────────────────────────── */
+        .topbar { display: flex; justify-content: space-between; align-items: center; padding: 24px 20px 0; }
+        .greeting { font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: 3px; }
+        .team-name { font-family: var(--font-display); font-size: 28px; letter-spacing: .04em; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px; }
+        .theme-btn { width: 38px; height: 38px; border-radius: 12px; background: var(--toggle); border: 1px solid var(--border2); color: var(--text-1); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all var(--transition); }
+        .theme-btn:active { transform: scale(.88); }
 
-        .bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:480px;background:var(--nav-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--glass-border);border-radius:30px;display:flex;justify-content:space-around;padding:10px 4px;box-shadow:0 10px 40px rgba(0,0,0,.25);z-index:50;}
-        .nav-item{text-align:center;color:var(--text-muted);text-decoration:none;font-size:8.5px;font-weight:500;letter-spacing:.03em;transition:all var(--transition);flex:1;padding:3px 0;border-radius:20px;}
-        .nav-item.active{color:var(--accent);}
-        .nav-icon{font-size:20px;display:block;margin-bottom:2px;}
-        .loading-row{padding:28px 20px;text-align:center;color:var(--text-muted);font-size:14px;}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+        /* ── HERO CARD ───────────────────────────────── */
+        .hero-card {
+            margin: 18px 16px 0;
+            border-radius: var(--radius);
+            border: 1px solid var(--border2);
+            background: var(--hero-grad), var(--surface2);
+            backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+            padding: 20px;
+            display: flex; align-items: center; gap: 16px;
+            overflow: hidden; position: relative;
+            animation: fadeUp .38s .05s cubic-bezier(0.4,0,0.2,1) both;
+        }
+        .hero-card::after {
+            content: ''; position: absolute; right: -24px; top: -24px;
+            width: 130px; height: 130px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,107,53,0.13) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-rank-ring {
+            width: 66px; height: 66px; border-radius: 18px;
+            background: var(--accent-soft); border: 1.5px solid var(--accent-glow);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .hero-rank-num { font-family: var(--font-display); font-size: 32px; line-height: 1; color: var(--accent); }
+        .hero-rank-lbl { font-size: 8px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); opacity: .65; }
+        .hero-info { flex: 1; min-width: 0; }
+        .hero-pts-lbl { font-size: 9px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--text-3); margin-bottom: 2px; }
+        .hero-pts-row { display: flex; align-items: baseline; gap: 5px; }
+        .hero-pts-val { font-family: var(--font-display); font-size: 44px; letter-spacing: .02em; line-height: 1; color: var(--text-1); }
+        .hero-pts-unit { font-size: 13px; font-weight: 600; color: var(--text-2); }
+        .hero-meta { font-size: 12px; color: var(--text-2); margin-top: 6px; }
+        .hero-meta b { color: var(--accent); font-weight: 700; }
+
+        /* ── SECTION LABEL ───────────────────────────── */
+        .section-label { font-size: 10px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--text-3); padding: 0 20px; margin: 22px 0 10px; animation: fadeUp .38s .1s both; }
+
+        /* ── CARD ────────────────────────────────────── */
+        .card {
+            background: var(--surface); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--border); border-radius: var(--radius);
+            margin: 0 16px; overflow: hidden;
+            animation: fadeUp .4s cubic-bezier(0.4,0,0.2,1) both;
+        }
+
+        /* ── LEADERBOARD ─────────────────────────────── */
+        .card-header { padding: 14px 18px 12px; border-bottom: 1px solid var(--divider); display: flex; justify-content: space-between; align-items: center; }
+        .card-header h3 { font-size: 14px; font-weight: 700; letter-spacing: .02em; }
+        .live-pill { display: flex; align-items: center; gap: 5px; background: rgba(74,222,128,.1); border: 1px solid rgba(74,222,128,.2); border-radius: 20px; padding: 3px 10px; font-size: 10px; font-weight: 600; color: #4ade80; }
+        .live-dot { width: 5px; height: 5px; border-radius: 50%; background: #4ade80; animation: blink 1.8s ease-in-out infinite; }
+        @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:.25;} }
+
+        .lb-row { display: flex; align-items: center; padding: 11px 18px; border-bottom: 1px solid var(--divider); gap: 12px; animation: fadeUp .4s both; }
+        .lb-row:last-child { border-bottom: none; }
+        .lb-row.is-me { background: var(--my-row); }
+
+        .rank-badge { width: 30px; height: 30px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: var(--surface2); color: var(--text-2); font-family: var(--font-mono); font-size: 12px; }
+        .rank-badge.gold   { background: var(--gold-bg);   color: var(--gold); }
+        .rank-badge.silver { background: var(--silver-bg); color: var(--silver); }
+        .rank-badge.bronze { background: var(--bronze-bg); color: var(--bronze); }
+
+        .lb-left { flex: 1; min-width: 0; }
+        .lb-team-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+        .lb-team { font-size: 14px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .lb-me-tag { font-size: 8px; font-weight: 800; letter-spacing: .07em; color: var(--accent); background: var(--accent-soft); padding: 2px 5px; border-radius: 4px; flex-shrink: 0; }
+        .lb-bar-wrap { height: 2px; background: var(--divider); border-radius: 1px; overflow: hidden; }
+        .lb-bar { height: 100%; border-radius: 1px; transition: width .9s cubic-bezier(0.4,0,0.2,1); }
+        .lb-bar.c0 { background: var(--gold); }
+        .lb-bar.c1 { background: var(--silver); }
+        .lb-bar.c2 { background: var(--bronze); }
+        .lb-bar.cn { background: var(--accent); opacity: .5; }
+        .lb-pts { font-family: var(--font-mono); font-size: 14px; font-weight: 500; color: var(--accent); flex-shrink: 0; }
+
+        /* ── CAP LEADERS ─────────────────────────────── */
+        .caps-grid { display: grid; grid-template-columns: 1fr 1fr; }
+        .cap-card { padding: 20px 16px; position: relative; overflow: hidden; }
+        .cap-card:first-child { border-right: 1px solid var(--divider); }
+        .cap-card::before { content: ''; position: absolute; top: -30px; right: -30px; width: 90px; height: 90px; border-radius: 50%; opacity: .14; }
+        .cap-card.oc::before { background: radial-gradient(circle, #FF6B35, transparent); }
+        .cap-card.pc::before { background: radial-gradient(circle, #b47cf7, transparent); }
+        .cap-icon { font-size: 22px; margin-bottom: 8px; display: block; }
+        .cap-title { font-size: 9px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 8px; }
+        .cap-title.oc { color: #FF6B35; } .cap-title.pc { color: #b47cf7; }
+        .cap-player { font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .cap-team-name { font-size: 11px; color: var(--text-2); margin-bottom: 10px; }
+        .cap-num { font-family: var(--font-display); font-size: 38px; line-height: 1; }
+        .cap-num.oc { color: #FF6B35; } .cap-num.pc { color: #b47cf7; }
+        .cap-unit { font-size: 11px; color: var(--text-3); font-weight: 600; margin-left: 4px; }
+
+        /* ── TOURNAMENT LEADERS ──────────────────────── */
+        .leaders-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+        .leader-cell { padding: 16px 14px; border-right: 1px solid var(--divider); border-bottom: 1px solid var(--divider); }
+        .leader-cell:nth-child(3n)      { border-right: none; }
+        .leader-cell:nth-last-child(-n+3) { border-bottom: none; }
+        .leader-icon { font-size: 18px; margin-bottom: 6px; display: block; }
+        .leader-label { font-size: 8.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--text-3); margin-bottom: 4px; }
+        .leader-val { font-family: var(--font-display); font-size: 28px; line-height: 1; color: var(--text-1); margin-bottom: 3px; }
+        .leader-name { font-size: 11px; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* ── BOTTOM NAV ──────────────────────────────── */
+        .bottom-nav {
+            position: fixed;
+            bottom: var(--nav-bottom);
+            left: 50%; transform: translateX(-50%);
+            width: calc(100% - 28px); max-width: 480px;
+            height: var(--nav-h);
+            background: var(--nav-bg);
+            backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
+            border: 1px solid var(--border2);
+            border-radius: 28px;
+            display: flex; justify-content: space-around; align-items: center;
+            padding: 6px 2px;
+            box-shadow: 0 8px 40px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.04);
+            z-index: 100;
+        }
+        .nav-item {
+            text-align: center; color: var(--text-3); text-decoration: none;
+            font-size: 8px; font-weight: 600; letter-spacing: .04em;
+            flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
+            transition: color var(--transition);
+        }
+        .nav-item.active { color: var(--accent); }
+        .nav-icon-wrap {
+            width: 36px; height: 28px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            transition: background var(--transition);
+        }
+        .nav-item.active .nav-icon-wrap { background: var(--accent-soft); }
+        .nav-icon { font-size: 16px; line-height: 1; }
+
+        /* ── ANIMATIONS ──────────────────────────────── */
+        @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+        .loading-row { padding: 28px; text-align: center; color: var(--text-3); font-size: 13px; }
     </style>
 </head>
 <body>
 
+    <!-- TOPBAR -->
     <div class="topbar">
-        <div class="topbar-left">
+        <div>
             <p class="greeting">IPL Fantasy 2026</p>
-            <h1 id="welcome-text">Loading…</h1>
+            <div class="team-name" id="welcome-text">Loading…</div>
         </div>
         <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
     </div>
 
+    <!-- HERO RANK CARD -->
+    <div class="hero-card">
+        <div class="hero-rank-ring">
+            <div class="hero-rank-num" id="hero-rank">—</div>
+            <div class="hero-rank-lbl">Rank</div>
+        </div>
+        <div class="hero-info">
+            <div class="hero-pts-lbl">Total Points</div>
+            <div class="hero-pts-row">
+                <span class="hero-pts-val" id="hero-pts">—</span>
+                <span class="hero-pts-unit">pts</span>
+            </div>
+            <div class="hero-meta" id="hero-meta">Loading your standing…</div>
+        </div>
+    </div>
+
+    <!-- LEADERBOARD -->
     <p class="section-label">Fantasy Standings</p>
-    <div class="card">
-        <div class="card-header"><h3>Leaderboard</h3><span class="live-dot">Live</span></div>
+    <div class="card" style="animation-delay:.13s">
+        <div class="card-header">
+            <h3>Leaderboard</h3>
+            <div class="live-pill"><div class="live-dot"></div>Live</div>
+        </div>
         <div id="leaderboard-body"><div class="loading-row">Loading…</div></div>
     </div>
 
-    <p class="section-label">Cap Leaders</p>
-    <div class="card">
+    <!-- CAP HOLDERS -->
+    <p class="section-label" style="animation-delay:.18s">Cap Holders</p>
+    <div class="card" style="animation-delay:.2s">
         <div class="caps-grid">
-            <div class="cap-card">
-                <span class="cap-emoji">🧡</span>
-                <div class="cap-title orange">Orange Cap</div>
+            <div class="cap-card oc">
+                <span class="cap-icon">🧡</span>
+                <div class="cap-title oc">Orange Cap</div>
                 <div class="cap-player" id="oc-name">—</div>
-                <div class="cap-team" id="oc-team">—</div>
-                <span class="cap-value orange" id="oc-val">0</span><span class="cap-unit">runs</span>
+                <div class="cap-team-name" id="oc-team">—</div>
+                <span class="cap-num oc" id="oc-val">0</span><span class="cap-unit">runs</span>
             </div>
-            <div class="cap-card">
-                <span class="cap-emoji">💜</span>
-                <div class="cap-title purple">Purple Cap</div>
+            <div class="cap-card pc">
+                <span class="cap-icon">💜</span>
+                <div class="cap-title pc">Purple Cap</div>
                 <div class="cap-player" id="pc-name">—</div>
-                <div class="cap-team" id="pc-team">—</div>
-                <span class="cap-value purple" id="pc-val">0</span><span class="cap-unit">wkts</span>
+                <div class="cap-team-name" id="pc-team">—</div>
+                <span class="cap-num pc" id="pc-val">0</span><span class="cap-unit">wkts</span>
             </div>
         </div>
     </div>
 
-    <p class="section-label">Tournament Leaders</p>
-    <div class="card">
+    <!-- TOURNAMENT LEADERS -->
+    <p class="section-label" style="animation-delay:.24s">Tournament Leaders</p>
+    <div class="card" style="animation-delay:.26s">
         <div class="leaders-grid">
             <div class="leader-cell"><span class="leader-icon">🏏</span><div class="leader-label">Most Sixes</div><div class="leader-val" id="l-sixes">—</div><div class="leader-name" id="l-sixes-n">—</div></div>
             <div class="leader-cell"><span class="leader-icon">4️⃣</span><div class="leader-label">Most Fours</div><div class="leader-val" id="l-fours">—</div><div class="leader-name" id="l-fours-n">—</div></div>
@@ -111,64 +288,121 @@
         </div>
     </div>
 
-        <nav class="bottom-nav">
-    <a href="dashboard.html" class="nav-item active"><span class="nav-icon">🏠</span>Home</a>
-    <a href="squad.html"     class="nav-item"><span class="nav-icon">🛡️</span>Squad</a>
-    <a href="players.html"   class="nav-item"><span class="nav-icon">🃏</span>Cards</a>
-    <a href="teams.html"     class="nav-item"><span class="nav-icon">👥</span>Teams</a>
-    <a href="stats.html"     class="nav-item"><span class="nav-icon">📊</span>Stats</a>
-    <a href="settings.html"  class="nav-item"><span class="nav-icon">⚙️</span>Settings</a>
-</nav>
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+        <a href="dashboard.html" class="nav-item active">
+            <div class="nav-icon-wrap"><span class="nav-icon">🏠</span></div>Home
+        </a>
+        <a href="squad.html" class="nav-item">
+            <div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad
+        </a>
+        <a href="players.html" class="nav-item">
+            <div class="nav-icon-wrap"><span class="nav-icon">🃏</span></div>Cards
+        </a>
+        <a href="teams.html" class="nav-item">
+            <div class="nav-icon-wrap"><span class="nav-icon">👥</span></div>Teams
+        </a>
+        <a href="stats.html" class="nav-item">
+            <div class="nav-icon-wrap"><span class="nav-icon">📊</span></div>Stats
+        </a>
+        <a href="settings.html" class="nav-item">
+            <div class="nav-icon-wrap"><span class="nav-icon">⚙️</span></div>Settings
+        </a>
+    </nav>
 
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
+
+        // ── THEME ─────────────────────────────────────────
         const savedTheme = localStorage.getItem("theme") || "dark";
         document.documentElement.setAttribute("data-theme", savedTheme);
         document.getElementById("theme-icon").textContent = savedTheme === "dark" ? "☀️" : "🌙";
         function toggleTheme() {
             const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
-            document.documentElement.setAttribute("data-theme", next); localStorage.setItem("theme", next);
+            document.documentElement.setAttribute("data-theme", next);
+            localStorage.setItem("theme", next);
             document.getElementById("theme-icon").textContent = next === "dark" ? "☀️" : "🌙";
         }
+
+        // ── INIT ──────────────────────────────────────────
+        const myTeam = localStorage.getItem("teamName") || "";
         document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById("welcome-text").innerText = localStorage.getItem("teamName") || "Manager";
-            loadLeaderboard(); loadLeaders();
+            document.getElementById("welcome-text").innerText = myTeam || "Dashboard";
+            loadLeaderboard();
+            loadLeaders();
         });
+
+        // ── LEADERBOARD ───────────────────────────────────
         async function loadLeaderboard() {
             const tbody = document.getElementById('leaderboard-body');
-            const myTeam = localStorage.getItem("teamName") || "";
             try {
-                const res = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify({action:'getLeaderboard'}) });
+                const res    = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify({action:'getLeaderboard'}) });
                 const result = await res.json();
-                if (result.status === "success") {
-                    const rc = ['gold','silver','bronze'];
-                    tbody.innerHTML = result.leaderboard.map((t,i) => `
-                        <div class="lb-row ${t.teamName===myTeam?'is-me':''}">
-                            <div class="rank-badge ${rc[i]||''}">${i+1}</div>
-                            <div class="lb-team">${t.teamName}</div>
-                            <div class="lb-points">${t.points} pts</div>
-                        </div>`).join('');
-                } else tbody.innerHTML = '<div class="loading-row" style="color:#e74c3c;">Error loading data.</div>';
-            } catch { tbody.innerHTML = '<div class="loading-row" style="color:#e74c3c;">Connection failed.</div>'; }
+                if (result.status !== "success") throw new Error();
+
+                const lb    = result.leaderboard;
+                const maxPt = Math.max(...lb.map(t => Number(t.points) || 0), 1);
+                const medals = ['🥇','🥈','🥉'];
+                const rc     = ['gold','silver','bronze'];
+
+                // Populate hero card
+                const myIdx = lb.findIndex(t => t.teamName === myTeam);
+                if (myIdx !== -1) {
+                    document.getElementById('hero-rank').innerText = myIdx + 1;
+                    document.getElementById('hero-pts').innerText  = lb[myIdx].points || 0;
+                    const ahead = lb.length - myIdx - 1;
+                    document.getElementById('hero-meta').innerHTML =
+                        `<b>${lb.length}</b> teams total · ahead of <b>${ahead}</b>`;
+                } else {
+                    document.getElementById('hero-rank').innerText = '—';
+                    document.getElementById('hero-pts').innerText  = '0';
+                    document.getElementById('hero-meta').innerText = 'No stats yet — go draft!';
+                }
+
+                tbody.innerHTML = lb.map((t, i) => {
+                    const isMe   = t.teamName === myTeam;
+                    const pct    = Math.max(4, Math.round((Number(t.points) / maxPt) * 100));
+                    const barCls = i < 3 ? 'c' + i : 'cn';
+                    const rkCls  = rc[i] || '';
+                    const medal  = medals[i] || (i + 1);
+                    return `<div class="lb-row ${isMe ? 'is-me' : ''}" style="animation-delay:${.06 * i + .15}s">
+                        <div class="rank-badge ${rkCls}">${medal}</div>
+                        <div class="lb-left">
+                            <div class="lb-team-row">
+                                <span class="lb-team">${t.teamName}</span>
+                                ${isMe ? '<span class="lb-me-tag">YOU</span>' : ''}
+                            </div>
+                            <div class="lb-bar-wrap">
+                                <div class="lb-bar ${barCls}" style="width:${pct}%"></div>
+                            </div>
+                        </div>
+                        <div class="lb-pts">${t.points}</div>
+                    </div>`;
+                }).join('');
+
+            } catch {
+                tbody.innerHTML = '<div class="loading-row" style="color:#e74c3c;">Failed to load.</div>';
+            }
         }
+
+        // ── LEADERS ───────────────────────────────────────
         async function loadLeaders() {
             try {
-                const res = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify({action:'getLeaders'}) });
+                const res    = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify({action:'getLeaders'}) });
                 const result = await res.json();
-                if (result.status === "success") {
-                    const L = result.leaders;
-                    document.getElementById('oc-name').innerText = L.orangeCap.name;
-                    document.getElementById('oc-team').innerText = L.orangeCap.iplTeam;
-                    document.getElementById('oc-val').innerText  = L.orangeCap.value;
-                    document.getElementById('pc-name').innerText = L.purpleCap.name;
-                    document.getElementById('pc-team').innerText = L.purpleCap.iplTeam;
-                    document.getElementById('pc-val').innerText  = L.purpleCap.value;
-                    const fill = (vid, nid, obj) => { document.getElementById(vid).innerText=obj.value; document.getElementById(nid).innerText=obj.name; };
-                    fill('l-sixes','l-sixes-n',L.mostSixes); fill('l-fours','l-fours-n',L.mostFours);
-                    fill('l-catches','l-catches-n',L.mostCatches); fill('l-fifty','l-fifty-n',L.mostFifties);
-                    fill('l-hundo','l-hundo-n',L.mostHundreds); fill('l-pts','l-pts-n',L.highestPts);
-                }
-            } catch(err) { console.error('Leaders failed',err); }
+                if (result.status !== "success") return;
+                const L = result.leaders;
+                document.getElementById('oc-name').innerText = L.orangeCap.name;
+                document.getElementById('oc-team').innerText = L.orangeCap.iplTeam;
+                document.getElementById('oc-val').innerText  = L.orangeCap.value;
+                document.getElementById('pc-name').innerText = L.purpleCap.name;
+                document.getElementById('pc-team').innerText = L.purpleCap.iplTeam;
+                document.getElementById('pc-val').innerText  = L.purpleCap.value;
+                const fill = (v, n, o) => { document.getElementById(v).innerText = o.value; document.getElementById(n).innerText = o.name; };
+                fill('l-sixes','l-sixes-n',L.mostSixes); fill('l-fours','l-fours-n',L.mostFours);
+                fill('l-catches','l-catches-n',L.mostCatches); fill('l-fifty','l-fifty-n',L.mostFifties);
+                fill('l-hundo','l-hundo-n',L.mostHundreds); fill('l-pts','l-pts-n',L.highestPts);
+            } catch(e) { console.error('Leaders failed', e); }
         }
     </script>
 </body>
