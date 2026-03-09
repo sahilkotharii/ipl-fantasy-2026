@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Stats | IPL Fantasy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #FF6B35; --accent-soft: rgba(255,107,53,0.15);
+            --radius-card: 22px; --font-main: 'Outfit', sans-serif; --font-mono: 'DM Mono', monospace;
+            --transition: 0.25s cubic-bezier(0.4,0,0.2,1); --nav-h: 74px;
+        }
+        [data-theme="dark"] {
+            --bg: #080d14; --bg-mesh: radial-gradient(ellipse at 20% 10%,rgba(30,60,100,0.45) 0%,transparent 55%),#080d14;
+            --glass-bg: rgba(255,255,255,0.04); --glass-border: rgba(255,255,255,0.08); --glass-shadow: 0 8px 40px rgba(0,0,0,0.45);
+            --nav-bg: rgba(8,13,20,0.88); --text-primary: #f0f2f5; --text-secondary: rgba(240,242,245,0.5);
+            --text-muted: rgba(240,242,245,0.28); --divider: rgba(255,255,255,0.06);
+            --input-bg: rgba(0,0,0,0.3); --input-border: rgba(255,255,255,0.1);
+            --overlay: rgba(0,0,0,0.7); --theme-toggle-bg: rgba(255,255,255,0.06);
+            --section-bg: rgba(0,0,0,0.2);
+        }
+        [data-theme="light"] {
+            --bg: #f0ece6; --bg-mesh: radial-gradient(ellipse at 20% 10%,rgba(255,200,150,0.2) 0%,transparent 55%),#f0ece6;
+            --glass-bg: rgba(255,255,255,0.55); --glass-border: rgba(255,255,255,0.85); --glass-shadow: 0 8px 40px rgba(0,0,0,0.09);
+            --nav-bg: rgba(240,236,230,0.9); --text-primary: #1a1a2e; --text-secondary: rgba(26,26,46,0.55);
+            --text-muted: rgba(26,26,46,0.32); --divider: rgba(0,0,0,0.07);
+            --input-bg: rgba(0,0,0,0.05); --input-border: rgba(0,0,0,0.1);
+            --overlay: rgba(0,0,0,0.5); --theme-toggle-bg: rgba(0,0,0,0.06);
+            --section-bg: rgba(0,0,0,0.04);
+        }
+
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+        body{font-family:var(--font-main);background:var(--bg-mesh);background-color:var(--bg);min-height:100vh;color:var(--text-primary);padding-bottom:calc(var(--nav-h)+20px);transition:background-color var(--transition),color var(--transition);}
+
+        .topbar{display:flex;justify-content:space-between;align-items:flex-start;padding:28px 20px 16px;}
+        .topbar-left .greeting{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:3px;}
+        .topbar-left h1{font-size:22px;font-weight:700;}
+        .topbar-left p{font-size:13px;color:var(--text-secondary);margin-top:3px;}
+        .theme-btn{width:38px;height:38px;border-radius:50%;background:var(--theme-toggle-bg);border:1px solid var(--glass-border);color:var(--text-primary);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);transition:all var(--transition);}
+        .theme-btn:active{transform:scale(0.9);}
+
+        .search-wrap{margin:0 16px 12px;position:relative;}
+        .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none;}
+        .search-bar{width:100%;padding:12px 14px 12px 40px;border-radius:14px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-family:var(--font-main);font-size:14px;outline:none;-webkit-appearance:none;transition:border-color var(--transition);}
+        .search-bar:focus{border-color:var(--accent);}
+        .search-bar::placeholder{color:var(--text-muted);}
+
+        .card{background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);box-shadow:var(--glass-shadow);border-radius:var(--radius-card);margin:0 16px 20px;overflow:hidden;}
+
+        .player-row{display:flex;align-items:center;padding:13px 20px;border-bottom:1px solid var(--divider);gap:12px;cursor:pointer;transition:background var(--transition);}
+        .player-row:last-child{border-bottom:none;}
+        .player-row:active{background:rgba(255,255,255,0.04);}
+
+        .player-avatar{width:38px;height:38px;border-radius:12px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+        .player-info{flex:1;min-width:0;}
+        .player-name{font-size:15px;font-weight:500;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+        .badges{display:flex;gap:5px;flex-wrap:wrap;}
+        .badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:5px;letter-spacing:.04em;}
+        .badge.bat{background:rgba(52,152,219,.18);color:#4facfe;}
+        .badge.bowl{background:rgba(231,76,60,.18);color:#e74c3c;}
+        .badge.ar{background:rgba(241,196,15,.18);color:#f1c40f;}
+        .badge.wk{background:rgba(155,89,182,.18);color:#bb8fce;}
+        .badge.owned{background:rgba(79,172,254,.15);color:#4facfe;}
+        .badge.unsold{background:rgba(255,255,255,.06);color:var(--text-muted);}
+        .chevron{font-size:12px;color:var(--text-muted);}
+
+        /* ─── BOTTOM SHEET MODAL ──────────────────────── */
+        .modal{display:none;position:fixed;inset:0;background:var(--overlay);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:100;align-items:flex-end;justify-content:center;}
+        .modal.open{display:flex;}
+        .modal-sheet{background:var(--glass-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--glass-border);border-radius:24px 24px 0 0;width:100%;max-height:88vh;overflow-y:auto;padding:20px 0 40px;animation:sheetUp .3s cubic-bezier(0.4,0,0.2,1);box-shadow:0 -16px 60px rgba(0,0,0,0.5);}
+        @keyframes sheetUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+
+        .sheet-handle{width:36px;height:4px;border-radius:2px;background:var(--text-muted);margin:0 auto 18px;}
+        .sheet-header{display:flex;justify-content:space-between;align-items:flex-start;padding:0 20px 14px;border-bottom:1px solid var(--divider);margin-bottom:0;}
+        .sheet-header-info h3{font-size:17px;font-weight:600;margin-bottom:2px;}
+        .sheet-header-info p{font-size:12px;color:var(--text-secondary);}
+        .close-btn{width:30px;height:30px;border-radius:50%;background:var(--input-bg);border:1px solid var(--input-border);color:var(--text-secondary);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+
+        /* ─── STAT SECTIONS ───────────────────────────── */
+        .stat-section{padding:16px 20px 0;}
+        .stat-section-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--divider);}
+        .stat-section-title.bat-color{color:#4facfe;}
+        .stat-section-title.bowl-color{color:#e74c3c;}
+        .stat-section-title.milestone-color{color:#f1c40f;}
+
+        .stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:4px;}
+        .stat-input-group{display:flex;flex-direction:column;}
+        .stat-input-group label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:5px;}
+        .stat-input-group input{padding:10px 8px;border-radius:10px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-family:var(--font-mono);font-size:15px;text-align:center;outline:none;-webkit-appearance:none;transition:border-color var(--transition);}
+        .stat-input-group input:focus{border-color:var(--accent);}
+
+        .submit-btn{display:block;width:calc(100% - 40px);margin:20px 20px 0;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:14px;font-family:var(--font-main);font-size:15px;font-weight:600;cursor:pointer;transition:all var(--transition);}
+        .submit-btn:active{transform:scale(0.97);}
+        .submit-btn:disabled{opacity:0.5;cursor:not-allowed;}
+
+        .empty-state{padding:30px 20px;text-align:center;color:var(--text-muted);font-size:14px;}
+
+        .bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:480px;background:var(--nav-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--glass-border);border-radius:30px;display:flex;justify-content:space-around;padding:10px 8px;box-shadow:0 10px 40px rgba(0,0,0,0.25);z-index:50;}
+        .nav-item{text-align:center;color:var(--text-muted);text-decoration:none;font-size:10px;font-weight:500;letter-spacing:.05em;transition:all var(--transition);flex:1;padding:4px 0;border-radius:20px;}
+        .nav-item.active{color:var(--accent);}
+        .nav-icon{font-size:20px;display:block;margin-bottom:2px;}
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <div class="topbar-left">
+            <p class="greeting">Admin</p>
+            <h1>Match Stats</h1>
+            <p>Tap a player to enter performance</p>
+        </div>
+        <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
+    </div>
+
+    <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-bar" id="search-bar" placeholder="Search players…" onkeyup="filterPlayers()">
+    </div>
+
+    <div class="card">
+        <div id="stats-player-list"><div class="empty-state">Loading players…</div></div>
+    </div>
+
+    <!-- Stat Entry Bottom Sheet -->
+    <div id="stat-modal" class="modal" onclick="handleOverlay(event)">
+        <div class="modal-sheet">
+            <div class="sheet-handle"></div>
+            <div class="sheet-header">
+                <div class="sheet-header-info">
+                    <h3 id="modal-player-name">Player Name</h3>
+                    <p id="modal-player-team">Owned by: –</p>
+                </div>
+                <button class="close-btn" onclick="closeStatForm()">✕</button>
+            </div>
+
+            <form id="stat-form">
+                <div class="stat-section">
+                    <p class="stat-section-title bat-color">Batting & Fielding</p>
+                    <div class="stat-grid">
+                        <div class="stat-input-group"><label>Runs</label><input type="number" id="s-runs" value="0" min="0" inputmode="numeric"></div>
+                        <div class="stat-input-group"><label>4s</label><input type="number" id="s-4s" value="0" min="0" inputmode="numeric"></div>
+                        <div class="stat-input-group"><label>6s</label><input type="number" id="s-6s" value="0" min="0" inputmode="numeric"></div>
+                        <div class="stat-input-group"><label>Catches</label><input type="number" id="s-catches" value="0" min="0" inputmode="numeric"></div>
+                        <div class="stat-input-group"><label>Run Outs</label><input type="number" id="s-runouts" value="0" min="0" inputmode="numeric"></div>
+                        <div class="stat-input-group"><label>Stumpings</label><input type="number" id="s-stumpings" value="0" min="0" inputmode="numeric"></div>
+                    </div>
+                </div>
+
+                <div class="stat-section">
+                    <p class="stat-section-title bowl-color">Bowling</p>
+                    <div class="stat-grid">
+                        <div class="stat-input-group"><label>Wickets</label><input type="number" id="s-wickets" value="0" min="0" inputmode="numeric"></div>
+                        <div class="stat-input-group"><label>Maidens</label><input type="number" id="s-maidens" value="0" min="0" inputmode="numeric"></div>
+                        <div class="stat-input-group"><label>Dots</label><input type="number" id="s-dots" value="0" min="0" inputmode="numeric"></div>
+                        <div class="stat-input-group" style="grid-column:span 3"><label>Economy Rate</label><input type="number" id="s-economy" value="0.0" step="0.1" inputmode="decimal" style="width:120px;"></div>
+                    </div>
+                </div>
+
+                <div class="stat-section">
+                    <p class="stat-section-title milestone-color">Milestones</p>
+                    <div class="stat-grid">
+                        <div class="stat-input-group"><label>50s</label><input type="number" id="s-50s" value="0" min="0" max="1" inputmode="numeric"></div>
+                        <div class="stat-input-group"><label>100s</label><input type="number" id="s-100s" value="0" min="0" max="1" inputmode="numeric"></div>
+                        <div class="stat-input-group"><label>3W Haul</label><input type="number" id="s-3w" value="0" min="0" max="1" inputmode="numeric"></div>
+                        <div class="stat-input-group"><label>5W Haul</label><input type="number" id="s-5w" value="0" min="0" max="1" inputmode="numeric"></div>
+                    </div>
+                </div>
+
+                <button type="button" class="submit-btn" onclick="submitStats()">Calculate & Update Points</button>
+            </form>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span>Home</a>
+        <a href="squad.html" class="nav-item"><span class="nav-icon">🛡️</span>Squad</a>
+        <a href="stats.html" class="nav-item active"><span class="nav-icon">📊</span>Stats</a>
+        <a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span>Settings</a>
+    </nav>
+
+    <script>
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
+        const myTeamName = localStorage.getItem("teamName") || "";
+        const isAdmin = myTeamName === "Admin";
+        let allPlayers = [];
+        let currentPlayer = "";
+
+        const savedTheme = localStorage.getItem("theme") || "dark";
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        document.getElementById("theme-icon").textContent = savedTheme === "dark" ? "☀️" : "🌙";
+        function toggleTheme() {
+            const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", next);
+            localStorage.setItem("theme", next);
+            document.getElementById("theme-icon").textContent = next === "dark" ? "☀️" : "🌙";
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Update the subtext to reflect who can update what
+            const subEl = document.querySelector('.topbar-left p');
+            if (isAdmin) {
+                subEl.innerText = "Admin: update stats for any player";
+            } else {
+                subEl.innerText = "Update stats for your own players only";
+            }
+            loadAllPlayers();
+        });
+
+        function handleOverlay(e) { if (e.target === document.getElementById('stat-modal')) closeStatForm(); }
+
+        async function loadAllPlayers() {
+            const container = document.getElementById('stats-player-list');
+            try {
+                const res = await fetch(WEB_APP_URL, { method: 'POST', body: JSON.stringify({ action: 'getPlayers' }) });
+                const result = await res.json();
+                if (result.status === "success") {
+                    // Admin sees everyone. Others only see their own players.
+                    allPlayers = isAdmin
+                        ? result.players
+                        : result.players.filter(p => p['Sold To'] === myTeamName);
+
+                    if (allPlayers.length === 0 && !isAdmin) {
+                        container.innerHTML = '<div class="empty-state">You have no players in your squad yet.<br>Draft players first to update their stats.</div>';
+                        return;
+                    }
+                    renderList(allPlayers);
+                }
+            } catch { container.innerHTML = '<div class="empty-state" style="color:#e74c3c;">Failed to load players.</div>'; }
+        }
+
+        function roleClass(r) { if(r==='BOWL') return 'bowl'; if(r==='AR') return 'ar'; if(r==='WK') return 'wk'; return 'bat'; }
+
+        function renderList(players) {
+            const container = document.getElementById('stats-player-list');
+            const filtered = players.filter(p =>
+                p['Player Name'].toLowerCase().includes(
+                    (document.getElementById('search-bar').value || '').toLowerCase()
+                )
+            );
+            if (!filtered.length) { container.innerHTML = '<div class="empty-state">No players found.</div>'; return; }
+            container.innerHTML = filtered.map(p => {
+                const safeName = p['Player Name'].replace(/"/g, '&quot;');
+                const safeTeam = (p['Sold To'] || '').replace(/"/g, '&quot;');
+                const rc = roleClass(p['Role']);
+                const owned = p['Sold To']
+                    ? `<span class="badge owned">${p['Sold To']}</span>`
+                    : `<span class="badge unsold">Unsold</span>`;
+                return `
+                    <div class="player-row" data-name="${safeName}" data-team="${safeTeam}" onclick="openStatForm(this.dataset.name, this.dataset.team)">
+                        <div class="player-avatar">👤</div>
+                        <div class="player-info">
+                            <div class="player-name">${p['Player Name']}</div>
+                            <div class="badges"><span class="badge ${rc}">${p['Role']}</span>${owned}</div>
+                        </div>
+                        <div class="chevron">❯</div>
+                    </div>`;
+            }).join('');
+        }
+
+        function filterPlayers() { renderList(allPlayers); }
+
+        function openStatForm(name, team) {
+            currentPlayer = name;
+            document.getElementById('modal-player-name').innerText = name;
+            document.getElementById('modal-player-team').innerText = team ? `Owned by: ${team}` : 'Status: Unsold';
+            document.getElementById('stat-form').reset();
+            document.getElementById('stat-modal').classList.add('open');
+        }
+
+        function closeStatForm() { document.getElementById('stat-modal').classList.remove('open'); }
+
+        async function submitStats() {
+            const btn = document.querySelector('.submit-btn');
+            btn.innerText = "Calculating…"; btn.disabled = true;
+            const stats = {
+                runs: document.getElementById('s-runs').value,
+                fours: document.getElementById('s-4s').value,
+                sixes: document.getElementById('s-6s').value,
+                catches: document.getElementById('s-catches').value,
+                wickets: document.getElementById('s-wickets').value,
+                maidens: document.getElementById('s-maidens').value,
+                dots: document.getElementById('s-dots').value,
+                economy: document.getElementById('s-economy').value,
+                fifties: document.getElementById('s-50s').value,
+                hundreds: document.getElementById('s-100s').value,
+                threeW: document.getElementById('s-3w').value,
+                fiveW: document.getElementById('s-5w').value,
+                runouts: document.getElementById('s-runouts').value,
+                stumpings: document.getElementById('s-stumpings').value
+            };
+            try {
+                const res = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        action: 'updateStats',
+                        playerName: currentPlayer,
+                        requesterTeam: myTeamName,   // ← sent for backend validation
+                        stats
+                    })
+                });
+                const result = await res.json();
+                if (result.status === "success") { alert(result.message); closeStatForm(); }
+                else alert(result.message);
+            } catch { alert("Failed to update. Check connection."); }
+            finally { btn.innerText = "Calculate & Update Points"; btn.disabled = false; }
+        }
+    </script>
+</body>
+</html>

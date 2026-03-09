@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dashboard | IPL Fantasy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root{--accent:#FF6B35;--accent-soft:rgba(255,107,53,0.15);--radius-card:22px;--font-main:'Outfit',sans-serif;--font-mono:'DM Mono',monospace;--transition:0.25s cubic-bezier(0.4,0,0.2,1);--nav-h:74px;}
+        [data-theme="dark"]{--bg:#080d14;--bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(30,60,100,.45) 0%,transparent 55%),radial-gradient(ellipse at 80% 90%,rgba(20,40,70,.35) 0%,transparent 55%),#080d14;--glass-bg:rgba(255,255,255,.04);--glass-border:rgba(255,255,255,.08);--glass-shadow:0 8px 40px rgba(0,0,0,.45);--nav-bg:rgba(8,13,20,.88);--text-primary:#f0f2f5;--text-secondary:rgba(240,242,245,.5);--text-muted:rgba(240,242,245,.28);--divider:rgba(255,255,255,.06);--rank-bg:rgba(255,255,255,.06);--my-row:rgba(255,107,53,.08);--toggle-bg:rgba(255,255,255,.06);}
+        [data-theme="light"]{--bg:#f0ece6;--bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(255,200,150,.2) 0%,transparent 55%),#f0ece6;--glass-bg:rgba(255,255,255,.55);--glass-border:rgba(255,255,255,.85);--glass-shadow:0 8px 40px rgba(0,0,0,.09);--nav-bg:rgba(240,236,230,.9);--text-primary:#1a1a2e;--text-secondary:rgba(26,26,46,.55);--text-muted:rgba(26,26,46,.32);--divider:rgba(0,0,0,.07);--rank-bg:rgba(0,0,0,.05);--my-row:rgba(255,107,53,.07);--toggle-bg:rgba(0,0,0,.06);}
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+        body{font-family:var(--font-main);background:var(--bg-mesh);background-color:var(--bg);min-height:100vh;color:var(--text-primary);padding-bottom:calc(var(--nav-h)+20px);transition:background-color var(--transition),color var(--transition);}
+        .topbar{display:flex;justify-content:space-between;align-items:flex-start;padding:28px 20px 12px;}
+        .topbar-left .greeting{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:3px;}
+        .topbar-left h1{font-size:22px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:220px;}
+        .theme-btn{width:38px;height:38px;border-radius:50%;background:var(--toggle-bg);border:1px solid var(--glass-border);color:var(--text-primary);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);transition:all var(--transition);}
+        .theme-btn:active{transform:scale(.9);}
+        .section-label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);padding:0 20px;margin-bottom:10px;margin-top:4px;}
+        .card{background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);box-shadow:var(--glass-shadow);border-radius:var(--radius-card);margin:0 16px 20px;overflow:hidden;}
+        .card-header{padding:16px 20px 14px;border-bottom:1px solid var(--divider);display:flex;justify-content:space-between;align-items:center;}
+        .card-header h3{font-size:16px;font-weight:600;}
+        .live-dot{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:500;color:#4ade80;}
+        .live-dot::before{content:'';width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 1.6s ease-in-out infinite;}
+        @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+        .lb-row{display:flex;align-items:center;padding:13px 20px;border-bottom:1px solid var(--divider);gap:14px;animation:fadeIn .3s ease both;}
+        .lb-row:last-child{border-bottom:none;}
+        .lb-row:nth-child(1){animation-delay:.05s;}.lb-row:nth-child(2){animation-delay:.1s;}.lb-row:nth-child(3){animation-delay:.15s;}
+        .lb-row.is-me{background:var(--my-row);}
+        .rank-badge{width:28px;height:28px;border-radius:8px;background:var(--rank-bg);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--text-secondary);flex-shrink:0;}
+        .rank-badge.gold{background:rgba(255,196,0,.15);color:#ffc400;}
+        .rank-badge.silver{background:rgba(180,180,200,.15);color:#b4b4c8;}
+        .rank-badge.bronze{background:rgba(200,130,80,.15);color:#c88250;}
+        .lb-team{flex:1;font-size:15px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+        .lb-points{font-family:var(--font-mono);font-size:15px;font-weight:500;color:var(--accent);flex-shrink:0;}
+
+        /* CAPS */
+        .caps-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--divider);}
+        .cap-card{padding:18px 16px;background:var(--glass-bg);}
+        .cap-emoji{font-size:26px;margin-bottom:10px;display:block;}
+        .cap-title{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px;}
+        .cap-title.orange{color:#ff6b35;}.cap-title.purple{color:#a855f7;}
+        .cap-player{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+        .cap-team{font-size:11px;color:var(--text-secondary);margin-bottom:8px;}
+        .cap-value{font-family:var(--font-mono);font-size:22px;font-weight:500;}
+        .cap-value.orange{color:#ff6b35;}.cap-value.purple{color:#a855f7;}
+        .cap-unit{font-size:11px;color:var(--text-muted);margin-left:2px;}
+
+        /* LEADERS */
+        .leaders-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--divider);}
+        .leader-cell{background:var(--glass-bg);padding:16px 14px;}
+        .leader-icon{font-size:20px;margin-bottom:8px;display:block;}
+        .leader-val{font-family:var(--font-mono);font-size:20px;font-weight:500;color:var(--text-primary);margin-bottom:3px;}
+        .leader-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:4px;}
+        .leader-name{font-size:12px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+        .bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:480px;background:var(--nav-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--glass-border);border-radius:30px;display:flex;justify-content:space-around;padding:10px 8px;box-shadow:0 10px 40px rgba(0,0,0,.25);z-index:50;}
+        .nav-item{text-align:center;color:var(--text-muted);text-decoration:none;font-size:10px;font-weight:500;letter-spacing:.05em;transition:all var(--transition);flex:1;padding:4px 0;border-radius:20px;}
+        .nav-item.active{color:var(--accent);}
+        .nav-icon{font-size:20px;display:block;margin-bottom:2px;}
+        .loading-row{padding:28px 20px;text-align:center;color:var(--text-muted);font-size:14px;}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <div class="topbar-left">
+            <p class="greeting">IPL Fantasy 2026</p>
+            <h1 id="welcome-text">Loading…</h1>
+        </div>
+        <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
+    </div>
+
+    <p class="section-label">Fantasy Standings</p>
+    <div class="card">
+        <div class="card-header"><h3>Leaderboard</h3><span class="live-dot">Live</span></div>
+        <div id="leaderboard-body"><div class="loading-row">Loading…</div></div>
+    </div>
+
+    <p class="section-label">Cap Leaders</p>
+    <div class="card">
+        <div class="caps-grid">
+            <div class="cap-card">
+                <span class="cap-emoji">🧡</span>
+                <div class="cap-title orange">Orange Cap</div>
+                <div class="cap-player" id="oc-name">—</div>
+                <div class="cap-team" id="oc-team">—</div>
+                <span class="cap-value orange" id="oc-val">0</span><span class="cap-unit">runs</span>
+            </div>
+            <div class="cap-card">
+                <span class="cap-emoji">💜</span>
+                <div class="cap-title purple">Purple Cap</div>
+                <div class="cap-player" id="pc-name">—</div>
+                <div class="cap-team" id="pc-team">—</div>
+                <span class="cap-value purple" id="pc-val">0</span><span class="cap-unit">wkts</span>
+            </div>
+        </div>
+    </div>
+
+    <p class="section-label">Tournament Leaders</p>
+    <div class="card">
+        <div class="leaders-grid">
+            <div class="leader-cell"><span class="leader-icon">🏏</span><div class="leader-label">Most Sixes</div><div class="leader-val" id="l-sixes">—</div><div class="leader-name" id="l-sixes-n">—</div></div>
+            <div class="leader-cell"><span class="leader-icon">4️⃣</span><div class="leader-label">Most Fours</div><div class="leader-val" id="l-fours">—</div><div class="leader-name" id="l-fours-n">—</div></div>
+            <div class="leader-cell"><span class="leader-icon">🧤</span><div class="leader-label">Most Catches</div><div class="leader-val" id="l-catches">—</div><div class="leader-name" id="l-catches-n">—</div></div>
+            <div class="leader-cell"><span class="leader-icon">⭐</span><div class="leader-label">Most 50s</div><div class="leader-val" id="l-fifty">—</div><div class="leader-name" id="l-fifty-n">—</div></div>
+            <div class="leader-cell"><span class="leader-icon">💯</span><div class="leader-label">Most 100s</div><div class="leader-val" id="l-hundo">—</div><div class="leader-name" id="l-hundo-n">—</div></div>
+            <div class="leader-cell"><span class="leader-icon">🏆</span><div class="leader-label">Top Points</div><div class="leader-val" id="l-pts">—</div><div class="leader-name" id="l-pts-n">—</div></div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="dashboard.html" class="nav-item active"><span class="nav-icon">🏠</span>Home</a>
+        <a href="squad.html" class="nav-item"><span class="nav-icon">🛡️</span>Squad</a>
+        <a href="stats.html" class="nav-item"><span class="nav-icon">📊</span>Stats</a>
+        <a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span>Settings</a>
+    </nav>
+
+    <script>
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
+        const savedTheme = localStorage.getItem("theme") || "dark";
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        document.getElementById("theme-icon").textContent = savedTheme === "dark" ? "☀️" : "🌙";
+        function toggleTheme() {
+            const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", next); localStorage.setItem("theme", next);
+            document.getElementById("theme-icon").textContent = next === "dark" ? "☀️" : "🌙";
+        }
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("welcome-text").innerText = localStorage.getItem("teamName") || "Manager";
+            loadLeaderboard(); loadLeaders();
+        });
+        async function loadLeaderboard() {
+            const tbody = document.getElementById('leaderboard-body');
+            const myTeam = localStorage.getItem("teamName") || "";
+            try {
+                const res = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify({action:'getLeaderboard'}) });
+                const result = await res.json();
+                if (result.status === "success") {
+                    const rc = ['gold','silver','bronze'];
+                    tbody.innerHTML = result.leaderboard.map((t,i) => `
+                        <div class="lb-row ${t.teamName===myTeam?'is-me':''}">
+                            <div class="rank-badge ${rc[i]||''}">${i+1}</div>
+                            <div class="lb-team">${t.teamName}</div>
+                            <div class="lb-points">${t.points} pts</div>
+                        </div>`).join('');
+                } else tbody.innerHTML = '<div class="loading-row" style="color:#e74c3c;">Error loading data.</div>';
+            } catch { tbody.innerHTML = '<div class="loading-row" style="color:#e74c3c;">Connection failed.</div>'; }
+        }
+        async function loadLeaders() {
+            try {
+                const res = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify({action:'getLeaders'}) });
+                const result = await res.json();
+                if (result.status === "success") {
+                    const L = result.leaders;
+                    document.getElementById('oc-name').innerText = L.orangeCap.name;
+                    document.getElementById('oc-team').innerText = L.orangeCap.iplTeam;
+                    document.getElementById('oc-val').innerText  = L.orangeCap.value;
+                    document.getElementById('pc-name').innerText = L.purpleCap.name;
+                    document.getElementById('pc-team').innerText = L.purpleCap.iplTeam;
+                    document.getElementById('pc-val').innerText  = L.purpleCap.value;
+                    const fill = (vid, nid, obj) => { document.getElementById(vid).innerText=obj.value; document.getElementById(nid).innerText=obj.name; };
+                    fill('l-sixes','l-sixes-n',L.mostSixes); fill('l-fours','l-fours-n',L.mostFours);
+                    fill('l-catches','l-catches-n',L.mostCatches); fill('l-fifty','l-fifty-n',L.mostFifties);
+                    fill('l-hundo','l-hundo-n',L.mostHundreds); fill('l-pts','l-pts-n',L.highestPts);
+                }
+            } catch(err) { console.error('Leaders failed',err); }
+        }
+    </script>
+</body>
+</html>
