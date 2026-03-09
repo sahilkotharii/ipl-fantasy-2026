@@ -5,243 +5,321 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>IPL Fantasy 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        /* ─── DESIGN TOKENS ─────────────────────────────── */
         :root {
             --accent: #FF6B35;
-            --accent-soft: rgba(255, 107, 53, 0.15);
-            --radius-card: 22px;
-            --radius-input: 14px;
-            --radius-btn: 14px;
+            --accent-soft: rgba(255,107,53,0.16);
+            --accent-glow: rgba(255,107,53,0.30);
             --font-main: 'Outfit', sans-serif;
+            --font-display: 'Bebas Neue', cursive;
             --font-mono: 'DM Mono', monospace;
-            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --ease: cubic-bezier(0.4,0,0.2,1);
+            --t: 0.25s;
         }
-
-        /* ─── DARK THEME ─────────────────────────────────── */
         [data-theme="dark"] {
-            --bg: #080d14;
-            --bg-mesh: radial-gradient(ellipse at 20% 20%, rgba(30, 60, 100, 0.5) 0%, transparent 60%),
-                       radial-gradient(ellipse at 80% 80%, rgba(20, 40, 70, 0.4) 0%, transparent 60%),
-                       radial-gradient(ellipse at 50% 50%, #0a1220 0%, #080d14 100%);
-            --glass-bg: rgba(255, 255, 255, 0.04);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
-            --input-bg: rgba(0, 0, 0, 0.25);
-            --input-border: rgba(255, 255, 255, 0.08);
-            --input-focus: rgba(255, 107, 53, 0.4);
-            --text-primary: #f0f2f5;
-            --text-secondary: rgba(240, 242, 245, 0.5);
-            --text-muted: rgba(240, 242, 245, 0.3);
-            --btn-primary-bg: #f0f2f5;
-            --btn-primary-text: #0a1220;
-            --theme-toggle-bg: rgba(255,255,255,0.06);
+            --bg: #070c13;
+            --overlay-start: rgba(7,12,19,0.15);
+            --overlay-end: rgba(7,12,19,0.97);
+            --glass: rgba(255,255,255,0.04);
+            --glass2: rgba(255,255,255,0.07);
+            --border: rgba(255,255,255,0.09);
+            --border2: rgba(255,255,255,0.15);
+            --text-1: #eef1f5;
+            --text-2: rgba(238,241,245,0.55);
+            --text-3: rgba(238,241,245,0.3);
+            --input-bg: rgba(0,0,0,0.35);
+            --input-border: rgba(255,255,255,0.09);
+            --btn-bg: #eef1f5;
+            --btn-text: #0a1220;
+            --toggle: rgba(255,255,255,0.07);
         }
-
-        /* ─── LIGHT THEME ────────────────────────────────── */
         [data-theme="light"] {
-            --bg: #f0ece6;
-            --bg-mesh: radial-gradient(ellipse at 20% 20%, rgba(255, 200, 150, 0.25) 0%, transparent 60%),
-                       radial-gradient(ellipse at 80% 80%, rgba(200, 180, 255, 0.15) 0%, transparent 60%),
-                       radial-gradient(ellipse at 50% 50%, #f5f1eb 0%, #ece8e1 100%);
-            --glass-bg: rgba(255, 255, 255, 0.55);
-            --glass-border: rgba(255, 255, 255, 0.8);
-            --glass-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
-            --input-bg: rgba(0, 0, 0, 0.04);
-            --input-border: rgba(0, 0, 0, 0.1);
-            --input-focus: rgba(255, 107, 53, 0.35);
-            --text-primary: #1a1a2e;
-            --text-secondary: rgba(26, 26, 46, 0.55);
-            --text-muted: rgba(26, 26, 46, 0.35);
-            --btn-primary-bg: #1a1a2e;
-            --btn-primary-text: #f0ece6;
-            --theme-toggle-bg: rgba(0,0,0,0.06);
+            --bg: #f2ede7;
+            --overlay-start: rgba(242,237,231,0.05);
+            --overlay-end: rgba(242,237,231,0.96);
+            --glass: rgba(255,255,255,0.55);
+            --glass2: rgba(255,255,255,0.8);
+            --border: rgba(0,0,0,0.08);
+            --border2: rgba(0,0,0,0.15);
+            --text-1: #17202e;
+            --text-2: rgba(23,32,46,0.58);
+            --text-3: rgba(23,32,46,0.35);
+            --input-bg: rgba(0,0,0,0.04);
+            --input-border: rgba(0,0,0,0.1);
+            --btn-bg: #17202e;
+            --btn-text: #f2ede7;
+            --toggle: rgba(0,0,0,0.07);
         }
 
-        /* ─── RESET ──────────────────────────────────────── */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body { height: 100%; }
 
         body {
             font-family: var(--font-main);
-            background: var(--bg-mesh);
-            background-color: var(--bg);
-            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text-1);
+            min-height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: var(--text-primary);
-            transition: background-color var(--transition), color var(--transition);
-            padding: 20px;
+            transition: background var(--t) var(--ease), color var(--t) var(--ease);
+            overflow-x: hidden;
         }
 
-        /* ─── THEME TOGGLE ───────────────────────────────── */
-        .theme-btn {
-            position: fixed;
-            top: 18px; right: 18px;
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            background: var(--theme-toggle-bg);
-            border: 1px solid var(--glass-border);
-            color: var(--text-primary);
-            font-size: 17px;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            backdrop-filter: blur(10px);
-            transition: all var(--transition);
-            z-index: 999;
-        }
-        .theme-btn:active { transform: scale(0.92); }
-
-        /* ─── GLASS CARD ─────────────────────────────────── */
-        .card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
-            border-radius: var(--radius-card);
+        /* ── HERO IMAGE SECTION ─────────────────────────── */
+        .hero {
+            position: relative;
             width: 100%;
-            max-width: 380px;
-            padding: 36px 28px 32px;
-            animation: slideUp 0.45s cubic-bezier(0.4, 0, 0.2, 1) both;
+            height: 46vh;
+            min-height: 220px;
+            max-height: 380px;
+            overflow: hidden;
+            flex-shrink: 0;
         }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to   { opacity: 1; transform: translateY(0); }
+        .hero-img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center 25%;
+            display: block;
+            transition: transform 0.6s var(--ease);
         }
-
-        /* ─── HEADER ─────────────────────────────────────── */
-        .logo {
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.18em;
+        /* Gradient overlay — fades image into the card below */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                var(--overlay-start) 0%,
+                rgba(7,12,19,0.05) 40%,
+                var(--overlay-end) 100%
+            );
+            pointer-events: none;
+        }
+        /* IPL Fantasy wordmark over image */
+        .hero-wordmark {
+            position: absolute;
+            top: 20px; left: 20px;
+            display: flex; flex-direction: column;
+        }
+        .hero-tag {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .2em;
             text-transform: uppercase;
             color: var(--accent);
-            margin-bottom: 6px;
+            text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+        }
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: 36px;
+            letter-spacing: .06em;
+            line-height: 1;
+            color: #fff;
+            text-shadow: 0 2px 24px rgba(0,0,0,0.7);
+        }
+        /* Theme toggle */
+        .theme-btn {
+            position: absolute;
+            top: 16px; right: 16px;
+            width: 38px; height: 38px;
+            border-radius: 12px;
+            background: rgba(0,0,0,0.35);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.18);
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all var(--t) var(--ease);
+            z-index: 10;
+        }
+        .theme-btn:active { transform: scale(.88); }
+
+        /* ── FORM PANEL ─────────────────────────────────── */
+        .panel {
+            flex: 1;
+            background: var(--bg);
+            border-radius: 28px 28px 0 0;
+            margin-top: -28px;
+            position: relative;
+            z-index: 2;
+            padding: 30px 24px 48px;
+            /* subtle top border to separate from image */
+            border-top: 1px solid var(--border2);
+            box-shadow: 0 -8px 40px rgba(0,0,0,0.18);
+            transition: background var(--t) var(--ease);
         }
 
-        h2 {
-            font-size: 26px;
+        /* Drag handle hint */
+        .panel-handle {
+            width: 36px; height: 4px;
+            border-radius: 2px;
+            background: var(--border2);
+            margin: 0 auto 24px;
+        }
+
+        /* Form header */
+        .form-kicker {
+            font-size: 10px;
             font-weight: 700;
-            color: var(--text-primary);
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+        .form-heading {
+            font-family: var(--font-display);
+            font-size: 32px;
+            letter-spacing: .04em;
+            line-height: 1;
             margin-bottom: 28px;
-            line-height: 1.2;
+            color: var(--text-1);
         }
 
-        /* ─── INPUTS ─────────────────────────────────────── */
-        .field {
-            margin-bottom: 12px;
+        /* Tabs: Login / Sign Up */
+        .auth-tabs {
+            display: flex;
+            gap: 4px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 4px;
+            margin-bottom: 24px;
+        }
+        .auth-tab {
+            flex: 1;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            background: transparent;
+            font-family: var(--font-main);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-3);
+            cursor: pointer;
+            transition: all var(--t) var(--ease);
+        }
+        .auth-tab.active {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 2px 12px var(--accent-glow);
         }
 
+        /* Fields */
+        .field { margin-bottom: 14px; }
         .field label {
             display: block;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.1em;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .1em;
             text-transform: uppercase;
-            color: var(--text-secondary);
+            color: var(--text-2);
             margin-bottom: 6px;
         }
-
         input {
             width: 100%;
             padding: 13px 16px;
             background: var(--input-bg);
             border: 1px solid var(--input-border);
-            border-radius: var(--radius-input);
-            color: var(--text-primary);
+            border-radius: 12px;
+            color: var(--text-1);
             font-family: var(--font-main);
             font-size: 15px;
-            font-weight: 400;
             outline: none;
-            transition: border-color var(--transition), box-shadow var(--transition);
+            transition: border-color var(--t) var(--ease), box-shadow var(--t) var(--ease);
             -webkit-appearance: none;
         }
-
         input:focus {
-            border-color: var(--input-focus);
+            border-color: var(--accent);
             box-shadow: 0 0 0 3px var(--accent-soft);
         }
-
-        input::placeholder { color: var(--text-muted); }
+        input::placeholder { color: var(--text-3); }
 
         .hidden { display: none !important; }
 
-        /* ─── BUTTONS ────────────────────────────────────── */
-        .btn-primary {
+        /* 2-col grid for PIN fields on signup */
+        .pin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        /* Submit button */
+        .btn-submit {
             width: 100%;
-            padding: 14px;
-            margin-top: 8px;
-            background: var(--btn-primary-bg);
-            color: var(--btn-primary-text);
-            border: none;
-            border-radius: var(--radius-btn);
-            font-family: var(--font-main);
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition);
-            letter-spacing: 0.01em;
-        }
-
-        .btn-primary:active { transform: scale(0.97); opacity: 0.9; }
-        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        .btn-accent {
+            padding: 15px;
+            margin-top: 6px;
             background: var(--accent);
             color: #fff;
-        }
-
-        /* ─── TOGGLE TEXT ────────────────────────────────── */
-        .toggle-row {
-            margin-top: 22px;
-            text-align: center;
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        .toggle-row button {
-            background: none;
             border: none;
-            color: var(--accent);
+            border-radius: 14px;
             font-family: var(--font-main);
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: .02em;
             cursor: pointer;
-            padding: 0;
-            text-decoration: underline;
-            text-underline-offset: 2px;
+            transition: all var(--t) var(--ease);
+            box-shadow: 0 4px 20px var(--accent-glow);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-submit::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .btn-submit:active { transform: scale(.97); box-shadow: 0 2px 10px var(--accent-soft); }
+        .btn-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+        /* Footer note */
+        .form-footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-3);
+            line-height: 1.6;
         }
 
-        /* ─── DIVIDER ─────────────────────────────────────── */
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 18px 0;
-            color: var(--text-muted);
-            font-size: 12px;
-        }
-        .divider::before, .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--input-border);
-        }
+        /* ── ANIMATIONS ─────────────────────────────────── */
+        .hero  { animation: fadeIn .5s var(--ease) both; }
+        .panel { animation: slideUp .45s .1s var(--ease) both; }
+        @keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
+        @keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+        .field { animation: fadeUp .35s var(--ease) both; }
+        .field:nth-child(1) { animation-delay: .18s; }
+        .field:nth-child(2) { animation-delay: .22s; }
+        .field:nth-child(3) { animation-delay: .26s; }
+        .field:nth-child(4) { animation-delay: .30s; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
     </style>
 </head>
 <body>
 
-    <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">
-        <span id="theme-icon">☀️</span>
-    </button>
+    <!-- ── HERO ─────────────────────────────────────────── -->
+    <div class="hero">
+        <!-- Place IPL.jpg in your repo root — same folder as index.html -->
+        <img class="hero-img" src="IPL.jpg" alt="IPL Fantasy 2026"
+             onerror="this.style.display='none'; document.querySelector('.hero').style.background='linear-gradient(145deg,#1a2840 0%,#0d1520 60%,#070c13 100%)'">
+        <div class="hero-overlay"></div>
+        <div class="hero-wordmark">
+            <span class="hero-tag">Private League</span>
+            <span class="hero-title">IPL Fantasy<br>2026</span>
+        </div>
+        <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
+    </div>
 
-    <div class="card" id="auth-card">
-        <p class="logo">IPL Fantasy 2026</p>
-        <h2 id="form-title">Welcome back</h2>
+    <!-- ── FORM PANEL ────────────────────────────────────── -->
+    <div class="panel">
+        <div class="panel-handle"></div>
+
+        <div class="form-kicker">IPL Fantasy 2026</div>
+        <div class="form-heading" id="form-heading">Welcome Back</div>
+
+        <!-- Tab switcher -->
+        <div class="auth-tabs">
+            <button class="auth-tab active" id="tab-login"  onclick="setMode(true)">Login</button>
+            <button class="auth-tab"        id="tab-signup" onclick="setMode(false)">Sign Up</button>
+        </div>
 
         <form id="auth-form" autocomplete="off">
             <div class="field">
@@ -254,96 +332,96 @@
                 <input type="text" id="team-name" placeholder="e.g. Mumbai Mavericks">
             </div>
 
-            <div class="field">
-                <label>4-Digit PIN</label>
-                <input type="password" id="pin" placeholder="••••" pattern="\d{4}" maxlength="4" inputmode="numeric" required>
+            <div class="pin-grid">
+                <div class="field">
+                    <label>4-Digit PIN</label>
+                    <input type="password" id="pin" placeholder="••••" maxlength="4" inputmode="numeric" required>
+                </div>
+                <div class="field hidden" id="confirm-pin-group">
+                    <label>Confirm PIN</label>
+                    <input type="password" id="confirm-pin" placeholder="••••" maxlength="4" inputmode="numeric">
+                </div>
             </div>
 
-            <div class="field hidden" id="confirm-pin-group">
-                <label>Confirm PIN</label>
-                <input type="password" id="confirm-pin" placeholder="••••" pattern="\d{4}" maxlength="4" inputmode="numeric">
-            </div>
-
-            <button type="submit" class="btn-primary btn-accent" id="submit-btn">Login</button>
+            <button type="submit" class="btn-submit" id="submit-btn">Login</button>
         </form>
 
-        <div class="toggle-row">
-            <span id="toggle-label">Don't have an account?</span>
-            <button onclick="toggleForm()" id="toggle-btn"> Sign Up</button>
-        </div>
+        <p class="form-footer" id="form-footer">
+            Private league · Your team, your rules
+        </p>
     </div>
 
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
 
-        // ─── THEME ────────────────────────────────────────
+        // ── THEME ──────────────────────────────────────────
         const savedTheme = localStorage.getItem("theme") || "dark";
         document.documentElement.setAttribute("data-theme", savedTheme);
         document.getElementById("theme-icon").textContent = savedTheme === "dark" ? "☀️" : "🌙";
-
         function toggleTheme() {
-            const cur = document.documentElement.getAttribute("data-theme");
-            const next = cur === "dark" ? "light" : "dark";
+            const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
             document.documentElement.setAttribute("data-theme", next);
             localStorage.setItem("theme", next);
             document.getElementById("theme-icon").textContent = next === "dark" ? "☀️" : "🌙";
+            // Update overlay for light mode
+            document.querySelector('.hero-overlay').style.background = next === "light"
+                ? "linear-gradient(to bottom, rgba(242,237,231,0.05) 0%, rgba(242,237,231,0.04) 40%, rgba(242,237,231,0.96) 100%)"
+                : "linear-gradient(to bottom, rgba(7,12,19,0.15) 0%, rgba(7,12,19,0.05) 40%, rgba(7,12,19,0.97) 100%)";
         }
 
-        // ─── FORM TOGGLE ──────────────────────────────────
+        // ── MODE SWITCH ────────────────────────────────────
         let isLogin = true;
 
-        function toggleForm() {
-            isLogin = !isLogin;
-            document.getElementById('form-title').innerText = isLogin ? "Welcome back" : "Create your squad";
-            document.getElementById('team-name-group').classList.toggle('hidden', isLogin);
-            document.getElementById('confirm-pin-group').classList.toggle('hidden', isLogin);
-            document.getElementById('submit-btn').innerText = isLogin ? "Login" : "Sign Up";
-            document.getElementById('toggle-label').innerText = isLogin ? "Don't have an account?" : "Already have an account?";
-            document.getElementById('toggle-btn').innerText = isLogin ? " Sign Up" : " Login";
-
-            if (!isLogin) {
-                document.getElementById('team-name').setAttribute('required', 'true');
-                document.getElementById('confirm-pin').setAttribute('required', 'true');
-            } else {
-                document.getElementById('team-name').removeAttribute('required');
-                document.getElementById('confirm-pin').removeAttribute('required');
-            }
+        function setMode(login) {
+            isLogin = login;
+            document.getElementById('tab-login').classList.toggle('active', login);
+            document.getElementById('tab-signup').classList.toggle('active', !login);
+            document.getElementById('form-heading').innerText = login ? "Welcome Back" : "Join the League";
+            document.getElementById('team-name-group').classList.toggle('hidden', login);
+            document.getElementById('confirm-pin-group').classList.toggle('hidden', login);
+            document.getElementById('submit-btn').innerText = login ? "Login" : "Create Account";
+            document.getElementById('form-footer').innerText = login
+                ? "Private league · Your team, your rules"
+                : "Pick your squad · Beat your mates";
+            document.getElementById('team-name').toggleAttribute('required', !login);
+            document.getElementById('confirm-pin').toggleAttribute('required', !login);
         }
 
-        // ─── SUBMIT ───────────────────────────────────────
+        // ── SUBMIT ─────────────────────────────────────────
         document.getElementById('auth-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const btn = document.getElementById('submit-btn');
+            const btn  = document.getElementById('submit-btn');
             const name = document.getElementById('name').value.trim();
-            const pin = document.getElementById('pin').value;
-            const action = isLogin ? 'login' : 'signup';
-            let payload = { action, name, pin };
+            const pin  = document.getElementById('pin').value;
+            let payload = { action: isLogin ? 'login' : 'signup', name, pin };
 
             if (!isLogin) {
-                const teamName = document.getElementById('team-name').value.trim();
+                const teamName   = document.getElementById('team-name').value.trim();
                 const confirmPin = document.getElementById('confirm-pin').value;
-                if (pin !== confirmPin) { alert("PINs do not match!"); return; }
+                if (pin !== confirmPin)          { alert("PINs don't match!"); return; }
+                if (pin.length !== 4)            { alert("PIN must be 4 digits."); return; }
+                if (!teamName)                   { alert("Please enter a team name."); return; }
                 payload.teamName = teamName;
             }
 
-            btn.innerText = "One sec...";
-            btn.disabled = true;
+            btn.innerText = "One sec…";
+            btn.disabled  = true;
 
             try {
-                const res = await fetch(WEB_APP_URL, { method: 'POST', body: JSON.stringify(payload) });
+                const res    = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify(payload) });
                 const result = await res.json();
                 if (result.status === "success") {
                     localStorage.setItem("userName", name);
                     localStorage.setItem("teamName", isLogin ? result.teamName : payload.teamName);
                     window.location.href = "dashboard.html";
                 } else {
-                    alert(result.message);
+                    alert(result.message || "Something went wrong.");
                 }
             } catch {
-                alert("Connection failed. Check your Web App URL.");
+                alert("Connection failed. Check your network.");
             } finally {
-                btn.innerText = isLogin ? "Login" : "Sign Up";
-                btn.disabled = false;
+                btn.innerText = isLogin ? "Login" : "Create Account";
+                btn.disabled  = false;
             }
         });
     </script>
