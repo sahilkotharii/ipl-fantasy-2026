@@ -107,7 +107,7 @@
             clip-path: polygon(12% 0, 88% 0, 100% 12%, 100% 81.5%, 50% 99%, 0 81.5%, 0 12%);
         }
 
-        /* Tiers */
+        /* Fixed Tiers and professional badge colors */
         .tier-gold-card {
             --border-bg: linear-gradient(135deg, #FFDF73 0%, #B8860B 40%, #FFDF73 80%, #8B6508 100%);
             --inner-bg: linear-gradient(135deg, #FFE082 0%, #D4AF37 30%, #FFF59D 50%, #B8860B 75%, #8B6508 100%);
@@ -127,45 +127,46 @@
         .card-face { background: var(--border-bg); color: var(--text-col); }
         .card-face::before { background: var(--inner-bg); }
 
-        /* ─── FRONT CONTENT ───────────────────── */
-        .cf-inner { position: relative; z-index: 3; display: flex; flex-direction: column; height: 100%; }
-        .cf-top { position: relative; height: 55%; width: 100%; padding: 12% 10% 0; display: flex; }
+        /* ─── FRONT CONTENT (No Player Image) ─── */
+        .cf-inner { position: relative; z-index: 3; display: flex; flex-direction: column; height: 100%; padding: 15% 10% 8%; }
         
-        .cf-top-left { width: 35%; display: flex; flex-direction: column; align-items: center; z-index: 5; }
-        .cf-rating { font-family: var(--font-display); font-size: 3.8rem; line-height: 0.85; margin-bottom: -2px; }
-        .cf-role { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.05em; margin-bottom: 12px; }
-        .cf-team-logo { width: 56px; height: 56px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
-
-        .cf-top-right {
-            position: absolute; right: 5%; bottom: 0; width: 65%; height: 115%; z-index: 4;
-            display: flex; align-items: flex-end; justify-content: center;
-        }
-        .cf-player-img {
-            width: 100%; height: 100%; object-fit: contain; object-position: bottom center;
-            filter: drop-shadow(-5px 10px 15px rgba(0,0,0,0.4));
-        }
-
-        .cf-bottom { height: 45%; display: flex; flex-direction: column; align-items: center; padding: 0 8%; }
-        .cf-name { font-family: var(--font-display); font-size: 2.4rem; letter-spacing: 0.03em; margin-top: -2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
-        .cf-divider-horizontal { height: 1.5px; width: 90%; margin: 2px auto 8px; background: var(--text-col); opacity: 0.25; }
+        .cf-top-grid { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
         
-        .cf-stats-container { display: flex; justify-content: space-between; width: 100%; padding: 0 5%; }
-        .cf-stat-col { display: flex; flex-direction: column; gap: 2px; }
-        .cf-stat { display: flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 1.6rem; }
-        .cf-stat .val { width: 28px; text-align: right; }
-        .cf-stat .lbl { font-size: 1.3rem; font-weight: 400; opacity: 0.85; }
-        .cf-stat-divider { width: 1px; height: 90%; background: var(--text-col); opacity: 0.2; margin: 0 10px; }
+        .cf-rating-box { display: flex; flex-direction: column; align-items: center; }
+        .cf-rating { font-family: var(--font-display); font-size: 5rem; line-height: 0.85; margin-bottom: 2px; }
+        .cf-role { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 0.05em; }
+        
+        /* Centered Giant Team Logo */
+        .cf-logo-area { flex: 1; display: flex; justify-content: center; align-items: center; min-height: 120px; }
+        .cf-team-logo { width: 100px; height: 100px; object-fit: contain; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.3)); }
+
+        .cf-bottom { margin-top: auto; display: flex; flex-direction: column; align-items: center; }
+        
+        /* Stylish Bigger Names */
+        .cf-name { 
+            font-family: var(--font-display); font-size: 3rem; letter-spacing: 0.04em; line-height: 1;
+            text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+            margin-bottom: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .cf-divider-horizontal { height: 2px; width: 95%; margin: 5px auto 12px; background: var(--text-col); opacity: 0.25; }
+        
+        .cf-stats-container { display: flex; justify-content: space-around; width: 100%; padding: 0 2%; }
+        .cf-stat-col { display: flex; flex-direction: column; gap: 4px; }
+        .cf-stat { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 1.8rem; }
+        .cf-stat .val { width: 32px; text-align: right; }
+        .cf-stat .lbl { font-size: 1.4rem; font-weight: 400; opacity: 0.85; }
+        .cf-stat-divider { width: 1px; height: 80%; background: var(--text-col); opacity: 0.2; }
 
         /* ─── BACK CONTENT ────────────────────── */
         .cb-inner { position: relative; z-index: 3; display: flex; flex-direction: column; height: 100%; padding: 15% 10% 12%; text-align: center; }
         .cb-header { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--div-col); }
-        .cb-name { font-family: var(--font-display); font-size: 2.1rem; letter-spacing: 0.05em; }
-        .cb-sub { font-family: var(--font-main); font-size: 0.85rem; opacity: 0.85; margin-top: 4px; font-weight: 700; }
+        .cb-name { font-family: var(--font-display); font-size: 2.4rem; letter-spacing: 0.05em; }
+        .cb-sub { font-family: var(--font-main); font-size: 0.9rem; opacity: 0.85; margin-top: 4px; font-weight: 700; }
         .cb-stats-detailed { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; flex: 1; }
         .cb-stat-box { display: flex; flex-direction: column; justify-content: center; background: rgba(0,0,0,0.06); border-radius: 8px; padding: 8px 4px; border: 1px solid rgba(0,0,0,0.05); }
-        .cb-stat-val { font-family: var(--font-display); font-size: 1.6rem; }
-        .cb-stat-lbl { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; opacity: 0.7; }
-        .cb-footer { margin-top: auto; font-size: 0.9rem; font-weight: 700; opacity: 0.9; padding: 8px; background: var(--badge-bg); border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); }
+        .cb-stat-val { font-family: var(--font-display); font-size: 1.8rem; }
+        .cb-stat-lbl { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; opacity: 0.7; }
+        .cb-footer { margin-top: auto; font-size: 0.95rem; font-weight: 700; opacity: 0.9; padding: 10px; background: var(--badge-bg); border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); }
 
         /* Nav & Overlays */
         .modal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;}
@@ -197,7 +198,7 @@
     <div class="filter-row">
         <button class="filter-btn active" onclick="setFilter('ALL',this)">All</button>
         <button class="filter-btn" onclick="setFilter('BAT',this)">🏏 Bat</button>
-        <button class="filter-btn" onclick="setFilter('BOWL',this)">🎳 Bowl</button>
+        <button class="filter-btn" onclick="setFilter('BOWL',this)">Bowling</button>
         <button class="filter-btn" onclick="setFilter('AR',this)">⚡ All-R</button>
         <button class="filter-btn" onclick="setFilter('WK',this)">🧤 WK</button>
         <button class="filter-btn" onclick="setFilter('GOLD',this)">🥇 Gold</button>
@@ -249,18 +250,17 @@
             document.getElementById("theme-icon").textContent = next === "dark" ? "☀️" : "🌙";
         }
 
-        // Added BOTH the new logo paths and your old emojis back just in case!
         const TEAMS = {
-            'MI':   { color:'#004BA0', color2:'#1a6fd4', emoji:'🔵', logo:'ipl team logo/mi.webp' },
-            'CSK':  { color:'#d4860a', color2:'#f5a623', emoji:'🟡', logo:'ipl team logo/csk.jpg' },
-            'RCB':  { color:'#c0001a', color2:'#ff1a35', emoji:'🔴', logo:'ipl team logo/rcb.jpg' },
-            'KKR':  { color:'#3A225D', color2:'#6b3aaa', emoji:'🟣', logo:'ipl team logo/kkr.webp' },
-            'DC':   { color:'#17479E', color2:'#2a5fc0', emoji:'🔷', logo:'ipl team logo/dc.webp' },
-            'PBKS': { color:'#c41920', color2:'#ED1F27', emoji:'🦁', logo:'ipl team logo/pk.webp' },
-            'RR':   { color:'#254AA5', color2:'#f542b3', emoji:'💗', logo:'ipl team logo/rr.webp' },
-            'SRH':  { color:'#d44a10', color2:'#F7591A', emoji:'🟠', logo:'ipl team logo/srh.webp' },
-            'GT':   { color:'#1B2133', color2:'#3a5a9a', emoji:'🔷', logo:'ipl team logo/gt.webp' },
-            'LSG':  { color:'#1d6b42', color2:'#5ec48a', emoji:'🟢', logo:'ipl team logo/lsg.jpg' },
+            'MI':   { color:'#004BA0', color2:'#1a6fd4', logo:'ipl team logo/mi.webp' },
+            'CSK':  { color:'#d4860a', color2:'#f5a623', logo:'ipl team logo/csk.jpg' },
+            'RCB':  { color:'#c0001a', color2:'#ff1a35', logo:'ipl team logo/rcb.jpg' },
+            'KKR':  { color:'#3A225D', color2:'#6b3aaa', logo:'ipl team logo/kkr.webp' },
+            'DC':   { color:'#17479E', color2:'#2a5fc0', logo:'ipl team logo/dc.webp' },
+            'PBKS': { color:'#c41920', color2:'#ED1F27', logo:'ipl team logo/pk.webp' },
+            'RR':   { color:'#254AA5', color2:'#f542b3', logo:'ipl team logo/rr.webp' },
+            'SRH':  { color:'#d44a10', color2:'#F7591A', logo:'ipl team logo/srh.webp' },
+            'GT':   { color:'#1B2133', color2:'#3a5a9a', logo:'ipl team logo/gt.webp' },
+            'LSG':  { color:'#1d6b42', color2:'#5ec48a', logo:'ipl team logo/lsg.jpg' },
         };
         
         function getTeam(name) {
@@ -268,7 +268,7 @@
             for (const key of Object.keys(TEAMS)) {
                 if (n.includes(key)) return { abbr: key, ...TEAMS[key] };
             }
-            return { abbr: (n.slice(0,3) || 'IPL'), color:'#444', color2:'#666', emoji:'🏏', logo:'logos/default.png' };
+            return { abbr: (n.slice(0,3) || 'IPL'), color:'#444', color2:'#666', logo:'logos/default.png' };
         }
 
         function calcTiers(players) {
@@ -386,45 +386,27 @@
             const name   = p['Player Name'] || '';
             const isCap  = myCap === name && p['Sold To'] === myTeam;
             
-            // ─── AUTOMATIC IMAGE FETCHING LOGIC ───
-            let imgName = name.trim().toLowerCase().replace(/\s+/g, '-');
-
-            // Map tricky names here!
-            const trickyNamesMap = {
-                "Suryakumar Yadav": "surya-kumar-yadav", 
-                "MS Dhoni": "ms-dhoni"
-            };
-
-            if (trickyNamesMap[name]) {
-                imgName = trickyNamesMap[name];
-            }
-
             const runs    = parseInt(p['Runs'])     || 0;
             const wkts    = parseInt(p['Wickets'])  || 0;
             const cats    = parseInt(p['Catches'])  || 0;
             const fours   = parseInt(p['4s'])       || 0;
             const sixes   = parseInt(p['6s'])       || 0;
-            const dots    = parseInt(p['Dots'])     || 0;
-            const fifties = parseInt(p['50s'])      || 0;
-            const hunds   = parseInt(p['100s'])     || 0;
-            const maidens = parseInt(p['Maidens'])  || 0;
             const price   = p['Price Bought'] ? `₹${p['Price Bought']}Cr` : 'Unsold';
 
             const scene = document.getElementById('card-scene');
             scene.className = `card-scene tier-${tier}-card`;
             document.getElementById('card-flip').className = 'card-flip';
 
-            // FRONT - FIFA STYLE (with .webp extension applied correctly!)
+            // FRONT (Professional, Image-free design)
             document.getElementById('card-front').innerHTML = `
                 <div class="cf-inner">
-                    <div class="cf-top">
-                        <div class="cf-top-left">
+                    <div class="cf-top-grid">
+                        <div class="cf-rating-box">
                             <div class="cf-rating">${rating}</div>
                             <div class="cf-role">${role}</div>
-                            <img src="${team.logo}" alt="${team.abbr}" class="cf-team-logo">
                         </div>
-                        <div class="cf-top-right">
-                            <img src="players/${imgName}.webp" class="cf-player-img" alt="${name}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'; this.style.opacity='0.2';">
+                        <div class="cf-logo-area">
+                            <img src="${team.logo}" alt="${team.abbr}" class="cf-team-logo">
                         </div>
                     </div>
 
@@ -448,7 +430,7 @@
                     </div>
                 </div>`;
 
-            // BACK (Detailed Stats)
+            // BACK
             document.getElementById('card-back').innerHTML = `
                 <div class="cb-inner">
                     <div class="cb-header">
@@ -461,10 +443,7 @@
                         <div class="cb-stat-box"><div class="cb-stat-val">${sixes}</div><div class="cb-stat-lbl">6s</div></div>
                         <div class="cb-stat-box"><div class="cb-stat-val">${cats}</div><div class="cb-stat-lbl">Catches</div></div>
                         <div class="cb-stat-box"><div class="cb-stat-val">${wkts}</div><div class="cb-stat-lbl">Wickets</div></div>
-                        <div class="cb-stat-box"><div class="cb-stat-val">${maidens}</div><div class="cb-stat-lbl">Maidens</div></div>
-                        <div class="cb-stat-box"><div class="cb-stat-val">${dots}</div><div class="cb-stat-lbl">Dots</div></div>
-                        <div class="cb-stat-box"><div class="cb-stat-val">${fifties}</div><div class="cb-stat-lbl">50s</div></div>
-                        <div class="cb-stat-box"><div class="cb-stat-val">${hunds}</div><div class="cb-stat-lbl">100s</div></div>
+                        <div class="cb-stat-box"><div class="cb-stat-val">${pts}</div><div class="cb-stat-lbl">Total</div></div>
                     </div>
                     <div class="cb-footer">
                         Owned by: ${p['Sold To'] || 'Unsold'} ${isCap ? '(C)' : ''}
