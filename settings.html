@@ -113,6 +113,66 @@
         .add-btn-full{width:100%;padding:11px;background:rgba(255,107,53,.15);color:var(--accent);border:1px solid rgba(255,107,53,.3);border-radius:10px;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;transition:all var(--transition);margin-top:2px;}
         .add-btn-full:active{transform:scale(.97);}
 
+
+        /* ─── POINTS TABLE (all users) ──────────────── */
+        .pts-table-wrap{overflow:hidden;}
+        .pts-category-block{border-bottom:1px solid var(--divider);}
+        .pts-category-block:last-child{border-bottom:none;}
+        .pts-cat-header{
+            display:flex;align-items:center;gap:10px;
+            padding:12px 20px;cursor:pointer;
+            transition:background var(--transition);
+        }
+        .pts-cat-header:active{background:var(--row-hover);}
+        .pts-cat-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+        .pts-cat-dot.batting  {background:#4facfe;}
+        .pts-cat-dot.bowling  {background:#e74c3c;}
+        .pts-cat-dot.fielding {background:#22c55e;}
+        .pts-cat-dot.milestone{background:#f1c40f;}
+        .pts-cat-dot.custom   {background:#a855f7;}
+        .pts-cat-name{font-size:13px;font-weight:700;flex:1;text-transform:capitalize;}
+        .pts-cat-count{font-size:11px;color:var(--text-muted);font-family:var(--font-mono);}
+        .pts-cat-chevron{font-size:11px;color:var(--text-muted);transition:transform var(--transition);}
+        .pts-category-block.open .pts-cat-chevron{transform:rotate(90deg);}
+        .pts-cat-rows{display:none;background:rgba(0,0,0,.06);}
+        [data-theme="light"] .pts-cat-rows{background:rgba(0,0,0,.02);}
+        .pts-category-block.open .pts-cat-rows{display:block;}
+        .pts-stat-row{
+            display:flex;align-items:center;
+            padding:10px 20px 10px 38px;
+            border-top:1px solid var(--divider);
+            gap:10px;
+        }
+        .pts-stat-name{flex:1;font-size:14px;color:var(--text-primary);}
+        .pts-stat-key{font-size:10px;font-family:var(--font-mono);color:var(--text-muted);margin-top:1px;}
+        .pts-stat-pill{
+            background:var(--accent-soft);border:1px solid rgba(255,107,53,.2);
+            border-radius:8px;padding:4px 10px;
+            font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--accent);
+            white-space:nowrap;flex-shrink:0;
+        }
+        .pts-stat-pill.zero{background:rgba(255,255,255,.04);border-color:var(--glass-border);color:var(--text-muted);}
+
+        /* ─── HOW TO PLAY ────────────────────────────── */
+        .htp-block{padding:16px 20px;border-bottom:1px solid var(--divider);}
+        .htp-block:last-child{border-bottom:none;}
+        .htp-step{display:flex;gap:12px;align-items:flex-start;}
+        .htp-num{
+            width:28px;height:28px;border-radius:9px;
+            background:var(--accent-soft);color:var(--accent);
+            font-size:13px;font-weight:700;
+            display:flex;align-items:center;justify-content:center;
+            flex-shrink:0;margin-top:1px;
+        }
+        .htp-text{flex:1;}
+        .htp-title{font-size:14px;font-weight:600;margin-bottom:3px;}
+        .htp-desc{font-size:13px;color:var(--text-secondary);line-height:1.5;}
+        .htp-tip{
+            margin-top:12px;padding:10px 14px;
+            background:rgba(241,196,15,.08);border:1px solid rgba(241,196,15,.2);
+            border-radius:10px;font-size:12px;color:var(--text-secondary);line-height:1.5;
+        }
+        .htp-tip strong{color:#f1c40f;}
         .empty-state{padding:24px 20px;text-align:center;color:var(--text-muted);font-size:14px;}
         .section-note{font-size:12px;color:var(--text-muted);padding:10px 20px 14px;border-bottom:1px solid var(--divider);}
 
@@ -167,6 +227,77 @@
                 <div><div class="row-text danger">Sign Out</div><div class="row-sub">Return to login screen</div></div>
             </div>
             <span class="row-chevron">❯</span>
+        </div>
+    </div>
+
+
+    <!-- ─── POINTS TABLE (visible to all) ──────────── -->
+    <p class="section-label">🏆 Points Table</p>
+    <div class="card">
+        <div class="pts-table-wrap" id="pts-table-wrap">
+            <div class="empty-state">Loading scoring rules…</div>
+        </div>
+    </div>
+
+    <!-- ─── HOW TO PLAY ──────────────────────────────── -->
+    <p class="section-label">📖 How to Play</p>
+    <div class="card">
+        <div class="htp-block">
+            <div class="htp-step">
+                <div class="htp-num">1</div>
+                <div class="htp-text">
+                    <div class="htp-title">Sign up &amp; join the league</div>
+                    <div class="htp-desc">Create an account with your name and a team name. Your admin will share the app link — everyone plays in the same private league.</div>
+                </div>
+            </div>
+        </div>
+        <div class="htp-block">
+            <div class="htp-step">
+                <div class="htp-num">2</div>
+                <div class="htp-text">
+                    <div class="htp-title">Draft your players at auction</div>
+                    <div class="htp-desc">Go to <strong>Squad</strong> → tap any player → enter your bid price to buy them. Once a player is bought they're locked to your team. Build your squad before the tournament starts.</div>
+                </div>
+            </div>
+        </div>
+        <div class="htp-block">
+            <div class="htp-step">
+                <div class="htp-num">3</div>
+                <div class="htp-text">
+                    <div class="htp-title">Pick a Captain &amp; Vice Captain</div>
+                    <div class="htp-desc">In your Squad page, set one player as Captain and one as Vice Captain. Your Captain earns <strong>2×</strong> points and your VC earns <strong>1.5×</strong> points for every match.</div>
+                </div>
+            </div>
+        </div>
+        <div class="htp-block">
+            <div class="htp-step">
+                <div class="htp-num">4</div>
+                <div class="htp-text">
+                    <div class="htp-title">Enter match stats after each game</div>
+                    <div class="htp-desc">After a match, go to <strong>Stats</strong> and tap the <strong>＋</strong> button next to each of your players. Enter runs, wickets, catches etc. and hit Add Stats — points are calculated automatically.</div>
+                </div>
+            </div>
+        </div>
+        <div class="htp-block">
+            <div class="htp-step">
+                <div class="htp-num">5</div>
+                <div class="htp-text">
+                    <div class="htp-title">Track the leaderboard</div>
+                    <div class="htp-desc">Check <strong>Home</strong> for the live leaderboard, Orange Cap (top run scorer), Purple Cap (top wicket taker), and other tournament leaders.</div>
+                </div>
+            </div>
+        </div>
+        <div class="htp-block">
+            <div class="htp-step">
+                <div class="htp-num">6</div>
+                <div class="htp-text">
+                    <div class="htp-title">Made a mistake? Use Edit mode</div>
+                    <div class="htp-desc">Tap the <strong>✏️</strong> button next to a player in Stats to open Edit mode. It pre-fills the current stats — correct any value and hit Replace. Points recalculate from scratch automatically.</div>
+                </div>
+            </div>
+        </div>
+        <div class="htp-tip">
+            💡 <strong>Tip:</strong> The points each stat is worth is shown in the Points Table above. Your admin can change these anytime from the Admin scoring rules section.
         </div>
     </div>
 
@@ -394,6 +525,69 @@
                 alert(result.message);
                 if (result.status === "success") loadPointsConfig();
             } catch { alert("Failed to delete."); }
+        }
+
+
+        // ─── POINTS TABLE (all users) ─────────────────────
+        async function loadPointsTable() {
+            const wrap = document.getElementById('pts-table-wrap');
+            try {
+                const res    = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify({action:'getPointsConfig'}) });
+                const result = await res.json();
+                if (result.status !== 'success' || !result.config.length) {
+                    wrap.innerHTML = '<div class="empty-state">No scoring rules found.</div>';
+                    return;
+                }
+
+                // Group by category
+                const catOrder = ['batting','bowling','fielding','milestone','custom'];
+                const groups   = {};
+                result.config.forEach(item => {
+                    const cat = (item.category || 'custom').toLowerCase();
+                    if (!groups[cat]) groups[cat] = [];
+                    groups[cat].push(item);
+                });
+
+                // Also handle any category not in catOrder
+                Object.keys(groups).forEach(c => { if (!catOrder.includes(c)) catOrder.push(c); });
+
+                let html = '';
+                catOrder.forEach(cat => {
+                    if (!groups[cat] || !groups[cat].length) return;
+                    const items = groups[cat];
+                    html += `<div class="pts-category-block" data-cat="${cat}">
+                        <div class="pts-cat-header" onclick="toggleCatBlock(this)">
+                            <div class="pts-cat-dot ${cat}"></div>
+                            <div class="pts-cat-name">${cat}</div>
+                            <div class="pts-cat-count">${items.length} stat${items.length>1?'s':''}</div>
+                            <div class="pts-cat-chevron">❯</div>
+                        </div>
+                        <div class="pts-cat-rows">`;
+                    items.forEach(item => {
+                        const isZero = !item.points || item.points === 0;
+                        html += `<div class="pts-stat-row">
+                            <div>
+                                <div class="pts-stat-name">${item.label}</div>
+                                <div class="pts-stat-key">${item.key}</div>
+                            </div>
+                            <div class="pts-stat-pill ${isZero?'zero':''}">${item.points} pts</div>
+                        </div>`;
+                    });
+                    html += `</div></div>`;
+                });
+                wrap.innerHTML = html;
+
+                // Auto-open first category
+                const first = wrap.querySelector('.pts-category-block');
+                if (first) first.classList.add('open');
+
+            } catch {
+                wrap.innerHTML = '<div class="empty-state" style="color:#e74c3c;">Failed to load.</div>';
+            }
+        }
+
+        function toggleCatBlock(hdr) {
+            hdr.closest('.pts-category-block').classList.toggle('open');
         }
 
         // ─── ADMIN USER MANAGEMENT ───────────────────────
