@@ -70,13 +70,9 @@
         .modal{display:none;position:fixed;inset:0;background:var(--overlay);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:200;align-items:center;justify-content:center;}
         .modal.open{display:flex;}
 
-        /* ─── BABAR AZAM STYLE FIFA CARD ──────── */
+        /* ─── FIFA CARD LAYOUT ────────────────── */
         .card-scene {
-            perspective: 1200px;
-            width: 86vw; 
-            max-width: 350px; 
-            aspect-ratio: 0.70; 
-            filter: drop-shadow(0 25px 45px rgba(0,0,0,0.7));
+            perspective: 1200px; width: 86vw; max-width: 350px; aspect-ratio: 0.70; filter: drop-shadow(0 25px 45px rgba(0,0,0,0.7));
         }
         .card-flip {
             position: relative; width: 100%; height: 100%;
@@ -84,7 +80,6 @@
         }
         .card-flip.flipped { transform: rotateY(180deg); }
         
-        /* Shape and Borders */
         .card-face {
             position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
             clip-path: polygon(12% 0, 88% 0, 100% 12%, 100% 82%, 50% 100%, 0 82%, 0 12%);
@@ -122,26 +117,18 @@
         .card-face { background: var(--border-bg); color: var(--text-col); }
         .card-face::before { background: var(--inner-bg); }
 
-        /* ─── FRONT LAYOUT ────────────────────── */
-        .cf-inner {
-            position: relative; z-index: 3; display: flex; flex-direction: column; height: 100%;
-        }
-
-        /* Top Half (55% height) */
-        .cf-top {
-            position: relative; height: 55%; width: 100%; padding: 12% 10% 0; display: flex;
-        }
+        /* ─── FRONT CONTENT ───────────────────── */
+        .cf-inner { position: relative; z-index: 3; display: flex; flex-direction: column; height: 100%; }
+        .cf-top { position: relative; height: 55%; width: 100%; padding: 12% 10% 0; display: flex; }
         
-        /* Left Column (Rating, Role, Flag, Logo) */
-        .cf-top-left {
-            width: 35%; display: flex; flex-direction: column; align-items: center; z-index: 5;
-        }
+        /* Stack rating, role, flag, team */
+        .cf-top-left { width: 35%; display: flex; flex-direction: column; align-items: center; z-index: 5; }
         .cf-rating { font-family: var(--font-display); font-size: 3.8rem; line-height: 0.85; }
         .cf-role { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.05em; margin-bottom: 8px; }
         .cf-flag { width: 36px; height: 24px; object-fit: cover; border-radius: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-bottom: 6px; }
         .cf-team-logo { width: 38px; height: 38px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
 
-        /* Right Column (Massive Transparent Portrait) */
+        /* Portrait aligns to right/bottom */
         .cf-top-right {
             position: absolute; right: 5%; bottom: 0; width: 65%; height: 115%; z-index: 4;
             display: flex; align-items: flex-end; justify-content: center;
@@ -151,23 +138,19 @@
             filter: drop-shadow(-5px 10px 15px rgba(0,0,0,0.4));
         }
 
-        /* Bottom Half (45% height) */
-        .cf-bottom {
-            height: 45%; display: flex; flex-direction: column; align-items: center; padding: 0 8%;
-        }
+        /* Bottom section */
+        .cf-bottom { height: 45%; display: flex; flex-direction: column; align-items: center; padding: 0 8%; }
         .cf-name { font-family: var(--font-display); font-size: 2.4rem; letter-spacing: 0.03em; margin-top: -2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
         .cf-divider-horizontal { height: 1.5px; width: 90%; margin: 2px auto 8px; background: var(--text-col); opacity: 0.25; }
         
-        .cf-stats-container {
-            display: flex; justify-content: space-between; width: 100%; padding: 0 5%;
-        }
+        .cf-stats-container { display: flex; justify-content: space-between; width: 100%; padding: 0 5%; }
         .cf-stat-col { display: flex; flex-direction: column; gap: 2px; }
         .cf-stat { display: flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 1.6rem; }
         .cf-stat .val { width: 28px; text-align: right; }
         .cf-stat .lbl { font-size: 1.3rem; font-weight: 400; opacity: 0.85; }
         .cf-stat-divider { width: 1px; height: 90%; background: var(--text-col); opacity: 0.2; margin: 0 10px; }
 
-        /* ─── CARD BACK LAYOUT ────────────────── */
+        /* ─── BACK CONTENT ────────────────────── */
         .cb-inner { position: relative; z-index: 3; display: flex; flex-direction: column; height: 100%; padding: 15% 10% 12%; text-align: center; }
         .cb-header { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--div-col); }
         .cb-name { font-family: var(--font-display); font-size: 2.1rem; letter-spacing: 0.05em; }
@@ -178,7 +161,7 @@
         .cb-stat-lbl { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; opacity: 0.7; }
         .cb-footer { margin-top: auto; font-size: 0.9rem; font-weight: 700; opacity: 0.9; padding: 8px; background: var(--badge-bg); border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); }
 
-        /* Modal Close & Nav */
+        /* Nav & Overlays */
         .modal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;}
         .empty-state{padding:32px 20px;text-align:center;color:var(--text-muted);font-size:14px;}
         .bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:480px;background:var(--nav-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--glass-border);border-radius:30px;display:flex;justify-content:space-around;padding:10px 4px;box-shadow:0 10px 40px rgba(0,0,0,.25);z-index:50;}
@@ -396,8 +379,23 @@
             const name   = p['Player Name'] || '';
             const isCap  = myCap === name && p['Sold To'] === myTeam;
             
-            // Format name for image path (e.g. "Virat Kohli" -> "virat-kohli")
-            const imgName = name.trim().toLowerCase().replace(/\s+/g, '-');
+            // ─── START AUTOMATIC IMAGE FETCHING LOGIC ───
+            // Default image path generation: "Virat Kohli" -> "virat-kohli"
+            let imgName = name.trim().toLowerCase().replace(/\s+/g, '-');
+
+            // FUZZY MATCHING BLOCK
+            // Use this block to manually map names that don't match the simple space-to-dash rule.
+            const trickyNamesMap = {
+                // "Sheet Name": "GitHub_Image_Filename_No_Ext"
+                "Suryakumar Yadav": "surya-kumar-yadav", // Based on your screenshots
+                // "Example Player": "example-player-portrait", 
+            };
+
+            // If the player name exists in our tricky map, use the manually defined filename instead
+            if (trickyNamesMap[name]) {
+                imgName = trickyNamesMap[name];
+            }
+            // ─── END AUTOMATIC IMAGE FETCHING LOGIC ───
 
             const runs    = parseInt(p['Runs'])     || 0;
             const wkts    = parseInt(p['Wickets'])  || 0;
@@ -414,18 +412,14 @@
             scene.className = `card-scene tier-${tier}-card`;
             document.getElementById('card-flip').className = 'card-flip';
 
-            // FRONT - BABAR AZAM LAYOUT
+            // FRONT - FIFA STYLE WITH AUTOMATIC IMAGE PATH
             document.getElementById('card-front').innerHTML = `
                 <div class="cf-inner">
                     <div class="cf-top">
                         <div class="cf-top-left">
                             <div class="cf-rating">${rating}</div>
                             <div class="cf-role">${role}</div>
-                            <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" class="cf-flag" alt="IND">
-                            <img src="${team.logo}" alt="${team.abbr}" class="cf-team-logo">
-                        </div>
-                        <div class="cf-top-right">
-                            <img src="players/${imgName}.webp" class="cf-player-img" alt="${name}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'; this.style.opacity='0.2';">
+                            <img src="player portrait/${imgName}.webp" class="cf-player-img" alt="${name}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'; this.style.opacity='0.2';">
                         </div>
                     </div>
 
