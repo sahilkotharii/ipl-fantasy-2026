@@ -94,13 +94,13 @@
         .modal{display:none;position:fixed;inset:0;background:var(--overlay);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:200;align-items:center;justify-content:center;}
         .modal.open{display:flex;}
 
-        /* ─── FIFA CARD ───────────────────────── */
+        /* ─── FIFA CARD SHAPE & ANIMATION ─────── */
         .card-scene {
             perspective: 1200px;
-            width: 85vw; /* Responsive width */
-            max-width: 340px; /* PC cap */
-            aspect-ratio: 0.70; /* FIFA Card aspect ratio */
-            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
+            width: 86vw; 
+            max-width: 350px; 
+            aspect-ratio: 0.68; /* Taller to fit new badge seamlessly */
+            filter: drop-shadow(0 25px 45px rgba(0,0,0,0.7));
         }
         .card-flip {
             position: relative;
@@ -111,60 +111,74 @@
         }
         .card-flip.flipped { transform: rotateY(180deg); }
         
-        /* The iconic FIFA card shape */
+        /* The Outer Wrapper (Acts as the border) */
         .card-face {
             position: absolute;
             inset: 0;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            clip-path: polygon(10% 0, 90% 0, 100% 12%, 100% 85%, 50% 100%, 0 85%, 0 12%);
+            /* Iconic FIFA notched corners & bottom point */
+            clip-path: polygon(12% 0, 88% 0, 100% 12%, 100% 82%, 50% 100%, 0 82%, 0 12%);
             display: flex;
             flex-direction: column;
-            overflow: hidden;
         }
         .card-back-face {
             transform: rotateY(180deg);
         }
 
-        /* ─── TIER TEXTURES & COLORS ───────────── */
-        /* GOLD */
-        .tier-gold-card .card-face {
-            background: linear-gradient(135deg, #FFE082 0%, #D4AF37 30%, #FFF59D 50%, #B8860B 75%, #8B6508 100%);
-            color: #31230B;
+        /* The Inner Card Texture (creates the 4px border effect) */
+        .card-face::before {
+            content: '';
+            position: absolute;
+            inset: 4px; /* Border Thickness */
+            /* Matches the outer shape slightly scaled in */
+            clip-path: polygon(12% 0, 88% 0, 100% 12%, 100% 81.5%, 50% 99%, 0 81.5%, 0 12%);
+            z-index: 1;
         }
-        .tier-gold-card .card-face::after {
-            content:''; position:absolute; inset:0; pointer-events:none;
-            background: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,0.15) 15px, rgba(255,255,255,0.15) 16px);
+        
+        /* Subtle mesh pattern overlay */
+        .card-face::after {
+            content:''; position:absolute; inset:4px; z-index: 2; pointer-events:none;
+            background: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,0.08) 15px, rgba(255,255,255,0.08) 16px);
+            clip-path: polygon(12% 0, 88% 0, 100% 12%, 100% 81.5%, 50% 99%, 0 81.5%, 0 12%);
         }
-        .tier-gold-card .cf-divider { background: rgba(49, 35, 11, 0.3); }
 
-        /* SILVER */
-        .tier-silver-card .card-face {
-            background: linear-gradient(135deg, #F5F5F5 0%, #A9A9A9 30%, #FFFFFF 50%, #808080 75%, #505050 100%);
-            color: #1A1A1A;
+        /* ─── TIER THEMES (CSS Variables) ──────── */
+        .tier-gold-card {
+            --border-bg: linear-gradient(135deg, #FFDF73 0%, #B8860B 40%, #FFDF73 80%, #8B6508 100%);
+            --inner-bg: linear-gradient(135deg, #FFE082 0%, #D4AF37 30%, #FFF59D 50%, #B8860B 75%, #8B6508 100%);
+            --text-col: #31230B;
+            --div-col: rgba(49, 35, 11, 0.3);
+            --badge-bg: rgba(255, 255, 255, 0.25);
         }
-        .tier-silver-card .card-face::after {
-            content:''; position:absolute; inset:0; pointer-events:none;
-            background: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,0.3) 15px, rgba(255,255,255,0.3) 16px);
+        .tier-silver-card {
+            --border-bg: linear-gradient(135deg, #FFFFFF 0%, #A9A9A9 40%, #E0E0E0 80%, #616161 100%);
+            --inner-bg: linear-gradient(135deg, #F5F5F5 0%, #A9A9A9 30%, #FFFFFF 50%, #808080 75%, #505050 100%);
+            --text-col: #1A1A1A;
+            --div-col: rgba(26, 26, 26, 0.3);
+            --badge-bg: rgba(255, 255, 255, 0.4);
         }
-        .tier-silver-card .cf-divider { background: rgba(26, 26, 26, 0.3); }
+        .tier-bronze-card {
+            --border-bg: linear-gradient(135deg, #E6A87C 0%, #8B4513 40%, #CD7F32 80%, #3E1E04 100%);
+            --inner-bg: linear-gradient(135deg, #E6A87C 0%, #A0522D 30%, #FFCBA4 50%, #8B4513 75%, #5C2E00 100%);
+            --text-col: #3E1E04;
+            --div-col: rgba(56, 26, 0, 0.3);
+            --badge-bg: rgba(255, 255, 255, 0.2);
+        }
 
-        /* BRONZE */
-        .tier-bronze-card .card-face {
-            background: linear-gradient(135deg, #E6A87C 0%, #A0522D 30%, #FFCBA4 50%, #8B4513 75%, #5C2E00 100%);
-            color: #381A00;
+        .card-face {
+            background: var(--border-bg);
+            color: var(--text-col);
         }
-        .tier-bronze-card .card-face::after {
-            content:''; position:absolute; inset:0; pointer-events:none;
-            background: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,0.1) 15px, rgba(255,255,255,0.1) 16px);
+        .card-face::before {
+            background: var(--inner-bg);
         }
-        .tier-bronze-card .cf-divider { background: rgba(56, 26, 0, 0.3); }
 
 
         /* ─── CARD FRONT LAYOUT ───────────────── */
         .cf-inner {
             position: relative;
-            z-index: 2;
+            z-index: 3; /* Keeps content above the backgrounds */
             display: flex;
             flex-direction: column;
             height: 100%;
@@ -174,7 +188,7 @@
         /* Top Half (Rating, Role, Flag + Avatar) */
         .cf-top {
             display: flex;
-            height: 52%;
+            height: 48%;
         }
         .cf-top-left {
             width: 35%;
@@ -193,15 +207,22 @@
             font-family: var(--font-display);
             font-size: 1.4rem;
             letter-spacing: 0.05em;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
+        
+        /* Bigger, cleaner logo box */
         .cf-flag-box {
-            width: 40px;
-            height: 40px;
+            width: 52px;
+            height: 52px;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 5px;
+            padding: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .cf-team-logo {
             max-width: 100%;
@@ -210,7 +231,7 @@
         }
         .cf-tier-star {
             font-size: 1.5rem;
-            margin-top: -2px;
+            margin-top: 2px;
         }
 
         /* Avatar */
@@ -222,35 +243,50 @@
             position: relative;
         }
         .cf-avatar {
-            width: 120px;
-            height: 120px;
-            background-color: rgba(0,0,0,0.1); /* Placeholder background */
-            border-radius: 50%; /* Make it round if needed, or remove for cutout images */
+            width: 130px;
+            height: 130px;
+            background-color: rgba(0,0,0,0.08);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25));
         }
 
-        /* Name Section */
+        /* Name Section & Owner Badge */
         .cf-name-container {
             text-align: center;
             margin-top: auto;
         }
         .cf-name {
             font-family: var(--font-display);
-            font-size: 2.2rem;
-            letter-spacing: 0.03em;
+            font-size: 2.3rem;
+            letter-spacing: 0.04em;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
         .cf-divider-horizontal {
             height: 2px;
-            width: 90%;
-            margin: 4px auto 10px;
-            background: currentColor;
-            opacity: 0.2;
+            width: 85%;
+            margin: 4px auto 8px;
+            background: var(--text-col);
+            opacity: 0.25;
+        }
+        .cf-owner-badge {
+            background: var(--badge-bg);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: var(--text-col);
+            padding: 3px 14px;
+            border-radius: 20px;
+            font-family: var(--font-main);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: inline-block;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
 
         /* Bottom Stats */
@@ -259,7 +295,7 @@
             grid-template-columns: 1fr 1px 1fr;
             gap: 15px;
             padding: 0 5%;
-            margin-bottom: 15px;
+            margin-bottom: 8%; /* Adjusting spacing for the bottom point */
         }
         .cf-stats-col {
             display: flex;
@@ -272,10 +308,10 @@
             align-items: center;
             gap: 6px;
             font-family: var(--font-display);
-            font-size: 1.4rem;
+            font-size: 1.45rem;
         }
         .cf-stat-val {
-            width: 30px;
+            width: 32px;
             text-align: right;
         }
         .cf-stat-lbl {
@@ -283,38 +319,43 @@
             opacity: 0.8;
             font-weight: 400;
         }
+        .cf-divider {
+            background: var(--div-col);
+            width: 1px;
+            height: 100%;
+        }
 
         /* ─── CARD BACK LAYOUT ────────────────── */
         .cb-inner {
             position: relative;
-            z-index: 2;
+            z-index: 3;
             display: flex;
             flex-direction: column;
             height: 100%;
-            padding: 15% 10% 10%;
+            padding: 15% 10% 12%;
             text-align: center;
         }
         .cb-header {
             margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 2px solid rgba(0,0,0,0.1);
+            border-bottom: 2px solid var(--div-col);
         }
         .cb-name {
             font-family: var(--font-display);
-            font-size: 2rem;
+            font-size: 2.1rem;
             letter-spacing: 0.05em;
         }
         .cb-sub {
             font-family: var(--font-main);
             font-size: 0.85rem;
-            opacity: 0.8;
+            opacity: 0.85;
             margin-top: 4px;
-            font-weight: 600;
+            font-weight: 700;
         }
         .cb-stats-detailed {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: 8px;
             flex: 1;
         }
         .cb-stat-box {
@@ -339,8 +380,12 @@
         .cb-footer {
             margin-top: auto;
             font-size: 0.9rem;
-            font-weight: 600;
-            opacity: 0.8;
+            font-weight: 700;
+            opacity: 0.9;
+            padding: 8px;
+            background: var(--badge-bg);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         /* Modal Close */
@@ -429,19 +474,20 @@
             document.getElementById("theme-icon").textContent = next === "dark" ? "Light" : "Dark";
         }
 
-        // ─── TEAM MAP (Update with your actual image paths) ─────────────────────────────────────
+        // ─── TEAM MAP ─────────────────────────────────────
         const TEAMS = {
-    'MI':   { color:'#004BA0', color2:'#1a6fd4', logo:'ipl team logo/mi.webp' },
-    'CSK':  { color:'#d4860a', color2:'#f5a623', logo:'ipl team logo/csk.jpg' },
-    'RCB':  { color:'#c0001a', color2:'#ff1a35', logo:'ipl team logo/rcb.jpg' },
-    'KKR':  { color:'#3A225D', color2:'#6b3aaa', logo:'ipl team logo/kkr.webp' },
-    'DC':   { color:'#17479E', color2:'#2a5fc0', logo:'ipl team logo/dc.webp' },
-    'PBKS': { color:'#c41920', color2:'#ED1F27', logo:'ipl team logo/pk.webp' },
-    'RR':   { color:'#254AA5', color2:'#f542b3', logo:'ipl team logo/rr.webp' },
-    'SRH':  { color:'#d44a10', color2:'#F7591A', logo:'ipl team logo/srh.webp' },
-    'GT':   { color:'#1B2133', color2:'#3a5a9a', logo:'ipl team logo/gt.webp' },
-    'LSG':  { color:'#1d6b42', color2:'#5ec48a', logo:'ipl team logo/lsg.jpg' },
-};
+            'MI':   { color:'#004BA0', color2:'#1a6fd4', logo:'ipl team logo/mi.webp' },
+            'CSK':  { color:'#d4860a', color2:'#f5a623', logo:'ipl team logo/csk.jpg' },
+            'RCB':  { color:'#c0001a', color2:'#ff1a35', logo:'ipl team logo/rcb.jpg' },
+            'KKR':  { color:'#3A225D', color2:'#6b3aaa', logo:'ipl team logo/kkr.webp' },
+            'DC':   { color:'#17479E', color2:'#2a5fc0', logo:'ipl team logo/dc.webp' },
+            'PBKS': { color:'#c41920', color2:'#ED1F27', logo:'ipl team logo/pk.webp' },
+            'RR':   { color:'#254AA5', color2:'#f542b3', logo:'ipl team logo/rr.webp' },
+            'SRH':  { color:'#d44a10', color2:'#F7591A', logo:'ipl team logo/srh.webp' },
+            'GT':   { color:'#1B2133', color2:'#3a5a9a', logo:'ipl team logo/gt.webp' },
+            'LSG':  { color:'#1d6b42', color2:'#5ec48a', logo:'ipl team logo/lsg.jpg' },
+        };
+        
         function getTeam(name) {
             const n = (name || '').toUpperCase();
             for (const key of Object.keys(TEAMS)) {
@@ -575,7 +621,9 @@
             const name   = p['Player Name'] || '';
             const isOwned = p['Sold To'] && p['Sold To'].trim();
             const isCap  = myCap === name && p['Sold To'] === myTeam;
-            const isVC   = myVC  === name && p['Sold To'] === myTeam;
+            
+            // Generate Owner Label
+            const ownerLabel = isOwned ? `${p['Sold To']}'s Playing XI` : 'Unsold Player';
 
             // Fantasy Stats mapping
             const runs    = parseInt(p['Runs'])     || 0;
@@ -593,7 +641,7 @@
             scene.className = `card-scene tier-${tier}-card`;
             document.getElementById('card-flip').className = 'card-flip';
 
-            // FRONT (FIFA Layout with Image Logo)
+            // FRONT
             document.getElementById('card-front').innerHTML = `
                 <div class="cf-inner">
                     <div class="cf-top">
@@ -607,7 +655,7 @@
                         </div>
                         <div class="cf-top-right">
                             <div class="cf-avatar">
-                                P
+                                <span style="font-size:4.5rem; opacity:0.3;">👤</span>
                             </div>
                         </div>
                     </div>
@@ -615,6 +663,7 @@
                     <div class="cf-name-container">
                         <div class="cf-name">${name.toUpperCase()}</div>
                         <div class="cf-divider-horizontal"></div>
+                        <div class="cf-owner-badge">${ownerLabel}</div>
                     </div>
 
                     <div class="cf-stats-grid">
@@ -632,7 +681,7 @@
                     </div>
                 </div>`;
 
-            // BACK (Detailed Stats)
+            // BACK
             document.getElementById('card-back').innerHTML = `
                 <div class="cb-inner">
                     <div class="cb-header">
@@ -673,4 +722,3 @@
     </script>
 </body>
 </html>
-
