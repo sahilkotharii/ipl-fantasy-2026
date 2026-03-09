@@ -384,14 +384,14 @@
             let imgName = name.trim().toLowerCase().replace(/\s+/g, '-');
 
             // FUZZY MATCHING BLOCK
-            // Use this block to manually map names that don't match the simple space-to-dash rule.
+            // Use this block to manually map names from your sheet that don't perfectly match the image filename
             const trickyNamesMap = {
-                // "Sheet Name": "GitHub_Image_Filename_No_Ext"
-                "Suryakumar Yadav": "surya-kumar-yadav", // Based on your screenshots
-                // "Example Player": "example-player-portrait", 
+                // "Name in Sheet": "GitHub_Image_Filename_No_Ext"
+                "Suryakumar Yadav": "surya-kumar-yadav", // Mapped based on your screenshot!
+                "MS Dhoni": "ms-dhoni",
+                // Add more tricky ones here if needed
             };
 
-            // If the player name exists in our tricky map, use the manually defined filename instead
             if (trickyNamesMap[name]) {
                 imgName = trickyNamesMap[name];
             }
@@ -419,7 +419,11 @@
                         <div class="cf-top-left">
                             <div class="cf-rating">${rating}</div>
                             <div class="cf-role">${role}</div>
-                            <img src="player portrait/${imgName}.webp" class="cf-player-img" alt="${name}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'; this.style.opacity='0.2';">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" class="cf-flag" alt="IND">
+                            <img src="${team.logo}" alt="${team.abbr}" class="cf-team-logo">
+                        </div>
+                        <div class="cf-top-right">
+                            <img src="players/${imgName}.webp" class="cf-player-img" alt="${name}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'; this.style.opacity='0.2';">
                         </div>
                     </div>
 
