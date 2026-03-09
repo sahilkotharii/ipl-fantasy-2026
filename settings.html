@@ -391,6 +391,7 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             refreshProfileDisplay();
+            loadPointsTable();
             if (myTeam === "Admin") {
                 document.getElementById("admin-section").style.display = "block";
                 loadPointsConfig();
