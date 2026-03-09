@@ -340,7 +340,7 @@
                 const result = await res.json();
                 if (result.status !== "success") throw new Error();
 
-                const lb    = result.leaderboard;
+                const lb    = result.leaderboard.filter(t => t.teamName !== 'Admin');
                 const maxPt = Math.max(...lb.map(t => Number(t.points) || 0), 1);
                 const medals = ['🥇','🥈','🥉'];
                 const rc     = ['gold','silver','bronze'];
