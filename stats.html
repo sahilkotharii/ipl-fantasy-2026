@@ -88,7 +88,7 @@
         .stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:4px;}
         .stat-input-group{display:flex;flex-direction:column;}
         .stat-input-group label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:5px;}
-        .stat-input-group input{padding:10px 8px;border-radius:10px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-family:var(--font-mono);font-size:15px;text-align:center;outline:none;-webkit-appearance:none;transition:border-color var(--transition);}
+        .stat-input-group input{padding:10px 4px;border-radius:10px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-family:var(--font-mono);font-size:15px;text-align:center;outline:none;-webkit-appearance:none;transition:border-color var(--transition);}
         .stat-input-group input:focus{border-color:var(--accent);}
 
         .submit-btn{display:block;width:calc(100% - 40px);margin:20px 20px 0;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:14px;font-family:var(--font-main);font-size:15px;font-weight:600;cursor:pointer;transition:all var(--transition);}
@@ -97,8 +97,8 @@
 
         .empty-state{padding:30px 20px;text-align:center;color:var(--text-muted);font-size:14px;}
 
-        .bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:480px;background:var(--nav-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--glass-border);border-radius:30px;display:flex;justify-content:space-around;padding:10px 8px;box-shadow:0 10px 40px rgba(0,0,0,0.25);z-index:50;}
-        .nav-item{text-align:center;color:var(--text-muted);text-decoration:none;font-size:10px;font-weight:500;letter-spacing:.05em;transition:all var(--transition);flex:1;padding:4px 0;border-radius:20px;}
+        .bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:480px;background:var(--nav-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--glass-border);border-radius:30px;display:flex;justify-content:space-around;padding:10px 4px;box-shadow:0 10px 40px rgba(0,0,0,0.25);z-index:50;}
+        .nav-item{text-align:center;color:var(--text-muted);text-decoration:none;font-size:9px;font-weight:500;letter-spacing:.04em;transition:all var(--transition);flex:1;padding:4px 0;border-radius:20px;}
         .nav-item.active{color:var(--accent);}
         .nav-icon{font-size:20px;display:block;margin-bottom:2px;}
     </style>
@@ -173,9 +173,10 @@
         </div>
     </div>
 
-    <nav class="bottom-nav">
+        <nav class="bottom-nav">
         <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span>Home</a>
         <a href="squad.html" class="nav-item"><span class="nav-icon">🛡️</span>Squad</a>
+        <a href="players.html" class="nav-item"><span class="nav-icon">🃏</span>Cards</a>
         <a href="stats.html" class="nav-item active"><span class="nav-icon">📊</span>Stats</a>
         <a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span>Settings</a>
     </nav>
