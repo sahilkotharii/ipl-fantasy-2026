@@ -13,66 +13,44 @@
             --transition:0.25s cubic-bezier(0.4,0,0.2,1); --nav-h:70px;
         }
         [data-theme="dark"] {
-            --bg:#080d14;
-            --bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(30,60,100,.45) 0%,transparent 55%),#080d14;
+            --bg:#080d14; --bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(30,60,100,.45) 0%,transparent 55%),#080d14;
             --glass-bg:rgba(255,255,255,.04); --glass-border:rgba(255,255,255,.08);
-            --glass-shadow:0 8px 40px rgba(0,0,0,.45); --nav-bg:rgba(8,13,20,.88);
-            --text-primary:#f0f2f5; --text-secondary:rgba(240,242,245,.5);
+            --nav-bg:rgba(8,13,20,.88); --text-primary:#f0f2f5; --text-secondary:rgba(240,242,245,.5);
             --text-muted:rgba(240,242,245,.28); --divider:rgba(255,255,255,.06);
             --input-bg:rgba(0,0,0,.3); --input-border:rgba(255,255,255,.1);
-            --overlay:rgba(0,0,0,.85); --toggle-bg:rgba(255,255,255,.06);
-            --row-hover:rgba(255,255,255,.04);
-        }
-        [data-theme="light"] {
-            --bg:#f0ece6;
-            --bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(255,200,150,.2) 0%,transparent 55%),#f0ece6;
-            --glass-bg:rgba(255,255,255,.55); --glass-border:rgba(255,255,255,.85);
-            --glass-shadow:0 8px 40px rgba(0,0,0,.09); --nav-bg:rgba(240,236,230,.9);
-            --text-primary:#1a1a2e; --text-secondary:rgba(26,26,46,.55);
-            --text-muted:rgba(26,26,46,.32); --divider:rgba(0,0,0,.07);
-            --input-bg:rgba(0,0,0,.05); --input-border:rgba(0,0,0,.1);
-            --overlay:rgba(0,0,0,.75); --toggle-bg:rgba(0,0,0,.06);
-            --row-hover:rgba(0,0,0,.03);
+            --overlay:rgba(0,0,0,.85); --toggle-bg:rgba(255,255,255,.06); --row-hover:rgba(255,255,255,.04);
         }
 
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
         body{font-family:var(--font-main);background:var(--bg-mesh);background-color:var(--bg);min-height:100vh;color:var(--text-primary);padding-bottom:calc(var(--nav-h)+20px);transition:background-color var(--transition),color var(--transition);}
 
-        /* ─── TOPBAR ──────────────────────────── */
+        /* ─── TOPBAR & FILTERS ────────────────── */
         .topbar{display:flex;justify-content:space-between;align-items:flex-start;padding:26px 20px 10px;}
         .topbar-left .greeting{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:2px;}
         .topbar-left h1{font-size:22px;font-weight:700;}
         .topbar-left p{font-size:12px;color:var(--text-muted);margin-top:2px;}
         .theme-btn{width:36px;height:36px;border-radius:50%;background:var(--toggle-bg);border:1px solid var(--glass-border);color:var(--text-primary);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 
-        /* ─── SEARCH + FILTERS ────────────────── */
         .search-wrap{margin:0 16px 10px;position:relative;}
         .search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
         .search-bar{width:100%;padding:11px 13px 11px 38px;border-radius:13px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-family:var(--font-main);font-size:14px;outline:none;-webkit-appearance:none;}
         .search-bar:focus{border-color:var(--accent);}
-        .search-bar::placeholder{color:var(--text-muted);}
 
         .filter-row{display:flex;gap:7px;padding:0 16px 12px;overflow-x:auto;scrollbar-width:none;}
         .filter-row::-webkit-scrollbar{display:none;}
         .filter-btn{flex-shrink:0;padding:6px 14px;border-radius:18px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-secondary);font-family:var(--font-main);font-size:11px;font-weight:600;cursor:pointer;transition:all var(--transition);}
         .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
 
-        /* ─── CARD (glass container) ──────────── */
-        .card{background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);box-shadow:var(--glass-shadow);border-radius:20px;margin:0 16px 16px;overflow:hidden;}
-
-        /* ─── PLAYER LIST ROW ─────────────────── */
+        /* ─── CARD LIST ───────────────────────── */
+        .card{background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);border-radius:20px;margin:0 16px 16px;overflow:hidden;}
         .player-row{display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid var(--divider);cursor:pointer;transition:background var(--transition);gap:12px;}
         .player-row:last-child{border-bottom:none;}
         .player-row:active{background:var(--row-hover);}
-
-        /* Tier dot */
         .tier-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
         .tier-dot.gold{background:linear-gradient(135deg,#ffd700,#b8860b);}
         .tier-dot.silver{background:linear-gradient(135deg,#d4d4d4,#9e9e9e);}
         .tier-dot.bronze{background:linear-gradient(135deg,#cd7f32,#7a3c10);}
-
         .team-strip{width:4px;height:36px;border-radius:2px;flex-shrink:0;}
-
         .row-info{flex:1;min-width:0;}
         .row-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;}
         .row-meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
@@ -86,318 +64,127 @@
         .rb-unsold{background:rgba(255,255,255,.05);color:var(--text-muted);}
         .rb-cap{background:rgba(255,196,0,.2);color:#ffc400;}
         .rb-vc{background:rgba(180,180,200,.15);color:#b4b4c8;}
-
         .row-pts{font-family:var(--font-mono);font-size:13px;font-weight:500;color:var(--accent);flex-shrink:0;}
-        .row-chevron{font-size:11px;color:var(--text-muted);margin-left:2px;}
 
         /* ─── MODAL OVERLAY ───────────────────── */
         .modal{display:none;position:fixed;inset:0;background:var(--overlay);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:200;align-items:center;justify-content:center;}
         .modal.open{display:flex;}
 
-        /* ─── FIFA CARD SHAPE & ANIMATION ─────── */
+        /* ─── BABAR AZAM STYLE FIFA CARD ──────── */
         .card-scene {
             perspective: 1200px;
             width: 86vw; 
             max-width: 350px; 
-            aspect-ratio: 0.68; /* Taller to fit new badge seamlessly */
+            aspect-ratio: 0.70; 
             filter: drop-shadow(0 25px 45px rgba(0,0,0,0.7));
         }
         .card-flip {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative; width: 100%; height: 100%;
+            transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .card-flip.flipped { transform: rotateY(180deg); }
         
-        /* The Outer Wrapper (Acts as the border) */
+        /* Shape and Borders */
         .card-face {
-            position: absolute;
-            inset: 0;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            /* Iconic FIFA notched corners & bottom point */
+            position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
             clip-path: polygon(12% 0, 88% 0, 100% 12%, 100% 82%, 50% 100%, 0 82%, 0 12%);
-            display: flex;
-            flex-direction: column;
+            display: flex; flex-direction: column;
         }
-        .card-back-face {
-            transform: rotateY(180deg);
-        }
+        .card-back-face { transform: rotateY(180deg); }
 
-        /* The Inner Card Texture (creates the 4px border effect) */
         .card-face::before {
-            content: '';
-            position: absolute;
-            inset: 4px; /* Border Thickness */
-            /* Matches the outer shape slightly scaled in */
+            content: ''; position: absolute; inset: 4px; z-index: 1;
             clip-path: polygon(12% 0, 88% 0, 100% 12%, 100% 81.5%, 50% 99%, 0 81.5%, 0 12%);
-            z-index: 1;
         }
-        
-        /* Subtle mesh pattern overlay */
         .card-face::after {
             content:''; position:absolute; inset:4px; z-index: 2; pointer-events:none;
             background: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,0.08) 15px, rgba(255,255,255,0.08) 16px);
             clip-path: polygon(12% 0, 88% 0, 100% 12%, 100% 81.5%, 50% 99%, 0 81.5%, 0 12%);
         }
 
-        /* ─── TIER THEMES (CSS Variables) ──────── */
+        /* Tiers */
         .tier-gold-card {
             --border-bg: linear-gradient(135deg, #FFDF73 0%, #B8860B 40%, #FFDF73 80%, #8B6508 100%);
             --inner-bg: linear-gradient(135deg, #FFE082 0%, #D4AF37 30%, #FFF59D 50%, #B8860B 75%, #8B6508 100%);
-            --text-col: #31230B;
-            --div-col: rgba(49, 35, 11, 0.3);
-            --badge-bg: rgba(255, 255, 255, 0.25);
+            --text-col: #31230B; --div-col: rgba(49, 35, 11, 0.3); --badge-bg: rgba(255, 255, 255, 0.25);
         }
         .tier-silver-card {
             --border-bg: linear-gradient(135deg, #FFFFFF 0%, #A9A9A9 40%, #E0E0E0 80%, #616161 100%);
             --inner-bg: linear-gradient(135deg, #F5F5F5 0%, #A9A9A9 30%, #FFFFFF 50%, #808080 75%, #505050 100%);
-            --text-col: #1A1A1A;
-            --div-col: rgba(26, 26, 26, 0.3);
-            --badge-bg: rgba(255, 255, 255, 0.4);
+            --text-col: #1A1A1A; --div-col: rgba(26, 26, 26, 0.3); --badge-bg: rgba(255, 255, 255, 0.4);
         }
         .tier-bronze-card {
             --border-bg: linear-gradient(135deg, #E6A87C 0%, #8B4513 40%, #CD7F32 80%, #3E1E04 100%);
             --inner-bg: linear-gradient(135deg, #E6A87C 0%, #A0522D 30%, #FFCBA4 50%, #8B4513 75%, #5C2E00 100%);
-            --text-col: #3E1E04;
-            --div-col: rgba(56, 26, 0, 0.3);
-            --badge-bg: rgba(255, 255, 255, 0.2);
+            --text-col: #3E1E04; --div-col: rgba(56, 26, 0, 0.3); --badge-bg: rgba(255, 255, 255, 0.2);
         }
 
-        .card-face {
-            background: var(--border-bg);
-            color: var(--text-col);
-        }
-        .card-face::before {
-            background: var(--inner-bg);
-        }
+        .card-face { background: var(--border-bg); color: var(--text-col); }
+        .card-face::before { background: var(--inner-bg); }
 
-
-        /* ─── CARD FRONT LAYOUT ───────────────── */
+        /* ─── FRONT LAYOUT ────────────────────── */
         .cf-inner {
-            position: relative;
-            z-index: 3; /* Keeps content above the backgrounds */
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            padding: 12% 10% 6%;
+            position: relative; z-index: 3; display: flex; flex-direction: column; height: 100%;
         }
 
-        /* Top Half (Rating, Role, Flag + Avatar) */
+        /* Top Half (55% height) */
         .cf-top {
-            display: flex;
-            height: 48%;
-        }
-        .cf-top-left {
-            width: 35%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding-top: 5%;
-        }
-        .cf-rating {
-            font-family: var(--font-display);
-            font-size: 3.8rem;
-            line-height: 0.9;
-        }
-        .cf-role {
-            font-family: var(--font-display);
-            font-size: 1.4rem;
-            letter-spacing: 0.05em;
-            margin-bottom: 6px;
+            position: relative; height: 55%; width: 100%; padding: 12% 10% 0; display: flex;
         }
         
-        /* Bigger, cleaner logo box */
-        .cf-flag-box {
-            width: 52px;
-            height: 52px;
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.4);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 5px;
-            padding: 4px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        /* Left Column (Rating, Role, Flag, Logo) */
+        .cf-top-left {
+            width: 35%; display: flex; flex-direction: column; align-items: center; z-index: 5;
         }
-        .cf-team-logo {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        .cf-tier-star {
-            font-size: 1.5rem;
-            margin-top: 2px;
-        }
+        .cf-rating { font-family: var(--font-display); font-size: 3.8rem; line-height: 0.85; }
+        .cf-role { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.05em; margin-bottom: 8px; }
+        .cf-flag { width: 36px; height: 24px; object-fit: cover; border-radius: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-bottom: 6px; }
+        .cf-team-logo { width: 38px; height: 38px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
 
-        /* Avatar */
+        /* Right Column (Massive Transparent Portrait) */
         .cf-top-right {
-            width: 65%;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            position: relative;
+            position: absolute; right: 5%; bottom: 0; width: 65%; height: 115%; z-index: 4;
+            display: flex; align-items: flex-end; justify-content: center;
         }
-        .cf-avatar {
-            width: 130px;
-            height: 130px;
-            background-color: rgba(0,0,0,0.08);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25));
+        .cf-player-img {
+            width: 100%; height: 100%; object-fit: contain; object-position: bottom center;
+            filter: drop-shadow(-5px 10px 15px rgba(0,0,0,0.4));
         }
 
-        /* Name Section & Owner Badge */
-        .cf-name-container {
-            text-align: center;
-            margin-top: auto;
+        /* Bottom Half (45% height) */
+        .cf-bottom {
+            height: 45%; display: flex; flex-direction: column; align-items: center; padding: 0 8%;
         }
-        .cf-name {
-            font-family: var(--font-display);
-            font-size: 2.3rem;
-            letter-spacing: 0.04em;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .cf-name { font-family: var(--font-display); font-size: 2.4rem; letter-spacing: 0.03em; margin-top: -2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+        .cf-divider-horizontal { height: 1.5px; width: 90%; margin: 2px auto 8px; background: var(--text-col); opacity: 0.25; }
+        
+        .cf-stats-container {
+            display: flex; justify-content: space-between; width: 100%; padding: 0 5%;
         }
-        .cf-divider-horizontal {
-            height: 2px;
-            width: 85%;
-            margin: 4px auto 8px;
-            background: var(--text-col);
-            opacity: 0.25;
-        }
-        .cf-owner-badge {
-            background: var(--badge-bg);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: var(--text-col);
-            padding: 3px 14px;
-            border-radius: 20px;
-            font-family: var(--font-main);
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            display: inline-block;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-
-        /* Bottom Stats */
-        .cf-stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1px 1fr;
-            gap: 15px;
-            padding: 0 5%;
-            margin-bottom: 8%; /* Adjusting spacing for the bottom point */
-        }
-        .cf-stats-col {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .cf-stat-row {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 6px;
-            font-family: var(--font-display);
-            font-size: 1.45rem;
-        }
-        .cf-stat-val {
-            width: 32px;
-            text-align: right;
-        }
-        .cf-stat-lbl {
-            font-size: 1.2rem;
-            opacity: 0.8;
-            font-weight: 400;
-        }
-        .cf-divider {
-            background: var(--div-col);
-            width: 1px;
-            height: 100%;
-        }
+        .cf-stat-col { display: flex; flex-direction: column; gap: 2px; }
+        .cf-stat { display: flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 1.6rem; }
+        .cf-stat .val { width: 28px; text-align: right; }
+        .cf-stat .lbl { font-size: 1.3rem; font-weight: 400; opacity: 0.85; }
+        .cf-stat-divider { width: 1px; height: 90%; background: var(--text-col); opacity: 0.2; margin: 0 10px; }
 
         /* ─── CARD BACK LAYOUT ────────────────── */
-        .cb-inner {
-            position: relative;
-            z-index: 3;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            padding: 15% 10% 12%;
-            text-align: center;
-        }
-        .cb-header {
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--div-col);
-        }
-        .cb-name {
-            font-family: var(--font-display);
-            font-size: 2.1rem;
-            letter-spacing: 0.05em;
-        }
-        .cb-sub {
-            font-family: var(--font-main);
-            font-size: 0.85rem;
-            opacity: 0.85;
-            margin-top: 4px;
-            font-weight: 700;
-        }
-        .cb-stats-detailed {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            flex: 1;
-        }
-        .cb-stat-box {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: rgba(0,0,0,0.06);
-            border-radius: 8px;
-            padding: 8px 4px;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        .cb-stat-val {
-            font-family: var(--font-display);
-            font-size: 1.6rem;
-        }
-        .cb-stat-lbl {
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            opacity: 0.7;
-        }
-        .cb-footer {
-            margin-top: auto;
-            font-size: 0.9rem;
-            font-weight: 700;
-            opacity: 0.9;
-            padding: 8px;
-            background: var(--badge-bg);
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
+        .cb-inner { position: relative; z-index: 3; display: flex; flex-direction: column; height: 100%; padding: 15% 10% 12%; text-align: center; }
+        .cb-header { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--div-col); }
+        .cb-name { font-family: var(--font-display); font-size: 2.1rem; letter-spacing: 0.05em; }
+        .cb-sub { font-family: var(--font-main); font-size: 0.85rem; opacity: 0.85; margin-top: 4px; font-weight: 700; }
+        .cb-stats-detailed { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; flex: 1; }
+        .cb-stat-box { display: flex; flex-direction: column; justify-content: center; background: rgba(0,0,0,0.06); border-radius: 8px; padding: 8px 4px; border: 1px solid rgba(0,0,0,0.05); }
+        .cb-stat-val { font-family: var(--font-display); font-size: 1.6rem; }
+        .cb-stat-lbl { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; opacity: 0.7; }
+        .cb-footer { margin-top: auto; font-size: 0.9rem; font-weight: 700; opacity: 0.9; padding: 8px; background: var(--badge-bg); border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); }
 
-        /* Modal Close */
+        /* Modal Close & Nav */
         .modal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;}
-
-        /* ─── EMPTY STATE & BOTTOM NAV ────────── */
         .empty-state{padding:32px 20px;text-align:center;color:var(--text-muted);font-size:14px;}
         .bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:480px;background:var(--nav-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--glass-border);border-radius:30px;display:flex;justify-content:space-around;padding:10px 4px;box-shadow:0 10px 40px rgba(0,0,0,.25);z-index:50;}
         .nav-item{text-align:center;color:var(--text-muted);text-decoration:none;font-size:9px;font-weight:500;letter-spacing:.04em;transition:all var(--transition);flex:1;padding:3px 0;border-radius:20px;}
         .nav-item.active{color:var(--accent);}
         .nav-icon{font-size:18px;display:block;margin-bottom:2px;}
-
         @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
         .player-row{animation:fadeIn .25s ease both;}
     </style>
@@ -463,7 +250,6 @@
         let activeFilter = 'ALL';
         let tierMap = {};
 
-        // ─── THEME ────────────────────────────────────────
         const savedTheme = localStorage.getItem("theme") || "dark";
         document.documentElement.setAttribute("data-theme", savedTheme);
         document.getElementById("theme-icon").textContent = savedTheme === "dark" ? "Light" : "Dark";
@@ -474,7 +260,6 @@
             document.getElementById("theme-icon").textContent = next === "dark" ? "Light" : "Dark";
         }
 
-        // ─── TEAM MAP ─────────────────────────────────────
         const TEAMS = {
             'MI':   { color:'#004BA0', color2:'#1a6fd4', logo:'ipl team logo/mi.webp' },
             'CSK':  { color:'#d4860a', color2:'#f5a623', logo:'ipl team logo/csk.jpg' },
@@ -496,7 +281,6 @@
             return { abbr: (n.slice(0,3) || 'IPL'), color:'#444', color2:'#666', logo:'logos/default.png' };
         }
 
-        // ─── TIERS ────────────────────────────────────────
         function calcTiers(players) {
             const scores = players.map(p => parseFloat(p['Total Points']) || 0).filter(v => v > 0).sort((a,b) => b-a);
             if (!scores.length) { players.forEach(p => tierMap[p['Player Name']] = 'bronze'); return; }
@@ -522,7 +306,6 @@
             return 'rb-role-bat';
         }
 
-        // ─── LOAD ─────────────────────────────────────────
         document.addEventListener("DOMContentLoaded", async () => {
             try {
                 const res = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify({ action:'getPlayers' }) });
@@ -537,7 +320,6 @@
             }
         });
 
-        // ─── FILTERS ──────────────────────────────────────
         function setFilter(val, btn) {
             activeFilter = val;
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -565,12 +347,9 @@
             renderList(filtered);
         }
 
-        // ─── RENDER LIST ──────────────────────────────────
         function renderList(players) {
             const container = document.getElementById('player-list');
             if (!players.length) { container.innerHTML = '<div class="empty-state">No players match.</div>'; return; }
-
-            const maxPts = Math.max(...allPlayers.map(p => parseFloat(p['Total Points']) || 0));
 
             container.innerHTML = players.map((p, i) => {
                 const tier = tierMap[p['Player Name']] || 'bronze';
@@ -584,13 +363,10 @@
 
                 const capBadge = isMyCap ? `<span class="row-badge rb-cap">C</span>` : '';
                 const vcBadge  = isMyVC  ? `<span class="row-badge rb-vc">VC</span>` : '';
-                const ownerBadge = isOwned
-                    ? `<span class="row-badge rb-owned">${p['Sold To']}</span>`
-                    : `<span class="row-badge rb-unsold">Unsold</span>`;
+                const ownerBadge = isOwned ? `<span class="row-badge rb-owned">${p['Sold To']}</span>` : `<span class="row-badge rb-unsold">Unsold</span>`;
 
                 return `
-                <div class="player-row" style="animation-delay:${Math.min(i*0.03,0.4)}s"
-                     onclick="openCard(${i})">
+                <div class="player-row" style="animation-delay:${Math.min(i*0.03,0.4)}s" onclick="openCard(${i})">
                     <div class="tier-dot ${tier}"></div>
                     <div class="team-strip" style="background:linear-gradient(180deg,${team.color},${team.color2});"></div>
                     <div class="row-info">
@@ -609,7 +385,6 @@
             window._filteredPlayers = players;
         }
 
-        // ─── OPEN CARD MODAL ──────────────────────────────
         function openCard(idx) {
             const p      = window._filteredPlayers[idx];
             const maxPts = Math.max(...allPlayers.map(x => parseFloat(x['Total Points']) || 0));
@@ -619,13 +394,11 @@
             const rating = calcRating(pts, maxPts);
             const role   = (p['Role'] || 'BAT').toUpperCase();
             const name   = p['Player Name'] || '';
-            const isOwned = p['Sold To'] && p['Sold To'].trim();
             const isCap  = myCap === name && p['Sold To'] === myTeam;
             
-            // Generate Owner Label
-            const ownerLabel = isOwned ? `${p['Sold To']}'s Playing XI` : 'Unsold Player';
+            // Format name for image path (e.g. "Virat Kohli" -> "virat-kohli")
+            const imgName = name.trim().toLowerCase().replace(/\s+/g, '-');
 
-            // Fantasy Stats mapping
             const runs    = parseInt(p['Runs'])     || 0;
             const wkts    = parseInt(p['Wickets'])  || 0;
             const cats    = parseInt(p['Catches'])  || 0;
@@ -641,47 +414,42 @@
             scene.className = `card-scene tier-${tier}-card`;
             document.getElementById('card-flip').className = 'card-flip';
 
-            // FRONT
+            // FRONT - BABAR AZAM LAYOUT
             document.getElementById('card-front').innerHTML = `
                 <div class="cf-inner">
                     <div class="cf-top">
                         <div class="cf-top-left">
                             <div class="cf-rating">${rating}</div>
                             <div class="cf-role">${role}</div>
-                            <div class="cf-flag-box">
-                                <img src="${team.logo}" alt="${team.abbr}" class="cf-team-logo">
-                            </div>
-                            <div class="cf-tier-star">★</div>
+                            <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" class="cf-flag" alt="IND">
+                            <img src="${team.logo}" alt="${team.abbr}" class="cf-team-logo">
                         </div>
                         <div class="cf-top-right">
-                            <div class="cf-avatar">
-                                <span style="font-size:4.5rem; opacity:0.3;">👤</span>
-                            </div>
+                            <img src="players/${imgName}.webp" class="cf-player-img" alt="${name}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'; this.style.opacity='0.2';">
                         </div>
                     </div>
 
-                    <div class="cf-name-container">
+                    <div class="cf-bottom">
                         <div class="cf-name">${name.toUpperCase()}</div>
                         <div class="cf-divider-horizontal"></div>
-                        <div class="cf-owner-badge">${ownerLabel}</div>
-                    </div>
-
-                    <div class="cf-stats-grid">
-                        <div class="cf-stats-col">
-                            <div class="cf-stat-row"><div class="cf-stat-val">${runs}</div><div class="cf-stat-lbl">RUN</div></div>
-                            <div class="cf-stat-row"><div class="cf-stat-val">${wkts}</div><div class="cf-stat-lbl">WKT</div></div>
-                            <div class="cf-stat-row"><div class="cf-stat-val">${cats}</div><div class="cf-stat-lbl">CAT</div></div>
-                        </div>
-                        <div class="cf-divider"></div>
-                        <div class="cf-stats-col">
-                            <div class="cf-stat-row"><div class="cf-stat-val">${fours}</div><div class="cf-stat-lbl">4s</div></div>
-                            <div class="cf-stat-row"><div class="cf-stat-val">${sixes}</div><div class="cf-stat-lbl">6s</div></div>
-                            <div class="cf-stat-row"><div class="cf-stat-val">${dots}</div><div class="cf-stat-lbl">DOT</div></div>
+                        
+                        <div class="cf-stats-container">
+                            <div class="cf-stat-col">
+                                <div class="cf-stat"><span class="val">${runs}</span> <span class="lbl">RUN</span></div>
+                                <div class="cf-stat"><span class="val">${wkts}</span> <span class="lbl">WKT</span></div>
+                                <div class="cf-stat"><span class="val">${cats}</span> <span class="lbl">CAT</span></div>
+                            </div>
+                            <div class="cf-stat-divider"></div>
+                            <div class="cf-stat-col">
+                                <div class="cf-stat"><span class="val">${fours}</span> <span class="lbl">4s</span></div>
+                                <div class="cf-stat"><span class="val">${sixes}</span> <span class="lbl">6s</span></div>
+                                <div class="cf-stat"><span class="val">${pts}</span> <span class="lbl">PTS</span></div>
+                            </div>
                         </div>
                     </div>
                 </div>`;
 
-            // BACK
+            // BACK (Detailed Stats)
             document.getElementById('card-back').innerHTML = `
                 <div class="cb-inner">
                     <div class="cb-header">
