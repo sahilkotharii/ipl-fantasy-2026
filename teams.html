@@ -47,7 +47,7 @@
 
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
         html{scroll-behavior:smooth;}
-        body{font-family:var(--font-main);background:var(--bg-mesh);background-color:var(--bg);min-height:100vh;color:var(--text-primary);padding-bottom:calc(var(--nav-h)+24px);transition:background-color var(--transition),color var(--transition);}
+        body{font-family:var(--font-main);background:var(--bg-mesh);background-color:var(--bg);min-height:100vh;color:var(--text-primary);padding-bottom: calc(68px + 14px + 28px);transition:background-color var(--transition),color var(--transition);}
 
         /* ── TOPBAR ─────────────────────────────── */
         .topbar{display:flex;justify-content:space-between;align-items:flex-start;padding:28px 20px 12px;}
@@ -236,10 +236,35 @@
         .no-players{padding:16px;text-align:center;color:var(--text-muted);font-size:13px;}
 
         /* ── NAV ─────────────────────────────────── */
-        .bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:480px;background:var(--nav-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--glass-border);border-radius:30px;display:flex;justify-content:space-around;padding:8px 2px;box-shadow:0 10px 40px rgba(0,0,0,.25);z-index:50;}
-        .nav-item{text-align:center;color:var(--text-muted);text-decoration:none;font-size:8.5px;font-weight:500;letter-spacing:.04em;flex:1;padding:3px 0;border-radius:20px;transition:color var(--transition);}
-        .nav-item.active{color:var(--accent);}
-        .nav-icon{font-size:17px;display:block;margin-bottom:2px;}
+                .bottom-nav {
+            position: fixed;
+            bottom: 14px;
+            left: 50%; transform: translateX(-50%);
+            width: calc(100% - 28px); max-width: 480px;
+            height: 68px;
+            background: var(--nav-bg);
+            backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
+            border: 1px solid var(--border2, var(--glass-border));
+            border-radius: 28px;
+            display: flex; justify-content: space-around; align-items: center;
+            padding: 6px 2px;
+            box-shadow: 0 8px 40px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.04);
+            z-index: 100;
+        }
+        .nav-item {
+            text-align: center; color: var(--text-muted, var(--text-3)); text-decoration: none;
+            font-size: 8px; font-weight: 600; letter-spacing: .04em;
+            flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
+            transition: color 0.24s cubic-bezier(0.4,0,0.2,1);
+        }
+        .nav-item.active { color: var(--accent); }
+        .nav-icon-wrap {
+            width: 36px; height: 28px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.24s cubic-bezier(0.4,0,0.2,1);
+        }
+        .nav-item.active .nav-icon-wrap { background: var(--accent-soft); }
+        .nav-icon { font-size: 16px; line-height: 1; }
 
         /* ── ANIMATION ───────────────────────────── */
         .team-card{animation:fadeUp .3s ease both;}
@@ -288,14 +313,14 @@
 </div>
 
 <!-- ── BOTTOM NAV ─────────────────────────────── -->
-<nav class="bottom-nav">
-    <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span>Home</a>
-    <a href="squad.html"     class="nav-item"><span class="nav-icon">🛡️</span>Squad</a>
-    <a href="players.html"   class="nav-item"><span class="nav-icon">🃏</span>Cards</a>
-    <a href="teams.html"     class="nav-item active"><span class="nav-icon">👥</span>Teams</a>
-    <a href="stats.html"     class="nav-item"><span class="nav-icon">📊</span>Stats</a>
-    <a href="settings.html"  class="nav-item"><span class="nav-icon">⚙️</span>Settings</a>
-</nav>
+    <nav class="bottom-nav">
+        <a href="dashboard.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🏠</span></div>Home</a>
+        <a href="squad.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad</a>
+        <a href="players.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🃏</span></div>Cards</a>
+        <a href="teams.html" class="nav-item active"><div class="nav-icon-wrap"><span class="nav-icon">👥</span></div>Teams</a>
+        <a href="stats.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">📊</span></div>Stats</a>
+        <a href="settings.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">⚙️</span></div>Settings</a>
+    </nav>
 
 <script>
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
