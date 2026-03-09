@@ -8,186 +8,175 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
         :root {
-            --accent:#FF6B35; --font-main:'Outfit',sans-serif; --font-mono:'DM Mono',monospace;
-            --font-display:'Bebas Neue',cursive; --transition:0.25s cubic-bezier(0.4,0,0.2,1); --nav-h:74px;
-            --radius-card:22px;
+            --accent:#FF6B35; --font-main:'Outfit',sans-serif;
+            --font-mono:'DM Mono',monospace; --font-display:'Bebas Neue',cursive;
+            --transition:0.25s cubic-bezier(0.4,0,0.2,1); --nav-h:70px;
         }
         [data-theme="dark"] {
             --bg:#080d14;
-            --bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(30,60,100,.45) 0%,transparent 55%),radial-gradient(ellipse at 80% 90%,rgba(20,40,70,.35) 0%,transparent 55%),#080d14;
-            --glass-bg:rgba(255,255,255,.04); --glass-border:rgba(255,255,255,.08); --glass-shadow:0 8px 40px rgba(0,0,0,.45);
-            --nav-bg:rgba(8,13,20,.88); --text-primary:#f0f2f5; --text-secondary:rgba(240,242,245,.5);
+            --bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(30,60,100,.45) 0%,transparent 55%),#080d14;
+            --glass-bg:rgba(255,255,255,.04); --glass-border:rgba(255,255,255,.08);
+            --glass-shadow:0 8px 40px rgba(0,0,0,.45); --nav-bg:rgba(8,13,20,.88);
+            --text-primary:#f0f2f5; --text-secondary:rgba(240,242,245,.5);
             --text-muted:rgba(240,242,245,.28); --divider:rgba(255,255,255,.06);
-            --input-bg:rgba(0,0,0,.3); --input-border:rgba(255,255,255,.1); --toggle-bg:rgba(255,255,255,.06);
+            --input-bg:rgba(0,0,0,.3); --input-border:rgba(255,255,255,.1);
+            --overlay:rgba(0,0,0,.85); --toggle-bg:rgba(255,255,255,.06);
+            --row-hover:rgba(255,255,255,.04);
         }
         [data-theme="light"] {
             --bg:#f0ece6;
             --bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(255,200,150,.2) 0%,transparent 55%),#f0ece6;
-            --glass-bg:rgba(255,255,255,.55); --glass-border:rgba(255,255,255,.85); --glass-shadow:0 8px 40px rgba(0,0,0,.09);
-            --nav-bg:rgba(240,236,230,.9); --text-primary:#1a1a2e; --text-secondary:rgba(26,26,46,.55);
+            --glass-bg:rgba(255,255,255,.55); --glass-border:rgba(255,255,255,.85);
+            --glass-shadow:0 8px 40px rgba(0,0,0,.09); --nav-bg:rgba(240,236,230,.9);
+            --text-primary:#1a1a2e; --text-secondary:rgba(26,26,46,.55);
             --text-muted:rgba(26,26,46,.32); --divider:rgba(0,0,0,.07);
-            --input-bg:rgba(0,0,0,.05); --input-border:rgba(0,0,0,.1); --toggle-bg:rgba(0,0,0,.06);
-        }
-
-        /* ─── IPL TEAM COLORS ─────────────────────────── */
-        :root {
-            --mi:#004BA0; --mi-2:#0066cc;
-            --csk:#f5a623; --csk-2:#e8931a;
-            --rcb:#D4001A; --rcb-2:#ff1a35;
-            --kkr:#3A225D; --kkr-2:#5b3a8a;
-            --dc:#17479E; --dc-2:#e8251a;
-            --pbks:#ED1F27; --pbks-2:#c41920;
-            --rr:#254AA5; --rr-2:#f542b3;
-            --srh:#F7591A; --srh-2:#e04a10;
-            --gt:#1B2133; --gt-2:#4d7cc7;
-            --lsg:#A0E0BA; --lsg-2:#5ec48a;
+            --input-bg:rgba(0,0,0,.05); --input-border:rgba(0,0,0,.1);
+            --overlay:rgba(0,0,0,.75); --toggle-bg:rgba(0,0,0,.06);
+            --row-hover:rgba(0,0,0,.03);
         }
 
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-        body{font-family:var(--font-main);background:var(--bg-mesh);background-color:var(--bg);min-height:100vh;color:var(--text-primary);padding-bottom:calc(var(--nav-h)+24px);transition:background-color var(--transition),color var(--transition);}
+        body{font-family:var(--font-main);background:var(--bg-mesh);background-color:var(--bg);min-height:100vh;color:var(--text-primary);padding-bottom:calc(var(--nav-h)+20px);transition:background-color var(--transition),color var(--transition);}
 
-        /* ─── TOPBAR ──────────────────────────────────── */
-        .topbar{display:flex;justify-content:space-between;align-items:flex-start;padding:28px 20px 12px;}
-        .topbar-left .greeting{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:3px;}
+        /* ─── TOPBAR ──────────────────────────── */
+        .topbar{display:flex;justify-content:space-between;align-items:flex-start;padding:26px 20px 10px;}
+        .topbar-left .greeting{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:2px;}
         .topbar-left h1{font-size:22px;font-weight:700;}
-        .topbar-left p{font-size:13px;color:var(--text-secondary);margin-top:3px;}
-        .theme-btn{width:38px;height:38px;border-radius:50%;background:var(--toggle-bg);border:1px solid var(--glass-border);color:var(--text-primary);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);transition:all var(--transition);flex-shrink:0;}
-        .theme-btn:active{transform:scale(.9);}
+        .topbar-left p{font-size:12px;color:var(--text-muted);margin-top:2px;}
+        .theme-btn{width:36px;height:36px;border-radius:50%;background:var(--toggle-bg);border:1px solid var(--glass-border);color:var(--text-primary);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 
-        /* ─── SEARCH + FILTERS ────────────────────────── */
-        .search-wrap{margin:0 16px 12px;position:relative;}
-        .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none;}
-        .search-bar{width:100%;padding:12px 14px 12px 40px;border-radius:14px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-family:var(--font-main);font-size:14px;outline:none;-webkit-appearance:none;transition:border-color var(--transition);}
+        /* ─── SEARCH + FILTERS ────────────────── */
+        .search-wrap{margin:0 16px 10px;position:relative;}
+        .search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
+        .search-bar{width:100%;padding:11px 13px 11px 38px;border-radius:13px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-family:var(--font-main);font-size:14px;outline:none;-webkit-appearance:none;}
         .search-bar:focus{border-color:var(--accent);}
         .search-bar::placeholder{color:var(--text-muted);}
 
-        .filter-row{display:flex;gap:8px;padding:0 16px 16px;overflow-x:auto;scrollbar-width:none;}
+        .filter-row{display:flex;gap:7px;padding:0 16px 12px;overflow-x:auto;scrollbar-width:none;}
         .filter-row::-webkit-scrollbar{display:none;}
-        .filter-btn{flex-shrink:0;padding:7px 16px;border-radius:20px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-secondary);font-family:var(--font-main);font-size:12px;font-weight:600;cursor:pointer;transition:all var(--transition);letter-spacing:.04em;}
+        .filter-btn{flex-shrink:0;padding:6px 14px;border-radius:18px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-secondary);font-family:var(--font-main);font-size:11px;font-weight:600;cursor:pointer;transition:all var(--transition);}
         .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
-        .filter-btn:active{transform:scale(.95);}
 
-        /* ─── TIER LEGEND ─────────────────────────────── */
-        .tier-legend{display:flex;gap:12px;padding:0 20px 14px;align-items:center;}
-        .tier-dot{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--text-muted);}
-        .tier-dot::before{content:'';width:10px;height:10px;border-radius:50%;}
-        .tier-dot.gold::before{background:linear-gradient(135deg,#ffd700,#b8860b);}
-        .tier-dot.silver::before{background:linear-gradient(135deg,#e0e0e0,#9e9e9e);}
-        .tier-dot.bronze::before{background:linear-gradient(135deg,#cd9b60,#8b5e2e);}
-        .tier-dot.gold{color:#d4a30a;}
-        .tier-dot.silver{color:#9e9e9e;}
-        .tier-dot.bronze{color:#a0633a;}
+        /* ─── CARD (glass container) ──────────── */
+        .card{background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);box-shadow:var(--glass-shadow);border-radius:20px;margin:0 16px 16px;overflow:hidden;}
 
-        /* ─── CARD GRID ───────────────────────────────── */
-        .cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:0 16px;}
+        /* ─── PLAYER LIST ROW ─────────────────── */
+        .player-row{display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid var(--divider);cursor:pointer;transition:background var(--transition);gap:12px;}
+        .player-row:last-child{border-bottom:none;}
+        .player-row:active{background:var(--row-hover);}
 
-        /* ─── FLIP CARD WRAPPER ───────────────────────── */
-        .flip-wrap{perspective:1000px;cursor:pointer;}
-        .flip-inner{position:relative;width:100%;padding-bottom:148%;transform-style:preserve-3d;transition:transform 0.55s cubic-bezier(0.4,0,0.2,1);}
-        .flip-wrap.flipped .flip-inner{transform:rotateY(180deg);}
-        .card-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;overflow:hidden;}
+        /* Tier dot */
+        .tier-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+        .tier-dot.gold{background:linear-gradient(135deg,#ffd700,#b8860b);}
+        .tier-dot.silver{background:linear-gradient(135deg,#d4d4d4,#9e9e9e);}
+        .tier-dot.bronze{background:linear-gradient(135deg,#cd7f32,#7a3c10);}
+
+        /* Team color strip */
+        .team-strip{width:4px;height:36px;border-radius:2px;flex-shrink:0;}
+
+        .row-info{flex:1;min-width:0;}
+        .row-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;}
+        .row-meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+        .row-badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:.04em;text-transform:uppercase;}
+        .rb-role-bat{background:rgba(79,172,254,.15);color:#4facfe;}
+        .rb-role-bowl{background:rgba(231,76,60,.15);color:#e74c3c;}
+        .rb-role-ar{background:rgba(241,196,15,.15);color:#f1c40f;}
+        .rb-role-wk{background:rgba(155,89,182,.15);color:#bb8fce;}
+        .rb-team{background:rgba(255,255,255,.07);color:var(--text-secondary);}
+        .rb-owned{background:rgba(255,107,53,.12);color:var(--accent);}
+        .rb-unsold{background:rgba(255,255,255,.05);color:var(--text-muted);}
+        .rb-cap{background:rgba(255,196,0,.2);color:#ffc400;}
+        .rb-vc{background:rgba(180,180,200,.15);color:#b4b4c8;}
+
+        .row-pts{font-family:var(--font-mono);font-size:13px;font-weight:500;color:var(--accent);flex-shrink:0;}
+        .row-chevron{font-size:11px;color:var(--text-muted);margin-left:2px;}
+
+        /* ─── MODAL OVERLAY ───────────────────── */
+        .modal{display:none;position:fixed;inset:0;background:var(--overlay);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:200;align-items:center;justify-content:center;}
+        .modal.open{display:flex;}
+
+        /* ─── FIFA CARD ───────────────────────── */
+        .card-scene{perspective:900px;width:220px;height:320px;}
+        .card-flip{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,0,.2,1);}
+        .card-flip.flipped{transform:rotateY(180deg);}
+        .card-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;overflow:hidden;}
         .card-back-face{transform:rotateY(180deg);}
 
-        /* ─── CARD TIERS ──────────────────────────────── */
         /* GOLD */
-        .tier-gold .card-face-front {
-            background: linear-gradient(160deg, #3d2c00 0%, #b8860b 30%, #ffd700 52%, #daa520 70%, #7d5a00 100%);
-        }
-        .tier-gold .card-face-front::before {
-            content:''; position:absolute; inset:0;
-            background: repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(255,255,255,.04) 8px, rgba(255,255,255,.04) 9px);
-            pointer-events:none;
-        }
-        .tier-gold .card-back-face { background: linear-gradient(160deg, #3d2c00, #7d5a00); }
+        .tier-gold-card .card-face-front{background:linear-gradient(155deg,#3d2c00 0%,#a07010 25%,#ffd700 50%,#c8960c 72%,#6b4800 100%);}
+        .tier-gold-card .card-face-front::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(50deg,transparent,transparent 10px,rgba(255,255,255,.035) 10px,rgba(255,255,255,.035) 11px);pointer-events:none;}
+        .tier-gold-card .card-back-face{background:linear-gradient(155deg,#3d2c00,#7a5500);}
 
         /* SILVER */
-        .tier-silver .card-face-front {
-            background: linear-gradient(160deg, #2a2a2a 0%, #707070 30%, #d4d4d4 52%, #a0a0a0 70%, #404040 100%);
-        }
-        .tier-silver .card-face-front::before {
-            content:''; position:absolute; inset:0;
-            background: repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(255,255,255,.03) 8px, rgba(255,255,255,.03) 9px);
-            pointer-events:none;
-        }
-        .tier-silver .card-back-face { background: linear-gradient(160deg, #2a2a2a, #404040); }
+        .tier-silver-card .card-face-front{background:linear-gradient(155deg,#1c1c1c 0%,#5a5a5a 25%,#d0d0d0 50%,#888 72%,#2a2a2a 100%);}
+        .tier-silver-card .card-face-front::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(50deg,transparent,transparent 10px,rgba(255,255,255,.03) 10px,rgba(255,255,255,.03) 11px);pointer-events:none;}
+        .tier-silver-card .card-back-face{background:linear-gradient(155deg,#1c1c1c,#3a3a3a);}
 
         /* BRONZE */
-        .tier-bronze .card-face-front {
-            background: linear-gradient(160deg, #2d1500 0%, #7a3c10 30%, #cd7f32 52%, #9c5a25 70%, #4a2000 100%);
-        }
-        .tier-bronze .card-face-front::before {
-            content:''; position:absolute; inset:0;
-            background: repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(255,255,255,.03) 8px, rgba(255,255,255,.03) 9px);
-            pointer-events:none;
-        }
-        .tier-bronze .card-back-face { background: linear-gradient(160deg, #2d1500, #4a2000); }
+        .tier-bronze-card .card-face-front{background:linear-gradient(155deg,#2d1500 0%,#6b3010 25%,#cd7f32 50%,#8b4a1a 72%,#3a1800 100%);}
+        .tier-bronze-card .card-face-front::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(50deg,transparent,transparent 10px,rgba(255,255,255,.03) 10px,rgba(255,255,255,.03) 11px);pointer-events:none;}
+        .tier-bronze-card .card-back-face{background:linear-gradient(155deg,#2d1500,#4a2000);}
 
-        /* ─── CARD FRONT CONTENT ──────────────────────── */
-        .card-front-inner { position:relative; height:100%; display:flex; flex-direction:column; padding:10px 10px 8px; z-index:1; }
+        /* ─── CARD FRONT ──────────────────────── */
+        .cf-inner{position:relative;height:100%;display:flex;flex-direction:column;padding:14px 14px 10px;z-index:1;}
+        .cf-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+        .cf-rating{font-family:var(--font-display);font-size:42px;color:rgba(0,0,0,.65);line-height:1;}
+        .cf-role-col{text-align:right;}
+        .cf-role{font-size:10px;font-weight:800;letter-spacing:.08em;padding:3px 8px;border-radius:5px;background:rgba(0,0,0,.2);color:rgba(255,255,255,.8);display:inline-block;margin-bottom:6px;}
+        .cf-tier-label{font-size:9px;font-weight:700;color:rgba(0,0,0,.45);letter-spacing:.1em;text-align:right;}
 
-        /* Top row: rating + role */
-        .card-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px; }
-        .card-rating { font-family:var(--font-display); font-size:32px; color:rgba(0,0,0,.7); line-height:1; }
-        .tier-gold .card-rating, .tier-silver .card-rating, .tier-bronze .card-rating { color:rgba(0,0,0,.65); }
-        .card-role-badge { font-size:9px; font-weight:800; letter-spacing:.1em; padding:3px 7px; border-radius:4px; background:rgba(0,0,0,.25); color:rgba(255,255,255,.85); text-transform:uppercase; margin-top:4px; }
+        .cf-team-bar{border-radius:8px;padding:5px 10px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;}
+        .cf-team-name{font-family:var(--font-display);font-size:17px;color:rgba(255,255,255,.9);letter-spacing:.04em;}
+        .cf-team-emoji{font-size:17px;}
 
-        /* Team strip */
-        .card-team-strip { border-radius:10px; padding:6px 8px; margin-bottom:6px; display:flex; align-items:center; justify-content:space-between; }
-        .team-abbr { font-family:var(--font-display); font-size:16px; color:rgba(255,255,255,.9); letter-spacing:.05em; }
-        .team-emoji { font-size:16px; }
+        .cf-avatar-area{flex:1;display:flex;align-items:center;justify-content:center;}
+        .cf-avatar{width:72px;height:72px;border-radius:50%;background:rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;font-size:38px;border:2px solid rgba(255,255,255,.18);}
 
-        /* Player avatar area */
-        .card-avatar-area { flex:1; display:flex; align-items:center; justify-content:center; margin-bottom:4px; }
-        .card-avatar { width:60px; height:60px; border-radius:50%; background:rgba(0,0,0,.2); display:flex; align-items:center; justify-content:center; font-size:32px; border:2px solid rgba(255,255,255,.2); }
+        .cf-badges{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin:6px 0 4px;min-height:16px;}
+        .cf-badge{font-size:8px;font-weight:800;padding:2px 6px;border-radius:4px;letter-spacing:.05em;}
+        .cf-badge.cap{background:rgba(255,196,0,.3);color:#ffc400;border:1px solid rgba(255,196,0,.4);}
+        .cf-badge.vc{background:rgba(180,180,200,.2);color:rgba(220,220,240,.9);border:1px solid rgba(180,180,200,.3);}
+        .cf-badge.owner{background:rgba(0,0,0,.22);color:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.12);}
 
-        /* C/VC + owner badges */
-        .card-badges-row { display:flex; gap:4px; justify-content:center; flex-wrap:wrap; margin-bottom:4px; min-height:18px; }
-        .c-badge { font-size:9px; font-weight:800; padding:2px 6px; border-radius:4px; letter-spacing:.06em; }
-        .c-badge.cap { background:rgba(255,196,0,.3); color:#ffc400; border:1px solid rgba(255,196,0,.4); }
-        .c-badge.vc { background:rgba(180,180,200,.2); color:rgba(220,220,240,.9); border:1px solid rgba(180,180,200,.3); }
-        .c-badge.owned { background:rgba(0,0,0,.25); color:rgba(255,255,255,.7); border:1px solid rgba(255,255,255,.15); }
+        .cf-name{font-family:var(--font-display);font-size:18px;color:rgba(0,0,0,.7);text-align:center;letter-spacing:.05em;margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-        /* Player name */
-        .card-name { font-family:var(--font-display); font-size:15px; color:rgba(0,0,0,.75); text-align:center; letter-spacing:.05em; line-height:1.1; margin-bottom:8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .tier-gold .card-name, .tier-silver .card-name, .tier-bronze .card-name { color:rgba(0,0,0,.7); }
+        .cf-stats{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid rgba(255,255,255,.18);padding-top:8px;gap:2px;}
+        .cf-stat{text-align:center;}
+        .cf-stat-val{font-family:var(--font-mono);font-size:16px;font-weight:500;color:rgba(0,0,0,.7);display:block;}
+        .cf-stat-lbl{font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(0,0,0,.45);display:block;margin-top:1px;}
 
-        /* Stats row */
-        .card-stats-row { display:grid; grid-template-columns:1fr 1fr 1fr; border-top:1px solid rgba(255,255,255,.15); padding-top:6px; gap:2px; }
-        .card-stat { text-align:center; }
-        .card-stat-val { font-family:var(--font-mono); font-size:13px; font-weight:500; color:rgba(0,0,0,.75); display:block; line-height:1.2; }
-        .card-stat-lbl { font-size:8px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(0,0,0,.5); display:block; }
+        .cf-flip-hint{text-align:center;font-size:9px;color:rgba(255,255,255,.3);margin-top:8px;cursor:pointer;}
 
-        /* Flip hint */
-        .flip-hint { position:absolute; bottom:5px; right:8px; font-size:9px; color:rgba(255,255,255,.35); font-weight:500; z-index:2; }
+        /* ─── CARD BACK ───────────────────────── */
+        .cb-inner{position:relative;height:100%;display:flex;flex-direction:column;padding:12px 12px 10px;z-index:1;}
+        .cb-header{text-align:center;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:8px;}
+        .cb-name{font-family:var(--font-display);font-size:16px;color:rgba(255,255,255,.9);letter-spacing:.05em;}
+        .cb-sub{font-size:9px;color:rgba(255,255,255,.45);margin-top:2px;}
 
-        /* ─── CARD BACK CONTENT ───────────────────────── */
-        .card-back-inner { position:relative; height:100%; display:flex; flex-direction:column; padding:10px; z-index:1; }
-        .back-header { text-align:center; margin-bottom:8px; border-bottom:1px solid rgba(255,255,255,.12); padding-bottom:8px; }
-        .back-name { font-family:var(--font-display); font-size:14px; color:rgba(255,255,255,.9); letter-spacing:.05em; }
-        .back-team { font-size:9px; color:rgba(255,255,255,.5); margin-top:1px; font-weight:500; }
+        .cb-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;flex:1;}
+        .cb-stat{display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.2);border-radius:7px;padding:6px 4px;}
+        .cb-stat-val{font-family:var(--font-mono);font-size:14px;font-weight:500;color:rgba(255,255,255,.9);}
+        .cb-stat-lbl{font-size:7px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:2px;text-align:center;}
 
-        .back-stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:4px; flex:1; }
-        .back-stat { display:flex; flex-direction:column; align-items:center; justify-content:center; background:rgba(0,0,0,.2); border-radius:7px; padding:5px 4px; }
-        .back-stat-val { font-family:var(--font-mono); font-size:13px; font-weight:500; color:rgba(255,255,255,.9); line-height:1; }
-        .back-stat-lbl { font-size:8px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:rgba(255,255,255,.45); margin-top:2px; text-align:center; }
+        .cb-footer{margin-top:8px;text-align:center;border-top:1px solid rgba(255,255,255,.1);padding-top:7px;}
+        .cb-owner{font-size:10px;color:rgba(255,255,255,.45);}
+        .cb-owner strong{color:rgba(255,255,255,.8);}
+        .cb-flip-hint{font-size:9px;color:rgba(255,255,255,.25);margin-top:3px;cursor:pointer;}
 
-        .back-footer { margin-top:6px; border-top:1px solid rgba(255,255,255,.1); padding-top:6px; text-align:center; }
-        .back-owner { font-size:9px; color:rgba(255,255,255,.5); }
-        .back-owner span { color:rgba(255,255,255,.8); font-weight:600; }
-        .back-flip-hint { font-size:9px; color:rgba(255,255,255,.3); margin-top:3px; }
+        /* Close button */
+        .modal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;}
 
-        /* ─── EMPTY / LOADING ─────────────────────────── */
-        .state-msg { grid-column:span 2; padding:40px 20px; text-align:center; color:var(--text-muted); font-size:14px; }
+        /* ─── EMPTY STATE ─────────────────────── */
+        .empty-state{padding:32px 20px;text-align:center;color:var(--text-muted);font-size:14px;}
 
-        /* ─── BOTTOM NAV ──────────────────────────────── */
+        /* ─── BOTTOM NAV ──────────────────────── */
         .bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:480px;background:var(--nav-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--glass-border);border-radius:30px;display:flex;justify-content:space-around;padding:10px 4px;box-shadow:0 10px 40px rgba(0,0,0,.25);z-index:50;}
         .nav-item{text-align:center;color:var(--text-muted);text-decoration:none;font-size:9px;font-weight:500;letter-spacing:.04em;transition:all var(--transition);flex:1;padding:3px 0;border-radius:20px;}
         .nav-item.active{color:var(--accent);}
         .nav-icon{font-size:18px;display:block;margin-bottom:2px;}
 
-        /* ─── ANIMATIONS ──────────────────────────────── */
-        @keyframes cardIn{from{opacity:0;transform:translateY(16px) scale(.96);}to{opacity:1;transform:translateY(0) scale(1);}}
-        .flip-wrap{animation:cardIn .35s ease both;}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+        .player-row{animation:fadeIn .25s ease both;}
     </style>
 </head>
 <body>
@@ -217,14 +206,26 @@
         <button class="filter-btn" onclick="setFilter('BRONZE',this)">🥉 Bronze</button>
     </div>
 
-    <div class="tier-legend">
-        <div class="tier-dot gold">Gold — Top tier</div>
-        <div class="tier-dot silver">Silver — Mid tier</div>
-        <div class="tier-dot bronze">Bronze — Entry</div>
+    <div class="card">
+        <div id="player-list"><div class="empty-state">Loading players…</div></div>
     </div>
 
-    <div class="cards-grid" id="cards-grid">
-        <div class="state-msg">Loading player cards…</div>
+    <!-- ─── CARD MODAL ─────────────────────────────── -->
+    <div id="card-modal" class="modal" onclick="handleOverlayClick(event)">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div>
+            <div class="card-scene">
+                <div class="card-flip" id="card-flip">
+
+                    <!-- FRONT (populated by JS) -->
+                    <div class="card-face card-face-front" id="card-front"></div>
+
+                    <!-- BACK (populated by JS) -->
+                    <div class="card-face card-back-face" id="card-back"></div>
+
+                </div>
+            </div>
+        </div>
     </div>
 
     <nav class="bottom-nav">
@@ -243,7 +244,7 @@
 
         let allPlayers = [];
         let activeFilter = 'ALL';
-        let tierMap = {};  // playerName → 'gold'|'silver'|'bronze'
+        let tierMap = {};
 
         // ─── THEME ────────────────────────────────────────
         const savedTheme = localStorage.getItem("theme") || "dark";
@@ -256,63 +257,56 @@
             document.getElementById("theme-icon").textContent = next === "dark" ? "☀️" : "🌙";
         }
 
-        // ─── TEAM CONFIG ──────────────────────────────────
+        // ─── TEAM MAP ─────────────────────────────────────
         const TEAMS = {
-            'MI':   { color:'#004BA0', color2:'#0066cc', emoji:'🔵' },
-            'CSK':  { color:'#e8931a', color2:'#f5a623', emoji:'🟡' },
-            'RCB':  { color:'#D4001A', color2:'#ff1a35', emoji:'🔴' },
-            'KKR':  { color:'#3A225D', color2:'#5b3a8a', emoji:'🟣' },
-            'DC':   { color:'#17479E', color2:'#e8251a', emoji:'🔷' },
-            'PBKS': { color:'#ED1F27', color2:'#c41920', emoji:'🦁' },
+            'MI':   { color:'#004BA0', color2:'#1a6fd4', emoji:'🔵' },
+            'CSK':  { color:'#d4860a', color2:'#f5a623', emoji:'🟡' },
+            'RCB':  { color:'#c0001a', color2:'#ff1a35', emoji:'🔴' },
+            'KKR':  { color:'#3A225D', color2:'#6b3aaa', emoji:'🟣' },
+            'DC':   { color:'#17479E', color2:'#2a5fc0', emoji:'🔷' },
+            'PBKS': { color:'#c41920', color2:'#ED1F27', emoji:'🦁' },
             'RR':   { color:'#254AA5', color2:'#f542b3', emoji:'💗' },
-            'SRH':  { color:'#F7591A', color2:'#e04a10', emoji:'🟠' },
-            'GT':   { color:'#1B2133', color2:'#4d7cc7', emoji:'🔷' },
-            'LSG':  { color:'#2d7a4f', color2:'#5ec48a', emoji:'🟢' },
+            'SRH':  { color:'#d44a10', color2:'#F7591A', emoji:'🟠' },
+            'GT':   { color:'#1B2133', color2:'#3a5a9a', emoji:'🔷' },
+            'LSG':  { color:'#1d6b42', color2:'#5ec48a', emoji:'🟢' },
         };
 
         function getTeam(name) {
-            // Match partial names
             const n = (name || '').toUpperCase();
             for (const key of Object.keys(TEAMS)) {
                 if (n.includes(key)) return { abbr: key, ...TEAMS[key] };
             }
-            return { abbr: n.slice(0,3) || '?', color:'#444', color2:'#666', emoji:'🏏' };
+            return { abbr: (n.slice(0,3) || 'IPL'), color:'#444', color2:'#666', emoji:'🏏' };
         }
 
-        // ─── TIER CALCULATION ─────────────────────────────
+        // ─── TIERS ────────────────────────────────────────
         function calcTiers(players) {
-            const scored = players
-                .map(p => parseFloat(p['Total Points']) || 0)
-                .filter(v => v > 0)
-                .sort((a, b) => b - a);
-
-            if (!scored.length) {
-                players.forEach(p => { tierMap[p['Player Name']] = 'bronze'; });
-                return;
-            }
-
-            const topCut    = scored[Math.floor(scored.length * 0.33)] || 0;
-            const midCut    = scored[Math.floor(scored.length * 0.66)] || 0;
-
+            const scores = players.map(p => parseFloat(p['Total Points']) || 0).filter(v => v > 0).sort((a,b) => b-a);
+            if (!scores.length) { players.forEach(p => tierMap[p['Player Name']] = 'bronze'); return; }
+            const topCut = scores[Math.floor(scores.length * 0.33)] || 1;
+            const midCut = scores[Math.floor(scores.length * 0.66)] || 0;
             players.forEach(p => {
                 const pts = parseFloat(p['Total Points']) || 0;
-                if (pts >= topCut && pts > 0)        tierMap[p['Player Name']] = 'gold';
-                else if (pts >= midCut && pts > 0)   tierMap[p['Player Name']] = 'silver';
-                else                                  tierMap[p['Player Name']] = 'bronze';
+                if (pts >= topCut)      tierMap[p['Player Name']] = 'gold';
+                else if (pts >= midCut && pts > 0) tierMap[p['Player Name']] = 'silver';
+                else                    tierMap[p['Player Name']] = 'bronze';
             });
         }
 
-        // ─── RATING (50–99 scale) ─────────────────────────
         function calcRating(pts, maxPts) {
             if (!pts || pts <= 0) return 50;
-            if (!maxPts) return 50;
-            return Math.round(50 + (pts / maxPts) * 49);
+            return Math.round(50 + (pts / (maxPts || 1)) * 49);
+        }
+
+        function roleClass(r) {
+            if (r === 'BOWL') return 'rb-role-bowl';
+            if (r === 'AR')   return 'rb-role-ar';
+            if (r === 'WK')   return 'rb-role-wk';
+            return 'rb-role-bat';
         }
 
         // ─── LOAD ─────────────────────────────────────────
-        document.addEventListener("DOMContentLoaded", loadPlayers);
-
-        async function loadPlayers() {
+        document.addEventListener("DOMContentLoaded", async () => {
             try {
                 const res = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify({ action:'getPlayers' }) });
                 const result = await res.json();
@@ -322,11 +316,11 @@
                     applyFilters();
                 }
             } catch {
-                document.getElementById('cards-grid').innerHTML = '<div class="state-msg" style="color:#e74c3c;">Failed to load players.</div>';
+                document.getElementById('player-list').innerHTML = '<div class="empty-state" style="color:#e74c3c;">Failed to load players.</div>';
             }
-        }
+        });
 
-        // ─── FILTER LOGIC ─────────────────────────────────
+        // ─── FILTERS ──────────────────────────────────────
         function setFilter(val, btn) {
             activeFilter = val;
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -336,159 +330,192 @@
 
         function applyFilters() {
             const q = document.getElementById('search-bar').value.toLowerCase();
-            let filtered = allPlayers.filter(p => {
-                const name = (p['Player Name'] || '').toLowerCase();
-                const matchSearch = !q || name.includes(q);
+            const filtered = allPlayers.filter(p => {
+                const matchSearch = !q || p['Player Name'].toLowerCase().includes(q);
                 const role = (p['Role'] || '').toUpperCase();
                 const tier = tierMap[p['Player Name']] || 'bronze';
-                let matchFilter = true;
-                if (activeFilter === 'BAT')    matchFilter = role === 'BAT';
-                else if (activeFilter === 'BOWL') matchFilter = role === 'BOWL';
-                else if (activeFilter === 'AR')  matchFilter = role === 'AR';
-                else if (activeFilter === 'WK')  matchFilter = role === 'WK';
-                else if (activeFilter === 'GOLD')   matchFilter = tier === 'gold';
-                else if (activeFilter === 'SILVER') matchFilter = tier === 'silver';
-                else if (activeFilter === 'BRONZE') matchFilter = tier === 'bronze';
-                return matchSearch && matchFilter;
+                if (activeFilter === 'BAT')    return matchSearch && role === 'BAT';
+                if (activeFilter === 'BOWL')   return matchSearch && role === 'BOWL';
+                if (activeFilter === 'AR')     return matchSearch && role === 'AR';
+                if (activeFilter === 'WK')     return matchSearch && role === 'WK';
+                if (activeFilter === 'GOLD')   return matchSearch && tier === 'gold';
+                if (activeFilter === 'SILVER') return matchSearch && tier === 'silver';
+                if (activeFilter === 'BRONZE') return matchSearch && tier === 'bronze';
+                return matchSearch;
             });
 
-            document.getElementById('player-count').innerText =
-                `${filtered.length} of ${allPlayers.length} players`;
-
-            renderCards(filtered);
+            document.getElementById('player-count').innerText = `${filtered.length} of ${allPlayers.length} players`;
+            renderList(filtered);
         }
 
-        // ─── RENDER CARDS ─────────────────────────────────
-        function renderCards(players) {
-            const grid = document.getElementById('cards-grid');
-            if (!players.length) {
-                grid.innerHTML = '<div class="state-msg">No players match your search.</div>';
-                return;
-            }
+        // ─── RENDER LIST ──────────────────────────────────
+        function renderList(players) {
+            const container = document.getElementById('player-list');
+            if (!players.length) { container.innerHTML = '<div class="empty-state">No players match.</div>'; return; }
 
-            const maxPts = Math.max(...players.map(p => parseFloat(p['Total Points']) || 0));
+            const maxPts = Math.max(...allPlayers.map(p => parseFloat(p['Total Points']) || 0));
 
-            grid.innerHTML = players.map((p, idx) => {
-                const tier   = tierMap[p['Player Name']] || 'bronze';
-                const team   = getTeam(p['IPL Team'] || '');
-                const pts    = parseFloat(p['Total Points']) || 0;
-                const rating = calcRating(pts, maxPts);
-                const name   = p['Player Name'] || '';
-                const role   = (p['Role'] || 'BAT').toUpperCase();
+            container.innerHTML = players.map((p, i) => {
+                const tier = tierMap[p['Player Name']] || 'bronze';
+                const team = getTeam(p['IPL Team'] || '');
+                const pts  = parseFloat(p['Total Points']) || 0;
+                const role = (p['Role'] || 'BAT').toUpperCase();
+                const name = p['Player Name'] || '';
+                const isOwned = p['Sold To'] && p['Sold To'].trim();
+                const isMyCap = myCap === name && p['Sold To'] === myTeam;
+                const isMyVC  = myVC  === name && p['Sold To'] === myTeam;
 
-                // Ownership badges
-                const isOwned = p['Sold To'] && p['Sold To'].trim() !== '';
-                const isCap   = isOwned && myCap === name && p['Sold To'] === myTeam;
-                const isVC    = isOwned && myVC === name && p['Sold To'] === myTeam;
-
-                const badgesHTML = [
-                    isCap  ? `<span class="c-badge cap">CAPTAIN</span>` : '',
-                    isVC   ? `<span class="c-badge vc">VICE-C</span>` : '',
-                    isOwned ? `<span class="c-badge owned">${p['Sold To']}</span>` : ''
-                ].join('');
-
-                // Front stats (runs, wickets, catches)
-                const runs    = parseInt(p['Runs'] || p['runs']) || 0;
-                const wkts    = parseInt(p['Wickets'] || p['wickets']) || 0;
-                const cats    = parseInt(p['Catches'] || p['catches']) || 0;
-
-                // All back stats
-                const fours   = parseInt(p['4s']) || 0;
-                const sixes   = parseInt(p['6s']) || 0;
-                const fifties = parseInt(p['50s']) || 0;
-                const hunds   = parseInt(p['100s']) || 0;
-                const threeW  = parseInt(p['3W']) || 0;
-                const fiveW   = parseInt(p['5W']) || 0;
-                const maidens = parseInt(p['Maidens']) || 0;
-                const dots    = parseInt(p['Dots']) || 0;
-                const runouts = parseInt(p['Run Outs']) || 0;
-                const stmpgs  = parseInt(p['Stumpings']) || 0;
-                const price   = p['Price Bought'] ? `₹${p['Price Bought']}Cr` : 'Unsold';
-
-                const delay = Math.min(idx * 0.04, 0.5);
+                const capBadge = isMyCap ? `<span class="row-badge rb-cap">C</span>` : '';
+                const vcBadge  = isMyVC  ? `<span class="row-badge rb-vc">VC</span>` : '';
+                const ownerBadge = isOwned
+                    ? `<span class="row-badge rb-owned">${p['Sold To']}</span>`
+                    : `<span class="row-badge rb-unsold">Unsold</span>`;
 
                 return `
-                <div class="flip-wrap tier-${tier}" style="animation-delay:${delay}s" onclick="flipCard(this)">
-                    <div class="flip-inner">
-
-                        <!-- FRONT -->
-                        <div class="card-face card-face-front">
-                            <div class="card-front-inner">
-                                <div class="card-top">
-                                    <div>
-                                        <div class="card-rating">${rating}</div>
-                                        <div class="card-role-badge">${role}</div>
-                                    </div>
-                                    <div style="text-align:right;font-size:11px;color:rgba(0,0,0,.5);font-weight:600;margin-top:4px;">${tier.toUpperCase()}</div>
-                                </div>
-
-                                <div class="card-team-strip" style="background:linear-gradient(90deg,${team.color},${team.color2});">
-                                    <span class="team-abbr">${team.abbr}</span>
-                                    <span class="team-emoji">${team.emoji}</span>
-                                </div>
-
-                                <div class="card-avatar-area">
-                                    <div class="card-avatar">👤</div>
-                                </div>
-
-                                <div class="card-badges-row">${badgesHTML}</div>
-
-                                <div class="card-name">${name}</div>
-
-                                <div class="card-stats-row">
-                                    <div class="card-stat">
-                                        <span class="card-stat-val">${runs}</span>
-                                        <span class="card-stat-lbl">Runs</span>
-                                    </div>
-                                    <div class="card-stat">
-                                        <span class="card-stat-val">${wkts}</span>
-                                        <span class="card-stat-lbl">Wkts</span>
-                                    </div>
-                                    <div class="card-stat">
-                                        <span class="card-stat-val">${cats}</span>
-                                        <span class="card-stat-lbl">Cats</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="flip-hint">tap to flip ↩</span>
+                <div class="player-row" style="animation-delay:${Math.min(i*0.03,0.4)}s"
+                     onclick="openCard(${i})">
+                    <div class="tier-dot ${tier}"></div>
+                    <div class="team-strip" style="background:linear-gradient(180deg,${team.color},${team.color2});"></div>
+                    <div class="row-info">
+                        <div class="row-name">${name}</div>
+                        <div class="row-meta">
+                            <span class="row-badge ${roleClass(role)}">${role}</span>
+                            <span class="row-badge rb-team">${team.abbr}</span>
+                            ${ownerBadge}${capBadge}${vcBadge}
                         </div>
-
-                        <!-- BACK -->
-                        <div class="card-face card-back-face">
-                            <div class="card-back-inner">
-                                <div class="back-header">
-                                    <div class="back-name">${name}</div>
-                                    <div class="back-team">${team.abbr} · ${pts} pts · ${price}</div>
-                                </div>
-                                <div class="back-stats-grid">
-                                    <div class="back-stat"><span class="back-stat-val">${runs}</span><span class="back-stat-lbl">Runs</span></div>
-                                    <div class="back-stat"><span class="back-stat-val">${fours}</span><span class="back-stat-lbl">4s</span></div>
-                                    <div class="back-stat"><span class="back-stat-val">${sixes}</span><span class="back-stat-lbl">6s</span></div>
-                                    <div class="back-stat"><span class="back-stat-val">${cats}</span><span class="back-stat-lbl">Catches</span></div>
-                                    <div class="back-stat"><span class="back-stat-val">${wkts}</span><span class="back-stat-lbl">Wkts</span></div>
-                                    <div class="back-stat"><span class="back-stat-val">${maidens}</span><span class="back-stat-lbl">Maidens</span></div>
-                                    <div class="back-stat"><span class="back-stat-val">${dots}</span><span class="back-stat-lbl">Dots</span></div>
-                                    <div class="back-stat"><span class="back-stat-val">${fifties}</span><span class="back-stat-lbl">50s</span></div>
-                                    <div class="back-stat"><span class="back-stat-val">${hunds}</span><span class="back-stat-lbl">100s</span></div>
-                                    <div class="back-stat"><span class="back-stat-val">${threeW}</span><span class="back-stat-lbl">3W</span></div>
-                                    <div class="back-stat"><span class="back-stat-val">${fiveW}</span><span class="back-stat-lbl">5W</span></div>
-                                    <div class="back-stat"><span class="back-stat-val">${runouts}</span><span class="back-stat-lbl">Run-Out</span></div>
-                                </div>
-                                <div class="back-footer">
-                                    <div class="back-owner">Owned by <span>${p['Sold To'] || 'Unsold'}</span></div>
-                                    <div class="back-flip-hint">tap to flip back</div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
+                    <div class="row-pts">${pts > 0 ? pts + ' pts' : '—'}</div>
+                    <div class="row-chevron">❯</div>
                 </div>`;
             }).join('');
+
+            // Store filtered list reference for openCard index
+            window._filteredPlayers = players;
         }
 
-        // ─── FLIP ─────────────────────────────────────────
-        function flipCard(el) {
-            el.classList.toggle('flipped');
+        // ─── OPEN CARD MODAL ──────────────────────────────
+        function openCard(idx) {
+            const p       = window._filteredPlayers[idx];
+            const maxPts  = Math.max(...allPlayers.map(x => parseFloat(x['Total Points']) || 0));
+            const tier    = tierMap[p['Player Name']] || 'bronze';
+            const team    = getTeam(p['IPL Team'] || '');
+            const pts     = parseFloat(p['Total Points']) || 0;
+            const rating  = calcRating(pts, maxPts);
+            const role    = (p['Role'] || 'BAT').toUpperCase();
+            const name    = p['Player Name'] || '';
+            const isOwned = p['Sold To'] && p['Sold To'].trim();
+            const isCap   = myCap === name && p['Sold To'] === myTeam;
+            const isVC    = myVC  === name && p['Sold To'] === myTeam;
+
+            const runs    = parseInt(p['Runs'])     || 0;
+            const wkts    = parseInt(p['Wickets'])  || 0;
+            const cats    = parseInt(p['Catches'])  || 0;
+            const fours   = parseInt(p['4s'])       || 0;
+            const sixes   = parseInt(p['6s'])       || 0;
+            const fifties = parseInt(p['50s'])      || 0;
+            const hunds   = parseInt(p['100s'])     || 0;
+            const threeW  = parseInt(p['3W'])       || 0;
+            const fiveW   = parseInt(p['5W'])       || 0;
+            const maidens = parseInt(p['Maidens'])  || 0;
+            const dots    = parseInt(p['Dots'])     || 0;
+            const runouts = parseInt(p['Run Outs']) || 0;
+            const stmpgs  = parseInt(p['Stumpings'])|| 0;
+            const price   = p['Price Bought'] ? `₹${p['Price Bought']}Cr` : 'Unsold';
+
+            // Set tier class on scene
+            const flip = document.getElementById('card-flip');
+            flip.className = 'card-flip'; // reset flipped state
+            const scene = flip.parentElement;
+            scene.className = `card-scene tier-${tier}-card`;
+
+            // Build FRONT
+            document.getElementById('card-front').innerHTML = `
+                <div class="cf-inner">
+                    <div class="cf-top">
+                        <div>
+                            <div class="cf-rating">${rating}</div>
+                            <div class="cf-role">${role}</div>
+                        </div>
+                        <div class="cf-role-col">
+                            <div class="cf-tier-label">${tier.toUpperCase()}</div>
+                        </div>
+                    </div>
+
+                    <div class="cf-team-bar" style="background:linear-gradient(90deg,${team.color},${team.color2});">
+                        <span class="cf-team-name">${team.abbr}</span>
+                        <span class="cf-team-emoji">${team.emoji}</span>
+                    </div>
+
+                    <div class="cf-avatar-area">
+                        <div class="cf-avatar">👤</div>
+                    </div>
+
+                    <div class="cf-badges">
+                        ${isCap    ? `<span class="cf-badge cap">CAPTAIN</span>` : ''}
+                        ${isVC     ? `<span class="cf-badge vc">VICE-C</span>` : ''}
+                        ${isOwned  ? `<span class="cf-badge owner">${p['Sold To']}</span>` : ''}
+                    </div>
+
+                    <div class="cf-name">${name}</div>
+
+                    <div class="cf-stats">
+                        <div class="cf-stat">
+                            <span class="cf-stat-val">${runs}</span>
+                            <span class="cf-stat-lbl">Runs</span>
+                        </div>
+                        <div class="cf-stat">
+                            <span class="cf-stat-val">${wkts}</span>
+                            <span class="cf-stat-lbl">Wkts</span>
+                        </div>
+                        <div class="cf-stat">
+                            <span class="cf-stat-val">${cats}</span>
+                            <span class="cf-stat-lbl">Cats</span>
+                        </div>
+                    </div>
+                    <div class="cf-flip-hint" onclick="event.stopPropagation();flipCard()">tap to see full stats ↩</div>
+                </div>`;
+
+            // Build BACK
+            document.getElementById('card-back').innerHTML = `
+                <div class="cb-inner">
+                    <div class="cb-header">
+                        <div class="cb-name">${name}</div>
+                        <div class="cb-sub">${team.abbr} · ${pts} pts · ${price}</div>
+                    </div>
+                    <div class="cb-grid">
+                        <div class="cb-stat"><span class="cb-stat-val">${runs}</span><span class="cb-stat-lbl">Runs</span></div>
+                        <div class="cb-stat"><span class="cb-stat-val">${fours}</span><span class="cb-stat-lbl">4s</span></div>
+                        <div class="cb-stat"><span class="cb-stat-val">${sixes}</span><span class="cb-stat-lbl">6s</span></div>
+                        <div class="cb-stat"><span class="cb-stat-val">${cats}</span><span class="cb-stat-lbl">Catches</span></div>
+                        <div class="cb-stat"><span class="cb-stat-val">${wkts}</span><span class="cb-stat-lbl">Wkts</span></div>
+                        <div class="cb-stat"><span class="cb-stat-val">${maidens}</span><span class="cb-stat-lbl">Maidens</span></div>
+                        <div class="cb-stat"><span class="cb-stat-val">${dots}</span><span class="cb-stat-lbl">Dots</span></div>
+                        <div class="cb-stat"><span class="cb-stat-val">${fifties}</span><span class="cb-stat-lbl">50s</span></div>
+                        <div class="cb-stat"><span class="cb-stat-val">${hunds}</span><span class="cb-stat-lbl">100s</span></div>
+                        <div class="cb-stat"><span class="cb-stat-val">${threeW}</span><span class="cb-stat-lbl">3W</span></div>
+                        <div class="cb-stat"><span class="cb-stat-val">${fiveW}</span><span class="cb-stat-lbl">5W</span></div>
+                        <div class="cb-stat"><span class="cb-stat-val">${runouts+stmpgs}</span><span class="cb-stat-lbl">Dis.</span></div>
+                    </div>
+                    <div class="cb-footer">
+                        <div class="cb-owner">Owned by <strong>${p['Sold To'] || 'Unsold'}</strong></div>
+                        <div class="cb-flip-hint" onclick="event.stopPropagation();flipCard()">tap to flip back</div>
+                    </div>
+                </div>`;
+
+            document.getElementById('card-modal').classList.add('open');
+        }
+
+        function flipCard() {
+            document.getElementById('card-flip').classList.toggle('flipped');
+        }
+
+        function closeModal() {
+            document.getElementById('card-modal').classList.remove('open');
+            document.getElementById('card-flip').classList.remove('flipped');
+        }
+
+        function handleOverlayClick(e) {
+            if (e.target === document.getElementById('card-modal')) closeModal();
         }
     </script>
 </body>
