@@ -71,7 +71,6 @@
         .tier-dot.silver{background:linear-gradient(135deg,#d4d4d4,#9e9e9e);}
         .tier-dot.bronze{background:linear-gradient(135deg,#cd7f32,#7a3c10);}
 
-        /* Team color strip */
         .team-strip{width:4px;height:36px;border-radius:2px;flex-shrink:0;}
 
         .row-info{flex:1;min-width:0;}
@@ -96,80 +95,252 @@
         .modal.open{display:flex;}
 
         /* ─── FIFA CARD ───────────────────────── */
-        .card-scene{perspective:900px;width:220px;height:320px;}
-        .card-flip{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,0,.2,1);}
-        .card-flip.flipped{transform:rotateY(180deg);}
-        .card-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;overflow:hidden;}
-        .card-back-face{transform:rotateY(180deg);}
+        .card-scene {
+            perspective: 1200px;
+            width: 85vw; /* Responsive width */
+            max-width: 340px; /* PC cap */
+            aspect-ratio: 0.70; /* FIFA Card aspect ratio */
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
+        }
+        .card-flip {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-flip.flipped { transform: rotateY(180deg); }
+        
+        /* The iconic FIFA card shape */
+        .card-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            clip-path: polygon(10% 0, 90% 0, 100% 12%, 100% 85%, 50% 100%, 0 85%, 0 12%);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .card-back-face {
+            transform: rotateY(180deg);
+        }
 
+        /* ─── TIER TEXTURES & COLORS ───────────── */
         /* GOLD */
-        .tier-gold-card .card-face-front{background:linear-gradient(155deg,#3d2c00 0%,#a07010 25%,#ffd700 50%,#c8960c 72%,#6b4800 100%);}
-        .tier-gold-card .card-face-front::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(50deg,transparent,transparent 10px,rgba(255,255,255,.035) 10px,rgba(255,255,255,.035) 11px);pointer-events:none;}
-        .tier-gold-card .card-back-face{background:linear-gradient(155deg,#3d2c00,#7a5500);}
+        .tier-gold-card .card-face {
+            background: linear-gradient(135deg, #FFE082 0%, #D4AF37 30%, #FFF59D 50%, #B8860B 75%, #8B6508 100%);
+            color: #31230B;
+        }
+        .tier-gold-card .card-face::after {
+            content:''; position:absolute; inset:0; pointer-events:none;
+            background: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,0.15) 15px, rgba(255,255,255,0.15) 16px);
+        }
+        .tier-gold-card .cf-divider { background: rgba(49, 35, 11, 0.3); }
 
         /* SILVER */
-        .tier-silver-card .card-face-front{background:linear-gradient(155deg,#1c1c1c 0%,#5a5a5a 25%,#d0d0d0 50%,#888 72%,#2a2a2a 100%);}
-        .tier-silver-card .card-face-front::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(50deg,transparent,transparent 10px,rgba(255,255,255,.03) 10px,rgba(255,255,255,.03) 11px);pointer-events:none;}
-        .tier-silver-card .card-back-face{background:linear-gradient(155deg,#1c1c1c,#3a3a3a);}
+        .tier-silver-card .card-face {
+            background: linear-gradient(135deg, #F5F5F5 0%, #A9A9A9 30%, #FFFFFF 50%, #808080 75%, #505050 100%);
+            color: #1A1A1A;
+        }
+        .tier-silver-card .card-face::after {
+            content:''; position:absolute; inset:0; pointer-events:none;
+            background: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,0.3) 15px, rgba(255,255,255,0.3) 16px);
+        }
+        .tier-silver-card .cf-divider { background: rgba(26, 26, 26, 0.3); }
 
         /* BRONZE */
-        .tier-bronze-card .card-face-front{background:linear-gradient(155deg,#2d1500 0%,#6b3010 25%,#cd7f32 50%,#8b4a1a 72%,#3a1800 100%);}
-        .tier-bronze-card .card-face-front::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(50deg,transparent,transparent 10px,rgba(255,255,255,.03) 10px,rgba(255,255,255,.03) 11px);pointer-events:none;}
-        .tier-bronze-card .card-back-face{background:linear-gradient(155deg,#2d1500,#4a2000);}
+        .tier-bronze-card .card-face {
+            background: linear-gradient(135deg, #E6A87C 0%, #A0522D 30%, #FFCBA4 50%, #8B4513 75%, #5C2E00 100%);
+            color: #381A00;
+        }
+        .tier-bronze-card .card-face::after {
+            content:''; position:absolute; inset:0; pointer-events:none;
+            background: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,0.1) 15px, rgba(255,255,255,0.1) 16px);
+        }
+        .tier-bronze-card .cf-divider { background: rgba(56, 26, 0, 0.3); }
 
-        /* ─── CARD FRONT ──────────────────────── */
-        .cf-inner{position:relative;height:100%;display:flex;flex-direction:column;padding:14px 14px 10px;z-index:1;}
-        .cf-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-        .cf-rating{font-family:var(--font-display);font-size:42px;color:rgba(0,0,0,.65);line-height:1;}
-        .cf-role-col{text-align:right;}
-        .cf-role{font-size:10px;font-weight:800;letter-spacing:.08em;padding:3px 8px;border-radius:5px;background:rgba(0,0,0,.2);color:rgba(255,255,255,.8);display:inline-block;margin-bottom:6px;}
-        .cf-tier-label{font-size:9px;font-weight:700;color:rgba(0,0,0,.45);letter-spacing:.1em;text-align:right;}
 
-        .cf-team-bar{border-radius:8px;padding:5px 10px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;}
-        .cf-team-name{font-family:var(--font-display);font-size:17px;color:rgba(255,255,255,.9);letter-spacing:.04em;}
-        .cf-team-emoji{font-size:17px;}
+        /* ─── CARD FRONT LAYOUT ───────────────── */
+        .cf-inner {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 12% 10% 6%;
+        }
 
-        .cf-avatar-area{flex:1;display:flex;align-items:center;justify-content:center;}
-        .cf-avatar{width:72px;height:72px;border-radius:50%;background:rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;font-size:38px;border:2px solid rgba(255,255,255,.18);}
+        /* Top Half (Rating, Role, Flag + Avatar) */
+        .cf-top {
+            display: flex;
+            height: 52%;
+        }
+        .cf-top-left {
+            width: 35%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 5%;
+        }
+        .cf-rating {
+            font-family: var(--font-display);
+            font-size: 3.8rem;
+            line-height: 0.9;
+        }
+        .cf-role {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+        .cf-flag-box {
+            width: 36px;
+            height: 24px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(0,0,0,0.2);
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        .cf-tier-star {
+            font-size: 1.5rem;
+            margin-top: -2px;
+        }
 
-        .cf-badges{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin:6px 0 4px;min-height:16px;}
-        .cf-badge{font-size:8px;font-weight:800;padding:2px 6px;border-radius:4px;letter-spacing:.05em;}
-        .cf-badge.cap{background:rgba(255,196,0,.3);color:#ffc400;border:1px solid rgba(255,196,0,.4);}
-        .cf-badge.vc{background:rgba(180,180,200,.2);color:rgba(220,220,240,.9);border:1px solid rgba(180,180,200,.3);}
-        .cf-badge.owner{background:rgba(0,0,0,.22);color:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.12);}
+        /* Avatar */
+        .cf-top-right {
+            width: 65%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            position: relative;
+        }
+        .cf-avatar {
+            font-size: 7rem;
+            line-height: 1;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+        }
 
-        .cf-name{font-family:var(--font-display);font-size:18px;color:rgba(0,0,0,.7);text-align:center;letter-spacing:.05em;margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+        /* Name Section */
+        .cf-name-container {
+            text-align: center;
+            margin-top: auto;
+        }
+        .cf-name {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .cf-divider-horizontal {
+            height: 2px;
+            width: 90%;
+            margin: 4px auto 10px;
+            background: currentColor;
+            opacity: 0.2;
+        }
 
-        .cf-stats{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid rgba(255,255,255,.18);padding-top:8px;gap:2px;}
-        .cf-stat{text-align:center;}
-        .cf-stat-val{font-family:var(--font-mono);font-size:16px;font-weight:500;color:rgba(0,0,0,.7);display:block;}
-        .cf-stat-lbl{font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(0,0,0,.45);display:block;margin-top:1px;}
+        /* Bottom Stats */
+        .cf-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1px 1fr;
+            gap: 15px;
+            padding: 0 5%;
+            margin-bottom: 15px;
+        }
+        .cf-stats-col {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .cf-stat-row {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+        }
+        .cf-stat-val {
+            width: 30px;
+            text-align: right;
+        }
+        .cf-stat-lbl {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            font-weight: 400;
+        }
 
-        .cf-flip-hint{text-align:center;font-size:9px;color:rgba(255,255,255,.3);margin-top:8px;cursor:pointer;}
+        /* ─── CARD BACK LAYOUT ────────────────── */
+        .cb-inner {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 15% 10% 10%;
+            text-align: center;
+        }
+        .cb-header {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0,0,0,0.1);
+        }
+        .cb-name {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            letter-spacing: 0.05em;
+        }
+        .cb-sub {
+            font-family: var(--font-main);
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+        .cb-stats-detailed {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            flex: 1;
+        }
+        .cb-stat-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: rgba(0,0,0,0.06);
+            border-radius: 8px;
+            padding: 8px 4px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .cb-stat-val {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+        }
+        .cb-stat-lbl {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+        .cb-footer {
+            margin-top: auto;
+            font-size: 0.9rem;
+            font-weight: 600;
+            opacity: 0.8;
+        }
 
-        /* ─── CARD BACK ───────────────────────── */
-        .cb-inner{position:relative;height:100%;display:flex;flex-direction:column;padding:12px 12px 10px;z-index:1;}
-        .cb-header{text-align:center;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:8px;}
-        .cb-name{font-family:var(--font-display);font-size:16px;color:rgba(255,255,255,.9);letter-spacing:.05em;}
-        .cb-sub{font-size:9px;color:rgba(255,255,255,.45);margin-top:2px;}
-
-        .cb-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;flex:1;}
-        .cb-stat{display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.2);border-radius:7px;padding:6px 4px;}
-        .cb-stat-val{font-family:var(--font-mono);font-size:14px;font-weight:500;color:rgba(255,255,255,.9);}
-        .cb-stat-lbl{font-size:7px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:2px;text-align:center;}
-
-        .cb-footer{margin-top:8px;text-align:center;border-top:1px solid rgba(255,255,255,.1);padding-top:7px;}
-        .cb-owner{font-size:10px;color:rgba(255,255,255,.45);}
-        .cb-owner strong{color:rgba(255,255,255,.8);}
-        .cb-flip-hint{font-size:9px;color:rgba(255,255,255,.25);margin-top:3px;cursor:pointer;}
-
-        /* Close button */
+        /* Modal Close */
         .modal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;}
 
-        /* ─── EMPTY STATE ─────────────────────── */
+        /* ─── EMPTY STATE & BOTTOM NAV ────────── */
         .empty-state{padding:32px 20px;text-align:center;color:var(--text-muted);font-size:14px;}
-
-        /* ─── BOTTOM NAV ──────────────────────── */
         .bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:480px;background:var(--nav-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--glass-border);border-radius:30px;display:flex;justify-content:space-around;padding:10px 4px;box-shadow:0 10px 40px rgba(0,0,0,.25);z-index:50;}
         .nav-item{text-align:center;color:var(--text-muted);text-decoration:none;font-size:9px;font-weight:500;letter-spacing:.04em;transition:all var(--transition);flex:1;padding:3px 0;border-radius:20px;}
         .nav-item.active{color:var(--accent);}
@@ -210,19 +381,13 @@
         <div id="player-list"><div class="empty-state">Loading players…</div></div>
     </div>
 
-    <!-- ─── CARD MODAL ─────────────────────────────── -->
     <div id="card-modal" class="modal" onclick="handleOverlayClick(event)">
         <button class="modal-close" onclick="closeModal()">✕</button>
         <div>
-            <div class="card-scene">
+            <div class="card-scene" id="card-scene" onclick="flipCard()">
                 <div class="card-flip" id="card-flip">
-
-                    <!-- FRONT (populated by JS) -->
                     <div class="card-face card-face-front" id="card-front"></div>
-
-                    <!-- BACK (populated by JS) -->
                     <div class="card-face card-back-face" id="card-back"></div>
-
                 </div>
             </div>
         </div>
@@ -389,116 +554,94 @@
                 </div>`;
             }).join('');
 
-            // Store filtered list reference for openCard index
             window._filteredPlayers = players;
         }
 
         // ─── OPEN CARD MODAL ──────────────────────────────
         function openCard(idx) {
-            const p       = window._filteredPlayers[idx];
-            const maxPts  = Math.max(...allPlayers.map(x => parseFloat(x['Total Points']) || 0));
-            const tier    = tierMap[p['Player Name']] || 'bronze';
-            const team    = getTeam(p['IPL Team'] || '');
-            const pts     = parseFloat(p['Total Points']) || 0;
-            const rating  = calcRating(pts, maxPts);
-            const role    = (p['Role'] || 'BAT').toUpperCase();
-            const name    = p['Player Name'] || '';
+            const p      = window._filteredPlayers[idx];
+            const maxPts = Math.max(...allPlayers.map(x => parseFloat(x['Total Points']) || 0));
+            const tier   = tierMap[p['Player Name']] || 'bronze';
+            const team   = getTeam(p['IPL Team'] || '');
+            const pts    = parseFloat(p['Total Points']) || 0;
+            const rating = calcRating(pts, maxPts);
+            const role   = (p['Role'] || 'BAT').toUpperCase();
+            const name   = p['Player Name'] || '';
             const isOwned = p['Sold To'] && p['Sold To'].trim();
-            const isCap   = myCap === name && p['Sold To'] === myTeam;
-            const isVC    = myVC  === name && p['Sold To'] === myTeam;
+            const isCap  = myCap === name && p['Sold To'] === myTeam;
+            const isVC   = myVC  === name && p['Sold To'] === myTeam;
 
+            // Fantasy Stats mapping
             const runs    = parseInt(p['Runs'])     || 0;
             const wkts    = parseInt(p['Wickets'])  || 0;
             const cats    = parseInt(p['Catches'])  || 0;
             const fours   = parseInt(p['4s'])       || 0;
             const sixes   = parseInt(p['6s'])       || 0;
+            const dots    = parseInt(p['Dots'])     || 0;
             const fifties = parseInt(p['50s'])      || 0;
             const hunds   = parseInt(p['100s'])     || 0;
-            const threeW  = parseInt(p['3W'])       || 0;
-            const fiveW   = parseInt(p['5W'])       || 0;
             const maidens = parseInt(p['Maidens'])  || 0;
-            const dots    = parseInt(p['Dots'])     || 0;
-            const runouts = parseInt(p['Run Outs']) || 0;
-            const stmpgs  = parseInt(p['Stumpings'])|| 0;
             const price   = p['Price Bought'] ? `₹${p['Price Bought']}Cr` : 'Unsold';
 
-            // Set tier class on scene
-            const flip = document.getElementById('card-flip');
-            flip.className = 'card-flip'; // reset flipped state
-            const scene = flip.parentElement;
+            const scene = document.getElementById('card-scene');
             scene.className = `card-scene tier-${tier}-card`;
+            document.getElementById('card-flip').className = 'card-flip';
 
-            // Build FRONT
+            // FRONT (FIFA Layout)
             document.getElementById('card-front').innerHTML = `
                 <div class="cf-inner">
                     <div class="cf-top">
-                        <div>
+                        <div class="cf-top-left">
                             <div class="cf-rating">${rating}</div>
                             <div class="cf-role">${role}</div>
+                            <div class="cf-flag-box">${team.emoji}</div>
+                            <div class="cf-tier-star">★</div>
                         </div>
-                        <div class="cf-role-col">
-                            <div class="cf-tier-label">${tier.toUpperCase()}</div>
+                        <div class="cf-top-right">
+                            <div class="cf-avatar">👤</div>
                         </div>
                     </div>
 
-                    <div class="cf-team-bar" style="background:linear-gradient(90deg,${team.color},${team.color2});">
-                        <span class="cf-team-name">${team.abbr}</span>
-                        <span class="cf-team-emoji">${team.emoji}</span>
+                    <div class="cf-name-container">
+                        <div class="cf-name">${name.toUpperCase()}</div>
+                        <div class="cf-divider-horizontal"></div>
                     </div>
 
-                    <div class="cf-avatar-area">
-                        <div class="cf-avatar">👤</div>
-                    </div>
-
-                    <div class="cf-badges">
-                        ${isCap    ? `<span class="cf-badge cap">CAPTAIN</span>` : ''}
-                        ${isVC     ? `<span class="cf-badge vc">VICE-C</span>` : ''}
-                        ${isOwned  ? `<span class="cf-badge owner">${p['Sold To']}</span>` : ''}
-                    </div>
-
-                    <div class="cf-name">${name}</div>
-
-                    <div class="cf-stats">
-                        <div class="cf-stat">
-                            <span class="cf-stat-val">${runs}</span>
-                            <span class="cf-stat-lbl">Runs</span>
+                    <div class="cf-stats-grid">
+                        <div class="cf-stats-col">
+                            <div class="cf-stat-row"><div class="cf-stat-val">${runs}</div><div class="cf-stat-lbl">RUN</div></div>
+                            <div class="cf-stat-row"><div class="cf-stat-val">${wkts}</div><div class="cf-stat-lbl">WKT</div></div>
+                            <div class="cf-stat-row"><div class="cf-stat-val">${cats}</div><div class="cf-stat-lbl">CAT</div></div>
                         </div>
-                        <div class="cf-stat">
-                            <span class="cf-stat-val">${wkts}</span>
-                            <span class="cf-stat-lbl">Wkts</span>
-                        </div>
-                        <div class="cf-stat">
-                            <span class="cf-stat-val">${cats}</span>
-                            <span class="cf-stat-lbl">Cats</span>
+                        <div class="cf-divider"></div>
+                        <div class="cf-stats-col">
+                            <div class="cf-stat-row"><div class="cf-stat-val">${fours}</div><div class="cf-stat-lbl">4s</div></div>
+                            <div class="cf-stat-row"><div class="cf-stat-val">${sixes}</div><div class="cf-stat-lbl">6s</div></div>
+                            <div class="cf-stat-row"><div class="cf-stat-val">${dots}</div><div class="cf-stat-lbl">DOT</div></div>
                         </div>
                     </div>
-                    <div class="cf-flip-hint" onclick="event.stopPropagation();flipCard()">tap to see full stats ↩</div>
                 </div>`;
 
-            // Build BACK
+            // BACK (Detailed Stats)
             document.getElementById('card-back').innerHTML = `
                 <div class="cb-inner">
                     <div class="cb-header">
-                        <div class="cb-name">${name}</div>
-                        <div class="cb-sub">${team.abbr} · ${pts} pts · ${price}</div>
+                        <div class="cb-name">${name.toUpperCase()}</div>
+                        <div class="cb-sub">${team.abbr} | ${pts} Points | ${price}</div>
                     </div>
-                    <div class="cb-grid">
-                        <div class="cb-stat"><span class="cb-stat-val">${runs}</span><span class="cb-stat-lbl">Runs</span></div>
-                        <div class="cb-stat"><span class="cb-stat-val">${fours}</span><span class="cb-stat-lbl">4s</span></div>
-                        <div class="cb-stat"><span class="cb-stat-val">${sixes}</span><span class="cb-stat-lbl">6s</span></div>
-                        <div class="cb-stat"><span class="cb-stat-val">${cats}</span><span class="cb-stat-lbl">Catches</span></div>
-                        <div class="cb-stat"><span class="cb-stat-val">${wkts}</span><span class="cb-stat-lbl">Wkts</span></div>
-                        <div class="cb-stat"><span class="cb-stat-val">${maidens}</span><span class="cb-stat-lbl">Maidens</span></div>
-                        <div class="cb-stat"><span class="cb-stat-val">${dots}</span><span class="cb-stat-lbl">Dots</span></div>
-                        <div class="cb-stat"><span class="cb-stat-val">${fifties}</span><span class="cb-stat-lbl">50s</span></div>
-                        <div class="cb-stat"><span class="cb-stat-val">${hunds}</span><span class="cb-stat-lbl">100s</span></div>
-                        <div class="cb-stat"><span class="cb-stat-val">${threeW}</span><span class="cb-stat-lbl">3W</span></div>
-                        <div class="cb-stat"><span class="cb-stat-val">${fiveW}</span><span class="cb-stat-lbl">5W</span></div>
-                        <div class="cb-stat"><span class="cb-stat-val">${runouts+stmpgs}</span><span class="cb-stat-lbl">Dis.</span></div>
+                    <div class="cb-stats-detailed">
+                        <div class="cb-stat-box"><div class="cb-stat-val">${runs}</div><div class="cb-stat-lbl">Runs</div></div>
+                        <div class="cb-stat-box"><div class="cb-stat-val">${fours}</div><div class="cb-stat-lbl">4s</div></div>
+                        <div class="cb-stat-box"><div class="cb-stat-val">${sixes}</div><div class="cb-stat-lbl">6s</div></div>
+                        <div class="cb-stat-box"><div class="cb-stat-val">${cats}</div><div class="cb-stat-lbl">Catches</div></div>
+                        <div class="cb-stat-box"><div class="cb-stat-val">${wkts}</div><div class="cb-stat-lbl">Wickets</div></div>
+                        <div class="cb-stat-box"><div class="cb-stat-val">${maidens}</div><div class="cb-stat-lbl">Maidens</div></div>
+                        <div class="cb-stat-box"><div class="cb-stat-val">${dots}</div><div class="cb-stat-lbl">Dots</div></div>
+                        <div class="cb-stat-box"><div class="cb-stat-val">${fifties}</div><div class="cb-stat-lbl">50s</div></div>
+                        <div class="cb-stat-box"><div class="cb-stat-val">${hunds}</div><div class="cb-stat-lbl">100s</div></div>
                     </div>
                     <div class="cb-footer">
-                        <div class="cb-owner">Owned by <strong>${p['Sold To'] || 'Unsold'}</strong></div>
-                        <div class="cb-flip-hint" onclick="event.stopPropagation();flipCard()">tap to flip back</div>
+                        Owned by: ${p['Sold To'] || 'Unsold'} ${isCap ? '(C)' : ''}
                     </div>
                 </div>`;
 
