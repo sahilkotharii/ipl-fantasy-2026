@@ -18,7 +18,7 @@
             --nav-bg:rgba(8,13,20,.88); --text-primary:#f0f2f5; --text-secondary:rgba(240,242,245,.5);
             --text-muted:rgba(240,242,245,.28); --divider:rgba(255,255,255,.06);
             --input-bg:rgba(0,0,0,.3); --input-border:rgba(255,255,255,.1);
-            --overlay:rgba(0,0,0,.85); --toggle-bg:rgba(255,255,255,.06); --row-hover:rgba(255,255,255,.04);
+            --overlay:rgba(0,0,0,.88); --toggle-bg:rgba(255,255,255,.06); --row-hover:rgba(255,255,255,.04);
         }
         [data-theme="light"] {
             --bg:#f0ece6; --bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(255,200,150,.2) 0%,transparent 55%),#f0ece6;
@@ -26,13 +26,11 @@
             --nav-bg:rgba(240,236,230,.9); --text-primary:#1a1a2e; --text-secondary:rgba(26,26,46,.55);
             --text-muted:rgba(26,26,46,.32); --divider:rgba(0,0,0,.07);
             --input-bg:rgba(0,0,0,.05); --input-border:rgba(0,0,0,.1);
-            --overlay:rgba(0,0,0,.75); --toggle-bg:rgba(0,0,0,.06); --row-hover:rgba(0,0,0,.03);
+            --overlay:rgba(0,0,0,.82); --toggle-bg:rgba(0,0,0,.06); --row-hover:rgba(0,0,0,.03);
         }
-
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
         body{font-family:var(--font-main);background:var(--bg-mesh);background-color:var(--bg);min-height:100vh;color:var(--text-primary);padding-bottom:calc(var(--nav-h)+20px);transition:background-color var(--transition),color var(--transition);}
 
-        /* ─── TOPBAR & FILTERS ────────────────── */
         .topbar{display:flex;justify-content:space-between;align-items:flex-start;padding:26px 20px 10px;}
         .topbar-left .greeting{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:2px;}
         .topbar-left h1{font-size:22px;font-weight:700;}
@@ -44,427 +42,464 @@
         .search-bar{width:100%;padding:11px 13px 11px 38px;border-radius:13px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-family:var(--font-main);font-size:14px;outline:none;-webkit-appearance:none;}
         .search-bar:focus{border-color:var(--accent);}
         .search-bar::placeholder{color:var(--text-muted);}
-
         .filter-row{display:flex;gap:7px;padding:0 16px 12px;overflow-x:auto;scrollbar-width:none;}
         .filter-row::-webkit-scrollbar{display:none;}
         .filter-btn{flex-shrink:0;padding:6px 14px;border-radius:18px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-secondary);font-family:var(--font-main);font-size:11px;font-weight:600;cursor:pointer;transition:all var(--transition);}
         .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
 
-        /* ─── CARD LIST ───────────────────────── */
-        .card{background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);border-radius:20px;margin:0 16px 16px;overflow:hidden;}
-        .player-row{display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid var(--divider);cursor:pointer;transition:background var(--transition);gap:12px;}
+        /* ── LIST ───────────────────────────────────── */
+        .list-wrap{background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);border-radius:20px;margin:0 16px 16px;overflow:hidden;}
+        .player-row{display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid var(--divider);cursor:pointer;transition:background var(--transition);gap:12px;animation:fadeIn .25s ease both;}
         .player-row:last-child{border-bottom:none;}
         .player-row:active{background:var(--row-hover);}
+        /* FIX: solid fill so tier dots always visible */
         .tier-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-        .tier-dot.gold{background:linear-gradient(135deg,#ffd700,#b8860b);}
-        .tier-dot.silver{background:linear-gradient(135deg,#d4d4d4,#9e9e9e);}
-        .tier-dot.bronze{background:linear-gradient(135deg,#cd7f32,#7a3c10);}
+        .tier-dot.gold  {background:#D4A017;}
+        .tier-dot.silver{background:#A8A8A8;}
+        .tier-dot.bronze{background:#A0522D;}
         .team-strip{width:4px;height:36px;border-radius:2px;flex-shrink:0;}
         .row-info{flex:1;min-width:0;}
-        .row-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;}
-        .row-meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+        .row-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px;}
+        .row-meta{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
         .row-badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:.04em;text-transform:uppercase;}
-        .rb-role-bat{background:rgba(79,172,254,.15);color:#4facfe;}
-        .rb-role-bowl{background:rgba(231,76,60,.15);color:#e74c3c;}
-        .rb-role-ar{background:rgba(241,196,15,.15);color:#f1c40f;}
-        .rb-role-wk{background:rgba(155,89,182,.15);color:#bb8fce;}
-        .rb-team{background:rgba(255,255,255,.07);color:var(--text-secondary);}
-        .rb-owned{background:rgba(255,107,53,.12);color:var(--accent);}
+        .rb-role-bat {background:rgba(79,172,254,.15);color:#4facfe;}
+        .rb-role-bowl{background:rgba(231,76,60,.15); color:#e74c3c;}
+        .rb-role-ar  {background:rgba(241,196,15,.15);color:#f1c40f;}
+        .rb-role-wk  {background:rgba(155,89,182,.15);color:#bb8fce;}
+        .rb-team  {background:rgba(255,255,255,.07);color:var(--text-secondary);}
+        .rb-owned {background:rgba(255,107,53,.12); color:var(--accent);}
         .rb-unsold{background:rgba(255,255,255,.05);color:var(--text-muted);}
-        .rb-cap{background:rgba(255,196,0,.2);color:#ffc400;}
-        .rb-vc{background:rgba(180,180,200,.15);color:#b4b4c8;}
+        .rb-cap{background:rgba(255,196,0,.2);   color:#ffc400;}
+        .rb-vc {background:rgba(180,180,200,.15);color:#b4b4c8;}
         .row-pts{font-family:var(--font-mono);font-size:13px;font-weight:500;color:var(--accent);flex-shrink:0;}
         .row-chevron{font-size:11px;color:var(--text-muted);margin-left:2px;}
-
-        /* ─── MODAL OVERLAY ───────────────────── */
-        .modal{display:none;position:fixed;inset:0;background:var(--overlay);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:200;align-items:center;justify-content:center;}
-        .modal.open{display:flex;}
-
-        /* ─── FIFA CARD LAYOUT ────────────────── */
-        .card-scene {
-            perspective: 1200px; width: 86vw; max-width: 350px; aspect-ratio: 0.70; filter: drop-shadow(0 25px 45px rgba(0,0,0,0.7));
-        }
-        .card-flip {
-            position: relative; width: 100%; height: 100%;
-            transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .card-flip.flipped { transform: rotateY(180deg); }
-        
-        .card-face {
-            position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
-            clip-path: polygon(12% 0, 88% 0, 100% 12%, 100% 82%, 50% 100%, 0 82%, 0 12%);
-            display: flex; flex-direction: column;
-        }
-        .card-back-face { transform: rotateY(180deg); }
-
-        .card-face::before {
-            content: ''; position: absolute; inset: 4px; z-index: 1;
-            clip-path: polygon(12% 0, 88% 0, 100% 12%, 100% 81.5%, 50% 99%, 0 81.5%, 0 12%);
-        }
-        .card-face::after {
-            content:''; position:absolute; inset:4px; z-index: 2; pointer-events:none;
-            background: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,0.08) 15px, rgba(255,255,255,0.08) 16px);
-            clip-path: polygon(12% 0, 88% 0, 100% 12%, 100% 81.5%, 50% 99%, 0 81.5%, 0 12%);
-        }
-
-        /* Fixed Tiers and professional badge colors */
-        .tier-gold-card {
-            --border-bg: linear-gradient(135deg, #FFDF73 0%, #B8860B 40%, #FFDF73 80%, #8B6508 100%);
-            --inner-bg: linear-gradient(135deg, #FFE082 0%, #D4AF37 30%, #FFF59D 50%, #B8860B 75%, #8B6508 100%);
-            --text-col: #31230B; --div-col: rgba(49, 35, 11, 0.3); --badge-bg: rgba(255, 255, 255, 0.25);
-        }
-        .tier-silver-card {
-            --border-bg: linear-gradient(135deg, #FFFFFF 0%, #A9A9A9 40%, #E0E0E0 80%, #616161 100%);
-            --inner-bg: linear-gradient(135deg, #F5F5F5 0%, #A9A9A9 30%, #FFFFFF 50%, #808080 75%, #505050 100%);
-            --text-col: #1A1A1A; --div-col: rgba(26, 26, 26, 0.3); --badge-bg: rgba(255, 255, 255, 0.4);
-        }
-        .tier-bronze-card {
-            --border-bg: linear-gradient(135deg, #E6A87C 0%, #8B4513 40%, #CD7F32 80%, #3E1E04 100%);
-            --inner-bg: linear-gradient(135deg, #E6A87C 0%, #A0522D 30%, #FFCBA4 50%, #8B4513 75%, #5C2E00 100%);
-            --text-col: #3E1E04; --div-col: rgba(56, 26, 0, 0.3); --badge-bg: rgba(255, 255, 255, 0.2);
-        }
-
-        .card-face { background: var(--border-bg); color: var(--text-col); }
-        .card-face::before { background: var(--inner-bg); }
-
-        /* ─── FRONT CONTENT (No Player Image) ─── */
-        .cf-inner { position: relative; z-index: 3; display: flex; flex-direction: column; height: 100%; padding: 15% 10% 8%; }
-        
-        .cf-top-grid { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-        
-        .cf-rating-box { display: flex; flex-direction: column; align-items: center; }
-        .cf-rating { font-family: var(--font-display); font-size: 5rem; line-height: 0.85; margin-bottom: 2px; }
-        .cf-role { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 0.05em; }
-        
-        /* Centered Giant Team Logo */
-        .cf-logo-area { flex: 1; display: flex; justify-content: center; align-items: center; min-height: 120px; }
-        .cf-team-logo { width: 100px; height: 100px; object-fit: contain; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.3)); }
-
-        .cf-bottom { margin-top: auto; display: flex; flex-direction: column; align-items: center; }
-        
-        /* Stylish Bigger Names */
-        .cf-name { 
-            font-family: var(--font-display); font-size: 3rem; letter-spacing: 0.04em; line-height: 1;
-            text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
-            margin-bottom: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .cf-divider-horizontal { height: 2px; width: 95%; margin: 5px auto 12px; background: var(--text-col); opacity: 0.25; }
-        
-        .cf-stats-container { display: flex; justify-content: space-around; width: 100%; padding: 0 2%; }
-        .cf-stat-col { display: flex; flex-direction: column; gap: 4px; }
-        .cf-stat { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 1.8rem; }
-        .cf-stat .val { width: 32px; text-align: right; }
-        .cf-stat .lbl { font-size: 1.4rem; font-weight: 400; opacity: 0.85; }
-        .cf-stat-divider { width: 1px; height: 80%; background: var(--text-col); opacity: 0.2; }
-
-        /* ─── BACK CONTENT ────────────────────── */
-        .cb-inner { position: relative; z-index: 3; display: flex; flex-direction: column; height: 100%; padding: 15% 10% 12%; text-align: center; }
-        .cb-header { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--div-col); }
-        .cb-name { font-family: var(--font-display); font-size: 2.4rem; letter-spacing: 0.05em; }
-        .cb-sub { font-family: var(--font-main); font-size: 0.9rem; opacity: 0.85; margin-top: 4px; font-weight: 700; }
-        .cb-stats-detailed { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; flex: 1; }
-        .cb-stat-box { display: flex; flex-direction: column; justify-content: center; background: rgba(0,0,0,0.06); border-radius: 8px; padding: 8px 4px; border: 1px solid rgba(0,0,0,0.05); }
-        .cb-stat-val { font-family: var(--font-display); font-size: 1.8rem; }
-        .cb-stat-lbl { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; opacity: 0.7; }
-        .cb-footer { margin-top: auto; font-size: 0.95rem; font-weight: 700; opacity: 0.9; padding: 10px; background: var(--badge-bg); border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); }
-
-        /* Nav & Overlays */
-        .modal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;}
         .empty-state{padding:32px 20px;text-align:center;color:var(--text-muted);font-size:14px;}
+
+        /* ── MODAL ───────────────────────────────────── */
+        .modal{display:none;position:fixed;inset:0;background:var(--overlay);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:200;align-items:center;justify-content:center;padding:20px;}
+        .modal.open{display:flex;}
+        .modal-close{position:fixed;top:18px;right:18px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;}
+
+        /* ── CARD SCENE ──────────────────────────────── */
+        .card-scene{
+            perspective:1200px;
+            width:min(80vw,300px);
+            aspect-ratio:0.68;
+            filter:drop-shadow(0 28px 50px rgba(0,0,0,.8));
+            cursor:pointer;
+        }
+        .card-flip{
+            position:relative;width:100%;height:100%;
+            transform-style:preserve-3d;
+            transition:transform .65s cubic-bezier(.4,0,.2,1);
+        }
+        .card-flip.flipped{transform:rotateY(180deg);}
+
+        /* Pentagon shield shape */
+        .card-face{
+            position:absolute;inset:0;
+            backface-visibility:hidden;-webkit-backface-visibility:hidden;
+            clip-path:polygon(12% 0%,88% 0%,100% 12%,100% 80%,50% 100%,0% 80%,0% 12%);
+            display:flex;flex-direction:column;
+            overflow:hidden;
+        }
+        .card-back-face{transform:rotateY(180deg);}
+
+        /* Inner border ring */
+        .card-face::before{
+            content:'';position:absolute;inset:5px;z-index:1;pointer-events:none;
+            clip-path:polygon(12% 0%,88% 0%,100% 12%,100% 80%,50% 100%,0% 80%,0% 12%);
+            background:rgba(255,255,255,.12);
+        }
+        /* Diamond hatch */
+        .card-face::after{
+            content:'';position:absolute;inset:5px;z-index:2;pointer-events:none;
+            clip-path:polygon(12% 0%,88% 0%,100% 12%,100% 80%,50% 100%,0% 80%,0% 12%);
+            background:repeating-linear-gradient(45deg,transparent,transparent 12px,rgba(255,255,255,.055) 12px,rgba(255,255,255,.055) 13px);
+        }
+
+        /* ═══════════════════════════════════════════════
+           TIER COLORS — class set directly on .card-face
+           This is the fix: no CSS variable inheritance,
+           no parent class required. Works everywhere.
+        ════════════════════════════════════════════════ */
+        .card-face.gold{
+            background:linear-gradient(150deg,#3B2400 0%,#8B6000 18%,#E8B800 38%,#FFE066 50%,#C49A00 65%,#7A5000 82%,#3B2400 100%);
+            color:#2C1A00;
+        }
+        .card-face.silver{
+            background:linear-gradient(150deg,#1C1C1C 0%,#606060 18%,#C4C4C4 38%,#EFEFEF 50%,#8C8C8C 65%,#444444 82%,#1C1C1C 100%);
+            color:#111111;
+        }
+        .card-face.bronze{
+            background:linear-gradient(150deg,#2E1200 0%,#7A3800 18%,#C07028 38%,#E8A050 50%,#9A5018 65%,#4A2000 82%,#2E1200 100%);
+            color:#2E1200;
+        }
+
+        /* ── FRONT ───────────────────────────────────── */
+        /* bottom-padding ~24% clears the pointed pentagon tip */
+        .cf-inner{
+            position:relative;z-index:3;
+            display:flex;flex-direction:column;
+            height:100%;
+            padding:10% 9% 24% 9%;
+        }
+        .cf-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6%;}
+        .cf-rating{font-family:var(--font-display);font-size:clamp(36px,10vw,50px);line-height:.88;}
+        .cf-role  {font-family:var(--font-display);font-size:clamp(15px,4.5vw,20px);letter-spacing:.04em;margin-top:2px;opacity:.85;}
+        .cf-logo-wrap{display:flex;align-items:center;justify-content:center;}
+        .cf-logo{width:clamp(50px,15vw,68px);height:clamp(50px,15vw,68px);object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35));}
+        .cf-logo-fallback{font-size:clamp(34px,11vw,50px);line-height:1;}
+
+        /* NAME — 2 lines allowed, no forced single-line truncation */
+        .cf-name{
+            font-family:var(--font-display);
+            font-size:clamp(18px,6vw,30px);
+            letter-spacing:.045em;
+            line-height:1.0;
+            text-align:center;
+            white-space:normal;       /* allow wrapping */
+            word-break:break-word;
+            display:-webkit-box;
+            -webkit-line-clamp:2;
+            -webkit-box-orient:vertical;
+            overflow:hidden;
+            text-shadow:0 1px 3px rgba(0,0,0,.15);
+            margin-bottom:5%;
+        }
+        .cf-divider{height:1.5px;background:currentColor;opacity:.22;margin:0 2% 5%;border-radius:1px;}
+
+        /* Stats — smaller so 6 values never overflow the clipped area */
+        .cf-stats{display:flex;align-items:stretch;width:100%;}
+        .cf-stat-col{flex:1;display:flex;flex-direction:column;gap:clamp(3px,1vw,5px);}
+        .cf-stat-col:first-child{padding-right:6%;}
+        .cf-stat-col:last-child {padding-left: 6%;}
+        .cf-stat-vdiv{width:1.5px;background:currentColor;opacity:.2;flex-shrink:0;border-radius:1px;}
+        .cf-stat-row{display:flex;align-items:baseline;justify-content:space-between;gap:4px;}
+        .cf-stat-val{font-family:var(--font-display);font-size:clamp(15px,5vw,22px);line-height:1;flex-shrink:0;}
+        .cf-stat-lbl{font-family:var(--font-display);font-size:clamp(11px,3.2vw,15px);opacity:.6;white-space:nowrap;}
+
+        /* ── BACK ────────────────────────────────────── */
+        .cb-inner{
+            position:relative;z-index:3;
+            display:flex;flex-direction:column;
+            height:100%;
+            padding:10% 8% 24% 8%;
+        }
+        .cb-header{text-align:center;margin-bottom:4%;padding-bottom:4%;border-bottom:1.5px solid rgba(0,0,0,.22);}
+        .cb-name{
+            font-family:var(--font-display);
+            font-size:clamp(17px,5.5vw,24px);
+            letter-spacing:.045em;line-height:1.0;
+            white-space:normal;word-break:break-word;
+            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+            text-shadow:0 1px 3px rgba(0,0,0,.12);
+        }
+        .cb-sub{font-family:var(--font-main);font-size:clamp(9px,2.5vw,11px);opacity:.75;margin-top:3px;font-weight:700;letter-spacing:.03em;}
+
+        /* 3-col × 4-row grid for 12 stats */
+        .cb-grid{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:clamp(3px,1vw,5px);
+            flex:1;
+        }
+        .cb-stat{
+            display:flex;flex-direction:column;align-items:center;justify-content:center;
+            background:rgba(0,0,0,.1);border-radius:6px;
+            padding:clamp(3px,1vw,5px) 2px;
+            border:1px solid rgba(0,0,0,.07);
+        }
+        .cb-stat-val{font-family:var(--font-display);font-size:clamp(13px,4.2vw,18px);line-height:1;}
+        .cb-stat-lbl{font-size:clamp(7px,1.8vw,9px);font-weight:700;text-transform:uppercase;letter-spacing:.04em;opacity:.6;margin-top:1px;text-align:center;}
+
+        .cb-footer{
+            margin-top:4%;text-align:center;
+            font-family:var(--font-main);font-size:clamp(9px,2.5vw,11px);font-weight:700;opacity:.85;
+            padding:6px 8px;background:rgba(0,0,0,.1);border-radius:8px;border:1px solid rgba(0,0,0,.07);
+        }
+
+        /* ── NAV ────────────────────────────────────── */
         .bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:480px;background:var(--nav-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--glass-border);border-radius:30px;display:flex;justify-content:space-around;padding:10px 4px;box-shadow:0 10px 40px rgba(0,0,0,.25);z-index:50;}
         .nav-item{text-align:center;color:var(--text-muted);text-decoration:none;font-size:9px;font-weight:500;letter-spacing:.04em;transition:all var(--transition);flex:1;padding:3px 0;border-radius:20px;}
         .nav-item.active{color:var(--accent);}
         .nav-icon{font-size:18px;display:block;margin-bottom:2px;}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
-        .player-row{animation:fadeIn .25s ease both;}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
     </style>
 </head>
 <body>
 
-    <div class="topbar">
-        <div class="topbar-left">
-            <p class="greeting">Player Cards</p>
-            <h1>All Players</h1>
-            <p id="player-count">Loading…</p>
+<div class="topbar">
+    <div class="topbar-left">
+        <p class="greeting">Player Cards</p>
+        <h1>All Players</h1>
+        <p id="player-count">Loading…</p>
+    </div>
+    <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
+</div>
+
+<div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" class="search-bar" id="search-bar" placeholder="Search players…" oninput="applyFilters()">
+</div>
+
+<div class="filter-row">
+    <button class="filter-btn active" onclick="setFilter('ALL',this)">All</button>
+    <button class="filter-btn" onclick="setFilter('BAT',this)">🏏 Bat</button>
+    <button class="filter-btn" onclick="setFilter('BOWL',this)">🎳 Bowl</button>
+    <button class="filter-btn" onclick="setFilter('AR',this)">⚡ All-R</button>
+    <button class="filter-btn" onclick="setFilter('WK',this)">🧤 WK</button>
+    <button class="filter-btn" onclick="setFilter('GOLD',this)">🥇 Gold</button>
+    <button class="filter-btn" onclick="setFilter('SILVER',this)">🥈 Silver</button>
+    <button class="filter-btn" onclick="setFilter('BRONZE',this)">🥉 Bronze</button>
+</div>
+
+<div class="list-wrap">
+    <div id="player-list"><div class="empty-state">Loading players…</div></div>
+</div>
+
+<!-- MODAL -->
+<div id="card-modal" class="modal" onclick="handleOverlay(event)">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="card-scene" onclick="flipCard()">
+        <div class="card-flip" id="card-flip">
+            <!-- tier class (gold/silver/bronze) is set directly on these elements in JS -->
+            <div class="card-face" id="card-front"></div>
+            <div class="card-face card-back-face" id="card-back"></div>
         </div>
-        <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
     </div>
+</div>
 
-    <div class="search-wrap">
-        <span class="search-icon">🔍</span>
-        <input type="text" class="search-bar" id="search-bar" placeholder="Search players…" oninput="applyFilters()">
-    </div>
+<nav class="bottom-nav">
+    <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span>Home</a>
+    <a href="squad.html"    class="nav-item"><span class="nav-icon">🛡️</span>Squad</a>
+    <a href="players.html"  class="nav-item active"><span class="nav-icon">🃏</span>Cards</a>
+    <a href="stats.html"    class="nav-item"><span class="nav-icon">📊</span>Stats</a>
+    <a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span>Settings</a>
+</nav>
 
-    <div class="filter-row">
-        <button class="filter-btn active" onclick="setFilter('ALL',this)">All</button>
-        <button class="filter-btn" onclick="setFilter('BAT',this)">🏏 Bat</button>
-        <button class="filter-btn" onclick="setFilter('BOWL',this)">Bowling</button>
-        <button class="filter-btn" onclick="setFilter('AR',this)">⚡ All-R</button>
-        <button class="filter-btn" onclick="setFilter('WK',this)">🧤 WK</button>
-        <button class="filter-btn" onclick="setFilter('GOLD',this)">🥇 Gold</button>
-        <button class="filter-btn" onclick="setFilter('SILVER',this)">🥈 Silver</button>
-        <button class="filter-btn" onclick="setFilter('BRONZE',this)">🥉 Bronze</button>
-    </div>
+<script>
+const WEB_APP_URL="https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
+const myTeam=localStorage.getItem("teamName")||"";
+const myCap =localStorage.getItem("captain") ||"";
+const myVC  =localStorage.getItem("viceCaptain")||"";
 
-    <div class="card">
-        <div id="player-list"><div class="empty-state">Loading players…</div></div>
-    </div>
+let allPlayers=[],activeFilter="ALL",tierMap={};
 
-    <div id="card-modal" class="modal" onclick="handleOverlayClick(event)">
-        <button class="modal-close" onclick="closeModal()">✕</button>
-        <div>
-            <div class="card-scene" id="card-scene" onclick="flipCard()">
-                <div class="card-flip" id="card-flip">
-                    <div class="card-face card-face-front" id="card-front"></div>
-                    <div class="card-face card-back-face" id="card-back"></div>
+/* ── THEME ──────────────────────────────────────── */
+const savedTheme=localStorage.getItem("theme")||"dark";
+document.documentElement.setAttribute("data-theme",savedTheme);
+document.getElementById("theme-icon").textContent=savedTheme==="dark"?"☀️":"🌙";
+function toggleTheme(){
+    const next=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
+    document.documentElement.setAttribute("data-theme",next);
+    localStorage.setItem("theme",next);
+    document.getElementById("theme-icon").textContent=next==="dark"?"☀️":"🌙";
+}
+
+/* ── TEAMS ──────────────────────────────────────── */
+const TEAMS={
+    MI:  {color:"#004BA0",color2:"#1a6fd4",logo:"ipl team logo/mi.webp",  fb:"🔵"},
+    CSK: {color:"#c07c08",color2:"#f5a623",logo:"ipl team logo/csk.jpg",  fb:"🟡"},
+    RCB: {color:"#b0001a",color2:"#ff1a35",logo:"ipl team logo/rcb.jpg",  fb:"🔴"},
+    KKR: {color:"#3A225D",color2:"#6b3aaa",logo:"ipl team logo/kkr.webp", fb:"🟣"},
+    DC:  {color:"#17479E",color2:"#2a5fc0",logo:"ipl team logo/dc.webp",  fb:"🔷"},
+    PBKS:{color:"#c41920",color2:"#ED1F27",logo:"ipl team logo/pk.webp",  fb:"🦁"},
+    RR:  {color:"#254AA5",color2:"#f542b3",logo:"ipl team logo/rr.webp",  fb:"💗"},
+    SRH: {color:"#c04010",color2:"#F7591A",logo:"ipl team logo/srh.webp", fb:"🟠"},
+    GT:  {color:"#1B2133",color2:"#3a5a9a",logo:"ipl team logo/gt.webp",  fb:"🔷"},
+    LSG: {color:"#1d6b42",color2:"#5ec48a",logo:"ipl team logo/lsg.jpg",  fb:"🟢"},
+};
+function getTeam(n){
+    const u=(n||"").toUpperCase();
+    for(const k of Object.keys(TEAMS)) if(u.includes(k)) return{abbr:k,...TEAMS[k]};
+    return{abbr:u.slice(0,3)||"IPL",color:"#444",color2:"#666",logo:"",fb:"🏏"};
+}
+
+/* ── TIERS ──────────────────────────────────────── */
+function calcTiers(players){
+    const sc=players.map(p=>parseFloat(p["Total Points"])||0).filter(v=>v>0).sort((a,b)=>b-a);
+    if(!sc.length){players.forEach(p=>tierMap[p["Player Name"]]="bronze");return;}
+    const gLine=sc[Math.floor(sc.length*.33)]??0;
+    const sLine=sc[Math.floor(sc.length*.67)]??0;
+    players.forEach(p=>{
+        const v=parseFloat(p["Total Points"])||0;
+        if(v>=gLine&&v>0)       tierMap[p["Player Name"]]="gold";
+        else if(v>=sLine&&v>0)  tierMap[p["Player Name"]]="silver";
+        else                     tierMap[p["Player Name"]]="bronze";
+    });
+}
+function calcRating(pts,max){return(!pts||pts<=0)?50:Math.round(50+(pts/(max||1))*49);}
+function roleClass(r){return r==="BOWL"?"rb-role-bowl":r==="AR"?"rb-role-ar":r==="WK"?"rb-role-wk":"rb-role-bat";}
+
+/* Safe int getter — handles column name variations */
+function gi(p,...keys){for(const k of keys){const v=p[k];if(v!==undefined&&v!=="")return parseInt(v)||0;}return 0;}
+
+/* ── LOAD ───────────────────────────────────────── */
+document.addEventListener("DOMContentLoaded",async()=>{
+    try{
+        const res=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"getPlayers"})});
+        const r=await res.json();
+        if(r.status==="success"){allPlayers=r.players;calcTiers(allPlayers);applyFilters();}
+    }catch{
+        document.getElementById("player-list").innerHTML=`<div class="empty-state" style="color:#e74c3c;">Failed to load players.</div>`;
+    }
+});
+
+/* ── FILTERS ────────────────────────────────────── */
+function setFilter(val,btn){
+    activeFilter=val;
+    document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");applyFilters();
+}
+function applyFilters(){
+    const q=document.getElementById("search-bar").value.toLowerCase();
+    const f=allPlayers.filter(p=>{
+        const mq=!q||p["Player Name"].toLowerCase().includes(q);
+        const role=(p["Role"]||"").toUpperCase();
+        const tier=tierMap[p["Player Name"]]||"bronze";
+        if(activeFilter==="BAT")    return mq&&role==="BAT";
+        if(activeFilter==="BOWL")   return mq&&role==="BOWL";
+        if(activeFilter==="AR")     return mq&&role==="AR";
+        if(activeFilter==="WK")     return mq&&role==="WK";
+        if(activeFilter==="GOLD")   return mq&&tier==="gold";
+        if(activeFilter==="SILVER") return mq&&tier==="silver";
+        if(activeFilter==="BRONZE") return mq&&tier==="bronze";
+        return mq;
+    });
+    document.getElementById("player-count").innerText=`${f.length} of ${allPlayers.length} players`;
+    renderList(f);
+}
+
+/* ── RENDER LIST ────────────────────────────────── */
+function renderList(players){
+    const el=document.getElementById("player-list");
+    if(!players.length){el.innerHTML=`<div class="empty-state">No players match.</div>`;return;}
+    el.innerHTML=players.map((p,i)=>{
+        const tier=tierMap[p["Player Name"]]||"bronze";
+        const team=getTeam(p["IPL Team"]||"");
+        const pts=parseFloat(p["Total Points"])||0;
+        const role=(p["Role"]||"BAT").toUpperCase();
+        const name=p["Player Name"]||"";
+        const owned=p["Sold To"]&&p["Sold To"].trim();
+        const isCap=myCap===name&&p["Sold To"]===myTeam;
+        const isVC =myVC ===name&&p["Sold To"]===myTeam;
+        return`<div class="player-row" style="animation-delay:${Math.min(i*.03,.4)}s" onclick="openCard(${i})">
+            <div class="tier-dot ${tier}"></div>
+            <div class="team-strip" style="background:linear-gradient(180deg,${team.color},${team.color2})"></div>
+            <div class="row-info">
+                <div class="row-name">${name}</div>
+                <div class="row-meta">
+                    <span class="row-badge ${roleClass(role)}">${role}</span>
+                    <span class="row-badge rb-team">${team.abbr}</span>
+                    ${owned?`<span class="row-badge rb-owned">${p["Sold To"]}</span>`:`<span class="row-badge rb-unsold">Unsold</span>`}
+                    ${isCap?`<span class="row-badge rb-cap">C</span>`:""}
+                    ${isVC ?`<span class="row-badge rb-vc">VC</span>`:""}
                 </div>
             </div>
+            <div class="row-pts">${pts>0?pts+" pts":"—"}</div>
+            <div class="row-chevron">❯</div>
+        </div>`;
+    }).join("");
+    window._fp=players;
+}
+
+/* ── OPEN CARD ──────────────────────────────────── */
+function openCard(idx){
+    const p=window._fp[idx];
+    const max=Math.max(...allPlayers.map(x=>parseFloat(x["Total Points"])||0));
+    const tier=tierMap[p["Player Name"]]||"bronze";
+    const team=getTeam(p["IPL Team"]||"");
+    const pts=parseFloat(p["Total Points"])||0;
+    const rating=calcRating(pts,max);
+    const role=(p["Role"]||"BAT").toUpperCase();
+    const name=p["Player Name"]||"";
+    const owned=p["Sold To"]&&p["Sold To"].trim();
+    const isCap=myCap===name&&p["Sold To"]===myTeam;
+    const isVC =myVC ===name&&p["Sold To"]===myTeam;
+    const price=p["Price Bought"]?`₹${p["Price Bought"]}Cr`:"Unsold";
+
+    const runs   =gi(p,"Runs","runs");
+    const wkts   =gi(p,"Wickets","wickets");
+    const cats   =gi(p,"Catches","catches");
+    const fours  =gi(p,"4s","fours");
+    const sixes  =gi(p,"6s","sixes");
+    const fifties=gi(p,"50s","fifties");
+    const hunds  =gi(p,"100s","hundreds");
+    const threeW =gi(p,"3W","threeW","3 Wicket Haul");
+    const fiveW  =gi(p,"5W","fiveW","5 Wicket Haul");
+    const maidens=gi(p,"Maidens","maidens");
+    const dots   =gi(p,"Dots","dots");
+    const runouts=gi(p,"Run Outs","runouts");
+    const stmpgs =gi(p,"Stumpings","stumpings");
+
+    /* KEY FIX: set tier class directly on .card-face — not on parent.
+       Old code set it on #card-scene; CSS custom properties work but
+       ::before background inheritance is unreliable cross-browser.
+       Direct class = direct style matching, no inheritance needed. */
+    const front=document.getElementById("card-front");
+    const back =document.getElementById("card-back");
+    front.className=`card-face ${tier}`;
+    back.className =`card-face card-back-face ${tier}`;
+    document.getElementById("card-flip").classList.remove("flipped");
+
+    const logoHTML=team.logo
+        ?`<img src="${team.logo}" class="cf-logo" alt="${team.abbr}" onerror="this.style.display='none';this.nextSibling.style.display='block'"><span class="cf-logo-fallback" style="display:none">${team.fb}</span>`
+        :`<span class="cf-logo-fallback">${team.fb}</span>`;
+
+    front.innerHTML=`<div class="cf-inner">
+        <div class="cf-top">
+            <div><div class="cf-rating">${rating}</div><div class="cf-role">${role}</div></div>
+            <div class="cf-logo-wrap">${logoHTML}</div>
         </div>
-    </div>
+        <div class="cf-name">${name.toUpperCase()}</div>
+        <div class="cf-divider"></div>
+        <div class="cf-stats">
+            <div class="cf-stat-col">
+                <div class="cf-stat-row"><span class="cf-stat-val">${runs}</span><span class="cf-stat-lbl">RUN</span></div>
+                <div class="cf-stat-row"><span class="cf-stat-val">${wkts}</span><span class="cf-stat-lbl">WKT</span></div>
+                <div class="cf-stat-row"><span class="cf-stat-val">${cats}</span><span class="cf-stat-lbl">CAT</span></div>
+            </div>
+            <div class="cf-stat-vdiv"></div>
+            <div class="cf-stat-col">
+                <div class="cf-stat-row"><span class="cf-stat-val">${fours}</span><span class="cf-stat-lbl">4s</span></div>
+                <div class="cf-stat-row"><span class="cf-stat-val">${sixes}</span><span class="cf-stat-lbl">6s</span></div>
+                <div class="cf-stat-row"><span class="cf-stat-val">${pts}</span><span class="cf-stat-lbl">PTS</span></div>
+            </div>
+        </div>
+    </div>`;
 
-    <nav class="bottom-nav">
-        <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span>Home</a>
-        <a href="squad.html" class="nav-item"><span class="nav-icon">🛡️</span>Squad</a>
-        <a href="players.html" class="nav-item active"><span class="nav-icon">🃏</span>Cards</a>
-        <a href="stats.html" class="nav-item"><span class="nav-icon">📊</span>Stats</a>
-        <a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span>Settings</a>
-    </nav>
+    back.innerHTML=`<div class="cb-inner">
+        <div class="cb-header">
+            <div class="cb-name">${name.toUpperCase()}</div>
+            <div class="cb-sub">${team.abbr} · ${pts} pts · ${price}</div>
+        </div>
+        <div class="cb-grid">
+            <div class="cb-stat"><div class="cb-stat-val">${runs}</div><div class="cb-stat-lbl">Runs</div></div>
+            <div class="cb-stat"><div class="cb-stat-val">${fours}</div><div class="cb-stat-lbl">4s</div></div>
+            <div class="cb-stat"><div class="cb-stat-val">${sixes}</div><div class="cb-stat-lbl">6s</div></div>
+            <div class="cb-stat"><div class="cb-stat-val">${cats}</div><div class="cb-stat-lbl">Catches</div></div>
+            <div class="cb-stat"><div class="cb-stat-val">${wkts}</div><div class="cb-stat-lbl">Wickets</div></div>
+            <div class="cb-stat"><div class="cb-stat-val">${maidens}</div><div class="cb-stat-lbl">Maidens</div></div>
+            <div class="cb-stat"><div class="cb-stat-val">${dots}</div><div class="cb-stat-lbl">Dots</div></div>
+            <div class="cb-stat"><div class="cb-stat-val">${fifties}</div><div class="cb-stat-lbl">50s</div></div>
+            <div class="cb-stat"><div class="cb-stat-val">${hunds}</div><div class="cb-stat-lbl">100s</div></div>
+            <div class="cb-stat"><div class="cb-stat-val">${threeW}</div><div class="cb-stat-lbl">3W</div></div>
+            <div class="cb-stat"><div class="cb-stat-val">${fiveW}</div><div class="cb-stat-lbl">5W</div></div>
+            <div class="cb-stat"><div class="cb-stat-val">${runouts+stmpgs}</div><div class="cb-stat-lbl">Dis.</div></div>
+        </div>
+        <div class="cb-footer">
+            Owned by <strong>${p["Sold To"]||"Unsold"}</strong>
+            ${isCap?" · Captain 🌟":isVC?" · Vice-Captain ⭐":""}
+        </div>
+    </div>`;
 
-    <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
-        const myTeam = localStorage.getItem("teamName") || "";
-        const myCap  = localStorage.getItem("captain") || "";
-        const myVC   = localStorage.getItem("viceCaptain") || "";
+    document.getElementById("card-modal").classList.add("open");
+}
 
-        let allPlayers = [];
-        let activeFilter = 'ALL';
-        let tierMap = {};
-
-        const savedTheme = localStorage.getItem("theme") || "dark";
-        document.documentElement.setAttribute("data-theme", savedTheme);
-        document.getElementById("theme-icon").textContent = savedTheme === "dark" ? "☀️" : "🌙";
-        function toggleTheme() {
-            const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
-            document.documentElement.setAttribute("data-theme", next);
-            localStorage.setItem("theme", next);
-            document.getElementById("theme-icon").textContent = next === "dark" ? "☀️" : "🌙";
-        }
-
-        const TEAMS = {
-            'MI':   { color:'#004BA0', color2:'#1a6fd4', logo:'ipl team logo/mi.webp' },
-            'CSK':  { color:'#d4860a', color2:'#f5a623', logo:'ipl team logo/csk.jpg' },
-            'RCB':  { color:'#c0001a', color2:'#ff1a35', logo:'ipl team logo/rcb.jpg' },
-            'KKR':  { color:'#3A225D', color2:'#6b3aaa', logo:'ipl team logo/kkr.webp' },
-            'DC':   { color:'#17479E', color2:'#2a5fc0', logo:'ipl team logo/dc.webp' },
-            'PBKS': { color:'#c41920', color2:'#ED1F27', logo:'ipl team logo/pk.webp' },
-            'RR':   { color:'#254AA5', color2:'#f542b3', logo:'ipl team logo/rr.webp' },
-            'SRH':  { color:'#d44a10', color2:'#F7591A', logo:'ipl team logo/srh.webp' },
-            'GT':   { color:'#1B2133', color2:'#3a5a9a', logo:'ipl team logo/gt.webp' },
-            'LSG':  { color:'#1d6b42', color2:'#5ec48a', logo:'ipl team logo/lsg.jpg' },
-        };
-        
-        function getTeam(name) {
-            const n = (name || '').toUpperCase();
-            for (const key of Object.keys(TEAMS)) {
-                if (n.includes(key)) return { abbr: key, ...TEAMS[key] };
-            }
-            return { abbr: (n.slice(0,3) || 'IPL'), color:'#444', color2:'#666', logo:'logos/default.png' };
-        }
-
-        function calcTiers(players) {
-            const scores = players.map(p => parseFloat(p['Total Points']) || 0).filter(v => v > 0).sort((a,b) => b-a);
-            if (!scores.length) { players.forEach(p => tierMap[p['Player Name']] = 'bronze'); return; }
-            const topCut = scores[Math.floor(scores.length * 0.33)] || 1;
-            const midCut = scores[Math.floor(scores.length * 0.66)] || 0;
-            players.forEach(p => {
-                const pts = parseFloat(p['Total Points']) || 0;
-                if (pts >= topCut)      tierMap[p['Player Name']] = 'gold';
-                else if (pts >= midCut && pts > 0) tierMap[p['Player Name']] = 'silver';
-                else                    tierMap[p['Player Name']] = 'bronze';
-            });
-        }
-
-        function calcRating(pts, maxPts) {
-            if (!pts || pts <= 0) return 50;
-            return Math.round(50 + (pts / (maxPts || 1)) * 49);
-        }
-
-        function roleClass(r) {
-            if (r === 'BOWL') return 'rb-role-bowl';
-            if (r === 'AR')   return 'rb-role-ar';
-            if (r === 'WK')   return 'rb-role-wk';
-            return 'rb-role-bat';
-        }
-
-        document.addEventListener("DOMContentLoaded", async () => {
-            try {
-                const res = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify({ action:'getPlayers' }) });
-                const result = await res.json();
-                if (result.status === "success") {
-                    allPlayers = result.players;
-                    calcTiers(allPlayers);
-                    applyFilters();
-                }
-            } catch {
-                document.getElementById('player-list').innerHTML = '<div class="empty-state" style="color:#e74c3c;">Failed to load players.</div>';
-            }
-        });
-
-        function setFilter(val, btn) {
-            activeFilter = val;
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            applyFilters();
-        }
-
-        function applyFilters() {
-            const q = document.getElementById('search-bar').value.toLowerCase();
-            const filtered = allPlayers.filter(p => {
-                const matchSearch = !q || p['Player Name'].toLowerCase().includes(q);
-                const role = (p['Role'] || '').toUpperCase();
-                const tier = tierMap[p['Player Name']] || 'bronze';
-                if (activeFilter === 'BAT')    return matchSearch && role === 'BAT';
-                if (activeFilter === 'BOWL')   return matchSearch && role === 'BOWL';
-                if (activeFilter === 'AR')     return matchSearch && role === 'AR';
-                if (activeFilter === 'WK')     return matchSearch && role === 'WK';
-                if (activeFilter === 'GOLD')   return matchSearch && tier === 'gold';
-                if (activeFilter === 'SILVER') return matchSearch && tier === 'silver';
-                if (activeFilter === 'BRONZE') return matchSearch && tier === 'bronze';
-                return matchSearch;
-            });
-
-            document.getElementById('player-count').innerText = `${filtered.length} of ${allPlayers.length} players`;
-            renderList(filtered);
-        }
-
-        function renderList(players) {
-            const container = document.getElementById('player-list');
-            if (!players.length) { container.innerHTML = '<div class="empty-state">No players match.</div>'; return; }
-
-            container.innerHTML = players.map((p, i) => {
-                const tier = tierMap[p['Player Name']] || 'bronze';
-                const team = getTeam(p['IPL Team'] || '');
-                const pts  = parseFloat(p['Total Points']) || 0;
-                const role = (p['Role'] || 'BAT').toUpperCase();
-                const name = p['Player Name'] || '';
-                const isOwned = p['Sold To'] && p['Sold To'].trim();
-                const isMyCap = myCap === name && p['Sold To'] === myTeam;
-                const isMyVC  = myVC  === name && p['Sold To'] === myTeam;
-
-                const capBadge = isMyCap ? `<span class="row-badge rb-cap">C</span>` : '';
-                const vcBadge  = isMyVC  ? `<span class="row-badge rb-vc">VC</span>` : '';
-                const ownerBadge = isOwned ? `<span class="row-badge rb-owned">${p['Sold To']}</span>` : `<span class="row-badge rb-unsold">Unsold</span>`;
-
-                return `
-                <div class="player-row" style="animation-delay:${Math.min(i*0.03,0.4)}s" onclick="openCard(${i})">
-                    <div class="tier-dot ${tier}"></div>
-                    <div class="team-strip" style="background:linear-gradient(180deg,${team.color},${team.color2});"></div>
-                    <div class="row-info">
-                        <div class="row-name">${name}</div>
-                        <div class="row-meta">
-                            <span class="row-badge ${roleClass(role)}">${role}</span>
-                            <span class="row-badge rb-team">${team.abbr}</span>
-                            ${ownerBadge}${capBadge}${vcBadge}
-                        </div>
-                    </div>
-                    <div class="row-pts">${pts > 0 ? pts + ' pts' : '—'}</div>
-                    <div class="row-chevron">❯</div>
-                </div>`;
-            }).join('');
-
-            window._filteredPlayers = players;
-        }
-
-        function openCard(idx) {
-            const p      = window._filteredPlayers[idx];
-            const maxPts = Math.max(...allPlayers.map(x => parseFloat(x['Total Points']) || 0));
-            const tier   = tierMap[p['Player Name']] || 'bronze';
-            const team   = getTeam(p['IPL Team'] || '');
-            const pts    = parseFloat(p['Total Points']) || 0;
-            const rating = calcRating(pts, maxPts);
-            const role   = (p['Role'] || 'BAT').toUpperCase();
-            const name   = p['Player Name'] || '';
-            const isCap  = myCap === name && p['Sold To'] === myTeam;
-            
-            const runs    = parseInt(p['Runs'])     || 0;
-            const wkts    = parseInt(p['Wickets'])  || 0;
-            const cats    = parseInt(p['Catches'])  || 0;
-            const fours   = parseInt(p['4s'])       || 0;
-            const sixes   = parseInt(p['6s'])       || 0;
-            const price   = p['Price Bought'] ? `₹${p['Price Bought']}Cr` : 'Unsold';
-
-            const scene = document.getElementById('card-scene');
-            scene.className = `card-scene tier-${tier}-card`;
-            document.getElementById('card-flip').className = 'card-flip';
-
-            // FRONT (Professional, Image-free design)
-            document.getElementById('card-front').innerHTML = `
-                <div class="cf-inner">
-                    <div class="cf-top-grid">
-                        <div class="cf-rating-box">
-                            <div class="cf-rating">${rating}</div>
-                            <div class="cf-role">${role}</div>
-                        </div>
-                        <div class="cf-logo-area">
-                            <img src="${team.logo}" alt="${team.abbr}" class="cf-team-logo">
-                        </div>
-                    </div>
-
-                    <div class="cf-bottom">
-                        <div class="cf-name">${name.toUpperCase()}</div>
-                        <div class="cf-divider-horizontal"></div>
-                        
-                        <div class="cf-stats-container">
-                            <div class="cf-stat-col">
-                                <div class="cf-stat"><span class="val">${runs}</span> <span class="lbl">RUN</span></div>
-                                <div class="cf-stat"><span class="val">${wkts}</span> <span class="lbl">WKT</span></div>
-                                <div class="cf-stat"><span class="val">${cats}</span> <span class="lbl">CAT</span></div>
-                            </div>
-                            <div class="cf-stat-divider"></div>
-                            <div class="cf-stat-col">
-                                <div class="cf-stat"><span class="val">${fours}</span> <span class="lbl">4s</span></div>
-                                <div class="cf-stat"><span class="val">${sixes}</span> <span class="lbl">6s</span></div>
-                                <div class="cf-stat"><span class="val">${pts}</span> <span class="lbl">PTS</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-
-            // BACK
-            document.getElementById('card-back').innerHTML = `
-                <div class="cb-inner">
-                    <div class="cb-header">
-                        <div class="cb-name">${name.toUpperCase()}</div>
-                        <div class="cb-sub">${team.abbr} | ${pts} Points | ${price}</div>
-                    </div>
-                    <div class="cb-stats-detailed">
-                        <div class="cb-stat-box"><div class="cb-stat-val">${runs}</div><div class="cb-stat-lbl">Runs</div></div>
-                        <div class="cb-stat-box"><div class="cb-stat-val">${fours}</div><div class="cb-stat-lbl">4s</div></div>
-                        <div class="cb-stat-box"><div class="cb-stat-val">${sixes}</div><div class="cb-stat-lbl">6s</div></div>
-                        <div class="cb-stat-box"><div class="cb-stat-val">${cats}</div><div class="cb-stat-lbl">Catches</div></div>
-                        <div class="cb-stat-box"><div class="cb-stat-val">${wkts}</div><div class="cb-stat-lbl">Wickets</div></div>
-                        <div class="cb-stat-box"><div class="cb-stat-val">${pts}</div><div class="cb-stat-lbl">Total</div></div>
-                    </div>
-                    <div class="cb-footer">
-                        Owned by: ${p['Sold To'] || 'Unsold'} ${isCap ? '(C)' : ''}
-                    </div>
-                </div>`;
-
-            document.getElementById('card-modal').classList.add('open');
-        }
-
-        function flipCard() {
-            document.getElementById('card-flip').classList.toggle('flipped');
-        }
-
-        function closeModal() {
-            document.getElementById('card-modal').classList.remove('open');
-            document.getElementById('card-flip').classList.remove('flipped');
-        }
-
-        function handleOverlayClick(e) {
-            if (e.target === document.getElementById('card-modal')) closeModal();
-        }
-    </script>
+function flipCard(){document.getElementById("card-flip").classList.toggle("flipped");}
+function closeModal(){document.getElementById("card-modal").classList.remove("open");document.getElementById("card-flip").classList.remove("flipped");}
+function handleOverlay(e){if(e.target===document.getElementById("card-modal"))closeModal();}
+</script>
 </body>
 </html>
