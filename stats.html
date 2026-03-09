@@ -13,35 +13,41 @@
             --transition:0.25s cubic-bezier(0.4,0,0.2,1); --nav-h:74px;
         }
         [data-theme="dark"] {
-            --bg:#080d14; --bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(30,60,100,.45) 0%,transparent 55%),#080d14;
-            --glass-bg:rgba(255,255,255,.04); --glass-border:rgba(255,255,255,.08); --glass-shadow:0 8px 40px rgba(0,0,0,.45);
-            --nav-bg:rgba(8,13,20,.88); --text-primary:#f0f2f5; --text-secondary:rgba(240,242,245,.5);
-            --text-muted:rgba(240,242,245,.28); --divider:rgba(255,255,255,.06);
+            --bg:#080d14;
+            --bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(30,60,100,.45) 0%,transparent 55%),#080d14;
+            --glass-bg:rgba(255,255,255,.04); --glass-border:rgba(255,255,255,.08);
+            --glass-shadow:0 8px 40px rgba(0,0,0,.45);
+            --nav-bg:rgba(8,13,20,.88); --text-primary:#f0f2f5;
+            --text-secondary:rgba(240,242,245,.5); --text-muted:rgba(240,242,245,.28);
+            --divider:rgba(255,255,255,.06);
             --input-bg:rgba(0,0,0,.3); --input-border:rgba(255,255,255,.1);
             --overlay:rgba(0,0,0,.75); --toggle-bg:rgba(255,255,255,.06);
             --cur-bg:rgba(255,255,255,.03); --cur-border:rgba(255,255,255,.07);
-            --th-bg:rgba(255,255,255,.05); --edit-bg:rgba(255,255,255,.06);
+            --th-bg:rgba(255,255,255,.05); --row-btn-bg:rgba(255,255,255,.06);
         }
         [data-theme="light"] {
-            --bg:#f0ece6; --bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(255,200,150,.2) 0%,transparent 55%),#f0ece6;
-            --glass-bg:rgba(255,255,255,.55); --glass-border:rgba(255,255,255,.85); --glass-shadow:0 8px 40px rgba(0,0,0,.09);
-            --nav-bg:rgba(240,236,230,.9); --text-primary:#1a1a2e; --text-secondary:rgba(26,26,46,.55);
-            --text-muted:rgba(26,26,46,.32); --divider:rgba(0,0,0,.07);
+            --bg:#f0ece6;
+            --bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(255,200,150,.2) 0%,transparent 55%),#f0ece6;
+            --glass-bg:rgba(255,255,255,.55); --glass-border:rgba(255,255,255,.85);
+            --glass-shadow:0 8px 40px rgba(0,0,0,.09);
+            --nav-bg:rgba(240,236,230,.9); --text-primary:#1a1a2e;
+            --text-secondary:rgba(26,26,46,.55); --text-muted:rgba(26,26,46,.32);
+            --divider:rgba(0,0,0,.07);
             --input-bg:rgba(0,0,0,.05); --input-border:rgba(0,0,0,.1);
             --overlay:rgba(0,0,0,.5); --toggle-bg:rgba(0,0,0,.06);
             --cur-bg:rgba(0,0,0,.03); --cur-border:rgba(0,0,0,.07);
-            --th-bg:rgba(0,0,0,.05); --edit-bg:rgba(0,0,0,.04);
+            --th-bg:rgba(0,0,0,.05); --row-btn-bg:rgba(0,0,0,.04);
         }
 
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
         body{font-family:var(--font-main);background:var(--bg-mesh);background-color:var(--bg);min-height:100vh;color:var(--text-primary);padding-bottom:calc(var(--nav-h)+20px);transition:background-color var(--transition),color var(--transition);}
 
-        /* ── TOPBAR ─────────────────────────────── */
+        /* ── TOP BAR ─────────────────────────────── */
         .topbar{display:flex;justify-content:space-between;align-items:flex-start;padding:28px 20px 16px;}
         .topbar-left .greeting{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:3px;}
         .topbar-left h1{font-size:22px;font-weight:700;}
         .topbar-left p{font-size:13px;color:var(--text-secondary);margin-top:3px;}
-        .theme-btn{width:38px;height:38px;border-radius:50%;background:var(--toggle-bg);border:1px solid var(--glass-border);color:var(--text-primary);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--transition);}
+        .theme-btn{width:38px;height:38px;border-radius:50%;background:var(--toggle-bg);border:1px solid var(--glass-border);color:var(--text-primary);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 
         /* ── SEARCH ─────────────────────────────── */
         .search-wrap{margin:0 16px 12px;position:relative;}
@@ -50,13 +56,12 @@
         .search-bar:focus{border-color:var(--accent);}
         .search-bar::placeholder{color:var(--text-muted);}
 
-        /* ── CARD / LIST ────────────────────────── */
+        /* ── CARD / LIST ─────────────────────────── */
         .card{background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);box-shadow:var(--glass-shadow);border-radius:22px;margin:0 16px 20px;overflow:hidden;}
-        .player-row{display:flex;align-items:center;padding:13px 18px;border-bottom:1px solid var(--divider);gap:12px;cursor:pointer;transition:background var(--transition);}
+        .player-row{display:flex;align-items:center;padding:13px 18px;border-bottom:1px solid var(--divider);gap:12px;}
         .player-row:last-child{border-bottom:none;}
-        .player-row:active{background:rgba(255,255,255,.04);}
         .player-avatar{width:38px;height:38px;border-radius:12px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
-        .player-info{flex:1;min-width:0;}
+        .player-info{flex:1;min-width:0;cursor:pointer;}
         .player-name{font-size:15px;font-weight:600;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
         .badges{display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
         .badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:5px;letter-spacing:.04em;}
@@ -66,170 +71,82 @@
         .badge.wk   {background:rgba(155,89,182,.18);color:#bb8fce;}
         .badge.owned{background:rgba(79,172,254,.15); color:#4facfe;}
         .badge.unsold{background:rgba(255,255,255,.06);color:var(--text-muted);}
-        .badge.pts  {background:var(--accent-soft); color:var(--accent);font-family:var(--font-mono);}
+        .badge.pts  {background:var(--accent-soft);color:var(--accent);font-family:var(--font-mono);}
+        /* ★ sticky row buttons */
         .row-actions{display:flex;gap:6px;flex-shrink:0;}
+        .row-btn{width:32px;height:32px;border-radius:9px;border:1px solid var(--glass-border);background:var(--row-btn-bg);color:var(--text-secondary);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s;}
+        .row-btn.add-btn{background:rgba(255,107,53,.15);color:var(--accent);border-color:rgba(255,107,53,.3);font-size:20px;font-weight:300;}
+        .row-btn:active{transform:scale(.88);}
 
-        /* ── INLINE ROW BUTTONS (sticky in list) ── */
-        .row-btn{
-            width:30px;height:30px;border-radius:8px;border:1px solid var(--glass-border);
-            background:var(--edit-bg);color:var(--text-secondary);font-size:15px;
-            cursor:pointer;display:flex;align-items:center;justify-content:center;
-            transition:all var(--transition);flex-shrink:0;
-        }
-        .row-btn.add-btn{background:rgba(255,107,53,.15);color:var(--accent);border-color:rgba(255,107,53,.25);font-size:18px;font-weight:300;}
-        .row-btn:active{transform:scale(.9);}
-
-        /* ── MODAL OVERLAY ──────────────────────── */
+        /* ── MODAL ───────────────────────────────── */
         .modal{display:none;position:fixed;inset:0;background:var(--overlay);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:100;align-items:flex-end;justify-content:center;}
         .modal.open{display:flex;}
-
-        /* ── BOTTOM SHEET ───────────────────────── */
-        .modal-sheet{
-            background:var(--glass-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
-            border:1px solid var(--glass-border);border-radius:24px 24px 0 0;
-            width:100%;max-height:92vh;
-            display:flex;flex-direction:column;
-            animation:sheetUp .3s cubic-bezier(.4,0,.2,1);
-            box-shadow:0 -16px 60px rgba(0,0,0,.5);
-        }
+        .modal-sheet{background:var(--glass-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--glass-border);border-radius:24px 24px 0 0;width:100%;max-height:92vh;display:flex;flex-direction:column;animation:sheetUp .28s cubic-bezier(.4,0,.2,1);box-shadow:0 -16px 60px rgba(0,0,0,.5);}
         @keyframes sheetUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
 
-        /* Fixed header (non-scrolling) */
-        .sheet-header-fixed{
-            flex-shrink:0;
-            padding:16px 20px 0;
-            border-bottom:1px solid var(--divider);
-        }
+        /* Fixed top section */
+        .sheet-top{flex-shrink:0;padding:16px 20px 0;border-bottom:1px solid var(--divider);}
         .sheet-handle{width:36px;height:4px;border-radius:2px;background:var(--text-muted);margin:0 auto 14px;}
         .sheet-title-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
         .sheet-title-row h3{font-size:17px;font-weight:700;}
         .sheet-title-row p{font-size:12px;color:var(--text-secondary);margin-top:2px;}
-        .close-btn{width:30px;height:30px;border-radius:50%;background:var(--input-bg);border:1px solid var(--input-border);color:var(--text-secondary);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-
-        /* Mode toggle row */
+        .close-btn{width:30px;height:30px;border-radius:50%;background:var(--input-bg);border:1px solid var(--input-border);color:var(--text-secondary);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+        /* Mode tabs */
         .mode-row{display:flex;gap:8px;margin-bottom:14px;}
-        .mode-tab{
-            flex:1;padding:8px 0;border-radius:10px;border:1px solid var(--input-border);
-            background:var(--input-bg);color:var(--text-muted);font-family:var(--font-main);
-            font-size:12px;font-weight:700;cursor:pointer;transition:all var(--transition);
-            letter-spacing:.04em;text-transform:uppercase;
-        }
+        .mode-tab{flex:1;padding:8px;border-radius:10px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-muted);font-family:var(--font-main);font-size:12px;font-weight:700;cursor:pointer;transition:all var(--transition);letter-spacing:.04em;text-transform:uppercase;}
         .mode-tab.active{background:var(--accent);border-color:var(--accent);color:#fff;}
 
         /* Scrollable body */
-        .sheet-body{
-            flex:1;overflow-y:auto;
-            padding:0 0 8px;
-            -webkit-overflow-scrolling:touch;
-            scrollbar-width:none;
-        }
+        .sheet-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
         .sheet-body::-webkit-scrollbar{display:none;}
 
         /* ── CURRENT STATS TABLE ─────────────────── */
-        .cur-stats-section{padding:14px 20px 4px;}
-        .cur-stats-title{
-            font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-            color:var(--text-muted);margin-bottom:8px;
-        }
+        .cur-stats-wrap{padding:14px 20px 6px;}
+        .cur-stats-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
+        .tbl-scroll{overflow-x:auto;border-radius:12px;border:1px solid var(--cur-border);background:var(--cur-bg);scrollbar-width:thin;}
+        .tbl-scroll::-webkit-scrollbar{height:3px;}
+        .tbl-scroll::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px;}
+        .cur-tbl{border-collapse:collapse;width:100%;}
+        .cur-tbl th{padding:7px 12px;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);background:var(--th-bg);text-align:center;white-space:nowrap;}
+        .cur-tbl td{padding:9px 12px;font-family:var(--font-mono);font-size:14px;font-weight:500;text-align:center;color:var(--text-primary);border-top:1px solid var(--divider);white-space:nowrap;}
+        .cur-tbl td.hi{color:var(--accent);}
+        .cur-tbl td.pts{font-size:16px;font-weight:700;color:var(--accent);background:rgba(255,107,53,.07);}
+        .scroll-hint{text-align:center;font-size:10px;color:var(--text-muted);margin:4px 0 0;letter-spacing:.04em;}
 
-        /* Horizontally scrollable stats table */
-        .stats-table-wrap{
-            overflow-x:auto;
-            border-radius:12px;
-            border:1px solid var(--cur-border);
-            background:var(--cur-bg);
-            -webkit-overflow-scrolling:touch;
-            scrollbar-width:thin;
-        }
-        .stats-table-wrap::-webkit-scrollbar{height:3px;}
-        .stats-table-wrap::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px;}
-
-        .stats-table{
-            border-collapse:collapse;
-            min-width:600px; /* forces horizontal scroll on mobile */
-            width:100%;
-        }
-        .stats-table th{
-            padding:7px 12px;
-            font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-            color:var(--text-muted);background:var(--th-bg);text-align:center;
-            white-space:nowrap;
-        }
-        .stats-table td{
-            padding:8px 12px;
-            font-family:var(--font-mono);font-size:14px;font-weight:500;
-            text-align:center;color:var(--text-primary);
-            border-top:1px solid var(--divider);
-        }
-        /* Highlight non-zero values */
-        .stats-table td.nz{color:var(--accent);}
-        /* Points cell */
-        .stats-table td.pts-cell{
-            font-size:16px;font-weight:600;color:var(--accent);
-            background:rgba(255,107,53,.06);
-        }
-
-        /* Scroll hint pill */
-        .scroll-hint{
-            text-align:center;font-size:10px;color:var(--text-muted);
-            margin:5px 0 2px;letter-spacing:.04em;
-        }
-
-        /* ── STAT INPUT FORM ─────────────────────── */
+        /* ── FORM ────────────────────────────────── */
+        .mode-hint{padding:10px 20px 0;font-size:11px;color:var(--text-muted);line-height:1.5;}
+        .mode-hint span{color:var(--accent);font-weight:600;}
+        .mode-hint.edit-hint span{color:#e74c3c;}
         .stat-section{padding:14px 20px 0;}
-        .stat-section-title{
-            font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-            margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--divider);
-        }
-        .stat-section-title.bat-color  {color:#4facfe;}
-        .stat-section-title.bowl-color {color:#e74c3c;}
-        .stat-section-title.ms-color   {color:#f1c40f;}
+        .sec-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--divider);}
+        .sec-title.c-bat   {color:#4facfe;}
+        .sec-title.c-bowl  {color:#e74c3c;}
+        .sec-title.c-field {color:#4facfe;}
+        .sec-title.c-ms    {color:#f1c40f;}
+        .sec-title.c-custom{color:#a29bfe;}
+        .stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+        .sig{display:flex;flex-direction:column;}
+        .sig label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:5px;}
+        .sig input{padding:10px 4px;border-radius:10px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-family:var(--font-mono);font-size:15px;text-align:center;outline:none;-webkit-appearance:none;transition:border-color var(--transition);}
+        .sig input:focus{border-color:var(--accent);}
 
-        .stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:4px;}
-        .stat-input-group{display:flex;flex-direction:column;}
-        .stat-input-group label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:5px;}
-        .stat-input-group input{
-            padding:10px 4px;border-radius:10px;border:1px solid var(--input-border);
-            background:var(--input-bg);color:var(--text-primary);
-            font-family:var(--font-mono);font-size:15px;text-align:center;
-            outline:none;-webkit-appearance:none;transition:border-color var(--transition);
-        }
-        .stat-input-group input:focus{border-color:var(--accent);}
-        /* Add-mode inputs have a tinted border to show "adding" */
-        .add-mode .stat-input-group input:focus{border-color:#4facfe;}
-        .add-mode .stat-section-title.bat-color::after,
-        .add-mode .stat-section-title.bowl-color::after,
-        .add-mode .stat-section-title.ms-color::after{
-            content:' (+)';font-size:9px;opacity:.6;
-        }
-
-        /* ── STICKY BUTTON ROW ───────────────────── */
-        .sheet-footer{
-            flex-shrink:0;
-            padding:12px 20px 28px;
-            border-top:1px solid var(--divider);
-            background:var(--glass-bg);
-            backdrop-filter:blur(28px);
-        }
-        .footer-hint{font-size:11px;color:var(--text-muted);text-align:center;margin-bottom:10px;line-height:1.4;}
-        .footer-hint span{color:var(--accent);font-weight:600;}
-        .submit-btn{
-            width:100%;padding:14px;
-            color:#fff;border:none;border-radius:14px;
-            font-family:var(--font-main);font-size:15px;font-weight:600;
-            cursor:pointer;transition:all var(--transition);
-        }
+        /* ── STICKY FOOTER ───────────────────────── */
+        .sheet-footer{flex-shrink:0;padding:12px 20px 32px;border-top:1px solid var(--divider);background:var(--glass-bg);backdrop-filter:blur(28px);}
+        .footer-note{font-size:11px;color:var(--text-muted);text-align:center;margin-bottom:10px;line-height:1.4;}
+        .footer-note b{color:var(--accent);}
+        .footer-note b.red{color:#e74c3c;}
+        .submit-btn{width:100%;padding:14px;color:#fff;border:none;border-radius:14px;font-family:var(--font-main);font-size:15px;font-weight:600;cursor:pointer;transition:transform .15s,opacity .2s;}
         .submit-btn:active{transform:scale(.97);}
         .submit-btn:disabled{opacity:.5;cursor:not-allowed;}
-        .submit-btn.edit-mode-btn{background:linear-gradient(90deg,#e74c3c,#c0392b);}
-        .submit-btn.add-mode-btn{background:linear-gradient(90deg,var(--accent),#e8531a);}
+        .btn-add {background:linear-gradient(90deg,var(--accent),#e8531a);}
+        .btn-edit{background:linear-gradient(90deg,#e74c3c,#c0392b);}
 
-        /* ── EMPTY ──────────────────────────────── */
+        /* ── MISC ────────────────────────────────── */
         .empty-state{padding:30px 20px;text-align:center;color:var(--text-muted);font-size:14px;}
 
-        /* ── BOTTOM NAV ─────────────────────────── */
+        /* ── NAV ─────────────────────────────────── */
         .bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:480px;background:var(--nav-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--glass-border);border-radius:30px;display:flex;justify-content:space-around;padding:10px 4px;box-shadow:0 10px 40px rgba(0,0,0,.25);z-index:50;}
-        .nav-item{text-align:center;color:var(--text-muted);text-decoration:none;font-size:9px;font-weight:500;letter-spacing:.04em;transition:all var(--transition);flex:1;padding:3px 0;border-radius:20px;}
+        .nav-item{text-align:center;color:var(--text-muted);text-decoration:none;font-size:9px;font-weight:500;letter-spacing:.04em;flex:1;padding:3px 0;border-radius:20px;transition:color var(--transition);}
         .nav-item.active{color:var(--accent);}
         .nav-icon{font-size:18px;display:block;margin-bottom:2px;}
     </style>
@@ -247,135 +164,92 @@
 
 <div class="search-wrap">
     <span class="search-icon">🔍</span>
-    <input type="text" class="search-bar" id="search-bar" placeholder="Search players…" oninput="renderList(allPlayers)">
+    <input class="search-bar" id="search-bar" type="text" placeholder="Search players…" oninput="renderList(allPlayers)">
 </div>
 
 <div class="card">
-    <div id="stats-player-list"><div class="empty-state">Loading players…</div></div>
+    <div id="player-list"><div class="empty-state">Loading players…</div></div>
 </div>
 
-<!-- ── BOTTOM SHEET ────────────────────────────── -->
+<!-- ── BOTTOM SHEET ──────────────────────────────── -->
 <div id="stat-modal" class="modal" onclick="handleOverlay(event)">
-    <div class="modal-sheet">
+  <div class="modal-sheet">
 
-        <!-- FIXED HEADER -->
-        <div class="sheet-header-fixed">
-            <div class="sheet-handle"></div>
-            <div class="sheet-title-row">
-                <div>
-                    <h3 id="modal-player-name">Player Name</h3>
-                    <p id="modal-player-team">Owned by: –</p>
-                </div>
-                <button class="close-btn" onclick="closeStatForm()">✕</button>
-            </div>
-            <!-- Mode tabs -->
-            <div class="mode-row">
-                <button class="mode-tab active" id="tab-add" onclick="setMode('add')">＋ Add Stats</button>
-                <button class="mode-tab" id="tab-edit" onclick="setMode('edit')">✏️ Edit / Replace</button>
-            </div>
+    <!-- Fixed top -->
+    <div class="sheet-top">
+      <div class="sheet-handle"></div>
+      <div class="sheet-title-row">
+        <div>
+          <h3 id="modal-name">Player</h3>
+          <p id="modal-team">—</p>
         </div>
-
-        <!-- SCROLLABLE BODY -->
-        <div class="sheet-body" id="sheet-body">
-
-            <!-- Current stats table -->
-            <div class="cur-stats-section">
-                <div class="cur-stats-title">📊 Current Stats</div>
-                <div class="stats-table-wrap">
-                    <table class="stats-table" id="cur-stats-table">
-                        <tr>
-                            <th>PTS</th><th>Runs</th><th>4s</th><th>6s</th>
-                            <th>Cats</th><th>Wkts</th><th>Maidens</th><th>Dots</th>
-                            <th>50s</th><th>100s</th><th>3W</th><th>5W</th>
-                            <th>R-Out</th><th>Stmpg</th>
-                        </tr>
-                        <tr id="cur-stats-row">
-                            <td class="pts-cell">—</td>
-                            <td>—</td><td>—</td><td>—</td><td>—</td>
-                            <td>—</td><td>—</td><td>—</td><td>—</td>
-                            <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
-                        </tr>
-                    </table>
-                </div>
-                <p class="scroll-hint">← scroll to see all stats →</p>
-            </div>
-
-            <!-- Mode hint -->
-            <div style="padding:10px 20px 0;">
-                <div class="footer-hint" id="mode-hint" style="text-align:left;margin-bottom:0;">
-                    <span>＋ Add mode:</span> values are added to existing stats (e.g. enter runs scored today)
-                </div>
-            </div>
-
-            <!-- Input form -->
-            <div class="stat-section">
-                <p class="stat-section-title bat-color">Batting &amp; Fielding</p>
-                <div class="stat-grid">
-                    <div class="stat-input-group"><label>Runs</label><input type="number" id="s-runs" value="0" min="0" inputmode="numeric"></div>
-                    <div class="stat-input-group"><label>4s</label><input type="number" id="s-4s" value="0" min="0" inputmode="numeric"></div>
-                    <div class="stat-input-group"><label>6s</label><input type="number" id="s-6s" value="0" min="0" inputmode="numeric"></div>
-                    <div class="stat-input-group"><label>Catches</label><input type="number" id="s-catches" value="0" min="0" inputmode="numeric"></div>
-                    <div class="stat-input-group"><label>Run Outs</label><input type="number" id="s-runouts" value="0" min="0" inputmode="numeric"></div>
-                    <div class="stat-input-group"><label>Stumpings</label><input type="number" id="s-stumpings" value="0" min="0" inputmode="numeric"></div>
-                </div>
-            </div>
-
-            <div class="stat-section">
-                <p class="stat-section-title bowl-color">Bowling</p>
-                <div class="stat-grid">
-                    <div class="stat-input-group"><label>Wickets</label><input type="number" id="s-wickets" value="0" min="0" inputmode="numeric"></div>
-                    <div class="stat-input-group"><label>Maidens</label><input type="number" id="s-maidens" value="0" min="0" inputmode="numeric"></div>
-                    <div class="stat-input-group"><label>Dots</label><input type="number" id="s-dots" value="0" min="0" inputmode="numeric"></div>
-                </div>
-            </div>
-
-            <div class="stat-section">
-                <p class="stat-section-title ms-color">Milestones</p>
-                <div class="stat-grid">
-                    <div class="stat-input-group"><label>50s</label><input type="number" id="s-50s" value="0" min="0" max="1" inputmode="numeric"></div>
-                    <div class="stat-input-group"><label>100s</label><input type="number" id="s-100s" value="0" min="0" max="1" inputmode="numeric"></div>
-                    <div class="stat-input-group"><label>3W Haul</label><input type="number" id="s-3w" value="0" min="0" max="1" inputmode="numeric"></div>
-                    <div class="stat-input-group"><label>5W Haul</label><input type="number" id="s-5w" value="0" min="0" max="1" inputmode="numeric"></div>
-                </div>
-            </div>
-            <!-- bottom breathing room before sticky footer -->
-            <div style="height:16px;"></div>
-        </div><!-- end .sheet-body -->
-
-        <!-- STICKY FOOTER BUTTON -->
-        <div class="sheet-footer">
-            <p class="footer-hint" id="footer-hint-add">
-                Entering stats for this match only. Will be <span>added</span> to player's totals.
-            </p>
-            <p class="footer-hint" id="footer-hint-edit" style="display:none;">
-                This will <span style="color:#e74c3c;">replace</span> all existing stats for this player. Use to fix mistakes.
-            </p>
-            <button class="submit-btn add-mode-btn" id="submit-btn" onclick="submitStats()">
-                ＋ Add Stats & Update Points
-            </button>
-        </div>
-
+        <button class="close-btn" onclick="closeModal()">✕</button>
+      </div>
+      <div class="mode-row">
+        <button class="mode-tab active" id="tab-add"  onclick="setMode('add')">＋ Add Stats</button>
+        <button class="mode-tab"        id="tab-edit" onclick="setMode('edit')">✏️ Edit / Replace</button>
+      </div>
     </div>
+
+    <!-- Scrollable body -->
+    <div class="sheet-body" id="sheet-body">
+
+      <!-- Current stats table — columns generated from Config -->
+      <div class="cur-stats-wrap">
+        <div class="cur-stats-label">📊 Current Stats</div>
+        <div class="tbl-scroll">
+          <table class="cur-tbl">
+            <thead id="cur-thead"></thead>
+            <tbody id="cur-tbody"></tbody>
+          </table>
+        </div>
+        <p class="scroll-hint">← swipe to see all stats →</p>
+      </div>
+
+      <!-- Mode hint (swapped by setMode) -->
+      <div id="mode-hint-wrap" class="mode-hint">
+        <span>＋ Add mode:</span> values entered are added on top of current totals.
+      </div>
+
+      <!-- Dynamic form built from Config -->
+      <div id="dynamic-form"></div>
+      <div style="height:16px"></div>
+
+    </div><!-- /sheet-body -->
+
+    <!-- Sticky footer -->
+    <div class="sheet-footer">
+      <p class="footer-note" id="footer-note">
+        Stats for this match will be <b>added</b> to totals.
+      </p>
+      <button class="submit-btn btn-add" id="submit-btn" onclick="submitStats()">
+        ＋ Add Stats &amp; Update Points
+      </button>
+    </div>
+
+  </div>
 </div>
 
 <nav class="bottom-nav">
     <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span>Home</a>
-    <a href="squad.html"    class="nav-item"><span class="nav-icon">🛡️</span>Squad</a>
-    <a href="players.html"  class="nav-item"><span class="nav-icon">🃏</span>Cards</a>
-    <a href="stats.html"    class="nav-item active"><span class="nav-icon">📊</span>Stats</a>
-    <a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span>Settings</a>
+    <a href="squad.html"     class="nav-item"><span class="nav-icon">🛡️</span>Squad</a>
+    <a href="players.html"   class="nav-item"><span class="nav-icon">🃏</span>Cards</a>
+    <a href="stats.html"     class="nav-item active"><span class="nav-icon">📊</span>Stats</a>
+    <a href="settings.html"  class="nav-item"><span class="nav-icon">⚙️</span>Settings</a>
 </nav>
 
 <script>
+// ── CONFIG ──────────────────────────────────────────────────
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
-const myTeamName = localStorage.getItem("teamName") || "";
-const isAdmin    = myTeamName === "Admin";
+const myTeam      = localStorage.getItem("teamName") || "";
+const isAdmin     = myTeam === "Admin";
 
-let allPlayers    = [];
-let currentPlayer = null; // full player object
-let currentMode   = "add"; // "add" | "edit"
+let allPlayers   = [];
+let pointsConfig = [];   // array of {key, label, points, category}
+let curPlayer    = null;
+let curMode      = "add";
 
-// ── THEME ────────────────────────────────────────
+// ── THEME ───────────────────────────────────────────────────
 const savedTheme = localStorage.getItem("theme") || "dark";
 document.documentElement.setAttribute("data-theme", savedTheme);
 document.getElementById("theme-icon").textContent = savedTheme === "dark" ? "☀️" : "🌙";
@@ -386,238 +260,278 @@ function toggleTheme() {
     document.getElementById("theme-icon").textContent = next === "dark" ? "☀️" : "🌙";
 }
 
-// ── INIT ─────────────────────────────────────────
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("role-label").innerText  = isAdmin ? "Admin" : "My Squad";
-    document.getElementById("role-desc").innerText   = isAdmin
+// ── INIT ───────────────────────────────────────────────────
+document.addEventListener("DOMContentLoaded", async () => {
+    document.getElementById("role-label").innerText = isAdmin ? "Admin" : "My Squad";
+    document.getElementById("role-desc").innerText  = isAdmin
         ? "Update stats for any player"
-        : "Update stats for your own players only";
-    loadAllPlayers();
+        : "Your players only";
+    // Load config and players in parallel
+    await Promise.all([loadConfig(), loadPlayers()]);
 });
 
-function handleOverlay(e) {
-    if (e.target === document.getElementById("stat-modal")) closeStatForm();
+// ── LOAD CONFIG ────────────────────────────────────────────
+// KEY: this is what makes custom attributes appear in the form.
+async function loadConfig() {
+    try {
+        const res = await fetch(WEB_APP_URL, {
+            method:"POST", body: JSON.stringify({ action:"getPointsConfig" })
+        });
+        const result = await res.json();
+        if (result.status === "success") pointsConfig = result.config;
+    } catch(e) { console.warn("Config load failed:", e); }
 }
 
-// ── LOAD PLAYERS ────────────────────────────────
-async function loadAllPlayers() {
-    const container = document.getElementById("stats-player-list");
+// ── LOAD PLAYERS ───────────────────────────────────────────
+async function loadPlayers() {
+    const container = document.getElementById("player-list");
     try {
         const res    = await fetch(WEB_APP_URL, { method:"POST", body: JSON.stringify({ action:"getPlayers" }) });
         const result = await res.json();
         if (result.status === "success") {
             allPlayers = isAdmin
                 ? result.players
-                : result.players.filter(p => p["Sold To"] === myTeamName);
-
+                : result.players.filter(p => p["Sold To"] === myTeam);
             if (!allPlayers.length && !isAdmin) {
-                container.innerHTML = `<div class="empty-state">You have no players yet.<br>Draft players first.</div>`;
+                container.innerHTML = `<div class="empty-state">No players in your squad yet.</div>`;
                 return;
             }
             renderList(allPlayers);
         }
     } catch {
-        container.innerHTML = `<div class="empty-state" style="color:#e74c3c;">Failed to load players.</div>`;
+        container.innerHTML = `<div class="empty-state" style="color:#e74c3c">Failed to load players.</div>`;
     }
 }
 
-function roleClass(r) {
-    if (r === "BOWL") return "bowl";
-    if (r === "AR")   return "ar";
-    if (r === "WK")   return "wk";
-    return "bat";
-}
+// ── RENDER LIST ────────────────────────────────────────────
+function roleClass(r) { return {BOWL:"bowl",AR:"ar",WK:"wk"}[r] || "bat"; }
+function n(v) { return parseInt(v) || 0; }
 
-function safeInt(v) { return parseInt(v) || 0; }
-
-// ── RENDER LIST ──────────────────────────────────
 function renderList(players) {
-    const container = document.getElementById("stats-player-list");
-    const q = (document.getElementById("search-bar").value || "").toLowerCase();
-    const filtered = players.filter(p => p["Player Name"].toLowerCase().includes(q));
+    const q  = document.getElementById("search-bar").value.toLowerCase();
+    const fl = players.filter(p => p["Player Name"].toLowerCase().includes(q));
+    const el = document.getElementById("player-list");
+    if (!fl.length) { el.innerHTML = `<div class="empty-state">No players found.</div>`; return; }
 
-    if (!filtered.length) {
-        container.innerHTML = `<div class="empty-state">No players found.</div>`;
-        return;
-    }
-
-    container.innerHTML = filtered.map(p => {
-        const rc    = roleClass(p["Role"]);
-        const pts   = safeInt(p["Total Points"]);
-        const owned = p["Sold To"]
+    el.innerHTML = fl.map(p => {
+        const enc  = encodeURIComponent(p["Player Name"]);
+        const rc   = roleClass(p["Role"]);
+        const pts  = n(p["Total Points"]);
+        const own  = p["Sold To"]
             ? `<span class="badge owned">${p["Sold To"]}</span>`
             : `<span class="badge unsold">Unsold</span>`;
-        const ptsB  = pts > 0 ? `<span class="badge pts">${pts}pts</span>` : "";
-        // Encode name/team for safe HTML attribute use
-        const enc   = encodeURIComponent(p["Player Name"]);
-
+        const ptB  = pts > 0 ? `<span class="badge pts">${pts}pts</span>` : "";
         return `
         <div class="player-row">
-            <div class="player-avatar">👤</div>
-            <div class="player-info" onclick="openStatForm('${enc}', 'add')" style="cursor:pointer;">
-                <div class="player-name">${p["Player Name"]}</div>
-                <div class="badges">
-                    <span class="badge ${rc}">${p["Role"]}</span>
-                    ${owned}${ptsB}
-                </div>
-            </div>
-            <div class="row-actions">
-                <button class="row-btn add-btn" title="Add stats" onclick="openStatForm('${enc}','add')">＋</button>
-                <button class="row-btn" title="Edit / replace stats" onclick="openStatForm('${enc}','edit')">✏️</button>
-            </div>
+          <div class="player-avatar">👤</div>
+          <div class="player-info" onclick="openModal('${enc}','add')">
+            <div class="player-name">${p["Player Name"]}</div>
+            <div class="badges"><span class="badge ${rc}">${p["Role"]}</span>${own}${ptB}</div>
+          </div>
+          <div class="row-actions">
+            <button class="row-btn add-btn" title="Add stats"      onclick="openModal('${enc}','add')">＋</button>
+            <button class="row-btn"          title="Edit / replace" onclick="openModal('${enc}','edit')">✏️</button>
+          </div>
         </div>`;
     }).join("");
 }
 
-// ── OPEN MODAL ───────────────────────────────────
-function openStatForm(encName, mode) {
-    const name = decodeURIComponent(encName);
-    currentPlayer = allPlayers.find(p => p["Player Name"] === name);
-    if (!currentPlayer) return;
+// ── OPEN MODAL ─────────────────────────────────────────────
+async function openModal(encName, mode) {
+    curPlayer = allPlayers.find(p => p["Player Name"] === decodeURIComponent(encName));
+    if (!curPlayer) return;
 
-    document.getElementById("modal-player-name").innerText = name;
-    document.getElementById("modal-player-team").innerText = currentPlayer["Sold To"]
-        ? `Owned by: ${currentPlayer["Sold To"]}`
+    // Ensure config is loaded before building form
+    if (!pointsConfig.length) await loadConfig();
+
+    document.getElementById("modal-name").innerText = curPlayer["Player Name"];
+    document.getElementById("modal-team").innerText = curPlayer["Sold To"]
+        ? `Owned by: ${curPlayer["Sold To"]}`
         : "Status: Unsold";
 
-    populateCurrentStats(currentPlayer);
+    buildStatsTable();   // build current stats table from live config
+    buildForm();         // build input form from live config
     setMode(mode);
-    resetForm();
-
-    // If edit mode, pre-fill inputs with current stats
-    if (mode === "edit") prefillForm(currentPlayer);
 
     document.getElementById("stat-modal").classList.add("open");
-    // Scroll sheet body to top
     document.getElementById("sheet-body").scrollTop = 0;
 }
 
-// ── FILL CURRENT STATS TABLE ─────────────────────
-function populateCurrentStats(p) {
-    const vals = [
-        safeInt(p["Total Points"]),
-        safeInt(p["Runs"]),
-        safeInt(p["4s"]),
-        safeInt(p["6s"]),
-        safeInt(p["Catches"]),
-        safeInt(p["Wickets"]),
-        safeInt(p["Maidens"]),
-        safeInt(p["Dots"]),
-        safeInt(p["50s"]),
-        safeInt(p["100s"]),
-        safeInt(p["3W"]),
-        safeInt(p["5W"]),
-        safeInt(p["Run Outs"]),
-        safeInt(p["Stumpings"]),
-    ];
-    const row = document.getElementById("cur-stats-row");
-    row.innerHTML = vals.map((v, i) => {
-        const cls = i === 0 ? "pts-cell" : (v > 0 ? "nz" : "");
-        return `<td class="${cls}">${v}</td>`;
-    }).join("");
-}
+// ── CURRENT STATS TABLE ────────────────────────────────────
+// Dynamically generates a column for every attribute in Config,
+// so custom attributes show their current value too.
+function buildStatsTable() {
+    let thHTML = "<tr><th>PTS</th>";
+    let tdHTML = `<td class="pts">${n(curPlayer["Total Points"])}</td>`;
 
-// ── RESET / PREFILL FORM ────────────────────────
-function resetForm() {
-    ["s-runs","s-4s","s-6s","s-catches","s-runouts","s-stumpings",
-     "s-wickets","s-maidens","s-dots","s-50s","s-100s","s-3w","s-5w"].forEach(id => {
-        document.getElementById(id).value = "0";
+    pointsConfig.forEach(attr => {
+        thHTML += `<th>${attr.label}</th>`;
+        // Look up the value: try exact key, then known aliases
+        const val = n(curPlayer[attr.key])
+                 || n(curPlayer[keyAlias(attr.key)])
+                 || n(curPlayer[attr.key.toUpperCase()])
+                 || 0;
+        tdHTML += `<td class="${val > 0 ? 'hi' : ''}">${val}</td>`;
     });
+
+    document.getElementById("cur-thead").innerHTML = thHTML + "</tr>";
+    document.getElementById("cur-tbody").innerHTML = "<tr>" + tdHTML + "</tr>";
 }
 
-function prefillForm(p) {
-    document.getElementById("s-runs").value     = safeInt(p["Runs"]);
-    document.getElementById("s-4s").value       = safeInt(p["4s"]);
-    document.getElementById("s-6s").value       = safeInt(p["6s"]);
-    document.getElementById("s-catches").value  = safeInt(p["Catches"]);
-    document.getElementById("s-runouts").value  = safeInt(p["Run Outs"]);
-    document.getElementById("s-stumpings").value= safeInt(p["Stumpings"]);
-    document.getElementById("s-wickets").value  = safeInt(p["Wickets"]);
-    document.getElementById("s-maidens").value  = safeInt(p["Maidens"]);
-    document.getElementById("s-dots").value     = safeInt(p["Dots"]);
-    document.getElementById("s-50s").value      = safeInt(p["50s"]);
-    document.getElementById("s-100s").value     = safeInt(p["100s"]);
-    document.getElementById("s-3w").value       = safeInt(p["3W"]);
-    document.getElementById("s-5w").value       = safeInt(p["5W"]);
+// Maps config key → Players sheet column header name
+function keyAlias(key) {
+    const a = {
+        fours:'4s', sixes:'6s', fifties:'50s', hundreds:'100s',
+        runouts:'Run Outs', stumpings:'Stumpings', maidens:'Maidens',
+        dots:'Dots', threew:'3W', fivew:'5W',
+        catches:'Catches', wickets:'Wickets', runs:'Runs'
+    };
+    return a[key.toLowerCase()] || key;
 }
 
-// ── MODE TABS ────────────────────────────────────
+// ── BUILD DYNAMIC FORM ─────────────────────────────────────
+// KEY FIX: No longer hardcoded HTML. Reads pointsConfig and
+// renders an input for EVERY attribute, including custom ones.
+function buildForm() {
+    const catOrder = ['batting','bowling','fielding','milestone','custom'];
+    const catMeta  = {
+        batting:  { title:'Batting',    cls:'c-bat'    },
+        bowling:  { title:'Bowling',    cls:'c-bowl'   },
+        fielding: { title:'Fielding',   cls:'c-field'  },
+        milestone:{ title:'Milestones', cls:'c-ms'     },
+        custom:   { title:'Custom',     cls:'c-custom' },
+    };
+
+    // Group attributes by category
+    const groups = {};
+    pointsConfig.forEach(attr => {
+        const cat = (attr.category || 'custom').toLowerCase();
+        if (!groups[cat]) groups[cat] = [];
+        groups[cat].push(attr);
+    });
+
+    let html = "";
+    catOrder.forEach(cat => {
+        if (!groups[cat] || !groups[cat].length) return;
+        const m = catMeta[cat] || { title: cat, cls:'c-custom' };
+        html += `<div class="stat-section">
+            <p class="sec-title ${m.cls}">${m.title}</p>
+            <div class="stat-grid">`;
+        groups[cat].forEach(attr => {
+            html += `<div class="sig">
+                <label>${attr.label}</label>
+                <input type="number" id="si-${attr.key}" value="0" min="0"
+                       inputmode="numeric" data-key="${attr.key}">
+            </div>`;
+        });
+        // Handle leftover categories not in catOrder
+        html += `</div></div>`;
+    });
+
+    // Any category not in catOrder
+    Object.keys(groups).forEach(cat => {
+        if (catOrder.includes(cat)) return;
+        html += `<div class="stat-section">
+            <p class="sec-title c-custom">${cat}</p>
+            <div class="stat-grid">`;
+        groups[cat].forEach(attr => {
+            html += `<div class="sig">
+                <label>${attr.label}</label>
+                <input type="number" id="si-${attr.key}" value="0" min="0"
+                       inputmode="numeric" data-key="${attr.key}">
+            </div>`;
+        });
+        html += `</div></div>`;
+    });
+
+    if (!html) html = `<div class="stat-section"><p style="color:var(--text-muted);font-size:13px;padding:20px 0;text-align:center;">No scoring attributes configured.</p></div>`;
+    document.getElementById("dynamic-form").innerHTML = html;
+}
+
+// ── MODE SWITCH ────────────────────────────────────────────
 function setMode(mode) {
-    currentMode = mode;
+    curMode = mode;
     const isAdd = mode === "add";
 
     document.getElementById("tab-add").classList.toggle("active", isAdd);
     document.getElementById("tab-edit").classList.toggle("active", !isAdd);
 
-    document.getElementById("footer-hint-add").style.display  = isAdd ? "block" : "none";
-    document.getElementById("footer-hint-edit").style.display = isAdd ? "none"  : "block";
-
-    const btn = document.getElementById("submit-btn");
+    const hint = document.getElementById("mode-hint-wrap");
     if (isAdd) {
-        btn.textContent = "＋ Add Stats & Update Points";
-        btn.className   = "submit-btn add-mode-btn";
-        resetForm();
+        hint.className = "mode-hint";
+        hint.innerHTML = `<span>＋ Add mode:</span> values entered are added on top of current totals.`;
     } else {
-        btn.textContent = "✏️ Replace Stats & Recalculate";
-        btn.className   = "submit-btn edit-mode-btn";
-        if (currentPlayer) prefillForm(currentPlayer);
+        hint.className = "mode-hint edit-hint";
+        hint.innerHTML = `<span>✏️ Edit mode:</span> will <span>replace</span> all existing stats. Use to correct mistakes.`;
     }
 
-    // Visual hint on form sections
-    document.querySelector(".sheet-body").classList.toggle("add-mode", isAdd);
+    const note = document.getElementById("footer-note");
+    const btn  = document.getElementById("submit-btn");
+    if (isAdd) {
+        note.innerHTML = `Stats for this match will be <b>added</b> to player's totals.`;
+        btn.textContent = "＋ Add Stats & Update Points";
+        btn.className  = "submit-btn btn-add";
+        resetInputs(0);
+    } else {
+        note.innerHTML = `Will <b class="red">replace</b> all current stats and recalculate points.`;
+        btn.textContent = "✏️ Replace Stats & Recalculate";
+        btn.className  = "submit-btn btn-edit";
+        prefillInputs();
+    }
+    btn.disabled = false;
 }
 
-function closeStatForm() {
-    document.getElementById("stat-modal").classList.remove("open");
+function resetInputs(v) {
+    document.querySelectorAll("#dynamic-form input[data-key]").forEach(i => i.value = v);
 }
 
-// ── SUBMIT ───────────────────────────────────────
+function prefillInputs() {
+    if (!curPlayer) return;
+    document.querySelectorAll("#dynamic-form input[data-key]").forEach(inp => {
+        const key = inp.getAttribute("data-key");
+        inp.value = n(curPlayer[key]) || n(curPlayer[keyAlias(key)]);
+    });
+}
+
+function closeModal()   { document.getElementById("stat-modal").classList.remove("open"); }
+function handleOverlay(e) { if (e.target === document.getElementById("stat-modal")) closeModal(); }
+
+// ── SUBMIT ─────────────────────────────────────────────────
+// KEY FIX: stats object is built from ALL dynamic inputs by key,
+// so custom attributes are automatically included in the payload.
 async function submitStats() {
     const btn = document.getElementById("submit-btn");
     btn.innerText = "Calculating…";
     btn.disabled  = true;
 
-    const stats = {
-        runs:     document.getElementById("s-runs").value,
-        fours:    document.getElementById("s-4s").value,
-        sixes:    document.getElementById("s-6s").value,
-        catches:  document.getElementById("s-catches").value,
-        wickets:  document.getElementById("s-wickets").value,
-        maidens:  document.getElementById("s-maidens").value,
-        dots:     document.getElementById("s-dots").value,
-        fifties:  document.getElementById("s-50s").value,
-        hundreds: document.getElementById("s-100s").value,
-        threeW:   document.getElementById("s-3w").value,
-        fiveW:    document.getElementById("s-5w").value,
-        runouts:  document.getElementById("s-runouts").value,
-        stumpings:document.getElementById("s-stumpings").value,
-    };
+    const stats = {};
+    document.querySelectorAll("#dynamic-form input[data-key]").forEach(inp => {
+        stats[inp.getAttribute("data-key")] = inp.value;
+    });
 
     try {
         const res = await fetch(WEB_APP_URL, {
-            method: "POST",
+            method:"POST",
             body: JSON.stringify({
                 action:        "updateStats",
-                playerName:    currentPlayer["Player Name"],
-                requesterTeam: myTeamName,
-                mode:          currentMode,   // "add" | "edit" — backend uses this
+                playerName:    curPlayer["Player Name"],
+                requesterTeam: myTeam,
+                mode:          curMode,     // "add" | "edit"
                 stats
             })
         });
         const result = await res.json();
         if (result.status === "success") {
             alert(result.message);
-            closeStatForm();
-            loadAllPlayers(); // refresh list with new points
+            closeModal();
+            await loadPlayers(); // refresh list with updated points
         } else {
             alert(result.message || "Error updating stats.");
         }
     } catch {
-        alert("Failed to update. Check your connection.");
+        alert("Failed to update. Check connection.");
     } finally {
-        // Restore button label based on current mode
-        setMode(currentMode);
-        btn.disabled = false;
+        setMode(curMode);
     }
 }
 </script>
