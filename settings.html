@@ -148,6 +148,10 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .user-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .user-sub{font-size:10px;color:var(--text-3);margin-top:1px;}
 .user-pts{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:500;}
+.del-user-btn{width:28px;height:28px;border-radius:8px;border:1px solid rgba(231,76,60,.3);
+  background:rgba(231,76,60,.08);color:#e74c3c;font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.del-user-btn:hover{background:rgba(231,76,60,.2);}
 
 /* SIGN OUT */
 .signout-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:calc(100% - 32px);
@@ -486,7 +490,7 @@ async function saveScoringRules(){
 async function recalcAll(){
   const btn=document.getElementById("recalc-btn");
   btn.disabled=true;btn.textContent="Recalculating…";
-  const res=await api({action:"recalcAllPoints"});
+  const res=await api({action:"recalcAll"});
   if(res?.status==="success") alert("✅ All player points recalculated!");
   else alert(res?.message||"Recalculation failed.");
   btn.disabled=false;btn.textContent="🔄 Recalculate All Player Points";
@@ -499,15 +503,30 @@ async function loadUsers(){
   if(!res||res.status!=="success"){el.innerHTML='<div class="loading-row" style="color:#e74c3c">Failed to load users.</div>';return;}
   const teams=(res.leaderboard||[]).filter(t=>t.teamName!=="Admin");
   if(!teams.length){el.innerHTML='<div class="loading-row">No users yet.</div>';return;}
-  el.innerHTML=teams.map(t=>`
-    <div class="user-row">
+  el.innerHTML=teams.map((t,i)=>`
+    <div class="user-row" id="urow-${i}">
       <div class="user-avatar">${(t.teamName[0]||"?").toUpperCase()}</div>
       <div class="user-info">
         <div class="user-name">${t.teamName}</div>
-        <div class="user-sub">${t.ownerName||"—"} · Rank #${teams.indexOf(t)+1}</div>
+        <div class="user-sub">${t.ownerName||"—"} · Rank #${i+1} · ${t.points} pts</div>
       </div>
-      <span class="user-pts">${t.points} pts</span>
+      <button class="del-user-btn" onclick="deleteUser('${encodeURIComponent(t.teamName)}',${i})" title="Delete user">🗑️</button>
     </div>`).join("");
+}
+
+async function deleteUser(encTeam,rowIdx){
+  const teamName=decodeURIComponent(encTeam);
+  if(!confirm(`Delete "${teamName}" and all their data? This cannot be undone.`)) return;
+  const row=document.getElementById("urow-"+rowIdx);
+  if(row){row.style.opacity="0.4";row.style.pointerEvents="none";}
+  const res=await api({action:"deleteUser",teamToDelete:teamName});
+  if(res?.status==="success"){
+    alert(`✅ "${teamName}" has been deleted.`);
+    loadUsers();
+  } else {
+    alert(res?.message||"Failed to delete user.");
+    if(row){row.style.opacity="";row.style.pointerEvents="";}
+  }
 }
 
 // ── EDIT PROFILE ─────────────────────────────────────────────────────────
