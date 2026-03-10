@@ -9,28 +9,28 @@
     <style>
         :root {
             --accent:#FF6B35; --accent-soft:rgba(255,107,53,0.15); --accent-glow:rgba(255,107,53,0.25);
+            --blue:#4facfe; --blue-soft:rgba(79,172,254,0.12);
             --font-main:'Outfit',sans-serif; --font-mono:'DM Mono',monospace; --font-display:'Bebas Neue',cursive;
             --transition:0.25s cubic-bezier(0.4,0,0.2,1);
         }
         [data-theme="dark"] {
-            --bg:#080d14;
-            --bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(30,60,100,.45) 0%,transparent 55%),
-                      radial-gradient(ellipse at 80% 80%,rgba(255,107,53,.07) 0%,transparent 50%),#080d14;
-            --glass-bg:rgba(255,255,255,.04); --glass-border:rgba(255,255,255,.08);
+            --bg:#07101f;
+            --bg-mesh:radial-gradient(ellipse at 15% 5%,rgba(79,172,254,0.12) 0%,transparent 50%),
+                      radial-gradient(ellipse at 85% 85%,rgba(255,107,53,0.10) 0%,transparent 50%),#07101f;
+            --glass-bg:rgba(255,255,255,.04); --glass-border:rgba(79,172,254,0.13);
             --glass-shadow:0 8px 40px rgba(0,0,0,.45);
-            --nav-bg:rgba(8,13,20,.92); --text-primary:#f0f2f5;
-            --text-secondary:rgba(240,242,245,.5); --text-muted:rgba(240,242,245,.28);
-            --divider:rgba(255,255,255,.06);
-            --input-bg:rgba(0,0,0,.3); --input-border:rgba(255,255,255,.1);
+            --nav-bg:rgba(7,16,31,.95); --text-primary:#eef2ff;
+            --text-secondary:rgba(238,242,255,.52); --text-muted:rgba(238,242,255,.28);
+            --divider:rgba(255,255,255,.055);
+            --input-bg:rgba(0,0,0,.3); --input-border:rgba(79,172,254,.15);
             --overlay:rgba(0,0,0,.78); --toggle-bg:rgba(255,255,255,.06);
-            --cur-bg:rgba(255,255,255,.025); --cur-border:rgba(255,255,255,.07);
-            --th-bg:rgba(255,255,255,.04); --sheet-bg:#0d1520;
+            --cur-bg:rgba(255,255,255,.025); --cur-border:rgba(79,172,254,.12);
+            --th-bg:rgba(79,172,254,.06); --sheet-bg:#0a1628;
         }
         [data-theme="light"] {
             --bg:#f0ece6;
-            --bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(255,200,150,.2) 0%,transparent 55%),
-                      radial-gradient(ellipse at 80% 80%,rgba(255,107,53,.06) 0%,transparent 50%),#f0ece6;
-            --glass-bg:rgba(255,255,255,.6); --glass-border:rgba(255,255,255,.85);
+            --bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(255,200,150,.2) 0%,transparent 55%),#f0ece6;
+            --glass-bg:rgba(255,255,255,.65); --glass-border:rgba(255,255,255,.9);
             --glass-shadow:0 8px 40px rgba(0,0,0,.09);
             --nav-bg:rgba(240,236,230,.93); --text-primary:#1a1a2e;
             --text-secondary:rgba(26,26,46,.55); --text-muted:rgba(26,26,46,.32);
@@ -43,135 +43,89 @@
 
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
         html{scroll-behavior:smooth;}
-        body{
-            font-family:var(--font-main);
-            background:var(--bg-mesh);background-color:var(--bg);
-            min-height:100vh;color:var(--text-primary);
-            padding-bottom:calc(68px + 14px + 28px);
-            /* Safe area for iPhone notch / Dynamic Island */
-            padding-left:env(safe-area-inset-left, 0px);
-            padding-right:env(safe-area-inset-right, 0px);
-            transition:background-color var(--transition),color var(--transition);
-            overflow-x:hidden;
-        }
+        body{font-family:var(--font-main);background:var(--bg-mesh);background-color:var(--bg);
+            min-height:100vh;color:var(--text-primary);padding-bottom:calc(68px + 14px + 28px);
+            padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px);
+            transition:background-color var(--transition),color var(--transition);overflow-x:hidden;}
 
-        /* ── TOPBAR ────────────────────────────────────────── */
-        .topbar{display:flex;justify-content:space-between;align-items:flex-start;padding:28px 20px 12px;}
-        .topbar-left .greeting{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+        /* TOPBAR */
+        .topbar{display:flex;justify-content:space-between;align-items:flex-start;padding:20px 20px 12px;}
+        .topbar-left .greeting{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:4px;}
         .topbar-left h1{font-size:26px;font-weight:800;line-height:1.1;letter-spacing:-.3px;}
         .topbar-left p{font-size:13px;color:var(--text-secondary);margin-top:4px;}
-        .theme-btn{width:38px;height:38px;border-radius:50%;background:var(--toggle-bg);border:1px solid var(--glass-border);color:var(--text-primary);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all var(--transition);}
-        .theme-btn:active{transform:scale(.9);}
+        .theme-btn{width:38px;height:38px;border-radius:50%;background:var(--toggle-bg);border:1px solid var(--glass-border);
+            color:var(--text-primary);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 
-        /* ── SEARCH ────────────────────────────────────────── */
+        /* SEARCH */
         .search-wrap{margin:0 16px 16px;position:relative;}
         .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none;}
-        .search-bar{width:100%;padding:13px 14px 13px 42px;border-radius:14px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-family:var(--font-main);font-size:14px;outline:none;-webkit-appearance:none;transition:border-color var(--transition);}
+        .search-bar{width:100%;padding:13px 14px 13px 42px;border-radius:14px;border:1px solid var(--input-border);
+            background:var(--input-bg);color:var(--text-primary);font-family:var(--font-main);font-size:14px;outline:none;-webkit-appearance:none;}
         .search-bar:focus{border-color:var(--accent);}
         .search-bar::placeholder{color:var(--text-muted);}
 
-        /* ── PLAYER LIST ───────────────────────────────────── */
+        /* PLAYER LIST */
         .players-list{padding:0 16px;}
-
-        .player-card{
-            background:var(--glass-bg);
-            backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-            border:1px solid var(--glass-border);
-            box-shadow:var(--glass-shadow);
-            border-radius:20px;
-            margin-bottom:10px;
-            display:flex;align-items:center;
-            padding:14px 16px;
-            gap:13px;
-            cursor:pointer;
-            transition:border-color var(--transition),box-shadow var(--transition);
-            -webkit-tap-highlight-color:transparent;
-        }
-        .player-card:active{
-            border-color:rgba(255,107,53,.3);
-            box-shadow:0 4px 20px rgba(255,107,53,.1),var(--glass-shadow);
-        }
-
-        /* Avatar circle */
-        .p-avatar{
-            width:42px;height:42px;border-radius:13px;
-            background:var(--accent-soft);border:1px solid var(--accent-glow);
-            display:flex;align-items:center;justify-content:center;
-            font-size:20px;flex-shrink:0;
-        }
-
-        /* Info */
+        .player-card{background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+            border:1px solid var(--glass-border);box-shadow:var(--glass-shadow);border-radius:20px;
+            margin-bottom:10px;display:flex;align-items:center;padding:14px 16px;gap:13px;
+            transition:border-color var(--transition),box-shadow var(--transition);-webkit-tap-highlight-color:transparent;
+            animation:fadeUp .3s ease both;}
+        .player-card:active{border-color:rgba(255,107,53,.3);box-shadow:0 4px 20px rgba(255,107,53,.1),var(--glass-shadow);}
+        .p-avatar{width:42px;height:42px;border-radius:13px;background:var(--accent-soft);border:1px solid var(--accent-glow);
+            display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
         .p-info{flex:1;min-width:0;}
         .p-name{font-size:15px;font-weight:700;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
         .p-meta{display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
-
-        /* Badges */
         .badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;letter-spacing:.04em;}
-        .badge.bat  {background:rgba(52,152,219,.18);color:#4facfe;}
-        .badge.bowl {background:rgba(231,76,60,.18); color:#e74c3c;}
-        .badge.ar   {background:rgba(241,196,15,.18);color:#f1c40f;}
-        .badge.wk   {background:rgba(155,89,182,.18);color:#bb8fce;}
+        .badge.bat{background:rgba(52,152,219,.18);color:#4facfe;}
+        .badge.bowl{background:rgba(231,76,60,.18);color:#e74c3c;}
+        .badge.ar{background:rgba(241,196,15,.18);color:#f1c40f;}
+        .badge.wk{background:rgba(155,89,182,.18);color:#bb8fce;}
         .badge.owned{background:rgba(79,172,254,.12);color:#4facfe;}
         .badge.unsold{background:rgba(255,255,255,.06);color:var(--text-muted);}
 
-        /* Points + actions column */
+        /* Points + actions — horizontal layout: pts | + | ✏️ */
         .p-right{display:flex;align-items:center;gap:6px;flex-shrink:0;}
-
-        /* Points pill */
-        .pts-pill{
-            background:var(--accent-soft);border:1px solid var(--accent-glow);
-            border-radius:10px;padding:6px 10px;text-align:center;
-        }
+        .pts-pill{background:var(--accent-soft);border:1px solid var(--accent-glow);border-radius:10px;padding:6px 10px;text-align:center;}
         .pts-pill .pv{font-family:var(--font-mono);font-size:15px;font-weight:600;color:var(--accent);display:block;line-height:1;}
         .pts-pill .pl{font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);opacity:.65;margin-top:2px;}
-
-        /* Action buttons — horizontal row */
         .p-actions{display:flex;flex-direction:row;gap:5px;}
-        .act-btn{
-            width:36px;height:36px;border-radius:10px;
-            border:1px solid var(--glass-border);
-            background:var(--glass-bg);
-            color:var(--text-secondary);
-            font-size:15px;cursor:pointer;
-            display:flex;align-items:center;justify-content:center;
-            transition:all var(--transition);
-            -webkit-tap-highlight-color:transparent;
-            touch-action:manipulation;
-        }
+        .act-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--glass-border);background:var(--glass-bg);
+            color:var(--text-secondary);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+            transition:all var(--transition);-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
         .act-btn.add{background:var(--accent-soft);border-color:var(--accent-glow);color:var(--accent);font-size:20px;font-weight:300;}
         .act-btn:active{transform:scale(.85);}
 
-        /* ── EMPTY / LOADING ───────────────────────────────── */
         .empty-state{padding:36px 20px;text-align:center;color:var(--text-muted);font-size:14px;}
 
-        /* ── BOTTOM SHEET ──────────────────────────────────── */
-        .modal{display:none;position:fixed;inset:0;background:var(--overlay);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:200;align-items:flex-end;justify-content:center;}
+        /* BOTTOM SHEET */
+        .modal{display:none;position:fixed;inset:0;background:var(--overlay);backdrop-filter:blur(8px);
+            -webkit-backdrop-filter:blur(8px);z-index:200;align-items:flex-end;justify-content:center;}
         .modal.open{display:flex;}
-        .modal-sheet{
-            background:var(--sheet-bg);
-            border:1px solid var(--glass-border);
-            border-radius:26px 26px 0 0;
-            width:100%;max-height:93vh;
-            display:flex;flex-direction:column;
-            animation:sheetUp .28s cubic-bezier(.4,0,.2,1);
-            box-shadow:0 -16px 60px rgba(0,0,0,.5);
-        }
+        .modal-sheet{background:var(--sheet-bg);border:1px solid var(--glass-border);border-radius:26px 26px 0 0;
+            width:100%;max-height:93vh;display:flex;flex-direction:column;
+            animation:sheetUp .28s cubic-bezier(.4,0,.2,1);box-shadow:0 -16px 60px rgba(0,0,0,.5);}
         @keyframes sheetUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
 
-        /* Sheet header — fixed */
+        /* Sheet header */
         .sheet-top{flex-shrink:0;padding:14px 20px 0;border-bottom:1px solid var(--divider);}
         .sheet-handle{width:36px;height:4px;border-radius:2px;background:var(--text-muted);margin:0 auto 14px;opacity:.4;}
         .sheet-title-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
         .sheet-title-row h3{font-size:18px;font-weight:800;letter-spacing:-.2px;}
         .sheet-title-row p{font-size:12px;color:var(--text-secondary);margin-top:3px;}
-        .close-btn{width:30px;height:30px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-border);color:var(--text-secondary);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+        /* Close button */
+        .close-btn{width:32px;height:32px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-border);
+            color:var(--text-secondary);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+        .close-btn:active{transform:scale(.9);}
 
         /* Mode tabs */
         .mode-row{display:flex;gap:6px;margin-bottom:14px;background:var(--input-bg);border:1px solid var(--input-border);border-radius:12px;padding:4px;}
-        .mode-tab{flex:1;padding:8px;border-radius:9px;border:none;background:transparent;color:var(--text-muted);font-family:var(--font-main);font-size:12px;font-weight:700;cursor:pointer;transition:all var(--transition);letter-spacing:.04em;text-transform:uppercase;}
+        .mode-tab{flex:1;padding:8px;border-radius:9px;border:none;background:transparent;color:var(--text-muted);
+            font-family:var(--font-main);font-size:12px;font-weight:700;cursor:pointer;transition:all var(--transition);letter-spacing:.04em;text-transform:uppercase;}
         .mode-tab.active{background:var(--accent);color:#fff;box-shadow:0 2px 10px rgba(255,107,53,.3);}
 
-        /* Sheet scrollable body */
+        /* Sheet body */
         .sheet-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
         .sheet-body::-webkit-scrollbar{display:none;}
 
@@ -182,62 +136,47 @@
         .tbl-scroll::-webkit-scrollbar{height:3px;}
         .tbl-scroll::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px;}
         .cur-tbl{border-collapse:collapse;width:100%;}
-        .cur-tbl th{padding:7px 12px;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);background:var(--th-bg);text-align:center;white-space:nowrap;}
-        .cur-tbl td{padding:9px 12px;font-family:var(--font-mono);font-size:14px;font-weight:500;text-align:center;color:var(--text-primary);border-top:1px solid var(--divider);white-space:nowrap;}
-        .cur-tbl td.hi{color:var(--accent);}
+        .cur-tbl th{padding:7px 12px;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+            color:var(--text-muted);background:var(--th-bg);text-align:center;white-space:nowrap;}
+        .cur-tbl td{padding:9px 12px;font-family:var(--font-mono);font-size:14px;font-weight:500;
+            text-align:center;color:var(--text-primary);border-top:1px solid var(--divider);white-space:nowrap;}
+        .cur-tbl td.hi{color:var(--blue);}
         .cur-tbl td.pts-cell{font-size:16px;font-weight:700;color:var(--accent);background:rgba(255,107,53,.07);}
         .scroll-hint{text-align:center;font-size:10px;color:var(--text-muted);margin:5px 0 0;letter-spacing:.04em;}
 
         /* Mode hint */
-        .mode-hint{padding:10px 16px;font-size:12px;color:var(--text-muted);line-height:1.5;background:var(--cur-bg);margin:0 16px 4px;border-radius:10px;border:1px solid var(--cur-border);}
+        .mode-hint{padding:10px 16px;font-size:12px;color:var(--text-muted);line-height:1.5;
+            background:var(--cur-bg);margin:0 16px 4px;border-radius:10px;border:1px solid var(--cur-border);}
         .mode-hint b{color:var(--accent);font-weight:700;}
         .mode-hint.edit-hint b{color:#e74c3c;}
 
         /* Stat sections */
         .stat-section{padding:14px 16px 0;}
-        .sec-title{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:11px;padding-bottom:8px;border-bottom:1px solid var(--divider);}
-        .sec-title.c-bat   {color:#4facfe;}
-        .sec-title.c-bowl  {color:#e74c3c;}
-        .sec-title.c-field {color:#52c8ff;}
-        .sec-title.c-ms    {color:#f1c40f;}
-        .sec-title.c-custom{color:#a29bfe;}
+        .sec-title{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+            margin-bottom:11px;padding-bottom:8px;border-bottom:1px solid var(--divider);}
+        .sec-title.c-bat{color:#4facfe;} .sec-title.c-bowl{color:#e74c3c;}
+        .sec-title.c-field{color:#52c8ff;} .sec-title.c-ms{color:#f1c40f;} .sec-title.c-custom{color:#a29bfe;}
 
         /* 2-col grid */
         .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
         .sig{display:flex;flex-direction:column;}
-        .sig label{
-            font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
-            color:var(--text-secondary);margin-bottom:7px;
-            white-space:normal;line-height:1.3;min-height:22px;
-        }
+        .sig label{font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+            color:var(--text-secondary);margin-bottom:7px;white-space:normal;line-height:1.3;min-height:22px;}
 
         /* Stepper */
-        .sig-ctrl{
-            display:grid;grid-template-columns:38px 1fr 38px;
-            border:1px solid var(--input-border);border-radius:12px;
-            overflow:hidden;background:var(--input-bg);
-            transition:border-color var(--transition),box-shadow var(--transition);
-        }
+        .sig-ctrl{display:grid;grid-template-columns:38px 1fr 38px;border:1px solid var(--input-border);
+            border-radius:12px;overflow:hidden;background:var(--input-bg);transition:border-color var(--transition),box-shadow var(--transition);}
         .sig-ctrl:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
-        .step-btn{
-            background:transparent;border:none;
-            color:var(--text-secondary);font-size:20px;font-weight:300;
-            cursor:pointer;display:flex;align-items:center;justify-content:center;
-            padding:0;height:48px;
-            border-right:1px solid var(--input-border);
-            transition:background var(--transition),color var(--transition);
-            -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-        }
+        .step-btn{background:transparent;border:none;color:var(--text-secondary);font-size:20px;font-weight:300;
+            cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;height:48px;
+            border-right:1px solid var(--input-border);transition:background var(--transition),color var(--transition);
+            -webkit-tap-highlight-color:transparent;touch-action:manipulation;}
         .step-btn.plus{border-right:none;border-left:1px solid var(--input-border);}
         .step-btn:active{background:var(--accent-soft);color:var(--accent);}
-        .sig input{
-            width:100%;padding:8px 4px;border:none;background:transparent;
-            color:var(--text-primary);font-family:var(--font-mono);
-            font-size:18px;font-weight:600;text-align:center;
-            outline:none;-webkit-appearance:none;min-width:0;
-        }
-        .sig input::-webkit-outer-spin-button,
-        .sig input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+        .sig input{width:100%;padding:8px 4px;border:none;background:transparent;color:var(--text-primary);
+            font-family:var(--font-mono);font-size:18px;font-weight:600;text-align:center;outline:none;
+            -webkit-appearance:none;min-width:0;}
+        .sig input::-webkit-outer-spin-button,.sig input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
         .sig input[type=number]{-moz-appearance:textfield;}
 
         /* Sheet footer */
@@ -245,51 +184,31 @@
         .footer-note{font-size:11px;color:var(--text-muted);text-align:center;margin-bottom:10px;line-height:1.5;}
         .footer-note b{color:var(--accent);}
         .footer-note b.red{color:#e74c3c;}
-        .submit-btn{width:100%;padding:15px;color:#fff;border:none;border-radius:14px;font-family:var(--font-main);font-size:15px;font-weight:700;cursor:pointer;transition:transform .15s,opacity .2s;letter-spacing:.01em;}
+        .submit-btn{width:100%;padding:15px;color:#fff;border:none;border-radius:14px;font-family:var(--font-main);
+            font-size:15px;font-weight:700;cursor:pointer;transition:transform .15s,opacity .2s;letter-spacing:.01em;}
         .submit-btn:active{transform:scale(.97);}
         .submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-        .btn-add {background:linear-gradient(90deg,var(--accent),#e8531a);box-shadow:0 4px 18px rgba(255,107,53,.35);}
+        .btn-add{background:linear-gradient(90deg,var(--accent),#e8531a);box-shadow:0 4px 18px rgba(255,107,53,.35);}
         .btn-edit{background:linear-gradient(90deg,#e74c3c,#c0392b);box-shadow:0 4px 18px rgba(231,76,60,.3);}
 
-        /* ── BOTTOM NAV ────────────────────────────────────── */
-        .bottom-nav {
-            position: fixed;
-            bottom: 14px;
-            left: 50%; transform: translateX(-50%);
-            width: calc(100% - 28px); max-width: 480px;
-            height: 68px;
-            background: var(--nav-bg);
-            backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
-            border: 1px solid var(--glass-border);
-            border-radius: 28px;
-            display: flex; justify-content: space-around; align-items: center;
-            padding: 6px 2px;
-            box-shadow: 0 8px 40px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.04);
-            z-index: 100;
-        }
-        .nav-item {
-            text-align: center; color: var(--text-muted); text-decoration: none;
-            font-size: 8px; font-weight: 600; letter-spacing: .04em;
-            flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
-            transition: color 0.24s cubic-bezier(0.4,0,0.2,1);
-        }
-        .nav-item.active { color: var(--accent); }
-        .nav-icon-wrap {
-            width: 36px; height: 28px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            transition: background 0.24s cubic-bezier(0.4,0,0.2,1);
-        }
-        .nav-item.active .nav-icon-wrap { background: var(--accent-soft); }
-        .nav-icon { font-size: 16px; line-height: 1; }
-
-        /* ── ANIMATIONS ────────────────────────────────────── */
+        /* BOTTOM NAV */
+        .bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+            width:calc(100% - 28px);max-width:480px;height:68px;
+            background:var(--nav-bg);backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);
+            border:1px solid var(--glass-border);border-radius:28px;
+            display:flex;justify-content:space-around;align-items:center;padding:6px 2px;
+            box-shadow:0 8px 40px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04);z-index:100;}
+        .nav-item{text-align:center;color:var(--text-muted);text-decoration:none;font-size:8px;font-weight:600;
+            letter-spacing:.04em;flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;transition:color var(--transition);}
+        .nav-item.active{color:var(--accent);}
+        .nav-icon-wrap{width:36px;height:28px;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:background var(--transition);}
+        .nav-item.active .nav-icon-wrap{background:var(--accent-soft);}
+        .nav-icon{font-size:16px;line-height:1;}
         @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-        .player-card{animation:fadeUp .3s ease both;}
     </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
     <div class="topbar-left">
         <p class="greeting" id="role-label">Stats</p>
@@ -299,13 +218,11 @@
     <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
 </div>
 
-<!-- SEARCH -->
 <div class="search-wrap">
     <span class="search-icon">🔍</span>
     <input class="search-bar" id="search-bar" type="text" placeholder="Search players…" oninput="renderList(allPlayers)">
 </div>
 
-<!-- PLAYER LIST -->
 <div class="players-list" id="player-list">
     <div class="empty-state">Loading players…</div>
 </div>
@@ -313,8 +230,6 @@
 <!-- BOTTOM SHEET -->
 <div id="stat-modal" class="modal" onclick="handleOverlay(event)">
   <div class="modal-sheet">
-
-    <!-- Fixed header -->
     <div class="sheet-top">
       <div class="sheet-handle"></div>
       <div class="sheet-title-row">
@@ -322,7 +237,8 @@
           <h3 id="modal-name">Player</h3>
           <p id="modal-team">—</p>
         </div>
-        <button class="close-btn" onclick="closeModal()">✕</button>
+        <!-- CLOSE BUTTON -->
+        <button class="close-btn" onclick="closeModal()" title="Close">✕</button>
       </div>
       <div class="mode-row">
         <button class="mode-tab active" id="tab-add"  onclick="setMode('add')">＋ Add Stats</button>
@@ -330,10 +246,7 @@
       </div>
     </div>
 
-    <!-- Scrollable body -->
     <div class="sheet-body" id="sheet-body">
-
-      <!-- Current stats table -->
       <div class="cur-stats-wrap">
         <div class="cur-stats-label">📊 Current Stats</div>
         <div class="tbl-scroll">
@@ -344,32 +257,20 @@
         </div>
         <p class="scroll-hint">← swipe to see all →</p>
       </div>
-
-      <!-- Mode hint -->
       <div id="mode-hint-wrap" class="mode-hint">
         <b>＋ Add mode:</b> values entered are added on top of current totals.
       </div>
-
-      <!-- Dynamic form -->
       <div id="dynamic-form"></div>
       <div style="height:16px"></div>
-
     </div>
 
-    <!-- Sticky footer -->
     <div class="sheet-footer">
-      <p class="footer-note" id="footer-note">
-        Stats for this match will be <b>added</b> to totals.
-      </p>
-      <button class="submit-btn btn-add" id="submit-btn" onclick="submitStats()">
-        ＋ Add Stats &amp; Update Points
-      </button>
+      <p class="footer-note" id="footer-note">Stats will be <b>added</b> to totals.</p>
+      <button class="submit-btn btn-add" id="submit-btn" onclick="submitStats()">＋ Add Stats &amp; Update Points</button>
     </div>
-
   </div>
 </div>
 
-<!-- BOTTOM NAV -->
 <nav class="bottom-nav">
     <a href="dashboard.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🏠</span></div>Home</a>
     <a href="squad.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad</a>
@@ -380,85 +281,72 @@
 </nav>
 
 <script>
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
-const myTeam      = localStorage.getItem("teamName") || "";
-const isAdmin     = myTeam === "Admin";
+const WEB_APP_URL="https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
+const myTeam=localStorage.getItem("teamName")||"";
+const isAdmin=myTeam==="Admin";
+let allPlayers=[],pointsConfig=[],curPlayer=null,curMode="add";
 
-let allPlayers   = [];
-let pointsConfig = [];
-let curPlayer    = null;
-let curMode      = "add";
-
-// ── THEME ─────────────────────────────────────────────────
-const savedTheme = localStorage.getItem("theme") || "dark";
-document.documentElement.setAttribute("data-theme", savedTheme);
-document.getElementById("theme-icon").textContent = savedTheme === "dark" ? "☀️" : "🌙";
-function toggleTheme() {
-    const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", next);
-    localStorage.setItem("theme", next);
-    document.getElementById("theme-icon").textContent = next === "dark" ? "☀️" : "🌙";
+const savedTheme=localStorage.getItem("theme")||"dark";
+document.documentElement.setAttribute("data-theme",savedTheme);
+document.getElementById("theme-icon").textContent=savedTheme==="dark"?"☀️":"🌙";
+function toggleTheme(){
+    const next=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
+    document.documentElement.setAttribute("data-theme",next);
+    localStorage.setItem("theme",next);
+    document.getElementById("theme-icon").textContent=next==="dark"?"☀️":"🌙";
 }
 
-// ── INIT ──────────────────────────────────────────────────
-document.addEventListener("DOMContentLoaded", async () => {
-    document.getElementById("role-label").innerText = isAdmin ? "Admin" : "My Squad";
-    document.getElementById("role-desc").innerText  = isAdmin ? "Update stats for any player" : "Your players only";
-    await Promise.all([loadConfig(), loadPlayers()]);
+// ── Total points with multiple key fallbacks ──
+function getPts(p){return parseFloat(p["Total Points"]||p["TotalPoints"]||p["total_points"]||0)||0;}
+function n(v){return parseInt(v)||0;}
+
+document.addEventListener("DOMContentLoaded",async()=>{
+    document.getElementById("role-label").innerText=isAdmin?"Admin":"My Squad";
+    document.getElementById("role-desc").innerText=isAdmin?"Update stats for any player":"Your players only";
+    await Promise.all([loadConfig(),loadPlayers()]);
 });
 
-// ── LOAD CONFIG ───────────────────────────────────────────
-async function loadConfig() {
-    try {
-        const res = await fetch(WEB_APP_URL, { method:"POST", body: JSON.stringify({ action:"getPointsConfig" }) });
-        const r   = await res.json();
-        if (r.status === "success") pointsConfig = r.config;
-    } catch(e) { console.warn("Config load failed:", e); }
+async function loadConfig(){
+    try{
+        const res=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"getPointsConfig"})});
+        const r=await res.json();
+        if(r.status==="success") pointsConfig=r.config;
+    }catch(e){console.warn("Config:",e);}
 }
 
-// ── LOAD PLAYERS ──────────────────────────────────────────
-async function loadPlayers() {
-    const container = document.getElementById("player-list");
-    try {
-        const res = await fetch(WEB_APP_URL, { method:"POST", body: JSON.stringify({ action:"getPlayers" }) });
-        const r   = await res.json();
-        if (r.status === "success") {
-            allPlayers = isAdmin
-                ? r.players
-                : r.players.filter(p => p["Sold To"] === myTeam);
-            if (!allPlayers.length && !isAdmin) {
-                container.innerHTML = `<div class="empty-state">No players in your squad yet.</div>`;
-                return;
+async function loadPlayers(){
+    const container=document.getElementById("player-list");
+    try{
+        const res=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"getPlayers"})});
+        const r=await res.json();
+        if(r.status==="success"){
+            allPlayers=isAdmin?r.players:r.players.filter(p=>p["Sold To"]===myTeam);
+            if(!allPlayers.length&&!isAdmin){
+                container.innerHTML=`<div class="empty-state">No players in your squad yet.</div>`;return;
             }
             renderList(allPlayers);
         }
-    } catch {
-        container.innerHTML = `<div class="empty-state" style="color:#e74c3c">Failed to load players.</div>`;
-    }
+    }catch{container.innerHTML=`<div class="empty-state" style="color:#e74c3c">Failed to load players.</div>`;}
 }
 
-// ── RENDER LIST ───────────────────────────────────────────
-function roleClass(r) { return {BOWL:"bowl",AR:"ar",WK:"wk"}[r] || "bat"; }
-function n(v) { return parseInt(v) || 0; }
+function roleClass(r){return{BOWL:"bowl",AR:"ar",WK:"wk"}[r]||"bat";}
+const roleEmoji={BAT:"🏏",BOWL:"⚾",AR:"⚡",WK:"🧤"};
 
-const roleEmoji = { BAT:"🏏", BOWL:"⚾", AR:"⚡", WK:"🧤" };
-
-function renderList(players) {
-    const q  = document.getElementById("search-bar").value.toLowerCase();
-    const fl = players.filter(p => p["Player Name"].toLowerCase().includes(q));
-    const el = document.getElementById("player-list");
-    if (!fl.length) { el.innerHTML = `<div class="empty-state">No players found.</div>`; return; }
-
-    el.innerHTML = fl.map((p, i) => {
-        const enc  = encodeURIComponent(p["Player Name"]);
-        const rc   = roleClass(p["Role"]);
-        const pts  = n(p["Total Points"]);
-        const icon = roleEmoji[p["Role"]] || "👤";
-        const own  = p["Sold To"]
-            ? `<span class="badge owned">${p["Sold To"]}</span>`
-            : `<span class="badge unsold">Unsold</span>`;
-        return `
-        <div class="player-card" style="animation-delay:${i * 0.04}s">
+function renderList(players){
+    const q=document.getElementById("search-bar").value.toLowerCase();
+    const fl=players.filter(p=>p["Player Name"].toLowerCase().includes(q));
+    const el=document.getElementById("player-list");
+    if(!fl.length){el.innerHTML=`<div class="empty-state">No players found.</div>`;return;}
+    el.innerHTML=fl.map((p,i)=>{
+        const enc=encodeURIComponent(p["Player Name"]);
+        const rc=roleClass(p["Role"]);
+        // ── SHOW CURRENT PTS in the card row ──
+        const pts=getPts(p);
+        const icon=roleEmoji[p["Role"]]||"👤";
+        const own=p["Sold To"]
+            ?`<span class="badge owned">${p["Sold To"]}</span>`
+            :`<span class="badge unsold">Unsold</span>`;
+        return`<div class="player-card" style="animation-delay:${i*.04}s">
           <div class="p-avatar">${icon}</div>
           <div class="p-info" onclick="openModal('${enc}','add')">
             <div class="p-name">${p["Player Name"]}</div>
@@ -473,159 +361,128 @@ function renderList(players) {
               <span class="pl">pts</span>
             </div>
             <div class="p-actions">
-              <button class="act-btn add" title="Add stats"      onclick="openModal('${enc}','add')" >＋</button>
-              <button class="act-btn"     title="Edit / replace" onclick="openModal('${enc}','edit')">✏️</button>
+              <button class="act-btn add" title="Add stats" onclick="openModal('${enc}','add')">＋</button>
+              <button class="act-btn"     title="Edit"      onclick="openModal('${enc}','edit')">✏️</button>
             </div>
           </div>
         </div>`;
     }).join("");
 }
 
-// ── OPEN MODAL ────────────────────────────────────────────
-async function openModal(encName, mode) {
-    curPlayer = allPlayers.find(p => p["Player Name"] === decodeURIComponent(encName));
-    if (!curPlayer) return;
-    if (!pointsConfig.length) await loadConfig();
-    document.getElementById("modal-name").innerText = curPlayer["Player Name"];
-    document.getElementById("modal-team").innerText = curPlayer["Sold To"]
-        ? `Owned by: ${curPlayer["Sold To"]}`
-        : "Status: Unsold";
+async function openModal(encName,mode){
+    curPlayer=allPlayers.find(p=>p["Player Name"]===decodeURIComponent(encName));
+    if(!curPlayer) return;
+    if(!pointsConfig.length) await loadConfig();
+    document.getElementById("modal-name").innerText=curPlayer["Player Name"];
+    document.getElementById("modal-team").innerText=curPlayer["Sold To"]?`Owned by: ${curPlayer["Sold To"]}`:"Status: Unsold";
     buildStatsTable();
     buildForm();
     setMode(mode);
     document.getElementById("stat-modal").classList.add("open");
-    document.getElementById("sheet-body").scrollTop = 0;
+    document.getElementById("sheet-body").scrollTop=0;
 }
 
-// ── CURRENT STATS TABLE ───────────────────────────────────
-function buildStatsTable() {
-    let thHTML = "<tr><th>PTS</th>";
-    let tdHTML = `<td class="pts-cell">${n(curPlayer["Total Points"])}</td>`;
-    pointsConfig.forEach(attr => {
-        thHTML += `<th>${attr.label}</th>`;
-        const val = n(curPlayer[attr.key]) || n(curPlayer[keyAlias(attr.key)]) || n(curPlayer[attr.key.toUpperCase()]) || 0;
-        tdHTML += `<td class="${val > 0 ? 'hi' : ''}">${val}</td>`;
+function keyAlias(key){
+    const a={fours:"4s",sixes:"6s",fifties:"50s",hundreds:"100s",runouts:"Run Outs",stumpings:"Stumpings",
+             maidens:"Maidens",dots:"Dots",threew:"3W",fivew:"5W",catches:"Catches",wickets:"Wickets",runs:"Runs"};
+    return a[key.toLowerCase()]||key;
+}
+
+function buildStatsTable(){
+    let thHTML="<tr><th>PTS</th>";
+    let tdHTML=`<td class="pts-cell">${getPts(curPlayer)}</td>`;
+    pointsConfig.forEach(attr=>{
+        thHTML+=`<th>${attr.label}</th>`;
+        const val=n(curPlayer[attr.key])||n(curPlayer[keyAlias(attr.key)])||n(curPlayer[attr.key.toUpperCase()])||0;
+        tdHTML+=`<td class="${val>0?"hi":""}">${val}</td>`;
     });
-    document.getElementById("cur-thead").innerHTML = thHTML + "</tr>";
-    document.getElementById("cur-tbody").innerHTML = "<tr>" + tdHTML + "</tr>";
+    document.getElementById("cur-thead").innerHTML=thHTML+"</tr>";
+    document.getElementById("cur-tbody").innerHTML="<tr>"+tdHTML+"</tr>";
 }
 
-function keyAlias(key) {
-    const a = {fours:'4s',sixes:'6s',fifties:'50s',hundreds:'100s',runouts:'Run Outs',stumpings:'Stumpings',maidens:'Maidens',dots:'Dots',threew:'3W',fivew:'5W',catches:'Catches',wickets:'Wickets',runs:'Runs'};
-    return a[key.toLowerCase()] || key;
-}
-
-// ── BUILD DYNAMIC FORM ────────────────────────────────────
-function buildForm() {
-    const catOrder = ['batting','bowling','fielding','milestone','custom'];
-    const catMeta  = {
-        batting:  {title:'Batting',   cls:'c-bat'},
-        bowling:  {title:'Bowling',   cls:'c-bowl'},
-        fielding: {title:'Fielding',  cls:'c-field'},
-        milestone:{title:'Milestones',cls:'c-ms'},
-        custom:   {title:'Custom',    cls:'c-custom'},
-    };
-    const groups = {};
-    pointsConfig.forEach(attr => {
-        const cat = (attr.category || 'custom').toLowerCase();
-        if (!groups[cat]) groups[cat] = [];
+function buildForm(){
+    const catOrder=["batting","bowling","fielding","milestone","custom"];
+    const catMeta={batting:{title:"Batting",cls:"c-bat"},bowling:{title:"Bowling",cls:"c-bowl"},
+        fielding:{title:"Fielding",cls:"c-field"},milestone:{title:"Milestones",cls:"c-ms"},custom:{title:"Custom",cls:"c-custom"}};
+    const groups={};
+    pointsConfig.forEach(attr=>{
+        const cat=(attr.category||"custom").toLowerCase();
+        if(!groups[cat]) groups[cat]=[];
         groups[cat].push(attr);
     });
-
-    const buildSection = (cat, meta) => {
-        let h = `<div class="stat-section"><p class="sec-title ${meta.cls}">${meta.title}</p><div class="stat-grid">`;
-        groups[cat].forEach(attr => {
-            const sid = 'si-' + attr.key;
-            h += `<div class="sig">
-                <label>${attr.label}</label>
+    const buildSection=(cat,meta)=>{
+        let h=`<div class="stat-section"><p class="sec-title ${meta.cls}">${meta.title}</p><div class="stat-grid">`;
+        groups[cat].forEach(attr=>{
+            const sid="si-"+attr.key;
+            h+=`<div class="sig"><label>${attr.label}</label>
                 <div class="sig-ctrl">
                     <button type="button" class="step-btn minus" onclick="stepVal('${sid}',-1)">−</button>
                     <input type="number" id="${sid}" value="0" min="0" inputmode="numeric" data-key="${attr.key}">
-                    <button type="button" class="step-btn plus"  onclick="stepVal('${sid}',1)">+</button>
-                </div>
-            </div>`;
+                    <button type="button" class="step-btn plus" onclick="stepVal('${sid}',1)">+</button>
+                </div></div>`;
         });
-        return h + `</div></div>`;
+        return h+"</div></div>";
     };
-
-    let html = "";
-    catOrder.forEach(cat => { if (groups[cat]?.length) html += buildSection(cat, catMeta[cat]); });
-    Object.keys(groups).forEach(cat => { if (!catOrder.includes(cat)) html += buildSection(cat, {title:cat,cls:'c-custom'}); });
-
-    if (!html) html = `<div class="stat-section"><p style="color:var(--text-muted);font-size:13px;padding:20px 0;text-align:center;">No scoring attributes configured.</p></div>`;
-    document.getElementById("dynamic-form").innerHTML = html;
+    let html="";
+    catOrder.forEach(cat=>{if(groups[cat]?.length) html+=buildSection(cat,catMeta[cat]);});
+    Object.keys(groups).forEach(cat=>{if(!catOrder.includes(cat)) html+=buildSection(cat,{title:cat,cls:"c-custom"});});
+    if(!html) html=`<div class="stat-section"><p style="color:var(--text-muted);font-size:13px;padding:20px 0;text-align:center;">No scoring attributes configured.</p></div>`;
+    document.getElementById("dynamic-form").innerHTML=html;
 }
 
-// ── MODE SWITCH ───────────────────────────────────────────
-function setMode(mode) {
-    curMode = mode;
-    const isAdd = mode === "add";
-    document.getElementById("tab-add").classList.toggle("active", isAdd);
-    document.getElementById("tab-edit").classList.toggle("active", !isAdd);
-    const hint = document.getElementById("mode-hint-wrap");
-    hint.className = isAdd ? "mode-hint" : "mode-hint edit-hint";
-    hint.innerHTML = isAdd
-        ? `<b>＋ Add mode:</b> values are added on top of current totals.`
-        : `<b>✏️ Edit mode:</b> will <b>replace</b> all existing stats. Use to correct mistakes.`;
-    const note = document.getElementById("footer-note");
-    const btn  = document.getElementById("submit-btn");
-    if (isAdd) {
-        note.innerHTML   = `Stats will be <b>added</b> to player's totals.`;
-        btn.textContent  = "＋ Add Stats & Update Points";
-        btn.className    = "submit-btn btn-add";
+function setMode(mode){
+    curMode=mode;const isAdd=mode==="add";
+    document.getElementById("tab-add").classList.toggle("active",isAdd);
+    document.getElementById("tab-edit").classList.toggle("active",!isAdd);
+    const hint=document.getElementById("mode-hint-wrap");
+    hint.className=isAdd?"mode-hint":"mode-hint edit-hint";
+    hint.innerHTML=isAdd?`<b>＋ Add mode:</b> values are added on top of current totals.`
+        :`<b>✏️ Edit mode:</b> will <b>replace</b> all existing stats. Use to correct mistakes.`;
+    const note=document.getElementById("footer-note");
+    const btn=document.getElementById("submit-btn");
+    if(isAdd){
+        note.innerHTML=`Stats will be <b>added</b> to player's totals.`;
+        btn.textContent="＋ Add Stats & Update Points";
+        btn.className="submit-btn btn-add";
         resetInputs(0);
-    } else {
-        note.innerHTML   = `Will <b class="red">replace</b> all current stats and recalculate points.`;
-        btn.textContent  = "✏️ Replace Stats & Recalculate";
-        btn.className    = "submit-btn btn-edit";
+    }else{
+        note.innerHTML=`Will <b class="red">replace</b> all current stats and recalculate points.`;
+        btn.textContent="✏️ Replace Stats & Recalculate";
+        btn.className="submit-btn btn-edit";
         prefillInputs();
     }
-    btn.disabled = false;
+    btn.disabled=false;
 }
-
-function resetInputs(v)  { document.querySelectorAll("#dynamic-form input[data-key]").forEach(i => i.value = v); }
-function prefillInputs() {
-    if (!curPlayer) return;
-    document.querySelectorAll("#dynamic-form input[data-key]").forEach(inp => {
-        const key = inp.getAttribute("data-key");
-        inp.value = n(curPlayer[key]) || n(curPlayer[keyAlias(key)]);
+function resetInputs(v){document.querySelectorAll("#dynamic-form input[data-key]").forEach(i=>i.value=v);}
+function prefillInputs(){
+    if(!curPlayer) return;
+    document.querySelectorAll("#dynamic-form input[data-key]").forEach(inp=>{
+        const key=inp.getAttribute("data-key");
+        inp.value=n(curPlayer[key])||n(curPlayer[keyAlias(key)]);
     });
 }
-
-// ── STEPPER ───────────────────────────────────────────────
-function stepVal(id, delta) {
-    const inp = document.getElementById(id);
-    if (!inp) return;
-    inp.value = Math.max(0, (parseInt(inp.value) || 0) + delta);
+function stepVal(id,delta){
+    const inp=document.getElementById(id);
+    if(!inp) return;
+    inp.value=Math.max(0,(parseInt(inp.value)||0)+delta);
 }
+function closeModal(){document.getElementById("stat-modal").classList.remove("open");}
+function handleOverlay(e){if(e.target===document.getElementById("stat-modal")) closeModal();}
 
-function closeModal()       { document.getElementById("stat-modal").classList.remove("open"); }
-function handleOverlay(e)   { if (e.target === document.getElementById("stat-modal")) closeModal(); }
-
-// ── SUBMIT ────────────────────────────────────────────────
-async function submitStats() {
-    const btn = document.getElementById("submit-btn");
-    btn.innerText = "Calculating…";
-    btn.disabled  = true;
-    const stats = {};
-    document.querySelectorAll("#dynamic-form input[data-key]").forEach(inp => {
-        stats[inp.getAttribute("data-key")] = inp.value;
-    });
-    try {
-        const res = await fetch(WEB_APP_URL, {
-            method:"POST",
-            body: JSON.stringify({ action:"updateStats", playerName:curPlayer["Player Name"], requesterTeam:myTeam, mode:curMode, stats })
-        });
-        const r = await res.json();
-        if (r.status === "success") {
-            alert(r.message);
-            closeModal();
-            await loadPlayers();
-        } else {
-            alert(r.message || "Error updating stats.");
-        }
-    } catch { alert("Failed to update. Check connection."); }
-    finally  { setMode(curMode); }
+async function submitStats(){
+    const btn=document.getElementById("submit-btn");
+    btn.innerText="Calculating…";btn.disabled=true;
+    const stats={};
+    document.querySelectorAll("#dynamic-form input[data-key]").forEach(inp=>{stats[inp.getAttribute("data-key")]=inp.value;});
+    try{
+        const res=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({
+            action:"updateStats",playerName:curPlayer["Player Name"],requesterTeam:myTeam,mode:curMode,stats
+        })});
+        const r=await res.json();
+        if(r.status==="success"){alert(r.message);closeModal();await loadPlayers();}
+        else alert(r.message||"Error updating stats.");
+    }catch{alert("Failed to update. Check connection.");}
+    finally{setMode(curMode);}
 }
 </script>
 </body>
