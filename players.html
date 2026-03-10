@@ -1,476 +1,362 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Players | IPL Fantasy</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --accent:#FF6B35; --accent-soft:rgba(255,107,53,0.14);
-            --blue:#4facfe; --blue-soft:rgba(79,172,254,0.12);
-            --font-main:'Outfit',sans-serif; --font-mono:'DM Mono',monospace; --font-display:'Bebas Neue',cursive;
-            --transition:0.25s cubic-bezier(0.4,0,0.2,1); --nav-h:68px;
-        }
-        [data-theme="dark"] {
-            --bg:#07101f;
-            --bg-mesh:radial-gradient(ellipse at 15% 5%,rgba(79,172,254,0.12) 0%,transparent 50%),
-                      radial-gradient(ellipse at 85% 85%,rgba(255,107,53,0.10) 0%,transparent 50%),#07101f;
-            --glass-bg:rgba(255,255,255,.04); --glass-border:rgba(79,172,254,0.14);
-            --nav-bg:rgba(7,16,31,.95); --text-primary:#eef2ff; --text-secondary:rgba(238,242,255,.52);
-            --text-muted:rgba(238,242,255,.28); --divider:rgba(255,255,255,.055);
-            --input-bg:rgba(0,0,0,.3); --input-border:rgba(79,172,254,.15);
-            --overlay:rgba(0,0,0,.88); --toggle-bg:rgba(255,255,255,.06); --row-hover:rgba(255,255,255,.04);
-        }
-        [data-theme="light"] {
-            --bg:#f0ece6;
-            --bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(255,200,150,.2) 0%,transparent 55%),#f0ece6;
-            --glass-bg:rgba(255,255,255,.65); --glass-border:rgba(255,255,255,.9);
-            --nav-bg:rgba(240,236,230,.92); --text-primary:#1a1a2e; --text-secondary:rgba(26,26,46,.55);
-            --text-muted:rgba(26,26,46,.32); --divider:rgba(0,0,0,.07);
-            --input-bg:rgba(0,0,0,.05); --input-border:rgba(0,0,0,.1);
-            --overlay:rgba(0,0,0,.82); --toggle-bg:rgba(0,0,0,.06); --row-hover:rgba(0,0,0,.03);
-        }
-        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-        body{font-family:var(--font-main);background:var(--bg-mesh);background-color:var(--bg);min-height:100vh;
-            color:var(--text-primary);padding-bottom:calc(var(--nav-h) + 14px + 28px);
-            transition:background-color var(--transition),color var(--transition);overflow-x:hidden;}
-
-        .topbar{display:flex;justify-content:space-between;align-items:flex-start;padding:20px 20px 10px;}
-        .topbar-left .greeting{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:2px;}
-        .topbar-left h1{font-size:22px;font-weight:700;}
-        .topbar-left p{font-size:12px;color:var(--text-muted);margin-top:2px;}
-        .theme-btn{width:36px;height:36px;border-radius:50%;background:var(--toggle-bg);border:1px solid var(--glass-border);
-            color:var(--text-primary);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-
-        .search-wrap{margin:0 16px 10px;position:relative;}
-        .search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
-        .search-bar{width:100%;padding:11px 13px 11px 38px;border-radius:13px;border:1px solid var(--input-border);
-            background:var(--input-bg);color:var(--text-primary);font-family:var(--font-main);font-size:14px;outline:none;-webkit-appearance:none;}
-        .search-bar:focus{border-color:var(--accent);}
-        .search-bar::placeholder{color:var(--text-muted);}
-        .filter-row{display:flex;gap:7px;padding:0 16px 12px;overflow-x:auto;scrollbar-width:none;}
-        .filter-row::-webkit-scrollbar{display:none;}
-        .filter-btn{flex-shrink:0;padding:6px 14px;border-radius:18px;border:1px solid var(--input-border);
-            background:var(--input-bg);color:var(--text-secondary);font-family:var(--font-main);font-size:11px;font-weight:600;cursor:pointer;transition:all var(--transition);}
-        .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
-
-        /* LIST */
-        .list-wrap{background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-            border:1px solid var(--glass-border);border-radius:20px;margin:0 16px 16px;overflow:hidden;}
-        .player-row{display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid var(--divider);
-            cursor:pointer;transition:background var(--transition);gap:12px;animation:fadeIn .25s ease both;}
-        .player-row:last-child{border-bottom:none;}
-        .player-row:active{background:var(--row-hover);}
-        .tier-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-        .tier-dot.gold{background:#FFD700;} .tier-dot.silver{background:#A8A8A8;} .tier-dot.bronze{background:#A0522D;}
-        .team-strip{width:4px;height:36px;border-radius:2px;flex-shrink:0;}
-        .row-info{flex:1;min-width:0;}
-        .row-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px;}
-        .row-meta{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
-        .row-badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:.04em;text-transform:uppercase;}
-        .rb-role-bat{background:rgba(79,172,254,.15);color:#4facfe;}
-        .rb-role-bowl{background:rgba(231,76,60,.15);color:#e74c3c;}
-        .rb-role-ar{background:rgba(241,196,15,.15);color:#f1c40f;}
-        .rb-role-wk{background:rgba(155,89,182,.15);color:#bb8fce;}
-        .rb-team{background:rgba(255,255,255,.07);color:var(--text-secondary);}
-        .rb-owned{background:rgba(255,107,53,.12);color:var(--accent);}
-        .rb-unsold{background:rgba(255,255,255,.05);color:var(--text-muted);}
-        .rb-cap{background:rgba(255,215,0,.2);color:#ffd700;}
-        .rb-vc{background:rgba(180,180,200,.15);color:#b4b4c8;}
-        .row-pts{font-family:var(--font-mono);font-size:13px;font-weight:500;color:var(--accent);flex-shrink:0;}
-        .row-chevron{font-size:11px;color:var(--text-muted);margin-left:2px;}
-        .empty-state{padding:32px 20px;text-align:center;color:var(--text-muted);font-size:14px;}
-
-        /* MODAL */
-        .modal{display:none;position:fixed;inset:0;background:var(--overlay);backdrop-filter:blur(14px);
-            -webkit-backdrop-filter:blur(14px);z-index:200;align-items:center;justify-content:center;padding:20px;}
-        .modal.open{display:flex;}
-        .modal-close{position:fixed;top:18px;right:18px;width:36px;height:36px;border-radius:50%;
-            background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:16px;
-            cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;}
-
-        /* CARD SCENE */
-        .card-scene{perspective:1200px;width:min(80vw,300px);aspect-ratio:0.68;
-            filter:drop-shadow(0 28px 50px rgba(0,0,0,.8));cursor:pointer;}
-        .card-flip{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.4,0,.2,1);}
-        .card-flip.flipped{transform:rotateY(180deg);}
-
-        /* Pentagon shield shape */
-        .card-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
-            clip-path:polygon(12% 0%,88% 0%,100% 12%,100% 80%,50% 100%,0% 80%,0% 12%);
-            display:flex;flex-direction:column;overflow:hidden;}
-        .card-back-face{transform:rotateY(180deg);}
-        .card-face::before{content:'';position:absolute;inset:5px;z-index:1;pointer-events:none;
-            clip-path:polygon(12% 0%,88% 0%,100% 12%,100% 80%,50% 100%,0% 80%,0% 12%);
-            background:rgba(255,255,255,.1);}
-        .card-face::after{content:'';position:absolute;inset:5px;z-index:2;pointer-events:none;
-            clip-path:polygon(12% 0%,88% 0%,100% 12%,100% 80%,50% 100%,0% 80%,0% 12%);
-            background:repeating-linear-gradient(45deg,transparent,transparent 12px,rgba(255,255,255,.05) 12px,rgba(255,255,255,.05) 13px);}
-
-        /* Tier gradients — set directly on .card-face */
-        .card-face.gold{background:linear-gradient(150deg,#3B2400 0%,#8B6000 18%,#E8B800 38%,#FFE066 50%,#C49A00 65%,#7A5000 82%,#3B2400 100%);color:#2C1A00;}
-        .card-face.silver{background:linear-gradient(150deg,#1C1C1C 0%,#606060 18%,#C4C4C4 38%,#EFEFEF 50%,#8C8C8C 65%,#444444 82%,#1C1C1C 100%);color:#111111;}
-        .card-face.bronze{background:linear-gradient(150deg,#2E1200 0%,#7A3800 18%,#C07028 38%,#E8A050 50%,#9A5018 65%,#4A2000 82%,#2E1200 100%);color:#2E1200;}
-
-        /* FRONT */
-        .cf-inner{position:relative;z-index:3;display:flex;flex-direction:column;height:100%;padding:8% 9% 24% 9%;}
-        .cf-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4%;}
-        .cf-rating{font-family:var(--font-display);font-size:clamp(36px,10vw,52px);line-height:.88;}
-        .cf-role{font-family:var(--font-display);font-size:clamp(14px,4vw,18px);letter-spacing:.04em;margin-top:2px;opacity:.85;}
-        .cf-logo-wrap{display:flex;align-items:center;justify-content:center;}
-        /* BIGGER LOGO */
-        .cf-logo{width:clamp(60px,18vw,80px);height:clamp(60px,18vw,80px);object-fit:contain;filter:drop-shadow(0 4px 12px rgba(0,0,0,.4));}
-        .cf-logo-fallback{font-size:clamp(40px,13vw,58px);line-height:1;}
-        .cf-name{font-family:var(--font-display);font-size:clamp(17px,5.5vw,28px);letter-spacing:.045em;line-height:1.0;
-            text-align:center;white-space:normal;word-break:break-word;
-            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-            text-shadow:0 1px 3px rgba(0,0,0,.15);margin-bottom:3%;}
-        /* Fantasy team tag on front */
-        .cf-owner{font-family:var(--font-main);font-size:clamp(8px,2.2vw,11px);font-weight:700;
-            text-align:center;opacity:.75;letter-spacing:.02em;margin-bottom:3%;
-            background:rgba(0,0,0,.15);border-radius:4px;padding:2px 6px;display:inline-block;align-self:center;}
-        .cf-divider{height:1.5px;background:currentColor;opacity:.2;margin:0 2% 4%;border-radius:1px;}
-        .cf-stats{display:flex;align-items:stretch;width:100%;}
-        .cf-stat-col{flex:1;display:flex;flex-direction:column;gap:clamp(3px,1vw,5px);}
-        .cf-stat-col:first-child{padding-right:5%;}
-        .cf-stat-col:last-child{padding-left:5%;}
-        .cf-stat-vdiv{width:1.5px;background:currentColor;opacity:.2;flex-shrink:0;border-radius:1px;}
-        .cf-stat-row{display:flex;align-items:baseline;justify-content:space-between;gap:4px;}
-        .cf-stat-val{font-family:var(--font-display);font-size:clamp(14px,4.5vw,20px);line-height:1;flex-shrink:0;}
-        .cf-stat-lbl{font-family:var(--font-display);font-size:clamp(10px,3vw,14px);opacity:.6;white-space:nowrap;}
-
-        /* BACK */
-        .cb-inner{position:relative;z-index:3;display:flex;flex-direction:column;height:100%;padding:8% 8% 24% 8%;}
-        .cb-header{text-align:center;margin-bottom:4%;padding-bottom:3%;border-bottom:1.5px solid rgba(0,0,0,.2);}
-        .cb-name{font-family:var(--font-display);font-size:clamp(15px,5vw,22px);letter-spacing:.045em;line-height:1.0;
-            white-space:normal;word-break:break-word;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-        .cb-sub{font-family:var(--font-main);font-size:clamp(8px,2.2vw,10px);opacity:.75;margin-top:3px;font-weight:700;letter-spacing:.03em;}
-        .cb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(3px,1vw,5px);flex:1;}
-        .cb-stat{display:flex;flex-direction:column;align-items:center;justify-content:center;
-            background:rgba(0,0,0,.1);border-radius:6px;padding:clamp(3px,1vw,5px) 2px;border:1px solid rgba(0,0,0,.07);}
-        .cb-stat-val{font-family:var(--font-display);font-size:clamp(13px,4vw,18px);line-height:1;}
-        .cb-stat-lbl{font-size:clamp(7px,1.8vw,9px);font-weight:700;text-transform:uppercase;letter-spacing:.04em;opacity:.6;margin-top:1px;text-align:center;}
-        .cb-footer{margin-top:4%;text-align:center;font-family:var(--font-main);font-size:clamp(9px,2.5vw,11px);
-            font-weight:700;opacity:.85;padding:5px 8px;background:rgba(0,0,0,.12);border-radius:7px;border:1px solid rgba(0,0,0,.07);}
-
-        /* NAV */
-        .bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
-            width:calc(100% - 28px);max-width:480px;height:68px;
-            background:var(--nav-bg);backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);
-            border:1px solid var(--glass-border);border-radius:28px;
-            display:flex;justify-content:space-around;align-items:center;padding:6px 2px;
-            box-shadow:0 8px 40px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04);z-index:100;}
-        .nav-item{text-align:center;color:var(--text-muted);text-decoration:none;font-size:8px;font-weight:600;
-            letter-spacing:.04em;flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;transition:color var(--transition);}
-        .nav-item.active{color:var(--accent);}
-        .nav-icon-wrap{width:36px;height:28px;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:background var(--transition);}
-        .nav-item.active .nav-icon-wrap{background:var(--accent-soft);}
-        .nav-icon{font-size:16px;line-height:1;}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>Players | IPL Fantasy 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#FF6B35;--accent-soft:rgba(255,107,53,.14);--blue:#4facfe;--blue-soft:rgba(79,172,254,.12);
+  --font-main:'Outfit',sans-serif;--font-mono:'DM Mono',monospace;--font-display:'Bebas Neue',cursive;--t:.25s cubic-bezier(.4,0,.2,1);}
+[data-theme="dark"]{--bg:#07101f;
+  --mesh:radial-gradient(ellipse at 15% 5%,rgba(79,172,254,.12) 0%,transparent 50%),
+        radial-gradient(ellipse at 85% 85%,rgba(255,107,53,.10) 0%,transparent 50%),#07101f;
+  --surf:rgba(255,255,255,.04);--brd:rgba(79,172,254,.14);--nav:rgba(7,16,31,.95);
+  --t1:#eef2ff;--t2:rgba(238,242,255,.52);--t3:rgba(238,242,255,.28);--div:rgba(255,255,255,.055);
+  --inp:rgba(0,0,0,.3);--ibrd:rgba(79,172,254,.15);--ov:rgba(0,0,0,.88);--tog:rgba(255,255,255,.06);--rh:rgba(255,255,255,.04);}
+[data-theme="light"]{--bg:#f0ece6;
+  --mesh:radial-gradient(ellipse at 20% 10%,rgba(255,200,150,.2) 0%,transparent 55%),#f0ece6;
+  --surf:rgba(255,255,255,.65);--brd:rgba(255,255,255,.9);--nav:rgba(240,236,230,.92);
+  --t1:#1a1a2e;--t2:rgba(26,26,46,.55);--t3:rgba(26,26,46,.32);--div:rgba(0,0,0,.07);
+  --inp:rgba(0,0,0,.05);--ibrd:rgba(0,0,0,.1);--ov:rgba(0,0,0,.82);--tog:rgba(0,0,0,.06);--rh:rgba(0,0,0,.03);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-main);background:var(--mesh);background-color:var(--bg);min-height:100vh;
+  color:var(--t1);padding-bottom:calc(68px + 14px + 28px);
+  transition:background-color var(--t),color var(--t);overflow-x:hidden;}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;padding:20px 20px 10px;}
+.topbar-left .greeting{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:2px;}
+.topbar-left h1{font-size:22px;font-weight:700;}
+.topbar-left p{font-size:12px;color:var(--t3);margin-top:2px;}
+.theme-btn{width:36px;height:36px;border-radius:50%;background:var(--tog);border:1px solid var(--brd);
+  color:var(--t1);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.search-wrap{margin:0 16px 10px;position:relative;}
+.search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
+.search-bar{width:100%;padding:11px 13px 11px 38px;border-radius:13px;border:1px solid var(--ibrd);background:var(--inp);color:var(--t1);font-family:var(--font-main);font-size:14px;outline:none;-webkit-appearance:none;}
+.search-bar:focus{border-color:var(--accent);}
+.search-bar::placeholder{color:var(--t3);}
+.filter-row{display:flex;gap:7px;padding:0 16px 12px;overflow-x:auto;scrollbar-width:none;}
+.filter-row::-webkit-scrollbar{display:none;}
+.filter-btn{flex-shrink:0;padding:6px 14px;border-radius:18px;border:1px solid var(--ibrd);background:var(--inp);
+  color:var(--t2);font-family:var(--font-main);font-size:11px;font-weight:600;cursor:pointer;transition:all var(--t);}
+.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.list-wrap{background:var(--surf);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--brd);border-radius:20px;margin:0 16px 16px;overflow:hidden;}
+.player-row{display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid var(--div);cursor:pointer;transition:background var(--t);gap:12px;animation:fadeIn .25s ease both;}
+.player-row:last-child{border-bottom:none;}
+.player-row:active{background:var(--rh);}
+.tier-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.tier-dot.gold{background:#FFD700;}.tier-dot.silver{background:#A8A8A8;}.tier-dot.bronze{background:#A0522D;}
+.team-strip{width:4px;height:36px;border-radius:2px;flex-shrink:0;}
+.row-info{flex:1;min-width:0;}
+.row-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px;}
+.row-meta{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
+.row-badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:.04em;text-transform:uppercase;}
+.rb-bat{background:rgba(79,172,254,.15);color:#4facfe;}
+.rb-bowl{background:rgba(231,76,60,.15);color:#e74c3c;}
+.rb-ar{background:rgba(241,196,15,.15);color:#f1c40f;}
+.rb-wk{background:rgba(155,89,182,.15);color:#bb8fce;}
+.rb-team{background:rgba(255,255,255,.07);color:var(--t2);}
+.rb-owned{background:rgba(255,107,53,.12);color:var(--accent);}
+.rb-unsold{background:rgba(255,255,255,.05);color:var(--t3);}
+.rb-cap{background:rgba(255,215,0,.2);color:#ffd700;}
+.rb-vc{background:rgba(180,180,200,.15);color:#b4b4c8;}
+.row-pts{font-family:var(--font-mono);font-size:13px;font-weight:500;color:var(--accent);flex-shrink:0;}
+.row-chevron{font-size:11px;color:var(--t3);margin-left:2px;}
+.empty-state{padding:32px 20px;text-align:center;color:var(--t3);font-size:14px;}
+/* MODAL */
+.modal{display:none;position:fixed;inset:0;background:var(--ov);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:200;align-items:center;justify-content:center;padding:20px;}
+.modal.open{display:flex;}
+.modal-close{position:fixed;top:18px;right:18px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;}
+.card-scene{perspective:1200px;width:min(80vw,300px);aspect-ratio:0.68;filter:drop-shadow(0 28px 50px rgba(0,0,0,.8));cursor:pointer;}
+.card-flip{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.4,0,.2,1);}
+.card-flip.flipped{transform:rotateY(180deg);}
+.card-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  clip-path:polygon(12% 0%,88% 0%,100% 12%,100% 80%,50% 100%,0% 80%,0% 12%);
+  display:flex;flex-direction:column;overflow:hidden;}
+.card-back-face{transform:rotateY(180deg);}
+.card-face::before{content:'';position:absolute;inset:5px;z-index:1;pointer-events:none;
+  clip-path:polygon(12% 0%,88% 0%,100% 12%,100% 80%,50% 100%,0% 80%,0% 12%);background:rgba(255,255,255,.1);}
+.card-face::after{content:'';position:absolute;inset:5px;z-index:2;pointer-events:none;
+  clip-path:polygon(12% 0%,88% 0%,100% 12%,100% 80%,50% 100%,0% 80%,0% 12%);
+  background:repeating-linear-gradient(45deg,transparent,transparent 12px,rgba(255,255,255,.05) 12px,rgba(255,255,255,.05) 13px);}
+.card-face.gold{background:linear-gradient(150deg,#3B2400 0%,#8B6000 18%,#E8B800 38%,#FFE066 50%,#C49A00 65%,#7A5000 82%,#3B2400 100%);color:#2C1A00;}
+.card-face.silver{background:linear-gradient(150deg,#1C1C1C 0%,#606060 18%,#C4C4C4 38%,#EFEFEF 50%,#8C8C8C 65%,#444444 82%,#1C1C1C 100%);color:#111111;}
+.card-face.bronze{background:linear-gradient(150deg,#2E1200 0%,#7A3800 18%,#C07028 38%,#E8A050 50%,#9A5018 65%,#4A2000 82%,#2E1200 100%);color:#2E1200;}
+.cf-inner{position:relative;z-index:3;display:flex;flex-direction:column;height:100%;padding:8% 9% 24% 9%;}
+.cf-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4%;}
+.cf-rating{font-family:var(--font-display);font-size:clamp(36px,10vw,52px);line-height:.88;}
+.cf-role{font-family:var(--font-display);font-size:clamp(14px,4vw,18px);letter-spacing:.04em;margin-top:2px;opacity:.85;}
+.cf-logo{width:clamp(60px,18vw,80px);height:clamp(60px,18vw,80px);object-fit:contain;filter:drop-shadow(0 4px 12px rgba(0,0,0,.4));}
+.cf-logo-fallback{font-size:clamp(40px,13vw,58px);line-height:1;}
+.cf-name{font-family:var(--font-display);font-size:clamp(17px,5.5vw,28px);letter-spacing:.045em;line-height:1;text-align:center;
+  white-space:normal;word-break:break-word;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  text-shadow:0 1px 3px rgba(0,0,0,.15);margin-bottom:3%;}
+.cf-owner{font-family:var(--font-main);font-size:clamp(8px,2.2vw,11px);font-weight:700;text-align:center;opacity:.75;
+  letter-spacing:.02em;margin-bottom:3%;background:rgba(0,0,0,.15);border-radius:4px;padding:2px 6px;display:inline-block;align-self:center;}
+.cf-divider{height:1.5px;background:currentColor;opacity:.2;margin:0 2% 4%;border-radius:1px;}
+.cf-stats{display:flex;align-items:stretch;width:100%;}
+.cf-stat-col{flex:1;display:flex;flex-direction:column;gap:clamp(3px,1vw,5px);}
+.cf-stat-col:first-child{padding-right:5%;}.cf-stat-col:last-child{padding-left:5%;}
+.cf-stat-vdiv{width:1.5px;background:currentColor;opacity:.2;flex-shrink:0;border-radius:1px;}
+.cf-stat-row{display:flex;align-items:baseline;justify-content:space-between;gap:4px;}
+.cf-stat-val{font-family:var(--font-display);font-size:clamp(14px,4.5vw,20px);line-height:1;flex-shrink:0;}
+.cf-stat-lbl{font-family:var(--font-display);font-size:clamp(10px,3vw,14px);opacity:.6;white-space:nowrap;}
+.cb-inner{position:relative;z-index:3;display:flex;flex-direction:column;height:100%;padding:8% 8% 24% 8%;}
+.cb-header{text-align:center;margin-bottom:4%;padding-bottom:3%;border-bottom:1.5px solid rgba(0,0,0,.2);}
+.cb-name{font-family:var(--font-display);font-size:clamp(15px,5vw,22px);letter-spacing:.045em;line-height:1;
+  white-space:normal;word-break:break-word;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.cb-sub{font-family:var(--font-main);font-size:clamp(8px,2.2vw,10px);opacity:.75;margin-top:3px;font-weight:700;letter-spacing:.03em;}
+.cb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(3px,1vw,5px);flex:1;}
+.cb-stat{display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.1);border-radius:6px;padding:clamp(3px,1vw,5px) 2px;border:1px solid rgba(0,0,0,.07);}
+.cb-stat-val{font-family:var(--font-display);font-size:clamp(13px,4vw,18px);line-height:1;}
+.cb-stat-lbl{font-size:clamp(7px,1.8vw,9px);font-weight:700;text-transform:uppercase;letter-spacing:.04em;opacity:.6;margin-top:1px;text-align:center;}
+.cb-footer{margin-top:4%;text-align:center;font-family:var(--font-main);font-size:clamp(9px,2.5vw,11px);font-weight:700;opacity:.85;padding:5px 8px;background:rgba(0,0,0,.12);border-radius:7px;border:1px solid rgba(0,0,0,.07);}
+.bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+  width:calc(100% - 28px);max-width:480px;height:68px;background:var(--nav);backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);
+  border:1px solid var(--brd);border-radius:28px;display:flex;justify-content:space-around;align-items:center;
+  padding:6px 2px;box-shadow:0 8px 40px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04);z-index:100;}
+.nav-item{text-align:center;color:var(--t3);text-decoration:none;font-size:8px;font-weight:600;letter-spacing:.04em;
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;transition:color var(--t);}
+.nav-item.active{color:var(--accent);}
+.nav-icon-wrap{width:36px;height:28px;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:background var(--t);}
+.nav-item.active .nav-icon-wrap{background:var(--accent-soft);}
+.nav-icon{font-size:16px;line-height:1;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
 </head>
 <body>
-
 <div class="topbar">
-    <div class="topbar-left">
-        <p class="greeting">Player Cards</p>
-        <h1>All Players</h1>
-        <p id="player-count">Loading…</p>
-    </div>
-    <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
+  <div class="topbar-left"><p class="greeting">Player Cards</p><h1>All Players</h1><p id="player-count">Loading…</p></div>
+  <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
 </div>
-
 <div class="search-wrap">
-    <span class="search-icon">🔍</span>
-    <input type="text" class="search-bar" id="search-bar" placeholder="Search players…" oninput="applyFilters()">
+  <span class="search-icon">🔍</span>
+  <input type="text" class="search-bar" id="search-bar" placeholder="Search players…" oninput="applyFilters()">
 </div>
-
 <div class="filter-row">
-    <button class="filter-btn active" onclick="setFilter('ALL',this)">All</button>
-    <button class="filter-btn" onclick="setFilter('BAT',this)">🏏 Bat</button>
-    <button class="filter-btn" onclick="setFilter('BOWL',this)">🎳 Bowl</button>
-    <button class="filter-btn" onclick="setFilter('AR',this)">⚡ All-R</button>
-    <button class="filter-btn" onclick="setFilter('WK',this)">🧤 WK</button>
-    <button class="filter-btn" onclick="setFilter('GOLD',this)">🥇 Gold</button>
-    <button class="filter-btn" onclick="setFilter('SILVER',this)">🥈 Silver</button>
-    <button class="filter-btn" onclick="setFilter('BRONZE',this)">🥉 Bronze</button>
+  <button class="filter-btn active" onclick="setFilter('ALL',this)">All</button>
+  <button class="filter-btn" onclick="setFilter('BAT',this)">🏏 Bat</button>
+  <button class="filter-btn" onclick="setFilter('BOWL',this)">🎳 Bowl</button>
+  <button class="filter-btn" onclick="setFilter('AR',this)">⚡ All-R</button>
+  <button class="filter-btn" onclick="setFilter('WK',this)">🧤 WK</button>
+  <button class="filter-btn" onclick="setFilter('GOLD',this)">🥇 Gold</button>
+  <button class="filter-btn" onclick="setFilter('SILVER',this)">🥈 Silver</button>
+  <button class="filter-btn" onclick="setFilter('BRONZE',this)">🥉 Bronze</button>
 </div>
-
-<div class="list-wrap">
-    <div id="player-list"><div class="empty-state">Loading players…</div></div>
-</div>
+<div class="list-wrap"><div id="player-list"><div class="empty-state">Loading players…</div></div></div>
 
 <div id="card-modal" class="modal" onclick="handleOverlay(event)">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="card-scene" onclick="flipCard()">
-        <div class="card-flip" id="card-flip">
-            <div class="card-face" id="card-front"></div>
-            <div class="card-face card-back-face" id="card-back"></div>
-        </div>
+  <button class="modal-close" onclick="closeModal()">✕</button>
+  <div class="card-scene" onclick="flipCard()">
+    <div class="card-flip" id="card-flip">
+      <div class="card-face" id="card-front"></div>
+      <div class="card-face card-back-face" id="card-back"></div>
     </div>
+  </div>
 </div>
 
 <nav class="bottom-nav">
-    <a href="dashboard.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🏠</span></div>Home</a>
-    <a href="squad.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad</a>
-    <a href="players.html" class="nav-item active"><div class="nav-icon-wrap"><span class="nav-icon">🃏</span></div>Cards</a>
-    <a href="teams.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">👥</span></div>Teams</a>
-    <a href="stats.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">📊</span></div>Stats</a>
-    <a href="settings.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">⚙️</span></div>Settings</a>
+  <a href="dashboard.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🏠</span></div>Home</a>
+  <a href="squad.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad</a>
+  <a href="players.html"   class="nav-item active"><div class="nav-icon-wrap"><span class="nav-icon">🃏</span></div>Cards</a>
+  <a href="teams.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">👥</span></div>Teams</a>
+  <a href="stats.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">📊</span></div>Stats</a>
+  <a href="settings.html"  class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">⚙️</span></div>Settings</a>
 </nav>
 
 <script>
 const WEB_APP_URL="https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
 const myTeam=localStorage.getItem("teamName")||"";
-const myCap =localStorage.getItem("captain") ||"";
-const myVC  =localStorage.getItem("viceCaptain")||"";
-
+const myCap=localStorage.getItem("captain")||"";
+const myVC=localStorage.getItem("viceCaptain")||"";
 let allPlayers=[],activeFilter="ALL",tierMap={},ratingMap={};
 
 const savedTheme=localStorage.getItem("theme")||"dark";
 document.documentElement.setAttribute("data-theme",savedTheme);
 document.getElementById("theme-icon").textContent=savedTheme==="dark"?"☀️":"🌙";
 function toggleTheme(){
-    const next=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
-    document.documentElement.setAttribute("data-theme",next);
-    localStorage.setItem("theme",next);
-    document.getElementById("theme-icon").textContent=next==="dark"?"☀️":"🌙";
+  const next=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
+  document.documentElement.setAttribute("data-theme",next);localStorage.setItem("theme",next);
+  document.getElementById("theme-icon").textContent=next==="dark"?"☀️":"🌙";
 }
 
 const TEAMS={
-    MI:  {color:"#004BA0",color2:"#1a6fd4",logo:"ipl team logo/mi.webp",  fb:"🔵"},
-    CSK: {color:"#c07c08",color2:"#f5a623",logo:"ipl team logo/csk.jpg",  fb:"🟡"},
-    RCB: {color:"#b0001a",color2:"#ff1a35",logo:"ipl team logo/rcb.jpg",  fb:"🔴"},
-    KKR: {color:"#3A225D",color2:"#6b3aaa",logo:"ipl team logo/kkr.webp", fb:"🟣"},
-    DC:  {color:"#17479E",color2:"#2a5fc0",logo:"ipl team logo/dc.webp",  fb:"🔷"},
-    PBKS:{color:"#c41920",color2:"#ED1F27",logo:"ipl team logo/pk.webp",  fb:"🦁"},
-    RR:  {color:"#254AA5",color2:"#f542b3",logo:"ipl team logo/rr.webp",  fb:"💗"},
-    SRH: {color:"#c04010",color2:"#F7591A",logo:"ipl team logo/srh.webp", fb:"🟠"},
-    GT:  {color:"#1B2133",color2:"#3a5a9a",logo:"ipl team logo/gt.webp",  fb:"🔷"},
-    LSG: {color:"#1d6b42",color2:"#5ec48a",logo:"ipl team logo/lsg.jpg",  fb:"🟢"},
+  MI:{color:"#004BA0",color2:"#1a6fd4",logo:"ipl team logo/mi.webp",fb:"🔵"},
+  CSK:{color:"#c07c08",color2:"#f5a623",logo:"ipl team logo/csk.jpg",fb:"🟡"},
+  RCB:{color:"#b0001a",color2:"#ff1a35",logo:"ipl team logo/rcb.jpg",fb:"🔴"},
+  KKR:{color:"#3A225D",color2:"#6b3aaa",logo:"ipl team logo/kkr.webp",fb:"🟣"},
+  DC:{color:"#17479E",color2:"#2a5fc0",logo:"ipl team logo/dc.webp",fb:"🔷"},
+  PBKS:{color:"#c41920",color2:"#ED1F27",logo:"ipl team logo/pk.webp",fb:"🦁"},
+  RR:{color:"#254AA5",color2:"#f542b3",logo:"ipl team logo/rr.webp",fb:"💗"},
+  SRH:{color:"#c04010",color2:"#F7591A",logo:"ipl team logo/srh.webp",fb:"🟠"},
+  GT:{color:"#1B2133",color2:"#3a5a9a",logo:"ipl team logo/gt.webp",fb:"🔷"},
+  LSG:{color:"#1d6b42",color2:"#5ec48a",logo:"ipl team logo/lsg.jpg",fb:"🟢"},
 };
 function getTeam(n){
-    const u=(n||"").toUpperCase();
-    for(const k of Object.keys(TEAMS)) if(u.includes(k)) return{abbr:k,...TEAMS[k]};
-    return{abbr:u.slice(0,3)||"IPL",color:"#2a3a5a",color2:"#3a5a8a",logo:"",fb:"🏏"};
+  const u=(n||"").toUpperCase();
+  for(const k of Object.keys(TEAMS)) if(u.includes(k)) return{abbr:k,...TEAMS[k]};
+  return{abbr:u.slice(0,3)||"IPL",color:"#2a3a5a",color2:"#3a5a8a",logo:"",fb:"🏏"};
 }
 
-// ── STATS: multi-key safe getter ──
-function gi(p,...keys){
-    for(const k of keys){
-        const v=p[k];
-        if(v!==undefined&&v!==null&&v!=="") return parseInt(v)||0;
-    }
-    return 0;
-}
+// FIX: check both "Total Points" and "Current Points"
+function getPts(p){return parseFloat(p["Total Points"]||p["Current Points"]||0)||0;}
+function gi(p,...keys){for(const k of keys){const v=p[k];if(v!==undefined&&v!==null&&v!=="")return parseInt(v)||0;}return 0;}
 
-// ── TOTAL POINTS: check all possible column names ──
-function getPts(p){
-    return parseFloat(p["Total Points"]||p["TotalPoints"]||p["total_points"]||p["TOTAL POINTS"]||0)||0;
-}
-
-// ── TIER & RATING CALCULATION ──
 function calcTiersAndRatings(players){
-    // Sort by points descending among those with points
-    const withPts = players.filter(p=>getPts(p)>0).sort((a,b)=>getPts(b)-getPts(a));
-    const total = withPts.length;
-
-    // Gold = top 33%, Silver = middle 33%, Bronze = rest + 0 pts
-    const goldCount   = Math.ceil(total * 0.33);
-    const silverCount = Math.ceil(total * 0.33);
-
-    players.forEach(p => {
-        const pts = getPts(p);
-        const name = p["Player Name"];
-
-        if(pts <= 0){
-            tierMap[name]   = "bronze";
-            ratingMap[name] = 35;
-            return;
-        }
-
-        const rank = withPts.findIndex(x => x["Player Name"]===name); // 0 = best
-        if(rank < goldCount){
-            tierMap[name]   = "gold";
-            // Gold: 80–99 based on position within gold tier
-            ratingMap[name] = Math.max(80, 99 - Math.round((rank / Math.max(goldCount-1,1)) * 19));
-        } else if(rank < goldCount+silverCount){
-            tierMap[name]   = "silver";
-            const rankInTier = rank - goldCount;
-            ratingMap[name] = Math.max(60, 79 - Math.round((rankInTier / Math.max(silverCount-1,1)) * 19));
-        } else {
-            tierMap[name]   = "bronze";
-            const rankInTier = rank - goldCount - silverCount;
-            const bronzeCount = Math.max(total - goldCount - silverCount, 1);
-            ratingMap[name] = Math.max(40, 59 - Math.round((rankInTier / Math.max(bronzeCount-1,1)) * 19));
-        }
-    });
+  const withPts=players.filter(p=>getPts(p)>0).sort((a,b)=>getPts(b)-getPts(a));
+  const total=withPts.length;
+  const goldCount=Math.ceil(total*.33);
+  const silverCount=Math.ceil(total*.33);
+  players.forEach(p=>{
+    const pts=getPts(p);const name=p["Player Name"];
+    if(pts<=0){tierMap[name]="bronze";ratingMap[name]=35;return;}
+    const rank=withPts.findIndex(x=>x["Player Name"]===name);
+    if(rank<goldCount){tierMap[name]="gold";ratingMap[name]=Math.max(80,99-Math.round((rank/Math.max(goldCount-1,1))*19));}
+    else if(rank<goldCount+silverCount){const r=rank-goldCount;tierMap[name]="silver";ratingMap[name]=Math.max(60,79-Math.round((r/Math.max(silverCount-1,1))*19));}
+    else{const r=rank-goldCount-silverCount;const bc=Math.max(total-goldCount-silverCount,1);tierMap[name]="bronze";ratingMap[name]=Math.max(40,59-Math.round((r/Math.max(bc-1,1))*19));}
+  });
 }
 
-function roleClass(r){return r==="BOWL"?"rb-role-bowl":r==="AR"?"rb-role-ar":r==="WK"?"rb-role-wk":"rb-role-bat";}
+function roleClass(r){return r==="BOWL"?"rb-bowl":r==="AR"?"rb-ar":r==="WK"?"rb-wk":"rb-bat";}
 
 document.addEventListener("DOMContentLoaded",async()=>{
-    try{
-        const res=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"getPlayers"})});
-        const r=await res.json();
-        if(r.status==="success"){
-            allPlayers=r.players;
-            calcTiersAndRatings(allPlayers);
-            applyFilters();
-        }
-    }catch{
-        document.getElementById("player-list").innerHTML=`<div class="empty-state" style="color:#e74c3c;">Failed to load players.</div>`;
-    }
+  try{
+    const res=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"getPlayers"})});
+    const r=await res.json();
+    if(r.status==="success"){allPlayers=r.players;calcTiersAndRatings(allPlayers);applyFilters();}
+  }catch{document.getElementById("player-list").innerHTML='<div class="empty-state" style="color:#e74c3c">Failed to load players.</div>';}
 });
 
 function setFilter(val,btn){
-    activeFilter=val;
-    document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    applyFilters();
+  activeFilter=val;
+  document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");applyFilters();
 }
 
 function applyFilters(){
-    const q=document.getElementById("search-bar").value.toLowerCase();
-    const f=allPlayers.filter(p=>{
-        const mq=!q||p["Player Name"].toLowerCase().includes(q);
-        const role=(p["Role"]||"").toUpperCase();
-        const tier=tierMap[p["Player Name"]]||"bronze";
-        if(activeFilter==="BAT")    return mq&&role==="BAT";
-        if(activeFilter==="BOWL")   return mq&&role==="BOWL";
-        if(activeFilter==="AR")     return mq&&role==="AR";
-        if(activeFilter==="WK")     return mq&&role==="WK";
-        if(activeFilter==="GOLD")   return mq&&tier==="gold";
-        if(activeFilter==="SILVER") return mq&&tier==="silver";
-        if(activeFilter==="BRONZE") return mq&&tier==="bronze";
-        return mq;
-    });
-    document.getElementById("player-count").innerText=`${f.length} of ${allPlayers.length} players`;
-    renderList(f);
+  const q=document.getElementById("search-bar").value.toLowerCase();
+  const f=allPlayers.filter(p=>{
+    const mq=!q||p["Player Name"].toLowerCase().includes(q);
+    const role=(p["Role"]||"").toUpperCase();
+    const tier=tierMap[p["Player Name"]]||"bronze";
+    if(activeFilter==="BAT")    return mq&&role==="BAT";
+    if(activeFilter==="BOWL")   return mq&&role==="BOWL";
+    if(activeFilter==="AR")     return mq&&role==="AR";
+    if(activeFilter==="WK")     return mq&&role==="WK";
+    if(activeFilter==="GOLD")   return mq&&tier==="gold";
+    if(activeFilter==="SILVER") return mq&&tier==="silver";
+    if(activeFilter==="BRONZE") return mq&&tier==="bronze";
+    return mq;
+  });
+  document.getElementById("player-count").innerText=`${f.length} of ${allPlayers.length} players`;
+  renderList(f);
 }
 
 function renderList(players){
-    const el=document.getElementById("player-list");
-    if(!players.length){el.innerHTML=`<div class="empty-state">No players match.</div>`;return;}
-    el.innerHTML=players.map((p,i)=>{
-        const tier=tierMap[p["Player Name"]]||"bronze";
-        const team=getTeam(p["IPL Team"]||"");
-        const pts=getPts(p);
-        const role=(p["Role"]||"BAT").toUpperCase();
-        const name=p["Player Name"]||"";
-        const owned=(p["Sold To"]&&p["Sold To"].trim());
-        const isCap=myCap===name&&p["Sold To"]===myTeam;
-        const isVC =myVC ===name&&p["Sold To"]===myTeam;
-        return`<div class="player-row" style="animation-delay:${Math.min(i*.03,.4)}s" onclick="openCard(${i})">
-            <div class="tier-dot ${tier}"></div>
-            <div class="team-strip" style="background:linear-gradient(180deg,${team.color},${team.color2})"></div>
-            <div class="row-info">
-                <div class="row-name">${name}</div>
-                <div class="row-meta">
-                    <span class="row-badge ${roleClass(role)}">${role}</span>
-                    <span class="row-badge rb-team">${team.abbr}</span>
-                    ${owned?`<span class="row-badge rb-owned">${p["Sold To"]}</span>`:`<span class="row-badge rb-unsold">Unsold</span>`}
-                    ${isCap?`<span class="row-badge rb-cap">C</span>`:""}
-                    ${isVC ?`<span class="row-badge rb-vc">VC</span>`:""}
-                </div>
-            </div>
-            <div class="row-pts">${pts>0?pts+" pts":"—"}</div>
-            <div class="row-chevron">❯</div>
-        </div>`;
-    }).join("");
-    window._fp=players;
-}
-
-function openCard(idx){
-    const p=window._fp[idx];
+  const el=document.getElementById("player-list");
+  if(!players.length){el.innerHTML='<div class="empty-state">No players match.</div>';return;}
+  el.innerHTML=players.map((p,i)=>{
     const tier=tierMap[p["Player Name"]]||"bronze";
     const team=getTeam(p["IPL Team"]||"");
     const pts=getPts(p);
-    const rating=ratingMap[p["Player Name"]]||35;
     const role=(p["Role"]||"BAT").toUpperCase();
     const name=p["Player Name"]||"";
     const owned=p["Sold To"]&&p["Sold To"].trim();
     const isCap=myCap===name&&p["Sold To"]===myTeam;
-    const isVC =myVC ===name&&p["Sold To"]===myTeam;
-    const price=p["Price Bought"]?`₹${p["Price Bought"]}Cr`:"Unsold";
-    const fantasyTeam=owned||"Unsold";
-
-    // All stats with multiple key fallbacks
-    const runs    = gi(p,"Runs","runs","RUNS");
-    const wkts    = gi(p,"Wickets","wickets","WICKETS");
-    const cats    = gi(p,"Catches","catches","CATCHES");
-    const fours   = gi(p,"4s","fours","FOURS","Fours");
-    const sixes   = gi(p,"6s","sixes","SIXES","Sixes");
-    const fifties = gi(p,"50s","fifties","FIFTIES","Fifties");
-    const hunds   = gi(p,"100s","hundreds","HUNDREDS","Hundreds");
-    const threeW  = gi(p,"3W","threeW","threew","THREE_W");
-    const fiveW   = gi(p,"5W","fiveW","fivew","FIVE_W");
-    const maidens = gi(p,"Maidens","maidens","MAIDENS");
-    const dots    = gi(p,"Dots","dots","DOTS");
-    const runouts = gi(p,"Run Outs","runouts","RUNOUTS","RunOuts");
-    const stmpgs  = gi(p,"Stumpings","stumpings","STUMPINGS");
-
-    const front=document.getElementById("card-front");
-    const back =document.getElementById("card-back");
-    front.className=`card-face ${tier}`;
-    back.className =`card-face card-back-face ${tier}`;
-    document.getElementById("card-flip").classList.remove("flipped");
-
-    const logoHTML=team.logo
-        ?`<img src="${team.logo}" class="cf-logo" alt="${team.abbr}" onerror="this.style.display='none';this.nextSibling.style.display='block'"><span class="cf-logo-fallback" style="display:none">${team.fb}</span>`
-        :`<span class="cf-logo-fallback">${team.fb}</span>`;
-
-    front.innerHTML=`<div class="cf-inner">
-        <div class="cf-top">
-            <div><div class="cf-rating">${rating}</div><div class="cf-role">${role}</div></div>
-            <div class="cf-logo-wrap">${logoHTML}</div>
+    const isVC=myVC===name&&p["Sold To"]===myTeam;
+    return`<div class="player-row" style="animation-delay:${Math.min(i*.03,.4)}s" onclick="openCard(${i})">
+      <div class="tier-dot ${tier}"></div>
+      <div class="team-strip" style="background:linear-gradient(180deg,${team.color},${team.color2})"></div>
+      <div class="row-info">
+        <div class="row-name">${name}</div>
+        <div class="row-meta">
+          <span class="row-badge ${roleClass(role)}">${role}</span>
+          <span class="row-badge rb-team">${team.abbr}</span>
+          ${owned?`<span class="row-badge rb-owned">${p["Sold To"]}</span>`:`<span class="row-badge rb-unsold">Unsold</span>`}
+          ${isCap?`<span class="row-badge rb-cap">C</span>`:""}
+          ${isVC?`<span class="row-badge rb-vc">VC</span>`:""}
         </div>
-        <div class="cf-name">${name.toUpperCase()}</div>
-        <div class="cf-owner">${fantasyTeam}</div>
-        <div class="cf-divider"></div>
-        <div class="cf-stats">
-            <div class="cf-stat-col">
-                <div class="cf-stat-row"><span class="cf-stat-val">${runs}</span><span class="cf-stat-lbl">RUN</span></div>
-                <div class="cf-stat-row"><span class="cf-stat-val">${wkts}</span><span class="cf-stat-lbl">WKT</span></div>
-                <div class="cf-stat-row"><span class="cf-stat-val">${cats}</span><span class="cf-stat-lbl">CAT</span></div>
-            </div>
-            <div class="cf-stat-vdiv"></div>
-            <div class="cf-stat-col">
-                <div class="cf-stat-row"><span class="cf-stat-val">${fours}</span><span class="cf-stat-lbl">4s</span></div>
-                <div class="cf-stat-row"><span class="cf-stat-val">${sixes}</span><span class="cf-stat-lbl">6s</span></div>
-                <div class="cf-stat-row"><span class="cf-stat-val">${pts}</span><span class="cf-stat-lbl">PTS</span></div>
-            </div>
-        </div>
+      </div>
+      <div class="row-pts">${pts>0?pts+" pts":"—"}</div>
+      <div class="row-chevron">❯</div>
     </div>`;
+  }).join("");
+  window._fp=players;
+}
 
-    back.innerHTML=`<div class="cb-inner">
-        <div class="cb-header">
-            <div class="cb-name">${name.toUpperCase()}</div>
-            <div class="cb-sub">${team.abbr} · ${pts} pts · ${price} · ${fantasyTeam}</div>
-        </div>
-        <div class="cb-grid">
-            <div class="cb-stat"><div class="cb-stat-val">${runs}</div><div class="cb-stat-lbl">Runs</div></div>
-            <div class="cb-stat"><div class="cb-stat-val">${fours}</div><div class="cb-stat-lbl">4s</div></div>
-            <div class="cb-stat"><div class="cb-stat-val">${sixes}</div><div class="cb-stat-lbl">6s</div></div>
-            <div class="cb-stat"><div class="cb-stat-val">${cats}</div><div class="cb-stat-lbl">Catches</div></div>
-            <div class="cb-stat"><div class="cb-stat-val">${wkts}</div><div class="cb-stat-lbl">Wickets</div></div>
-            <div class="cb-stat"><div class="cb-stat-val">${maidens}</div><div class="cb-stat-lbl">Maidens</div></div>
-            <div class="cb-stat"><div class="cb-stat-val">${dots}</div><div class="cb-stat-lbl">Dots</div></div>
-            <div class="cb-stat"><div class="cb-stat-val">${fifties}</div><div class="cb-stat-lbl">50s</div></div>
-            <div class="cb-stat"><div class="cb-stat-val">${hunds}</div><div class="cb-stat-lbl">100s</div></div>
-            <div class="cb-stat"><div class="cb-stat-val">${threeW}</div><div class="cb-stat-lbl">3W</div></div>
-            <div class="cb-stat"><div class="cb-stat-val">${fiveW}</div><div class="cb-stat-lbl">5W</div></div>
-            <div class="cb-stat"><div class="cb-stat-val">${runouts+stmpgs}</div><div class="cb-stat-lbl">Dis.</div></div>
-        </div>
-        <div class="cb-footer">
-            ${pts} pts · Rating ${rating}
-            ${isCap?" · Captain 🌟":isVC?" · Vice-Captain ⭐":""}
-        </div>
-    </div>`;
+function openCard(idx){
+  const p=window._fp[idx];
+  const tier=tierMap[p["Player Name"]]||"bronze";
+  const team=getTeam(p["IPL Team"]||"");
+  const pts=getPts(p);
+  const rating=ratingMap[p["Player Name"]]||35;
+  const role=(p["Role"]||"BAT").toUpperCase();
+  const name=p["Player Name"]||"";
+  const owned=p["Sold To"]&&p["Sold To"].trim();
+  const isCap=myCap===name&&p["Sold To"]===myTeam;
+  const isVC=myVC===name&&p["Sold To"]===myTeam;
+  const price=p["Price Bought"]?`₹${p["Price Bought"]}Cr`:"Unsold";
+  const fantasyTeam=owned||"Unsold";
+  const runs=gi(p,"Runs","runs");const wkts=gi(p,"Wickets","wickets");const cats=gi(p,"Catches","catches");
+  const fours=gi(p,"4s","fours");const sixes=gi(p,"6s","sixes");const fifties=gi(p,"50s","fifties");
+  const hunds=gi(p,"100s","hundreds");const threeW=gi(p,"3W","threew");const fiveW=gi(p,"5W","fivew");
+  const fourW=gi(p,"fourv");const maidens=gi(p,"Maidens","maidens");const dots=gi(p,"Dots","dots");
+  const runouts=gi(p,"Run Outs","runouts");const stmpgs=gi(p,"Stumpings","stumpings");
 
-    document.getElementById("card-modal").classList.add("open");
+  const front=document.getElementById("card-front");
+  const back=document.getElementById("card-back");
+  front.className=`card-face ${tier}`;
+  back.className=`card-face card-back-face ${tier}`;
+  document.getElementById("card-flip").classList.remove("flipped");
+
+  const logoHTML=team.logo?`<img src="${team.logo}" class="cf-logo" alt="${team.abbr}" onerror="this.style.display='none';this.nextSibling.style.display='block'"><span class="cf-logo-fallback" style="display:none">${team.fb}</span>`:`<span class="cf-logo-fallback">${team.fb}</span>`;
+
+  front.innerHTML=`<div class="cf-inner">
+    <div class="cf-top">
+      <div><div class="cf-rating">${rating}</div><div class="cf-role">${role}</div></div>
+      <div>${logoHTML}</div>
+    </div>
+    <div class="cf-name">${name.toUpperCase()}</div>
+    <div class="cf-owner">${fantasyTeam}</div>
+    <div class="cf-divider"></div>
+    <div class="cf-stats">
+      <div class="cf-stat-col">
+        <div class="cf-stat-row"><span class="cf-stat-val">${runs}</span><span class="cf-stat-lbl">RUN</span></div>
+        <div class="cf-stat-row"><span class="cf-stat-val">${wkts}</span><span class="cf-stat-lbl">WKT</span></div>
+        <div class="cf-stat-row"><span class="cf-stat-val">${cats}</span><span class="cf-stat-lbl">CAT</span></div>
+      </div>
+      <div class="cf-stat-vdiv"></div>
+      <div class="cf-stat-col">
+        <div class="cf-stat-row"><span class="cf-stat-val">${fours}</span><span class="cf-stat-lbl">4s</span></div>
+        <div class="cf-stat-row"><span class="cf-stat-val">${sixes}</span><span class="cf-stat-lbl">6s</span></div>
+        <div class="cf-stat-row"><span class="cf-stat-val">${pts}</span><span class="cf-stat-lbl">PTS</span></div>
+      </div>
+    </div>
+  </div>`;
+
+  back.innerHTML=`<div class="cb-inner">
+    <div class="cb-header">
+      <div class="cb-name">${name.toUpperCase()}</div>
+      <div class="cb-sub">${team.abbr} · ${pts} pts · ${price} · ${fantasyTeam}</div>
+    </div>
+    <div class="cb-grid">
+      <div class="cb-stat"><div class="cb-stat-val">${runs}</div><div class="cb-stat-lbl">Runs</div></div>
+      <div class="cb-stat"><div class="cb-stat-val">${fours}</div><div class="cb-stat-lbl">4s</div></div>
+      <div class="cb-stat"><div class="cb-stat-val">${sixes}</div><div class="cb-stat-lbl">6s</div></div>
+      <div class="cb-stat"><div class="cb-stat-val">${cats}</div><div class="cb-stat-lbl">Catches</div></div>
+      <div class="cb-stat"><div class="cb-stat-val">${wkts}</div><div class="cb-stat-lbl">Wickets</div></div>
+      <div class="cb-stat"><div class="cb-stat-val">${maidens}</div><div class="cb-stat-lbl">Maidens</div></div>
+      <div class="cb-stat"><div class="cb-stat-val">${dots}</div><div class="cb-stat-lbl">Dots</div></div>
+      <div class="cb-stat"><div class="cb-stat-val">${fifties}</div><div class="cb-stat-lbl">50s</div></div>
+      <div class="cb-stat"><div class="cb-stat-val">${hunds}</div><div class="cb-stat-lbl">100s</div></div>
+      <div class="cb-stat"><div class="cb-stat-val">${threeW}</div><div class="cb-stat-lbl">3W</div></div>
+      <div class="cb-stat"><div class="cb-stat-val">${fiveW}</div><div class="cb-stat-lbl">5W</div></div>
+      <div class="cb-stat"><div class="cb-stat-val">${fourW}</div><div class="cb-stat-lbl">4W</div></div>
+    </div>
+    <div class="cb-footer">${pts} pts · Rating ${rating}${isCap?" · Captain 🌟":isVC?" · Vice-Captain ⭐":""}</div>
+  </div>`;
+
+  document.getElementById("card-modal").classList.add("open");
 }
 
 function flipCard(){document.getElementById("card-flip").classList.toggle("flipped");}
