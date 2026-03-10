@@ -1,415 +1,308 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Squad | IPL Fantasy</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --accent: #FF6B35;
-            --accent-soft: rgba(255, 107, 53, 0.15);
-            --accent-glow: rgba(255,107,53,0.25);
-            --radius-card: 22px;
-            --font-main: 'Outfit', sans-serif;
-            --font-mono: 'DM Mono', monospace;
-            --font-display: 'Bebas Neue', cursive;
-            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            --nav-h: 74px;
-        }
-        [data-theme="dark"] {
-            --bg: #080d14; --bg-mesh: radial-gradient(ellipse at 20% 10%, rgba(30,60,100,0.45) 0%, transparent 55%), #080d14;
-            --glass-bg: rgba(255,255,255,0.04); --glass-border: rgba(255,255,255,0.08); --glass-shadow: 0 8px 40px rgba(0,0,0,0.45);
-            --nav-bg: rgba(8,13,20,0.88); --text-primary: #f0f2f5; --text-secondary: rgba(240,242,245,0.5);
-            --text-muted: rgba(240,242,245,0.28); --divider: rgba(255,255,255,0.06); --row-hover: rgba(255,255,255,0.04);
-            --input-bg: rgba(0,0,0,0.3); --input-border: rgba(255,255,255,0.1); --overlay: rgba(0,0,0,0.7);
-            --theme-toggle-bg: rgba(255,255,255,0.06); --sold-bg: rgba(79,172,254,0.15); --sold-text: #4facfe;
-        }
-        [data-theme="light"] {
-            --bg: #f0ece6; --bg-mesh: radial-gradient(ellipse at 20% 10%, rgba(255,200,150,0.2) 0%, transparent 55%), #f0ece6;
-            --glass-bg: rgba(255,255,255,0.55); --glass-border: rgba(255,255,255,0.85); --glass-shadow: 0 8px 40px rgba(0,0,0,0.09);
-            --nav-bg: rgba(240,236,230,0.9); --text-primary: #1a1a2e; --text-secondary: rgba(26,26,46,0.55);
-            --text-muted: rgba(26,26,46,0.32); --divider: rgba(0,0,0,0.07); --row-hover: rgba(0,0,0,0.03);
-            --input-bg: rgba(0,0,0,0.05); --input-border: rgba(0,0,0,0.1); --overlay: rgba(0,0,0,0.5);
-            --theme-toggle-bg: rgba(0,0,0,0.06); --sold-bg: rgba(79,172,254,0.12); --sold-text: #1a6faa;
-        }
-
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: var(--font-main); background: var(--bg-mesh); background-color: var(--bg); min-height: 100vh; color: var(--text-primary); padding-bottom: calc(68px + 14px + 28px); padding-left: env(safe-area-inset-left,0px); padding-right: env(safe-area-inset-right,0px); transition: background-color var(--transition), color var(--transition); overflow-x: hidden; }
-
-        .topbar { display: flex; justify-content: space-between; align-items: flex-start; padding: 28px 20px 16px; }
-        .topbar-left .greeting { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
-        .topbar-left h1 { font-family: var(--font-display); font-size: 38px; letter-spacing: .04em; line-height: 1; }
-        .topbar-left .budget-line { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
-        .topbar-left .budget-line span { font-family: var(--font-mono); color: var(--accent); font-weight: 500; }
-        .theme-btn { width: 38px; height: 38px; border-radius: 50%; background: var(--theme-toggle-bg); border: 1px solid var(--glass-border); color: var(--text-primary); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); transition: all var(--transition); }
-        .theme-btn:active { transform: scale(0.9); }
-
-        .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); padding: 0 20px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-
-        .card { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); border-radius: var(--radius-card); margin: 0 16px 20px; overflow: hidden; }
-        .card-header { padding: 16px 20px 14px; border-bottom: 1px solid var(--divider); display: flex; justify-content: space-between; align-items: center; }
-        .card-header h3 { font-size: 16px; font-weight: 600; }
-
-        .add-btn { background: var(--accent); color: #fff; border: none; padding: 8px 14px; border-radius: 10px; font-family: var(--font-main); font-size: 12px; font-weight: 600; cursor: pointer; transition: all var(--transition); }
-        .add-btn:active { transform: scale(0.95); }
-
-        /* ─── PLAYER CARD (matches stats.html) ───────── */
-        .players-list { padding: 0 16px; }
-
-        .player-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
-            border-radius: 20px;
-            margin-bottom: 10px;
-            display: flex; align-items: center;
-            padding: 14px 16px;
-            gap: 13px;
-            transition: border-color var(--transition), box-shadow var(--transition);
-            -webkit-tap-highlight-color: transparent;
-            animation: fadeUp .3s ease both;
-        }
-        .player-card:active {
-            border-color: rgba(255,107,53,.3);
-            box-shadow: 0 4px 20px rgba(255,107,53,.1), var(--glass-shadow);
-        }
-
-        .p-avatar { width: 42px; height: 42px; border-radius: 13px; background: var(--accent-soft); border: 1px solid var(--accent-glow); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-
-        .p-info { flex: 1; min-width: 0; }
-        .p-name { font-size: 15px; font-weight: 700; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .p-meta { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
-
-        .p-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-
-        /* Points pill */
-        .pts-pill { background: var(--accent-soft); border: 1px solid var(--accent-glow); border-radius: 10px; padding: 6px 10px; text-align: center; }
-        .pts-pill .pv { font-family: var(--font-mono); font-size: 15px; font-weight: 600; color: var(--accent); display: block; line-height: 1; }
-        .pts-pill .pl { font-size: 8px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); opacity: .65; margin-top: 2px; }
-
-        @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
-
-        /* Badges */
-        .badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; letter-spacing: .04em; }
-        .badge.bat  { background: rgba(52,152,219,.18); color: #4facfe; }
-        .badge.bowl { background: rgba(231,76,60,.18);  color: #e74c3c; }
-        .badge.ar   { background: rgba(241,196,15,.18); color: #f1c40f; }
-        .badge.wk   { background: rgba(155,89,182,.18); color: #bb8fce; }
-        .badge.team { background: rgba(255,255,255,.08); color: var(--text-secondary); }
-        .badge.price { background: var(--accent-soft); color: var(--accent); font-family: var(--font-mono); }
-
-        /* ─── C / VC BUTTONS ──────────────────────────── */
-        .role-btns { display: flex; gap: 5px; flex-shrink: 0; }
-        .role-btn { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--text-secondary); font-size: 11px; font-weight: 800; cursor: pointer; transition: all var(--transition); font-family: var(--font-main); display: flex; align-items: center; justify-content: center; }
-        .role-btn.active-c  { background: rgba(255,196,0,.2); border-color: rgba(255,196,0,.5); color: #ffc400; }
-        .role-btn.active-vc { background: rgba(180,180,200,.15); border-color: rgba(180,180,200,.4); color: #b4b4c8; }
-        .role-btn:active { transform: scale(.88); }
-
-        /* ─── MODAL ───────────────────────────────────── */
-        .modal { display: none; position: fixed; inset: 0; background: var(--overlay); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 100; align-items: flex-end; justify-content: center; }
-        .modal.open { display: flex; }
-
-        .modal-sheet { background: var(--glass-bg); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); border: 1px solid var(--glass-border); border-radius: 24px 24px 0 0; width: 100%; max-height: 82vh; overflow-y: auto; padding: 20px 0 30px; animation: sheetUp 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 -16px 60px rgba(0,0,0,0.5); }
-
-        @keyframes sheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-        .sheet-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--text-muted); margin: 0 auto 18px; }
-        .sheet-header { display: flex; justify-content: space-between; align-items: center; padding: 0 20px 14px; border-bottom: 1px solid var(--divider); margin-bottom: 4px; }
-        .sheet-header h3 { font-size: 17px; font-weight: 600; }
-        .close-btn { width: 30px; height: 30px; border-radius: 50%; background: var(--input-bg); border: 1px solid var(--input-border); color: var(--text-secondary); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: var(--font-main); }
-
-        /* Draft buy row */
-        .price-input { width: 58px; padding: 7px 8px; border-radius: 8px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--text-primary); font-size: 13px; font-family: var(--font-mono); text-align: center; outline: none; -webkit-appearance: none; }
-        .price-input:focus { border-color: var(--accent); }
-        .buy-btn { background: #22c55e; color: #fff; border: none; padding: 7px 13px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: var(--font-main); transition: all var(--transition); }
-        .buy-btn:active { transform: scale(0.95); }
-        .sold-chip { font-size: 10px; font-weight: 600; padding: 4px 8px; border-radius: 6px; background: var(--sold-bg); color: var(--sold-text); text-align: right; line-height: 1.4; }
-
-        .draft-search-wrap { padding: 12px 16px 8px; position: relative; }
-        .draft-search { width: 100%; padding: 10px 14px 10px 36px; border-radius: 12px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--text-primary); font-family: var(--font-main); font-size: 14px; outline: none; -webkit-appearance: none; transition: border-color var(--transition); }
-        .draft-search:focus { border-color: var(--accent); }
-        .draft-search::placeholder { color: var(--text-muted); }
-        .draft-search-icon { position: absolute; left: 28px; top: 50%; transform: translateY(-50%); font-size: 14px; pointer-events: none; }
-        .draft-filter-row { display: flex; gap: 6px; padding: 0 16px 10px; overflow-x: auto; scrollbar-width: none; }
-        .draft-filter-row::-webkit-scrollbar { display: none; }
-        .filter-chip { flex-shrink: 0; padding: 5px 12px; border-radius: 16px; border: 1px solid var(--glass-border); background: var(--input-bg); color: var(--text-muted); font-size: 11px; font-weight: 600; cursor: pointer; font-family: var(--font-main); transition: all var(--transition); }
-        .filter-chip.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
-        .empty-state { padding: 30px 20px; text-align: center; color: var(--text-muted); font-size: 14px; }
-        #draft-list-container { padding: 8px 16px 16px; }
-
-        /* ─── BOTTOM NAV ──────────────────────────────── */
-                .bottom-nav {
-            position: fixed;
-            bottom: 14px;
-            left: 50%; transform: translateX(-50%);
-            width: calc(100% - 28px); max-width: 480px;
-            height: 68px;
-            background: var(--nav-bg);
-            backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
-            border: 1px solid var(--border2, var(--glass-border));
-            border-radius: 28px;
-            display: flex; justify-content: space-around; align-items: center;
-            padding: 6px 2px;
-            box-shadow: 0 8px 40px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.04);
-            z-index: 100;
-        }
-        .nav-item {
-            text-align: center; color: var(--text-muted, var(--text-3)); text-decoration: none;
-            font-size: 8px; font-weight: 600; letter-spacing: .04em;
-            flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
-            transition: color 0.24s cubic-bezier(0.4,0,0.2,1);
-        }
-        .nav-item.active { color: var(--accent); }
-        .nav-icon-wrap {
-            width: 36px; height: 28px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            transition: background 0.24s cubic-bezier(0.4,0,0.2,1);
-        }
-        .nav-item.active .nav-icon-wrap { background: var(--accent-soft); }
-        .nav-icon { font-size: 16px; line-height: 1; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>Squad | IPL Fantasy 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#FF6B35;--accent-soft:rgba(255,107,53,.15);--accent-glow:rgba(255,107,53,.25);
+  --r:22px;--font-main:'Outfit',sans-serif;--font-mono:'DM Mono',monospace;--font-display:'Bebas Neue',cursive;--t:.25s cubic-bezier(.4,0,.2,1);}
+[data-theme="dark"]{--bg:#080d14;--mesh:radial-gradient(ellipse at 20% 10%,rgba(30,60,100,.45) 0%,transparent 55%),#080d14;
+  --surf:rgba(255,255,255,.04);--brd:rgba(255,255,255,.08);--shadow:0 8px 40px rgba(0,0,0,.45);
+  --nav:rgba(8,13,20,.88);--t1:#f0f2f5;--t2:rgba(240,242,245,.5);--t3:rgba(240,242,245,.28);--div:rgba(255,255,255,.06);
+  --ih:rgba(255,255,255,.04);--inp:rgba(0,0,0,.3);--ibrd:rgba(255,255,255,.1);--ov:rgba(0,0,0,.7);--tog:rgba(255,255,255,.06);}
+[data-theme="light"]{--bg:#f0ece6;--mesh:radial-gradient(ellipse at 20% 10%,rgba(255,200,150,.2) 0%,transparent 55%),#f0ece6;
+  --surf:rgba(255,255,255,.55);--brd:rgba(255,255,255,.85);--shadow:0 8px 40px rgba(0,0,0,.09);
+  --nav:rgba(240,236,230,.9);--t1:#1a1a2e;--t2:rgba(26,26,46,.55);--t3:rgba(26,26,46,.32);--div:rgba(0,0,0,.07);
+  --ih:rgba(0,0,0,.03);--inp:rgba(0,0,0,.05);--ibrd:rgba(0,0,0,.1);--ov:rgba(0,0,0,.5);--tog:rgba(0,0,0,.06);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-main);background:var(--mesh);background-color:var(--bg);min-height:100vh;color:var(--t1);
+  padding-bottom:calc(68px + 14px + 28px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px);
+  transition:background-color var(--t),color var(--t);overflow-x:hidden;}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;padding:28px 20px 16px;}
+.topbar-left .greeting{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+.topbar-left h1{font-family:var(--font-display);font-size:38px;letter-spacing:.04em;line-height:1;}
+.budget-line{font-size:13px;color:var(--t2);margin-top:4px;}
+.budget-line span{font-family:var(--font-mono);color:var(--accent);font-weight:500;}
+.theme-btn{width:38px;height:38px;border-radius:50%;background:var(--tog);border:1px solid var(--brd);
+  color:var(--t1);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.top-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.draft-btn{background:var(--accent);color:#fff;border:none;padding:7px 14px;border-radius:12px;
+  font-family:var(--font-main);font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.03em;transition:all var(--t);}
+.draft-btn:active{transform:scale(.95);}
+.players-list{padding:0 16px;}
+.player-card{background:var(--surf);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid var(--brd);box-shadow:var(--shadow);border-radius:20px;margin-bottom:10px;
+  display:flex;align-items:center;padding:14px 16px;gap:13px;transition:border-color var(--t);animation:fadeUp .3s ease both;}
+.p-avatar{width:42px;height:42px;border-radius:13px;background:var(--accent-soft);border:1px solid var(--accent-glow);
+  display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.p-info{flex:1;min-width:0;}
+.p-name{font-size:15px;font-weight:700;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.p-meta{display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
+.badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;letter-spacing:.04em;}
+.badge.bat{background:rgba(52,152,219,.18);color:#4facfe;}
+.badge.bowl{background:rgba(231,76,60,.18);color:#e74c3c;}
+.badge.ar{background:rgba(241,196,15,.18);color:#f1c40f;}
+.badge.wk{background:rgba(155,89,182,.18);color:#bb8fce;}
+.badge.team{background:rgba(255,255,255,.08);color:var(--t2);}
+.badge.price{background:var(--accent-soft);color:var(--accent);font-family:var(--font-mono);}
+.p-right{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.pts-pill{background:var(--accent-soft);border:1px solid var(--accent-glow);border-radius:10px;padding:6px 10px;text-align:center;}
+.pts-pill .pv{font-family:var(--font-mono);font-size:15px;font-weight:600;color:var(--accent);display:block;line-height:1;}
+.pts-pill .pl{font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);opacity:.65;margin-top:2px;}
+.role-btns{display:flex;gap:5px;flex-shrink:0;}
+.role-btn{width:34px;height:34px;border-radius:10px;border:1px solid var(--ibrd);background:var(--inp);
+  color:var(--t2);font-size:11px;font-weight:800;cursor:pointer;transition:all var(--t);font-family:var(--font-main);
+  display:flex;align-items:center;justify-content:center;}
+.role-btn.active-c {background:rgba(255,196,0,.2);border-color:rgba(255,196,0,.5);color:#ffc400;}
+.role-btn.active-vc{background:rgba(180,180,200,.15);border-color:rgba(180,180,200,.4);color:#b4b4c8;}
+.role-btn:active{transform:scale(.88);}
+.empty-state{padding:40px 20px;text-align:center;color:var(--t3);font-size:14px;line-height:1.6;}
+/* DRAFT MODAL */
+.modal{display:none;position:fixed;inset:0;background:var(--ov);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:100;align-items:flex-end;justify-content:center;}
+.modal.open{display:flex;}
+.modal-sheet{background:var(--surf);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
+  border:1px solid var(--brd);border-radius:24px 24px 0 0;width:100%;max-height:85vh;overflow-y:auto;
+  padding:20px 0 30px;animation:sheetUp .3s cubic-bezier(.4,0,.2,1);box-shadow:0 -16px 60px rgba(0,0,0,.5);}
+@keyframes sheetUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.sheet-handle{width:36px;height:4px;border-radius:2px;background:var(--t3);margin:0 auto 18px;opacity:.4;}
+.sheet-header{display:flex;justify-content:space-between;align-items:center;padding:0 20px 14px;border-bottom:1px solid var(--div);margin-bottom:4px;}
+.sheet-header h3{font-size:17px;font-weight:600;}
+.close-btn{width:30px;height:30px;border-radius:50%;background:var(--inp);border:1px solid var(--ibrd);
+  color:var(--t2);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.draft-search-wrap{padding:12px 16px 8px;position:relative;}
+.draft-search{width:100%;padding:10px 14px 10px 36px;border-radius:12px;border:1px solid var(--ibrd);
+  background:var(--inp);color:var(--t1);font-family:var(--font-main);font-size:14px;outline:none;-webkit-appearance:none;}
+.draft-search:focus{border-color:var(--accent);}
+.draft-search::placeholder{color:var(--t3);}
+.draft-search-icon{position:absolute;left:28px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
+.draft-filter-row{display:flex;gap:6px;padding:0 16px 10px;overflow-x:auto;scrollbar-width:none;}
+.draft-filter-row::-webkit-scrollbar{display:none;}
+.filter-chip{flex-shrink:0;padding:5px 12px;border-radius:16px;border:1px solid var(--brd);
+  background:var(--inp);color:var(--t2);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font-main);transition:all var(--t);}
+.filter-chip.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);}
+#draft-list-container{padding:8px 16px 16px;}
+.sold-chip{font-size:10px;font-weight:600;padding:4px 8px;border-radius:6px;background:rgba(79,172,254,.12);color:#4facfe;text-align:right;line-height:1.4;}
+.price-input{width:58px;padding:7px 8px;border-radius:8px;border:1px solid var(--ibrd);background:var(--inp);
+  color:var(--t1);font-size:13px;font-family:var(--font-mono);text-align:center;outline:none;-webkit-appearance:none;}
+.price-input:focus{border-color:var(--accent);}
+.buy-btn{background:#22c55e;color:#fff;border:none;padding:7px 13px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-main);transition:all var(--t);}
+.buy-btn:active{transform:scale(.95);}
+.bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+  width:calc(100% - 28px);max-width:480px;height:68px;background:var(--nav);backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);
+  border:1px solid var(--brd);border-radius:28px;display:flex;justify-content:space-around;align-items:center;
+  padding:6px 2px;box-shadow:0 8px 40px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04);z-index:100;}
+.nav-item{text-align:center;color:var(--t3);text-decoration:none;font-size:8px;font-weight:600;letter-spacing:.04em;
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;transition:color var(--t);}
+.nav-item.active{color:var(--accent);}
+.nav-icon-wrap{width:36px;height:28px;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:background var(--t);}
+.nav-item.active .nav-icon-wrap{background:var(--accent-soft);}
+.nav-icon{font-size:16px;line-height:1;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+</style>
 </head>
 <body>
+<div class="topbar">
+  <div class="topbar-left">
+    <p class="greeting">My Squad</p>
+    <h1>Roster</h1>
+    <p class="budget-line">Budget remaining: ₹<span id="budget">100</span> Cr</p>
+  </div>
+  <div class="top-right">
+    <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
+    <button class="draft-btn" onclick="openDraft()">＋ Draft</button>
+  </div>
+</div>
+<div class="players-list" id="my-squad-list"><div class="empty-state">Your squad is empty.<br>Start the draft!</div></div>
 
-    <div class="topbar">
-        <div class="topbar-left">
-            <p class="greeting">My Squad</p>
-            <h1>Roster</h1>
-            <p class="budget-line">Budget remaining: ₹<span id="budget">100</span> Cr</p>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
-            <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
-            <button onclick="openDraft()" style="background:var(--accent);color:#fff;border:none;padding:7px 14px;border-radius:12px;font-family:var(--font-main);font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.03em;">＋ Draft</button>
-        </div>
+<!-- Draft Modal -->
+<div id="draft-modal" class="modal" onclick="handleOverlay(event)">
+  <div class="modal-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <h3>Auction Draft</h3>
+      <button class="close-btn" onclick="closeDraft()">✕</button>
     </div>
-
-    <div class="players-list" id="my-squad-list">
-        <div class="empty-state">Your squad is empty.<br>Start the draft!</div>
+    <div class="draft-search-wrap">
+      <span class="draft-search-icon">🔍</span>
+      <input class="draft-search" id="draft-search" type="text" placeholder="Search players, teams…" oninput="renderDraftList()">
     </div>
-
-    <!-- Draft Modal -->
-    <div id="draft-modal" class="modal" onclick="handleOverlayClick(event)">
-        <div class="modal-sheet">
-            <div class="sheet-handle"></div>
-            <div class="sheet-header">
-                <h3>Auction Draft</h3>
-                <button class="close-btn" onclick="closeDraft()">✕</button>
-            </div>
-            <div class="draft-search-wrap">
-                <span class="draft-search-icon">🔍</span>
-                <input class="draft-search" id="draft-search" type="text" placeholder="Search players, teams…" oninput="filterDraft()">
-            </div>
-            <div class="draft-filter-row">
-                <button class="filter-chip active" onclick="setDraftFilter('ALL',this)">All</button>
-                <button class="filter-chip" onclick="setDraftFilter('Available',this)">Available</button>
-                <button class="filter-chip" onclick="setDraftFilter('BAT',this)">🏏 BAT</button>
-                <button class="filter-chip" onclick="setDraftFilter('BOWL',this)">🎳 BOWL</button>
-                <button class="filter-chip" onclick="setDraftFilter('AR',this)">⚡ AR</button>
-                <button class="filter-chip" onclick="setDraftFilter('WK',this)">🧤 WK</button>
-            </div>
-            <div id="draft-list-container">
-                <div class="empty-state">Loading players…</div>
-            </div>
-        </div>
+    <div class="draft-filter-row">
+      <button class="filter-chip active" onclick="setFilter('ALL',this)">All</button>
+      <button class="filter-chip" onclick="setFilter('Available',this)">Available</button>
+      <button class="filter-chip" onclick="setFilter('BAT',this)">🏏 BAT</button>
+      <button class="filter-chip" onclick="setFilter('BOWL',this)">🎳 BOWL</button>
+      <button class="filter-chip" onclick="setFilter('AR',this)">⚡ AR</button>
+      <button class="filter-chip" onclick="setFilter('WK',this)">🧤 WK</button>
     </div>
+    <div id="draft-list-container"><div class="empty-state">Loading players…</div></div>
+  </div>
+</div>
 
-            <nav class="bottom-nav">
-        <a href="dashboard.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🏠</span></div>Home</a>
-        <a href="squad.html" class="nav-item active"><div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad</a>
-        <a href="players.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🃏</span></div>Cards</a>
-        <a href="teams.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">👥</span></div>Teams</a>
-        <a href="stats.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">📊</span></div>Stats</a>
-        <a href="settings.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">⚙️</span></div>Settings</a>
-    </nav>
+<nav class="bottom-nav">
+  <a href="dashboard.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🏠</span></div>Home</a>
+  <a href="squad.html"     class="nav-item active"><div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad</a>
+  <a href="players.html"   class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🃏</span></div>Cards</a>
+  <a href="teams.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">👥</span></div>Teams</a>
+  <a href="stats.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">📊</span></div>Stats</a>
+  <a href="settings.html"  class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">⚙️</span></div>Settings</a>
+</nav>
 
-    <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
-        const myTeamName = localStorage.getItem("teamName");
+<script>
+const WEB_APP_URL="https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
+const myTeamName=localStorage.getItem("teamName");
+if(!myTeamName){window.location.href="index.html";}
 
-        // ─── THEME ────────────────────────────────────────
-        const savedTheme = localStorage.getItem("theme") || "dark";
-        document.documentElement.setAttribute("data-theme", savedTheme);
-        document.getElementById("theme-icon").textContent = savedTheme === "dark" ? "☀️" : "🌙";
-        function toggleTheme() {
-            const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
-            document.documentElement.setAttribute("data-theme", next);
-            localStorage.setItem("theme", next);
-            document.getElementById("theme-icon").textContent = next === "dark" ? "☀️" : "🌙";
-        }
+const savedTheme=localStorage.getItem("theme")||"dark";
+document.documentElement.setAttribute("data-theme",savedTheme);
+document.getElementById("theme-icon").textContent=savedTheme==="dark"?"☀️":"🌙";
+function toggleTheme(){
+  const next=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
+  document.documentElement.setAttribute("data-theme",next);
+  localStorage.setItem("theme",next);
+  document.getElementById("theme-icon").textContent=next==="dark"?"☀️":"🌙";
+}
 
-        document.addEventListener("DOMContentLoaded", loadMySquad);
+// FIX: check both "Total Points" and "Current Points"
+function getPts(p){return parseFloat(p["Total Points"]||p["Current Points"]||0)||0;}
+function roleClass(r){return r==="BOWL"?"bowl":r==="AR"?"ar":r==="WK"?"wk":"bat";}
 
-        function handleOverlayClick(e) { if (e.target === document.getElementById('draft-modal')) closeDraft(); }
-        function openDraft() { document.getElementById('draft-modal').classList.add('open'); fetchPlayers(); }
-        function closeDraft() { document.getElementById('draft-modal').classList.remove('open'); }
+document.addEventListener("DOMContentLoaded",loadMySquad);
+function handleOverlay(e){if(e.target===document.getElementById("draft-modal"))closeDraft();}
 
-        function roleClass(role) {
-            if (role === 'BOWL') return 'bowl';
-            if (role === 'AR') return 'ar';
-            if (role === 'WK') return 'wk';
-            return 'bat';
-        }
+async function loadMySquad(){
+  const container=document.getElementById("my-squad-list");
+  container.innerHTML='<div class="empty-state">Loading squad…</div>';
+  try{
+    const rolesRes=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"getRoles",teamName:myTeamName})});
+    const rolesData=await rolesRes.json();
+    if(rolesData.status==="success"){
+      if(rolesData.captain)    localStorage.setItem("captain",rolesData.captain);
+      if(rolesData.viceCaptain)localStorage.setItem("viceCaptain",rolesData.viceCaptain);
+    }
+    const res=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"getPlayers"})});
+    const result=await res.json();
+    if(result.status==="success"){
+      const myPlayers=result.players.filter(p=>p["Sold To"]===myTeamName);
+      const spent=myPlayers.reduce((s,p)=>s+(Number(p["Price Bought"])||0),0);
+      document.getElementById("budget").innerText=(100-spent).toFixed(2);
+      if(!myPlayers.length){container.innerHTML='<div class="empty-state">Your squad is empty.<br>Start the draft!</div>';return;}
+      const cap=localStorage.getItem("captain")||"";
+      const vc =localStorage.getItem("viceCaptain")||"";
+      const roleEmoji={BAT:"🏏",BOWL:"⚾",AR:"⚡",WK:"🧤"};
+      container.innerHTML=myPlayers.map((p,i)=>{
+        const enc=encodeURIComponent(p["Player Name"]);
+        const isC=cap===p["Player Name"];
+        const isVC=vc===p["Player Name"];
+        const rc=roleClass(p["Role"]);
+        const icon=roleEmoji[p["Role"]]||"👤";
+        const pts=getPts(p);
+        return`<div class="player-card" style="animation-delay:${i*.04}s">
+          <div class="p-avatar">${icon}</div>
+          <div class="p-info">
+            <div class="p-name">${p["Player Name"]}${isC?' <span style="font-size:10px;color:#ffc400;font-weight:800">C</span>':isVC?' <span style="font-size:10px;color:#b4b4c8;font-weight:800">VC</span>':''}</div>
+            <div class="p-meta">
+              <span class="badge ${rc}">${p["Role"]}</span>
+              <span class="badge team">${p["IPL Team"]}</span>
+              <span class="badge price">₹${p["Price Bought"]}Cr</span>
+            </div>
+          </div>
+          <div class="p-right">
+            <div class="pts-pill"><span class="pv">${pts}</span><span class="pl">pts</span></div>
+            <div class="role-btns">
+              <button class="role-btn ${isC?"active-c":""}" onclick="setRole('C','${enc}')">C</button>
+              <button class="role-btn ${isVC?"active-vc":""}" onclick="setRole('VC','${enc}')">VC</button>
+            </div>
+          </div>
+        </div>`;
+      }).join("");
+    }
+  }catch{container.innerHTML='<div class="empty-state" style="color:#e74c3c">Failed to load squad.</div>';}
+}
 
-        async function loadMySquad() {
-            const container = document.getElementById('my-squad-list');
-            container.innerHTML = '<div class="empty-state">Loading squad…</div>';
-            try {
-                // Always restore C/VC from the sheet — fixes the logout/re-login colour reset
-                const rolesRes = await fetch(WEB_APP_URL, { method: 'POST', body: JSON.stringify({ action: 'getRoles', teamName: myTeamName }) });
-                const rolesData = await rolesRes.json();
-                if (rolesData.status === "success") {
-                    if (rolesData.captain)    localStorage.setItem("captain",    rolesData.captain);
-                    if (rolesData.viceCaptain) localStorage.setItem("viceCaptain", rolesData.viceCaptain);
-                }
+async function setRole(role,enc){
+  const name=decodeURIComponent(enc);
+  if(role==="C"){
+    if(localStorage.getItem("viceCaptain")===name){alert(`${name} is already your Vice-Captain!`);return;}
+    localStorage.setItem("captain",name);
+  } else {
+    if(localStorage.getItem("captain")===name){alert(`${name} is already your Captain!`);return;}
+    localStorage.setItem("viceCaptain",name);
+  }
+  loadMySquad();
+  try{
+    await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"setRoles",teamName:myTeamName,
+      captain:localStorage.getItem("captain")||"",viceCaptain:localStorage.getItem("viceCaptain")||""})});
+  }catch{}
+}
 
-                const res = await fetch(WEB_APP_URL, { method: 'POST', body: JSON.stringify({ action: 'getPlayers' }) });
-                const result = await res.json();
-                if (result.status === "success") {
-                    const myPlayers = result.players.filter(p => p['Sold To'] === myTeamName);
-                    let spent = myPlayers.reduce((s, p) => s + (Number(p['Price Bought']) || 0), 0);
-                    document.getElementById('budget').innerText = (100 - spent).toFixed(2);
+let allDraftPlayers=[],draftFilter="ALL";
+function openDraft(){document.getElementById("draft-modal").classList.add("open");fetchDraftPlayers();}
+function closeDraft(){document.getElementById("draft-modal").classList.remove("open");}
 
-                    if (!myPlayers.length) { container.innerHTML = '<div class="empty-state">Your squad is empty.<br>Start the draft!</div>'; return; }
+async function fetchDraftPlayers(){
+  const c=document.getElementById("draft-list-container");
+  c.innerHTML='<div class="empty-state">Loading…</div>';
+  try{
+    const res=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"getPlayers"})});
+    const r=await res.json();
+    if(r.status==="success"){allDraftPlayers=r.players;renderDraftList();}
+  }catch{c.innerHTML='<div class="empty-state" style="color:#e74c3c">Failed to connect.</div>';}
+}
 
-                    const cap = localStorage.getItem("captain") || "";
-                    const vc  = localStorage.getItem("viceCaptain") || "";
+function setFilter(f,btn){
+  draftFilter=f;
+  document.querySelectorAll(".filter-chip").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  renderDraftList();
+}
 
-                    const roleEmoji = { BAT:'🏏', BOWL:'⚾', AR:'⚡', WK:'🧤' };
-                    container.innerHTML = myPlayers.map((player, i) => {
-                        const enc  = encodeURIComponent(player['Player Name']);
-                        const isC  = cap === player['Player Name'];
-                        const isVC = vc  === player['Player Name'];
-                        const rc   = roleClass(player['Role']);
-                        const icon = roleEmoji[player['Role']] || '👤';
-                        const pts  = parseInt(player['Total Points']) || 0;
-                        return `
-                            <div class="player-card" style="animation-delay:${i*0.04}s">
-                                <div class="p-avatar">${icon}</div>
-                                <div class="p-info">
-                                    <div class="p-name">${player['Player Name']}${isC ? ' <span style="font-size:10px;color:#ffc400;font-weight:800;margin-left:2px;">C</span>' : isVC ? ' <span style="font-size:10px;color:#b4b4c8;font-weight:800;margin-left:2px;">VC</span>' : ''}</div>
-                                    <div class="p-meta">
-                                        <span class="badge ${rc}">${player['Role']}</span>
-                                        <span class="badge team">${player['IPL Team']}</span>
-                                        <span class="badge price">₹${player['Price Bought']}Cr</span>
-                                    </div>
-                                </div>
-                                <div class="p-right">
-                                    <div class="pts-pill">
-                                        <span class="pv">${pts}</span>
-                                        <span class="pl">pts</span>
-                                    </div>
-                                    <div class="role-btns">
-                                        <button class="role-btn ${isC ? 'active-c' : ''}" onclick="setRole('C','${enc}')">C</button>
-                                        <button class="role-btn ${isVC ? 'active-vc' : ''}" onclick="setRole('VC','${enc}')">VC</button>
-                                    </div>
-                                </div>
-                            </div>`;
-                    }).join('');
-                }
-            } catch { container.innerHTML = '<div class="empty-state" style="color:#e74c3c;">Failed to load squad.</div>'; }
-        }
+function renderDraftList(){
+  const c=document.getElementById("draft-list-container");
+  const q=(document.getElementById("draft-search")?.value||"").toLowerCase();
+  let players=[...allDraftPlayers];
+  if(draftFilter==="Available") players=players.filter(p=>(p["Status"]||"").toLowerCase()!=="sold");
+  else if(["BAT","BOWL","AR","WK"].includes(draftFilter)) players=players.filter(p=>p["Role"]===draftFilter);
+  if(q) players=players.filter(p=>p["Player Name"].toLowerCase().includes(q)||(p["IPL Team"]||"").toLowerCase().includes(q));
+  if(!players.length){c.innerHTML='<div class="empty-state">No players found.</div>';return;}
+  const roleEmoji={BAT:"🏏",BOWL:"⚾",AR:"⚡",WK:"🧤"};
+  c.innerHTML=players.map((p,i)=>{
+    const isSold=(p["Status"]||"").toLowerCase()==="sold";
+    const enc=encodeURIComponent(p["Player Name"]);
+    const sid=p["Player Name"].replace(/[^a-zA-Z0-9]/g,"");
+    const rc=roleClass(p["Role"]);
+    const icon=roleEmoji[p["Role"]]||"👤";
+    return`<div class="player-card" style="animation-delay:${i*.03}s;${isSold?"opacity:.45;":""}">
+      <div class="p-avatar">${icon}</div>
+      <div class="p-info">
+        <div class="p-name">${p["Player Name"]}</div>
+        <div class="p-meta"><span class="badge ${rc}">${p["Role"]}</span><span class="badge team">${p["IPL Team"]}</span></div>
+      </div>
+      <div class="p-right">
+        ${isSold
+          ?`<span class="sold-chip">SOLD<br>${p["Sold To"]}</span>`
+          :`<input type="number" id="price-${sid}" class="price-input" placeholder="₹Cr">
+             <button class="buy-btn" onclick="buyPlayer('${enc}','price-${sid}')">Buy</button>`}
+      </div>
+    </div>`;
+  }).join("");
+}
 
-        async function setRole(role, enc) {
-            const name = decodeURIComponent(enc);
-            if (role === 'C') {
-                if (localStorage.getItem("viceCaptain") === name) { alert(`${name} is already your Vice-Captain!`); return; }
-                localStorage.setItem("captain", name);
-            } else {
-                if (localStorage.getItem("captain") === name) { alert(`${name} is already your Captain!`); return; }
-                localStorage.setItem("viceCaptain", name);
-            }
-            loadMySquad();
-            try {
-                await fetch(WEB_APP_URL, { method: 'POST', body: JSON.stringify({ action: 'setRoles', teamName: myTeamName, captain: localStorage.getItem("captain") || "", viceCaptain: localStorage.getItem("viceCaptain") || "" }) });
-            } catch {}
-        }
-
-        let allDraftPlayers = [];
-        let draftFilter = 'ALL';
-
-        async function fetchPlayers() {
-            const container = document.getElementById('draft-list-container');
-            container.innerHTML = '<div class="empty-state">Loading players…</div>';
-            try {
-                const res = await fetch(WEB_APP_URL, { method: 'POST', body: JSON.stringify({ action: 'getPlayers' }) });
-                const result = await res.json();
-                if (result.status === "success") {
-                    allDraftPlayers = result.players;
-                    renderDraftList();
-                }
-            } catch { container.innerHTML = '<div class="empty-state" style="color:#e74c3c;">Failed to connect.</div>'; }
-        }
-
-        function setDraftFilter(f, btn) {
-            draftFilter = f;
-            document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderDraftList();
-        }
-
-        function filterDraft() { renderDraftList(); }
-
-        function renderDraftList() {
-            const container = document.getElementById('draft-list-container');
-            const q = (document.getElementById('draft-search')?.value || '').toLowerCase();
-            let players = allDraftPlayers;
-
-            // Filter by role/availability chip
-            if (draftFilter === 'Available') players = players.filter(p => (p['Status']||'').toLowerCase() !== 'sold');
-            else if (['BAT','BOWL','AR','WK'].includes(draftFilter)) players = players.filter(p => p['Role'] === draftFilter);
-
-            // Filter by search query
-            if (q) players = players.filter(p =>
-                p['Player Name'].toLowerCase().includes(q) ||
-                (p['IPL Team']||'').toLowerCase().includes(q)
-            );
-
-            if (!players.length) { container.innerHTML = '<div class="empty-state">No players found.</div>'; return; }
-
-            container.innerHTML = players.map((player, i) => {
-                const isSold  = (player['Status']||'').toLowerCase() === 'sold';
-                const enc     = encodeURIComponent(player['Player Name']);
-                const safeId  = player['Player Name'].replace(/[^a-zA-Z0-9]/g, '');
-                const rc      = roleClass(player['Role']);
-                const roleEmoji = { BAT:'🏏', BOWL:'⚾', AR:'⚡', WK:'🧤' };
-                const icon = roleEmoji[player['Role']] || '👤';
-                return `
-                    <div class="player-card" style="animation-delay:${i*0.03}s;${isSold?'opacity:0.45;':''}">
-                        <div class="p-avatar">${icon}</div>
-                        <div class="p-info">
-                            <div class="p-name">${player['Player Name']}</div>
-                            <div class="p-meta">
-                                <span class="badge ${rc}">${player['Role']}</span>
-                                <span class="badge team">${player['IPL Team']}</span>
-                            </div>
-                        </div>
-                        <div class="p-right">
-                            ${isSold
-                                ? `<span class="sold-chip">SOLD<br>${player['Sold To']}</span>`
-                                : `<input type="number" id="price-${safeId}" class="price-input" placeholder="₹Cr">
-                                   <button class="buy-btn" onclick="buyPlayer('${enc}','price-${safeId}')">Buy</button>`
-                            }
-                        </div>
-                    </div>`;
-            }).join('');
-        }
-
-        async function buyPlayer(enc, inputId) {
-            const name = decodeURIComponent(enc);
-            const price = document.getElementById(inputId).value;
-            if (!price || price <= 0) { alert("Enter a valid price!"); return; }
-            if (!confirm(`Buy ${name} for ₹${price} Cr?`)) return;
-            document.getElementById(inputId).disabled = true;
-            try {
-                const res = await fetch(WEB_APP_URL, { method: 'POST', body: JSON.stringify({ action: 'buyPlayer', teamName: myTeamName, playerName: name, price }) });
-                const result = await res.json();
-                if (result.status === "success") { alert(result.message); fetchPlayers(); loadMySquad(); }
-                else { alert(result.message); document.getElementById(inputId).disabled = false; }
-            } catch { alert("Transaction failed."); document.getElementById(inputId).disabled = false; }
-        }
-    </script>
+async function buyPlayer(enc,inputId){
+  const name=decodeURIComponent(enc);
+  const price=document.getElementById(inputId)?.value;
+  if(!price||price<=0){alert("Enter a valid price!");return;}
+  if(!confirm(`Buy ${name} for ₹${price} Cr?`))return;
+  document.getElementById(inputId).disabled=true;
+  try{
+    const res=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"buyPlayer",teamName:myTeamName,playerName:name,price})});
+    const r=await res.json();
+    if(r.status==="success"){alert(r.message);fetchDraftPlayers();loadMySquad();}
+    else{alert(r.message);document.getElementById(inputId).disabled=false;}
+  }catch{alert("Transaction failed.");document.getElementById(inputId).disabled=false;}
+}
+</script>
 </body>
 </html>
