@@ -511,16 +511,16 @@ const ROLE_EMOJI={BAT:"🏏",BOWL:"🎳",AR:"⚡",WK:"🧤"};
 ══════════════════════════════ */
 let pendingRole=null,pendingName=null;
 
-function askSetRole(role,name){
+function askSetRole(role,idx){
+  const p=window._squadPlayers&&window._squadPlayers[idx];
+  if(!p)return;
+  const name=p["Player Name"];
   const isC=role==="C";
   const curCap=localStorage.getItem("captain")||"";
   const curVC=localStorage.getItem("viceCaptain")||"";
 
-  // Guard: can't assign same role to both
   if(isC && curVC===name){showToast(`${name} is already your Vice-Captain!`,"warn");return;}
   if(!isC && curCap===name){showToast(`${name} is already your Captain!`,"warn");return;}
-
-  // Guard: same as current
   if(isC && curCap===name){showToast("Already Captain!","info");return;}
   if(!isC && curVC===name){showToast("Already Vice-Captain!","info");return;}
 
@@ -537,7 +537,7 @@ function askSetRole(role,name){
   document.getElementById("confirm-ok").textContent=isC?"✓ Make Captain":"✓ Make Vice-Captain";
 
   // Info about what will change
-  const replacing=isC?(curCap?`Replacing: ${curCap}`):""):(curVC?`Replacing: ${curVC}`:"");
+  const replacing=isC?(curCap?`Replacing: ${curCap}`:""):(curVC?`Replacing: ${curVC}`:"");
   document.getElementById("confirm-sub").innerHTML=
     `Your <b>${isC?"Captain":"Vice-Captain"}</b> earns a points bonus.<br>${replacing}`;
 
@@ -626,6 +626,8 @@ async function loadMySquad(){
         container.innerHTML='<div class="empty-state"><span class="empty-emoji">🏏</span>Your squad is empty.<br>Tap <b>+ Draft</b> to get started!</div>';
         return;
       }
+      // Store globally so askSetRole can look up by index (avoids all encoding issues)
+      window._squadPlayers = myPlayers;
       const cap=localStorage.getItem("captain")||"";
       const vc =localStorage.getItem("viceCaptain")||"";
       container.innerHTML=myPlayers.map((p,i)=>{
@@ -635,9 +637,7 @@ async function loadMySquad(){
         const icon=ROLE_EMOJI[p["Role"]]||"👤";
         const pts=getPts(p);
         const tc=getTeamColors(p["IPL Team"]||"");
-        const enc=encodeURIComponent(name);
         return`<div class="player-card" style="animation-delay:${i*.05}s">
-          <!-- Team gradient BG -->
           <div class="card-bg" style="background:linear-gradient(110deg,${tc.c1}CC 0%,${tc.c2}55 45%,transparent 72%)"></div>
           <div class="card-shimmer"></div>
           <div class="card-accent" style="background:linear-gradient(180deg,${tc.c2},${tc.c1})"></div>
@@ -656,8 +656,8 @@ async function loadMySquad(){
                 <span class="pv">${pts}</span>
                 <span class="pl">pts</span>
               </div>
-              <button class="role-badge-c ${isC?"active":""}" onclick="askSetRole('C','${enc.replace(/'/g,"\\'")}')">C</button>
-              <button class="role-badge-vc ${isVC?"active":""}" onclick="askSetRole('VC','${enc.replace(/'/g,"\\'")}')">VC</button>
+              <button class="role-badge-c ${isC?"active":""}" onclick="askSetRole('C',${i})">C</button>
+              <button class="role-badge-vc ${isVC?"active":""}" onclick="askSetRole('VC',${i})">VC</button>
             </div>
           </div>
         </div>`;
