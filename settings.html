@@ -499,18 +499,18 @@ async function recalcAll(){
 // ── USERS LIST (Admin) ───────────────────────────────────────────────────
 async function loadUsers(){
   const el=document.getElementById("users-list");
-  const res=await api({action:"getLeaderboard"});
+  const res=await api({action:"getUsers"});
   if(!res||res.status!=="success"){el.innerHTML='<div class="loading-row" style="color:#e74c3c">Failed to load users.</div>';return;}
-  const teams=(res.leaderboard||[]).filter(t=>t.teamName!=="Admin");
-  if(!teams.length){el.innerHTML='<div class="loading-row">No users yet.</div>';return;}
-  el.innerHTML=teams.map((t,i)=>`
+  const users=(res.users||[]).filter(u=>u.teamName!=="Admin");
+  if(!users.length){el.innerHTML='<div class="loading-row">No users yet.</div>';return;}
+  el.innerHTML=users.map((u,i)=>`
     <div class="user-row" id="urow-${i}">
-      <div class="user-avatar">${(t.teamName[0]||"?").toUpperCase()}</div>
+      <div class="user-avatar">${(u.teamName[0]||"?").toUpperCase()}</div>
       <div class="user-info">
-        <div class="user-name">${t.teamName}</div>
-        <div class="user-sub">${t.ownerName||"—"} · Rank #${i+1} · ${t.points} pts</div>
+        <div class="user-name">${u.teamName}</div>
+        <div class="user-sub">${u.name||"—"} · C: ${u.captain||"None"} · VC: ${u.vc||"None"}</div>
       </div>
-      <button class="del-user-btn" onclick="deleteUser('${encodeURIComponent(t.teamName)}',${i})" title="Delete user">🗑️</button>
+      <button class="del-user-btn" onclick="deleteUser('${encodeURIComponent(u.teamName)}',${i})" title="Delete user">🗑️</button>
     </div>`).join("");
 }
 
