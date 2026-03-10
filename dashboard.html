@@ -1,602 +1,395 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-<title>Dashboard | IPL Fantasy 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>Dashboard | IPL Fantasy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --font-display:'Bebas Neue',cursive;
-  --font-body:'Outfit',sans-serif;
-  --font-mono:'DM Mono',monospace;
-  --orange:#FF6B35; --orange-bg:#fff3ee;
-  --purple:#7c3aed; --purple-bg:#f3f0ff;
-  --gold:#c9920a;   --gold-swatch:#d4a017; --gold-bg:#fef9eb;
-  --silver:#64748b; --silver-bg:#f1f5f9;
-  --bronze:#b45309; --bronze-bg:#fef3c7;
-  --green:#16a34a;
-  --t:.2s ease;
-}
-[data-theme="light"]{
-  --bg:#f5f4f2; --surface:#fff; --border:#e8e5e0; --border-soft:#f0ede8;
-  --text-1:#0a0a0a; --text-2:#6b6560; --text-3:#b0aba4;
-  --hero-bg:#0a0a0a; --hero-sub:rgba(255,255,255,.35); --hero-div:rgba(255,255,255,.1);
-  --nav-bg:#0a0a0a; --nav-text:rgba(255,255,255,.35); --nav-active:#fff;
-  --me-row:#fff8f6; --sidebar-bg:#fff; --topbar-bg:#fff;
+:root{
+  --accent:#FF6B35;--accent-soft:rgba(255,107,53,.14);--accent-glow:rgba(255,107,53,.28);
+  --blue:#4facfe;--blue-soft:rgba(79,172,254,.12);
+  --gold:#FFD700;--silver:#b8c8d8;--bronze:#cd8050;
+  --gold-bg:rgba(255,215,0,.12);--silver-bg:rgba(184,200,216,.1);--bronze-bg:rgba(205,128,80,.12);
+  --font-main:'Outfit',sans-serif;--font-display:'Bebas Neue',cursive;--font-mono:'DM Mono',monospace;
+  --ease:cubic-bezier(0.4,0,0.2,1);--t:0.24s;--r:18px;
 }
 [data-theme="dark"]{
-  --bg:#111; --surface:#1c1c1c; --border:#2a2a2a; --border-soft:#222;
-  --text-1:#f0ede8; --text-2:#888480; --text-3:#555250;
-  --hero-bg:#000; --hero-sub:rgba(255,255,255,.3); --hero-div:rgba(255,255,255,.08);
-  --nav-bg:#000; --nav-text:rgba(255,255,255,.3); --nav-active:#fff;
-  --me-row:#231a16; --sidebar-bg:#141414; --topbar-bg:#141414;
-  --orange-bg:#2a1a12; --purple-bg:#1a1228;
-  --gold-bg:#221a08; --silver-bg:#16191e; --bronze-bg:#211508;
+  --bg:#07101f;
+  --mesh:radial-gradient(ellipse at 15% 5%,rgba(79,172,254,.1) 0%,transparent 50%),
+        radial-gradient(ellipse at 85% 85%,rgba(255,107,53,.08) 0%,transparent 50%),#07101f;
+  --surf:rgba(255,255,255,.04);--surf2:rgba(15,28,60,.85);
+  --brd:rgba(79,172,254,.1);--brd2:rgba(79,172,254,.2);
+  --nav-bg:rgba(7,16,31,.95);--text-1:#eef2ff;--text-2:rgba(238,242,255,.5);--text-3:rgba(238,242,255,.26);
+  --div:rgba(255,255,255,.055);--my-row:rgba(255,107,53,.08);--tog:rgba(255,255,255,.06);
 }
+[data-theme="light"]{
+  --bg:#f0ece6;
+  --mesh:radial-gradient(ellipse at 20% 10%,rgba(79,172,254,.07) 0%,transparent 55%),
+        radial-gradient(ellipse at 80% 80%,rgba(255,107,53,.05) 0%,transparent 50%),#f0ece6;
+  --surf:rgba(255,255,255,.65);--surf2:rgba(255,255,255,.9);
+  --brd:rgba(0,0,0,.08);--brd2:rgba(0,0,0,.14);
+  --nav-bg:rgba(240,236,230,.95);--text-1:#17202e;--text-2:rgba(23,32,46,.56);--text-3:rgba(23,32,46,.34);
+  --div:rgba(0,0,0,.065);--my-row:rgba(255,107,53,.06);--tog:rgba(0,0,0,.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-main);background:var(--mesh);background-color:var(--bg);min-height:100vh;
+  color:var(--text-1);padding-bottom:calc(68px + 14px + 28px);padding-left:env(safe-area-inset-left,0px);
+  padding-right:env(safe-area-inset-right,0px);transition:background var(--t),color var(--t);overflow-x:hidden;}
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-body{font-family:var(--font-body);background:var(--bg);color:var(--text-1);min-height:100vh;transition:background var(--t),color var(--t);overflow-x:hidden;}
+/* TOPBAR */
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:22px 20px 0;}
+.greeting{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:4px;}
+.team-name{font-family:var(--font-display);font-size:30px;letter-spacing:.04em;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:230px;}
+.theme-btn{width:38px;height:38px;border-radius:12px;background:var(--tog);border:1px solid var(--brd2);
+  color:var(--text-1);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 
-/* ══════════════════════════════════════
-   DESKTOP LAYOUT  (≥ 768px)
-══════════════════════════════════════ */
-.app-shell{display:flex;min-height:100vh;}
+/* HERO CARD */
+.hero-card{margin:16px 16px 0;border-radius:var(--r);border:1px solid var(--brd2);
+  background:linear-gradient(135deg,rgba(79,172,254,.08),rgba(255,107,53,.05)),var(--surf2);
+  backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
+  padding:20px;display:flex;align-items:center;gap:16px;animation:fUp .35s .05s both;}
+.rank-ring{width:66px;height:66px;border-radius:16px;
+  background:linear-gradient(135deg,var(--blue-soft),var(--accent-soft));
+  border:1.5px solid var(--brd2);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;}
+.rank-num{font-family:var(--font-display);font-size:32px;line-height:1;color:var(--blue);}
+.rank-lbl{font-size:7px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);}
+.hero-info{flex:1;min-width:0;}
+.pts-lbl{font-size:9px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--text-3);margin-bottom:2px;}
+.pts-row{display:flex;align-items:baseline;gap:5px;}
+.pts-val{font-family:var(--font-display);font-size:44px;letter-spacing:.02em;line-height:1;color:var(--text-1);}
+.pts-unit{font-size:13px;font-weight:600;color:var(--text-2);}
+.hero-meta{font-size:12px;color:var(--text-2);margin-top:5px;}
+.hero-meta b{color:var(--accent);}
+.hero-bonus{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;}
+.bonus-chip{font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;display:flex;align-items:center;gap:3px;}
+.bonus-chip.c{background:rgba(255,196,0,.15);color:#ffc400;border:1px solid rgba(255,196,0,.25);}
+.bonus-chip.vc{background:rgba(168,184,208,.15);color:var(--silver);border:1px solid rgba(168,184,208,.25);}
 
-/* SIDEBAR NAV — desktop only */
-.sidebar{
-  width:220px;flex-shrink:0;
-  background:var(--sidebar-bg);
-  border-right:1px solid var(--border);
-  display:flex;flex-direction:column;
-  position:sticky;top:0;height:100vh;
-  padding:0;z-index:60;
-  transition:background var(--t),border-color var(--t);
-}
-.sidebar-brand{
-  padding:22px 20px 18px;
-  border-bottom:1px solid var(--border);
-  font-family:var(--font-display);font-size:17px;letter-spacing:.12em;
-  color:var(--text-1);transition:border-color var(--t),color var(--t);
-}
-.sidebar-brand span{display:block;font-family:var(--font-body);font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--text-3);margin-bottom:4px;}
-.sidebar-nav{flex:1;padding:12px 10px;display:flex;flex-direction:column;gap:2px;}
-.sidebar-item{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 12px;border-radius:10px;
-  text-decoration:none;font-size:13px;font-weight:600;
-  color:var(--text-2);transition:all var(--t);
-}
-.sidebar-item:hover{background:var(--border-soft);color:var(--text-1);}
-.sidebar-item.active{background:var(--text-1);color:var(--surface);}
-.sidebar-item .si-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
-.sidebar-bottom{padding:14px 10px;border-top:1px solid var(--border);transition:border-color var(--t);}
-.sidebar-user{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 12px;border-radius:10px;
-  background:var(--border-soft);
-}
-.sidebar-avatar{
-  width:32px;height:32px;border-radius:50%;
-  background:var(--text-1);color:var(--surface);
-  display:flex;align-items:center;justify-content:center;
-  font-size:12px;font-weight:800;flex-shrink:0;
-  transition:background var(--t),color var(--t);
-}
-.sidebar-uname{font-size:12px;font-weight:700;color:var(--text-1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;}
-.theme-btn-sidebar{
-  width:28px;height:28px;border-radius:7px;flex-shrink:0;
-  background:var(--bg);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:13px;transition:background var(--t),border-color var(--t);
-}
+/* SECTION */
+.sec{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--text-3);padding:0 20px;margin:20px 0 10px;}
+.card{background:var(--surf);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid var(--brd);border-radius:var(--r);margin:0 16px;overflow:hidden;animation:fUp .4s var(--ease) both;}
+.card-hdr{padding:14px 18px 12px;border-bottom:1px solid var(--div);display:flex;justify-content:space-between;align-items:center;}
+.card-hdr h3{font-size:14px;font-weight:700;}
 
-/* MAIN CONTENT AREA */
-.main{flex:1;min-width:0;display:flex;flex-direction:column;}
+/* LIVE PILL */
+.live-pill{display:flex;align-items:center;gap:5px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.2);
+  border-radius:20px;padding:3px 10px;font-size:10px;font-weight:600;color:#4ade80;}
+.live-dot{width:5px;height:5px;border-radius:50%;background:#4ade80;animation:blink 1.8s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
 
-/* TOPBAR — desktop hidden, mobile visible */
-.topbar{
-  display:none; /* hidden on desktop, shown on mobile */
-  background:var(--topbar-bg);border-bottom:1px solid var(--border);
-  padding:0 16px;height:50px;
-  align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:50;
-  transition:background var(--t),border-color var(--t);
-}
-.topbar-brand{font-family:var(--font-display);font-size:18px;letter-spacing:.12em;color:var(--text-1);}
-.topbar-right{display:flex;align-items:center;gap:8px;}
-.theme-btn-top{width:32px;height:32px;border-radius:8px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:background var(--t),border-color var(--t);}
-.avatar-top{width:32px;height:32px;border-radius:50%;background:var(--text-1);color:var(--surface);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;transition:background var(--t),color var(--t);}
+/* PRIZE PODIUM */
+.podium-wrap{display:flex;align-items:flex-end;justify-content:center;gap:10px;padding:20px 16px 8px;}
+.podium-item{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;max-width:110px;}
+.podium-avatar{border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:12px 8px;border:1px solid;gap:4px;width:100%;}
+.podium-avatar.p1{background:var(--gold-bg);border-color:rgba(255,215,0,.35);order:-1;}
+.podium-avatar.p2{background:var(--silver-bg);border-color:rgba(184,200,216,.3);}
+.podium-avatar.p3{background:var(--bronze-bg);border-color:rgba(205,128,80,.3);}
+.podium-icon{font-size:22px;}
+.podium-pts{font-family:var(--font-display);font-size:20px;line-height:1;}
+.p1 .podium-pts{color:var(--gold);}
+.p2 .podium-pts{color:var(--silver);}
+.p3 .podium-pts{color:var(--bronze);}
+.podium-name{font-size:11px;font-weight:700;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;}
+.podium-prize{font-size:10px;color:var(--text-3);font-weight:600;}
+.podium-bar{border-radius:8px 8px 0 0;width:100%;}
+.p1 .podium-bar{height:56px;background:linear-gradient(to top,rgba(255,215,0,.2),transparent);}
+.p2 .podium-bar{height:40px;background:linear-gradient(to top,rgba(184,200,216,.15),transparent);}
+.p3 .podium-bar{height:28px;background:linear-gradient(to top,rgba(205,128,80,.15),transparent);}
 
-/* DESKTOP GREETING + HERO */
-.page-header{
-  background:var(--hero-bg);
-  padding:28px 32px 0;
-  transition:background var(--t);
-}
-.page-header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
-.page-greeting-hello{font-size:11px;color:var(--hero-sub);font-weight:500;margin-bottom:3px;letter-spacing:.04em;}
-.page-greeting-team{font-family:var(--font-display);font-size:38px;letter-spacing:.04em;line-height:1;color:#fff;}
-.hero-stats-row{display:flex;gap:0;border-top:1px solid var(--hero-div);}
-.hero-stat{flex:1;padding:20px 0;text-align:center;border-right:1px solid var(--hero-div);}
-.hero-stat:last-child{border-right:none;}
-.hero-lbl{font-size:7.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--hero-sub);margin-bottom:6px;}
-.hero-val{font-family:var(--font-display);font-size:42px;line-height:1;color:#fff;}
-.hero-val.accent{color:var(--orange);}
-.hero-sub-txt{font-size:9px;color:var(--hero-sub);margin-top:3px;font-weight:500;}
-.cvc-strip{background:var(--hero-bg);border-top:1px solid var(--hero-div);padding:12px 32px;display:flex;gap:8px;flex-wrap:wrap;transition:background var(--t);}
-.cvc-chip{display:inline-flex;align-items:center;gap:5px;border-radius:5px;padding:5px 10px;font-size:11px;font-weight:600;white-space:nowrap;}
-.cvc-chip.cap{background:rgba(212,160,23,.18);color:#f0b429;border:1px solid rgba(212,160,23,.28);}
-.cvc-chip.vc {background:rgba(124,58,237,.2);color:#a78bfa;border:1px solid rgba(124,58,237,.3);}
-.cvc-chip.none{background:rgba(255,255,255,.07);color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.1);font-style:italic;}
-
-/* CONTENT GRID */
-.content-grid{
-  flex:1;padding:28px 32px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:24px;
-  align-content:start;
-}
-
-/* SECTION LABEL */
-.sec-label{
-  font-size:8.5px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--text-3);margin-bottom:10px;transition:color var(--t);
-}
-
-/* CARD */
-.card{
-  background:var(--surface);border:1px solid var(--border);border-radius:12px;
-  overflow:hidden;transition:background var(--t),border-color var(--t);
-}
-.card-hdr{
-  padding:13px 18px;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  transition:border-color var(--t);
-}
-.card-hdr-title{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text-1);transition:color var(--t);}
-.live-badge{display:flex;align-items:center;gap:4px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:4px;padding:3px 8px;font-size:8px;font-weight:800;letter-spacing:.1em;color:var(--green);}
-[data-theme="dark"] .live-badge{background:rgba(22,163,74,.1);border-color:rgba(22,163,74,.25);}
-.live-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 1.6s infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:.15;}}
-.loading-row{padding:24px;text-align:center;color:var(--text-3);font-size:12px;}
-
-/* SPAN FULL GRID */
-.span-2{grid-column:1/-1;}
-
-/* PODIUM */
-.podium-row{display:grid;grid-template-columns:1fr 1fr 1fr;}
-.podium-cell{padding:20px 14px;border-right:1px solid var(--border);text-align:center;position:relative;transition:background var(--t),border-color var(--t);}
-.podium-cell:last-child{border-right:none;}
-.podium-cell.winner{background:var(--gold-bg);}
-.podium-cell.runner{background:var(--silver-bg);}
-.podium-cell.third {background:var(--bronze-bg);}
-.podium-swatch{width:38px;height:38px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#fff;}
-.winner .podium-swatch{background:var(--gold-swatch);}
-.runner .podium-swatch{background:var(--silver);}
-.third  .podium-swatch{background:var(--bronze);}
-.podium-pts{font-family:var(--font-display);font-size:30px;line-height:1;margin-bottom:4px;}
-.winner .podium-pts{color:var(--gold);}
-.runner .podium-pts{color:var(--silver);}
-.third  .podium-pts{color:var(--bronze);}
-.podium-name{font-size:12px;font-weight:700;color:var(--text-1);margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:color var(--t);}
-.podium-prize{font-size:8px;color:var(--text-3);font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
-.podium-pos{position:absolute;top:10px;left:10px;font-size:8px;font-weight:900;opacity:.3;color:var(--text-1);}
-
-/* LEADERBOARD */
-.lb-row{display:flex;align-items:center;padding:11px 18px;gap:11px;border-bottom:1px solid var(--border);transition:background var(--t),border-color var(--t);}
+/* LEADERBOARD ROWS */
+.lb-row{display:flex;align-items:center;padding:11px 18px;border-bottom:1px solid var(--div);gap:12px;animation:fUp .4s both;}
 .lb-row:last-child{border-bottom:none;}
-.lb-row.is-me{background:var(--me-row);}
-.lb-rank{font-family:var(--font-mono);font-size:11px;font-weight:600;width:20px;text-align:center;color:var(--text-3);flex-shrink:0;}
-.lb-rank.gold  {color:var(--gold);  font-weight:800;}
-.lb-rank.silver{color:var(--silver);font-weight:800;}
-.lb-rank.bronze{color:var(--bronze);font-weight:800;}
-.lb-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.lb-body{flex:1;min-width:0;}
-.lb-team-row{display:flex;align-items:center;gap:5px;margin-bottom:1px;}
-.lb-team{font-size:13px;font-weight:700;color:var(--text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:color var(--t);}
-.lb-me-tag{font-size:7px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;background:var(--orange);color:#fff;border-radius:3px;padding:1px 5px;flex-shrink:0;}
-.lb-sub{font-size:9px;color:var(--text-3);margin-bottom:4px;}
-.lb-bar-track{height:2px;background:var(--border-soft);border-radius:2px;overflow:hidden;}
-.lb-bar-fill{height:100%;border-radius:2px;transition:width .9s ease;}
-.lb-right{flex-shrink:0;text-align:right;}
-.lb-pts-val{font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--text-1);transition:color var(--t);}
-.lb-pts-raw{font-size:9px;color:var(--text-3);}
+.lb-row.is-me{background:var(--my-row);}
+.rank-badge{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:12px;background:var(--surf2);color:var(--text-2);}
+.rank-badge.gold{background:var(--gold-bg);color:var(--gold);}
+.rank-badge.silver{background:var(--silver-bg);color:var(--silver);}
+.rank-badge.bronze{background:var(--bronze-bg);color:var(--bronze);}
+.lb-left{flex:1;min-width:0;}
+.lb-team-row{display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+.lb-team{font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.lb-me-tag{font-size:8px;font-weight:800;letter-spacing:.07em;color:var(--accent);background:var(--accent-soft);padding:2px 5px;border-radius:4px;flex-shrink:0;}
+.lb-sub{font-size:10px;color:var(--text-3);}
+.lb-bar-wrap{height:2px;background:var(--div);border-radius:1px;overflow:hidden;margin-top:4px;}
+.lb-bar{height:100%;border-radius:1px;transition:width .9s var(--ease);}
+.lb-bar.c0{background:var(--gold);}.lb-bar.c1{background:var(--silver);}.lb-bar.c2{background:var(--bronze);}
+.lb-bar.cn{background:var(--blue);opacity:.5;}
+.lb-pts{display:flex;flex-direction:column;align-items:flex-end;flex-shrink:0;}
+.lb-pts-val{font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--blue);}
+.lb-pts-raw{font-size:10px;color:var(--text-3);}
 
 /* CAP HOLDERS */
 .caps-grid{display:grid;grid-template-columns:1fr 1fr;}
-.cap-cell{padding:20px 18px;border-right:1px solid var(--border);transition:background var(--t),border-color var(--t);}
-.cap-cell:last-child{border-right:none;}
-.cap-cell.orange{background:var(--orange-bg);}
-.cap-cell.purple{background:var(--purple-bg);}
-.cap-swatch-row{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
-.cap-swatch{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;}
-.orange .cap-swatch{background:var(--orange);}
-.purple .cap-swatch{background:var(--purple);}
-.cap-type-lbl{font-size:7.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;}
-.orange .cap-type-lbl{color:var(--orange);}
-.purple .cap-type-lbl{color:var(--purple);}
-.cap-player{font-size:14px;font-weight:800;color:var(--text-1);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color var(--t);}
-.cap-team{font-size:10px;color:var(--text-2);margin-bottom:10px;transition:color var(--t);}
-.cap-big-num{font-family:var(--font-display);font-size:46px;line-height:1;}
-.orange .cap-big-num{color:var(--orange);}
-.purple .cap-big-num{color:var(--purple);}
-.cap-unit{font-size:9px;color:var(--text-3);font-weight:600;margin-top:2px;}
+.cap-card{padding:18px 16px;position:relative;overflow:hidden;}
+.cap-card:first-child{border-right:1px solid var(--div);}
+.cap-card::before{content:'';position:absolute;top:-30px;right:-30px;width:90px;height:90px;border-radius:50%;opacity:.12;}
+.cap-card.oc::before{background:radial-gradient(circle,#FF6B35,transparent);}
+.cap-card.pc::before{background:radial-gradient(circle,#b47cf7,transparent);}
+.cap-icon{font-size:20px;margin-bottom:6px;display:block;}
+.cap-title{font-size:9px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px;}
+.cap-title.oc{color:#FF6B35;}.cap-title.pc{color:#b47cf7;}
+.cap-player{font-size:14px;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cap-ipl{font-size:11px;color:var(--text-2);margin-bottom:8px;}
+.cap-num{font-family:var(--font-display);font-size:34px;line-height:1;}
+.cap-num.oc{color:#FF6B35;}.cap-num.pc{color:#b47cf7;}
+.cap-unit{font-size:10px;color:var(--text-3);font-weight:600;margin-left:3px;}
 
 /* LEADERS GRID */
-.leaders-grid{display:grid;grid-template-columns:repeat(3,1fr);}
-.leader-cell{padding:14px 14px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);transition:border-color var(--t);}
+.leaders-grid{display:grid;grid-template-columns:1fr 1fr 1fr;}
+.leader-cell{padding:13px 10px;border-right:1px solid var(--div);border-bottom:1px solid var(--div);}
 .leader-cell:nth-child(3n){border-right:none;}
 .leader-cell:nth-last-child(-n+3){border-bottom:none;}
-.leader-icon{font-size:18px;margin-bottom:5px;display:block;}
-.leader-lbl{font-size:7px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);margin-bottom:3px;}
-.leader-num{font-family:var(--font-display);font-size:28px;line-height:1;color:var(--text-1);margin-bottom:2px;transition:color var(--t);}
-.leader-name{font-size:9px;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.leader-icon{font-size:15px;margin-bottom:3px;display:block;}
+.leader-label{font-size:7.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--text-3);margin-bottom:2px;}
+.leader-val{font-family:var(--font-display);font-size:24px;line-height:1;margin-bottom:2px;}
+.leader-name{font-size:10px;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-/* ══════════════════════════════════════
-   MOBILE LAYOUT  (< 768px)
-══════════════════════════════════════ */
-@media(max-width:767px){
-  .sidebar{display:none;}
-  .topbar{display:flex;}
-  .page-header{padding:0;}
-  .page-header-top{display:none;}/* greeting shown via mobile greeting strip */
-  .mobile-greeting{display:block;}
-  .hero-stats-row{border-top:none;}
-  .hero-val{font-size:32px;}
-  .hero-stat{padding:16px 0;}
-  .cvc-strip{padding:10px 16px;}
-  .content-grid{
-    padding:0;gap:0;
-    display:flex;flex-direction:column;
-  }
-  .content-section{padding:16px 0 0;}
-  .sec-label{padding:0 16px;margin-bottom:8px;}
-  .card{border-radius:0;border-left:none;border-right:none;}
-  .span-2{grid-column:auto;}
-  .lb-row{padding:11px 16px;}
-  .cap-cell{padding:16px 14px;}
-  .cap-big-num{font-size:38px;}
-  .leader-cell{padding:12px 10px;}
-  .leader-num{font-size:24px;}
-  /* Bottom nav */
-  .bottom-nav{display:flex;}
-  body{padding-bottom:calc(74px + env(safe-area-inset-bottom,0px));}
-}
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+  width:calc(100% - 28px);max-width:480px;height:68px;
+  background:var(--nav-bg);backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);
+  border:1px solid var(--brd2);border-radius:28px;
+  display:flex;justify-content:space-around;align-items:center;padding:6px 2px;
+  box-shadow:0 8px 40px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04);z-index:100;}
+.nav-item{text-align:center;color:var(--text-3);text-decoration:none;font-size:8px;font-weight:600;
+  letter-spacing:.04em;flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;transition:color var(--t);}
+.nav-item.active{color:var(--accent);}
+.nav-icon-wrap{width:36px;height:28px;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:background var(--t);}
+.nav-item.active .nav-icon-wrap{background:var(--accent-soft);}
+.nav-icon{font-size:16px;line-height:1;}
 
-/* BOTTOM NAV — mobile only */
-.bottom-nav{
-  display:none;
-  position:fixed;bottom:14px;
-  left:50%;transform:translateX(-50%);
-  width:calc(100% - 28px);max-width:430px;height:58px;
-  background:var(--nav-bg);border-radius:18px;
-  justify-content:space-around;align-items:center;
-  padding:0 4px;box-shadow:0 8px 32px rgba(0,0,0,.3);
-  z-index:100;transition:background var(--t);
-}
-.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;flex:1;padding:6px 0;color:var(--nav-text);font-size:7.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:12px;transition:color var(--t);}
-.nav-item.active{color:var(--nav-active);}
-.nav-icon-bg{width:32px;height:22px;border-radius:7px;display:flex;align-items:center;justify-content:center;transition:background var(--t);}
-.nav-item.active .nav-icon-bg{background:rgba(255,255,255,.12);}
-.nav-icon{font-size:14px;line-height:1;}
-
-/* MOBILE GREETING (inside mobile view) */
-.mobile-greeting{display:none;background:var(--surface);border-bottom:1px solid var(--border);padding:13px 16px;transition:background var(--t),border-color var(--t);}
-.mobile-greeting-hello{font-size:11px;color:var(--text-2);font-weight:500;margin-bottom:1px;}
-.mobile-greeting-team{font-family:var(--font-display);font-size:28px;letter-spacing:.04em;line-height:1;color:var(--text-1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-
-/* Desktop content section wrapper */
-.content-section{display:contents;}
-@media(max-width:767px){
-  .content-section{display:block;}
-}
-
-/* ANIMATIONS */
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-.f1{animation:fadeUp .3s .04s both;}
-.f2{animation:fadeUp .3s .10s both;}
-.f3{animation:fadeUp .3s .16s both;}
-.f4{animation:fadeUp .3s .22s both;}
-.f5{animation:fadeUp .3s .28s both;}
-.f6{animation:fadeUp .3s .34s both;}
+.loading-row{padding:28px;text-align:center;color:var(--text-3);font-size:13px;}
+@keyframes fUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
 </style>
 </head>
 <body>
-<div class="app-shell">
 
-  <!-- ── SIDEBAR (desktop) ── -->
-  <aside class="sidebar">
-    <div class="sidebar-brand">
-      <span>IPL Fantasy</span>
-      2026
+<div class="topbar">
+  <div>
+    <p class="greeting">IPL Fantasy 2026</p>
+    <div class="team-name" id="team-name-txt">Loading…</div>
+  </div>
+  <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
+</div>
+
+<!-- Hero card: my rank + pts -->
+<div class="hero-card">
+  <div class="rank-ring">
+    <div class="rank-num" id="hero-rank">—</div>
+    <div class="rank-lbl">Rank</div>
+  </div>
+  <div class="hero-info">
+    <div class="pts-lbl">Total Points</div>
+    <div class="pts-row">
+      <span class="pts-val" id="hero-pts">—</span>
+      <span class="pts-unit">pts</span>
     </div>
-    <nav class="sidebar-nav">
-      <a href="dashboard.html" class="sidebar-item active"><span class="si-icon">🏠</span>Dashboard</a>
-      <a href="squad.html"     class="sidebar-item"><span class="si-icon">🛡️</span>My Squad</a>
-      <a href="players.html"   class="sidebar-item"><span class="si-icon">🃏</span>Player Cards</a>
-      <a href="teams.html"     class="sidebar-item"><span class="si-icon">👥</span>All Teams</a>
-      <a href="stats.html"     class="sidebar-item"><span class="si-icon">📊</span>Stats</a>
-      <a href="settings.html"  class="sidebar-item"><span class="si-icon">⚙️</span>Settings</a>
-    </nav>
-    <div class="sidebar-bottom">
-      <div class="sidebar-user">
-        <div class="sidebar-avatar" id="avatar-sidebar">?</div>
-        <div class="sidebar-uname" id="uname-sidebar">Loading…</div>
-        <button class="theme-btn-sidebar" onclick="toggleTheme()" id="theme-btn-sidebar">🌙</button>
-      </div>
+    <div class="hero-meta" id="hero-meta">Loading…</div>
+    <div class="hero-bonus" id="hero-bonus"></div>
+  </div>
+</div>
+
+<!-- Prize Podium -->
+<p class="sec" style="animation-delay:.1s">🏆 Prize Standings</p>
+<div class="card" style="animation-delay:.12s">
+  <div class="podium-wrap" id="podium-wrap">
+    <div class="loading-row">Loading…</div>
+  </div>
+</div>
+
+<!-- Full Leaderboard -->
+<p class="sec" style="animation-delay:.16s">Fantasy Standings</p>
+<div class="card" style="animation-delay:.18s">
+  <div class="card-hdr">
+    <h3>Leaderboard</h3>
+    <div class="live-pill"><div class="live-dot"></div>Live</div>
+  </div>
+  <div id="lb-body"><div class="loading-row">Loading…</div></div>
+</div>
+
+<!-- Cap Holders -->
+<p class="sec" style="animation-delay:.22s">Cap Holders</p>
+<div class="card" style="animation-delay:.24s">
+  <div class="caps-grid">
+    <div class="cap-card oc">
+      <span class="cap-icon">🧡</span>
+      <div class="cap-title oc">Orange Cap</div>
+      <div class="cap-player" id="oc-name">—</div>
+      <div class="cap-ipl" id="oc-team">—</div>
+      <span class="cap-num oc" id="oc-val">0</span><span class="cap-unit">runs</span>
     </div>
-  </aside>
-
-  <!-- ── MAIN ── -->
-  <div class="main">
-
-    <!-- Mobile top bar -->
-    <div class="topbar f1">
-      <div class="topbar-brand">IPL FANTASY · 2026</div>
-      <div class="topbar-right">
-        <button class="theme-btn-top" onclick="toggleTheme()" id="theme-btn-top">🌙</button>
-        <div class="avatar-top" id="avatar-top">?</div>
-      </div>
+    <div class="cap-card pc">
+      <span class="cap-icon">💜</span>
+      <div class="cap-title pc">Purple Cap</div>
+      <div class="cap-player" id="pc-name">—</div>
+      <div class="cap-ipl" id="pc-team">—</div>
+      <span class="cap-num pc" id="pc-val">0</span><span class="cap-unit">wkts</span>
     </div>
+  </div>
+</div>
 
-    <!-- Mobile greeting -->
-    <div class="mobile-greeting f1">
-      <div class="mobile-greeting-hello">Welcome back,</div>
-      <div class="mobile-greeting-team" id="mobile-team-name">Loading…</div>
-    </div>
+<!-- Tournament Leaders -->
+<p class="sec" style="animation-delay:.28s">Tournament Leaders</p>
+<div class="card" style="animation-delay:.3s">
+  <div class="leaders-grid">
+    <div class="leader-cell"><span class="leader-icon">🏏</span><div class="leader-label">Most Sixes</div><div class="leader-val" id="l-sixes">—</div><div class="leader-name" id="l-sixes-n">—</div></div>
+    <div class="leader-cell"><span class="leader-icon">4️⃣</span><div class="leader-label">Most Fours</div><div class="leader-val" id="l-fours">—</div><div class="leader-name" id="l-fours-n">—</div></div>
+    <div class="leader-cell"><span class="leader-icon">🧤</span><div class="leader-label">Most Catches</div><div class="leader-val" id="l-cats">—</div><div class="leader-name" id="l-cats-n">—</div></div>
+    <div class="leader-cell"><span class="leader-icon">⭐</span><div class="leader-label">Most 50s</div><div class="leader-val" id="l-50">—</div><div class="leader-name" id="l-50-n">—</div></div>
+    <div class="leader-cell"><span class="leader-icon">💯</span><div class="leader-label">Most 100s</div><div class="leader-val" id="l-100">—</div><div class="leader-name" id="l-100-n">—</div></div>
+    <div class="leader-cell"><span class="leader-icon">🎯</span><div class="leader-label">Dot Balls</div><div class="leader-val" id="l-dots">—</div><div class="leader-name" id="l-dots-n">—</div></div>
+    <div class="leader-cell"><span class="leader-icon">🎳</span><div class="leader-label">Maidens</div><div class="leader-val" id="l-maid">—</div><div class="leader-name" id="l-maid-n">—</div></div>
+    <div class="leader-cell"><span class="leader-icon">⚡</span><div class="leader-label">Wickets</div><div class="leader-val" id="l-wkt">—</div><div class="leader-name" id="l-wkt-n">—</div></div>
+    <div class="leader-cell"><span class="leader-icon">🏆</span><div class="leader-label">Top Player</div><div class="leader-val" id="l-top">—</div><div class="leader-name" id="l-top-n">—</div></div>
+  </div>
+</div>
+<div style="height:8px"></div>
 
-    <!-- Page header (hero strip) -->
-    <div class="page-header f2">
-      <!-- Desktop greeting row -->
-      <div class="page-header-top">
-        <div>
-          <div class="page-greeting-hello">Welcome back,</div>
-          <div class="page-greeting-team" id="desktop-team-name">Loading…</div>
-        </div>
-      </div>
-      <!-- Stats row -->
-      <div class="hero-stats-row">
-        <div class="hero-stat">
-          <div class="hero-lbl">Rank</div>
-          <div class="hero-val accent" id="hero-rank">—</div>
-          <div class="hero-sub-txt" id="hero-of">of — teams</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-lbl">Total Points</div>
-          <div class="hero-val" id="hero-pts">—</div>
-          <div class="hero-sub-txt">points</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-lbl">Ahead of</div>
-          <div class="hero-val" id="hero-ahead">—</div>
-          <div class="hero-sub-txt">teams</div>
-        </div>
-      </div>
-      <!-- C/VC -->
-      <div class="cvc-strip" id="cvc-strip">
-        <span class="cvc-chip none">No Captain / VC set yet</span>
-      </div>
-    </div>
-
-    <!-- Content grid -->
-    <div class="content-grid">
-
-      <!-- Prize Standings — full width -->
-      <div class="span-2 content-section f3">
-        <div class="sec-label">Prize Standings</div>
-        <div class="card">
-          <div class="podium-row" id="podium-row">
-            <div class="loading-row" style="grid-column:1/-1">Loading…</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Leaderboard — left col -->
-      <div class="content-section f3">
-        <div class="sec-label">Fantasy Standings</div>
-        <div class="card">
-          <div class="card-hdr">
-            <div class="card-hdr-title">Leaderboard</div>
-            <div class="live-badge"><span class="live-dot"></span>LIVE</div>
-          </div>
-          <div id="lb-body"><div class="loading-row">Loading…</div></div>
-        </div>
-      </div>
-
-      <!-- Cap Holders — right col -->
-      <div class="content-section f4">
-        <div class="sec-label">Cap Holders</div>
-        <div class="card">
-          <div class="caps-grid">
-            <div class="cap-cell orange">
-              <div class="cap-swatch-row">
-                <div class="cap-swatch">🧡</div>
-                <div class="cap-type-lbl">Orange Cap</div>
-              </div>
-              <div class="cap-player" id="oc-name">—</div>
-              <div class="cap-team"   id="oc-team">—</div>
-              <div class="cap-big-num" id="oc-val">0</div>
-              <div class="cap-unit">runs</div>
-            </div>
-            <div class="cap-cell purple">
-              <div class="cap-swatch-row">
-                <div class="cap-swatch">💜</div>
-                <div class="cap-type-lbl">Purple Cap</div>
-              </div>
-              <div class="cap-player" id="pc-name">—</div>
-              <div class="cap-team"   id="pc-team">—</div>
-              <div class="cap-big-num" id="pc-val">0</div>
-              <div class="cap-unit">wickets</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tournament Leaders below cap on same col -->
-        <div class="sec-label" style="margin-top:24px;">Tournament Leaders</div>
-        <div class="card">
-          <div class="leaders-grid">
-            <div class="leader-cell"><span class="leader-icon">6️⃣</span><div class="leader-lbl">Most Sixes</div><div class="leader-num" id="l-sixes">—</div><div class="leader-name" id="l-sixes-n">—</div></div>
-            <div class="leader-cell"><span class="leader-icon">4️⃣</span><div class="leader-lbl">Most Fours</div><div class="leader-num" id="l-fours">—</div><div class="leader-name" id="l-fours-n">—</div></div>
-            <div class="leader-cell"><span class="leader-icon">🧤</span><div class="leader-lbl">Catches</div><div class="leader-num" id="l-cats">—</div><div class="leader-name" id="l-cats-n">—</div></div>
-            <div class="leader-cell"><span class="leader-icon">🏅</span><div class="leader-lbl">Most 50s</div><div class="leader-num" id="l-50">—</div><div class="leader-name" id="l-50-n">—</div></div>
-            <div class="leader-cell"><span class="leader-icon">💯</span><div class="leader-lbl">Most 100s</div><div class="leader-num" id="l-100">—</div><div class="leader-name" id="l-100-n">—</div></div>
-            <div class="leader-cell"><span class="leader-icon">⚫</span><div class="leader-lbl">Dot Balls</div><div class="leader-num" id="l-dots">—</div><div class="leader-name" id="l-dots-n">—</div></div>
-            <div class="leader-cell"><span class="leader-icon">🎳</span><div class="leader-lbl">Maidens</div><div class="leader-num" id="l-maid">—</div><div class="leader-name" id="l-maid-n">—</div></div>
-            <div class="leader-cell"><span class="leader-icon">⚡</span><div class="leader-lbl">Wickets</div><div class="leader-num" id="l-wkt">—</div><div class="leader-name" id="l-wkt-n">—</div></div>
-            <div class="leader-cell"><span class="leader-icon">🏆</span><div class="leader-lbl">Top Player</div><div class="leader-num" id="l-top">—</div><div class="leader-name" id="l-top-n">—</div></div>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /content-grid -->
-  </div><!-- /main -->
-</div><!-- /app-shell -->
-
-<!-- Mobile bottom nav -->
 <nav class="bottom-nav">
-  <a href="dashboard.html" class="nav-item active"><div class="nav-icon-bg"><span class="nav-icon">🏠</span></div>Home</a>
-  <a href="squad.html"     class="nav-item"><div class="nav-icon-bg"><span class="nav-icon">🛡️</span></div>Squad</a>
-  <a href="players.html"   class="nav-item"><div class="nav-icon-bg"><span class="nav-icon">🃏</span></div>Cards</a>
-  <a href="teams.html"     class="nav-item"><div class="nav-icon-bg"><span class="nav-icon">👥</span></div>Teams</a>
-  <a href="stats.html"     class="nav-item"><div class="nav-icon-bg"><span class="nav-icon">📊</span></div>Stats</a>
-  <a href="settings.html"  class="nav-item"><div class="nav-icon-bg"><span class="nav-icon">⚙️</span></div>Settings</a>
+  <a href="dashboard.html" class="nav-item active"><div class="nav-icon-wrap"><span class="nav-icon">🏠</span></div>Home</a>
+  <a href="squad.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad</a>
+  <a href="players.html"   class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🃏</span></div>Cards</a>
+  <a href="teams.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">👥</span></div>Teams</a>
+  <a href="stats.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">📊</span></div>Stats</a>
+  <a href="settings.html"  class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">⚙️</span></div>Settings</a>
 </nav>
 
 <script>
-const WEB_APP_URL="https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
-const myTeam=localStorage.getItem("teamName")||"";
-const myName=localStorage.getItem("userName")||"";
-if(!myTeam) window.location.href="index.html";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
+const myTeam = localStorage.getItem("teamName") || "";
 
 // Theme
-function applyTheme(t){
-  document.documentElement.setAttribute("data-theme",t);
-  const icon=t==="dark"?"☀️":"🌙";
-  ["theme-btn-sidebar","theme-btn-top"].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=icon;});
-}
-const savedTheme=localStorage.getItem("theme")||"light";
-applyTheme(savedTheme);
-function toggleTheme(){
-  const next=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
-  localStorage.setItem("theme",next);
-  applyTheme(next);
+const savedTheme = localStorage.getItem("theme") || "dark";
+document.documentElement.setAttribute("data-theme", savedTheme);
+document.getElementById("theme-icon").textContent = savedTheme === "dark" ? "☀️" : "🌙";
+function toggleTheme() {
+  const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  localStorage.setItem("theme", next);
+  document.getElementById("theme-icon").textContent = next === "dark" ? "☀️" : "🌙";
 }
 
-// Set names + avatars
-const teamDisplay=myTeam||"Dashboard";
-const initials=(myName||myTeam||"?").split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase();
-document.getElementById("desktop-team-name").textContent=teamDisplay;
-document.getElementById("mobile-team-name").textContent=teamDisplay;
-document.getElementById("uname-sidebar").textContent=myName||myTeam;
-["avatar-sidebar","avatar-top"].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=initials;});
-
-async function api(body){
-  try{const r=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify(body)});return r.json();}
-  catch{return null;}
+function setEl(id, v) { const e = document.getElementById(id); if (e) e.innerText = v ?? "—"; }
+async function api(body) {
+  try { const r = await fetch(WEB_APP_URL, {method:"POST", body:JSON.stringify(body)}); return r.json(); }
+  catch { return null; }
 }
-function setEl(id,v){const e=document.getElementById(id);if(e)e.textContent=v??'—';}
 
-(async()=>{
-  const [lbRes,leadRes]=await Promise.all([
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("team-name-txt").innerText = myTeam || "Dashboard";
+  loadAll();
+});
+
+async function loadAll() {
+  const [lbRes, leadRes] = await Promise.all([
     api({action:"getLeaderboard"}),
     api({action:"getLeaders"})
   ]);
-  const lb=(lbRes?.leaderboard||[]).filter(t=>t.teamName!=="Admin");
 
-  // Hero
-  const myIdx=lb.findIndex(t=>t.teamName===myTeam);
-  if(myIdx!==-1){
-    const me=lb[myIdx];
-    setEl("hero-rank",myIdx+1);
-    setEl("hero-pts",me.points);
-    setEl("hero-of",`of ${lb.length} teams`);
-    setEl("hero-ahead",lb.length-myIdx-1);
-    let chips="";
-    if(me.captain) chips+=`<span class="cvc-chip cap">© ${me.captain} &nbsp;+${me.captainBonus||0} pts</span>`;
-    if(me.vc)      chips+=`<span class="cvc-chip vc">🌟 ${me.vc} &nbsp;+${me.vcBonus||0} pts</span>`;
-    if(!chips)     chips=`<span class="cvc-chip none">No Captain / VC set — go to Squad</span>`;
-    document.getElementById("cvc-strip").innerHTML=chips;
+  const lb = (lbRes?.leaderboard || []).filter(t => t.teamName !== "Admin");
+
+  // ── My hero card ──
+  const myIdx = lb.findIndex(t => t.teamName === myTeam);
+  if (myIdx !== -1) {
+    const me = lb[myIdx];
+    setEl("hero-rank", myIdx + 1);
+    setEl("hero-pts", me.points);
+    const ahead = lb.length - myIdx - 1;
+    document.getElementById("hero-meta").innerHTML = `<b>${lb.length}</b> teams total · ahead of <b>${ahead}</b>`;
+
+    // C/VC bonus chips
+    let bonusHTML = "";
+    if (me.captain) bonusHTML += `<span class="bonus-chip c">©️ ${me.captain.split(" ").slice(-1)[0]} +${me.captainBonus}pts</span>`;
+    if (me.vc)      bonusHTML += `<span class="bonus-chip vc">🌟 ${me.vc.split(" ").slice(-1)[0]} +${me.vcBonus}pts</span>`;
+    document.getElementById("hero-bonus").innerHTML = bonusHTML;
   } else {
-    setEl("hero-rank","—");setEl("hero-pts","0");
-    setEl("hero-of",`of ${lb.length} teams`);setEl("hero-ahead","—");
+    setEl("hero-rank", "—"); setEl("hero-pts", "0");
+    setEl("hero-meta", "Draft players to get on the board!");
   }
 
+  // ── Prize Podium (top 3) ──
   buildPodium(lb);
-  buildLeaderboard(lb);
-  if(leadRes?.status==="success") buildLeaders(leadRes.leaders);
-})();
 
-function buildPodium(lb){
-  const wrap=document.getElementById("podium-row");
-  const top3=lb.slice(0,3);
-  if(!top3.length){wrap.innerHTML='<div class="loading-row" style="grid-column:1/-1">No teams yet.</div>';return;}
-  const meta=[
-    {cls:"runner",label:"Runner Up",num:2},
-    {cls:"winner",label:"Winner",num:1},
-    {cls:"third",label:"2nd Runner",num:3}
-  ];
-  const order=[top3[1],top3[0],top3[2]].filter(Boolean);
-  const mIdxMap={0:1,1:0,2:2};
-  wrap.innerHTML=order.map((t,i)=>{
-    const m=meta[i];
-    const origIdx=lb.indexOf(t);
-    return`<div class="podium-cell ${m.cls}">
-      <div class="podium-pos">#${origIdx+1}</div>
-      <div class="podium-swatch">${m.num}</div>
-      <div class="podium-pts">${t.points}</div>
-      <div class="podium-name" title="${t.teamName}">${t.teamName}</div>
-      <div class="podium-prize">${m.label}</div>
-    </div>`;
-  }).join("");
+  // ── Leaderboard ──
+  buildLeaderboard(lb);
+
+  // ── Leaders ──
+  if (leadRes?.status === "success") buildLeaders(leadRes.leaders);
 }
 
-function buildLeaderboard(lb){
-  const body=document.getElementById("lb-body");
-  if(!lb.length){body.innerHTML='<div class="loading-row">No teams yet.</div>';return;}
-  const maxPt=Math.max(...lb.map(t=>t.points),1);
-  const rankCls=["gold","silver","bronze"];
-  const dotColors=["#d4a017","#64748b","#b45309","#FF6B35","#7c3aed","#4facfe","#22c55e","#f97316","#a855f7","#06b6d4"];
-  const barColors=["var(--gold-swatch)","var(--silver)","var(--bronze)"];
-  body.innerHTML=lb.map((t,i)=>{
-    const isMe=t.teamName===myTeam;
-    const pct=Math.max(4,Math.round((t.points/maxPt)*100));
-    const dot=dotColors[i%dotColors.length];
-    const bar=barColors[i]||dot;
-    const bonus=t.captain?` · C: +${t.captainBonus||0}`:"";
-    return`<div class="lb-row ${isMe?"is-me":""}">
-      <div class="lb-rank ${rankCls[i]||""}">${i+1}</div>
-      <div class="lb-dot" style="background:${dot}"></div>
-      <div class="lb-body">
+function buildPodium(lb) {
+  const prizes = ["🥇 Winner", "🥈 Runner Up", "🏅 2nd Runner"];
+  const icons  = ["🏆", "🥈", "🥉"];
+  const cls    = ["p1", "p2", "p3"];
+  const top3   = lb.slice(0, 3);
+  const wrap   = document.getElementById("podium-wrap");
+  if (!top3.length) { wrap.innerHTML = '<div class="loading-row">No teams yet.</div>'; return; }
+
+  // 2nd place - 1st place - 3rd place visual order
+  const order = [top3[1], top3[0], top3[2]].filter(Boolean);
+  const ordCls  = top3[1] ? ["p2","p1","p3"] : ["p1","p3"];
+
+  wrap.innerHTML = top3.map((t, i) => `
+    <div class="podium-item">
+      <div class="podium-avatar ${cls[i]}">
+        <div class="podium-icon">${icons[i]}</div>
+        <div class="podium-pts">${t.points}</div>
+        <div style="font-size:8px;color:var(--text-3);font-weight:600;">pts</div>
+      </div>
+      <div class="podium-name" title="${t.teamName}">${t.teamName}</div>
+      <div class="podium-prize">${prizes[i]}</div>
+      <div class="podium-bar"></div>
+    </div>`).join("");
+}
+
+function buildLeaderboard(lb) {
+  const body   = document.getElementById("lb-body");
+  if (!lb.length) { body.innerHTML = '<div class="loading-row">No teams yet.</div>'; return; }
+  const maxPt  = Math.max(...lb.map(t => t.points), 1);
+  const medals = ["🥇","🥈","🥉"];
+  const rc     = ["gold","silver","bronze"];
+
+  body.innerHTML = lb.map((t, i) => {
+    const isMe   = t.teamName === myTeam;
+    const pct    = Math.max(4, Math.round((t.points / maxPt) * 100));
+    const bCls   = i < 3 ? "c"+i : "cn";
+    const medal  = medals[i] || (i+1);
+    const bonus  = t.captain ? ` · C:+${t.captainBonus||0}` : "";
+    return `<div class="lb-row ${isMe?"is-me":""}" style="animation-delay:${.06*i+.15}s">
+      <div class="rank-badge ${rc[i]||""}">${medal}</div>
+      <div class="lb-left">
         <div class="lb-team-row">
           <span class="lb-team">${t.teamName}</span>
           ${isMe?'<span class="lb-me-tag">YOU</span>':""}
         </div>
         <div class="lb-sub">${t.ownerName||""}${bonus}</div>
-        <div class="lb-bar-track"><div class="lb-bar-fill" style="width:${pct}%;background:${bar}"></div></div>
+        <div class="lb-bar-wrap"><div class="lb-bar ${bCls}" style="width:${pct}%"></div></div>
       </div>
-      <div class="lb-right">
-        <div class="lb-pts-val">${t.points}</div>
-        ${t.rawPoints!==undefined&&t.rawPoints!==t.points?`<div class="lb-pts-raw">raw ${t.rawPoints}</div>`:""}
+      <div class="lb-pts">
+        <span class="lb-pts-val">${t.points}</span>
+        ${t.rawPoints !== t.points ? `<span class="lb-pts-raw">raw ${t.rawPoints}</span>` : ""}
       </div>
     </div>`;
   }).join("");
 }
 
-function buildLeaders(L){
-  const s=(id,v)=>setEl(id,v||"—");
-  s("oc-name",L.orangeCap?.name);    s("oc-team",L.orangeCap?.iplTeam);  s("oc-val",L.orangeCap?.value||0);
-  s("pc-name",L.purpleCap?.name);    s("pc-team",L.purpleCap?.iplTeam);  s("pc-val",L.purpleCap?.value||0);
-  s("l-sixes",L.mostSixes?.value);   s("l-sixes-n",L.mostSixes?.name);
-  s("l-fours",L.mostFours?.value);   s("l-fours-n",L.mostFours?.name);
-  s("l-cats",L.mostCatches?.value);  s("l-cats-n",L.mostCatches?.name);
-  s("l-50",L.mostFifties?.value);    s("l-50-n",L.mostFifties?.name);
-  s("l-100",L.mostHundreds?.value);  s("l-100-n",L.mostHundreds?.name);
-  s("l-dots",L.mostDots?.value);     s("l-dots-n",L.mostDots?.name);
-  s("l-maid",L.mostMaidens?.value);  s("l-maid-n",L.mostMaidens?.name);
-  s("l-wkt",L.purpleCap?.value);     s("l-wkt-n",L.purpleCap?.name);
-  s("l-top",L.highestPts?.value);    s("l-top-n",L.highestPts?.name);
+function buildLeaders(L) {
+  const s = (id, v) => setEl(id, v || "—");
+  s("oc-name", L.orangeCap?.name);    s("oc-team", L.orangeCap?.iplTeam);   s("oc-val", L.orangeCap?.value || 0);
+  s("pc-name", L.purpleCap?.name);    s("pc-team", L.purpleCap?.iplTeam);   s("pc-val", L.purpleCap?.value || 0);
+  s("l-sixes",  L.mostSixes?.value);  s("l-sixes-n", L.mostSixes?.name);
+  s("l-fours",  L.mostFours?.value);  s("l-fours-n", L.mostFours?.name);
+  s("l-cats",   L.mostCatches?.value);s("l-cats-n",  L.mostCatches?.name);
+  s("l-50",     L.mostFifties?.value);s("l-50-n",    L.mostFifties?.name);
+  s("l-100",    L.mostHundreds?.value);s("l-100-n",  L.mostHundreds?.name);
+  s("l-dots",   L.mostDots?.value);   s("l-dots-n",  L.mostDots?.name);
+  s("l-maid",   L.mostMaidens?.value);s("l-maid-n",  L.mostMaidens?.name);
+  s("l-wkt",    L.purpleCap?.value);  s("l-wkt-n",   L.purpleCap?.name);
+  s("l-top",    L.highestPts?.value); s("l-top-n",   L.highestPts?.name);
 }
 </script>
 </body>
