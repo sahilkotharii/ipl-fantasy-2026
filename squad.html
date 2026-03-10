@@ -2,17 +2,19 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Squad | IPL Fantasy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --accent: #FF6B35;
             --accent-soft: rgba(255, 107, 53, 0.15);
+            --accent-glow: rgba(255,107,53,0.25);
             --radius-card: 22px;
             --font-main: 'Outfit', sans-serif;
             --font-mono: 'DM Mono', monospace;
+            --font-display: 'Bebas Neue', cursive;
             --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             --nav-h: 74px;
         }
@@ -34,12 +36,12 @@
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: var(--font-main); background: var(--bg-mesh); background-color: var(--bg); min-height: 100vh; color: var(--text-primary); padding-bottom: calc(68px + 14px + 28px); transition: background-color var(--transition), color var(--transition); }
+        body { font-family: var(--font-main); background: var(--bg-mesh); background-color: var(--bg); min-height: 100vh; color: var(--text-primary); padding-bottom: calc(68px + 14px + 28px); padding-left: env(safe-area-inset-left,0px); padding-right: env(safe-area-inset-right,0px); transition: background-color var(--transition), color var(--transition); overflow-x: hidden; }
 
         .topbar { display: flex; justify-content: space-between; align-items: flex-start; padding: 28px 20px 16px; }
-        .topbar-left .greeting { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 3px; }
-        .topbar-left h1 { font-size: 22px; font-weight: 700; }
-        .topbar-left .budget-line { font-size: 13px; color: var(--text-secondary); margin-top: 3px; }
+        .topbar-left .greeting { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+        .topbar-left h1 { font-family: var(--font-display); font-size: 38px; letter-spacing: .04em; line-height: 1; }
+        .topbar-left .budget-line { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
         .topbar-left .budget-line span { font-family: var(--font-mono); color: var(--accent); font-weight: 500; }
         .theme-btn { width: 38px; height: 38px; border-radius: 50%; background: var(--theme-toggle-bg); border: 1px solid var(--glass-border); color: var(--text-primary); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); transition: all var(--transition); }
         .theme-btn:active { transform: scale(0.9); }
@@ -53,29 +55,58 @@
         .add-btn { background: var(--accent); color: #fff; border: none; padding: 8px 14px; border-radius: 10px; font-family: var(--font-main); font-size: 12px; font-weight: 600; cursor: pointer; transition: all var(--transition); }
         .add-btn:active { transform: scale(0.95); }
 
-        /* ─── PLAYER ROW ──────────────────────────────── */
-        .player-row { display: flex; align-items: center; justify-content: space-between; padding: 13px 20px; border-bottom: 1px solid var(--divider); gap: 12px; transition: background var(--transition); }
-        .player-row:last-child { border-bottom: none; }
+        /* ─── PLAYER CARD (matches stats.html) ───────── */
+        .players-list { padding: 0 16px; }
 
-        .player-avatar { width: 38px; height: 38px; border-radius: 12px; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+        .player-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: 20px;
+            margin-bottom: 10px;
+            display: flex; align-items: center;
+            padding: 14px 16px;
+            gap: 13px;
+            transition: border-color var(--transition), box-shadow var(--transition);
+            -webkit-tap-highlight-color: transparent;
+            animation: fadeUp .3s ease both;
+        }
+        .player-card:active {
+            border-color: rgba(255,107,53,.3);
+            box-shadow: 0 4px 20px rgba(255,107,53,.1), var(--glass-shadow);
+        }
 
-        .player-info { flex: 1; min-width: 0; }
-        .player-name { font-size: 15px; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .badges { display: flex; gap: 5px; flex-wrap: wrap; }
-        .badge { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 5px; letter-spacing: 0.04em; }
-        .badge.bat { background: rgba(52, 152, 219, 0.18); color: #4facfe; }
-        .badge.bowl { background: rgba(231, 76, 60, 0.18); color: #e74c3c; }
-        .badge.ar { background: rgba(241, 196, 15, 0.18); color: #f1c40f; }
-        .badge.wk { background: rgba(155, 89, 182, 0.18); color: #bb8fce; }
-        .badge.team { background: rgba(255,255,255,0.08); color: var(--text-secondary); }
+        .p-avatar { width: 42px; height: 42px; border-radius: 13px; background: var(--accent-soft); border: 1px solid var(--accent-glow); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+
+        .p-info { flex: 1; min-width: 0; }
+        .p-name { font-size: 15px; font-weight: 700; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .p-meta { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+
+        .p-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+
+        /* Points pill */
+        .pts-pill { background: var(--accent-soft); border: 1px solid var(--accent-glow); border-radius: 10px; padding: 6px 10px; text-align: center; }
+        .pts-pill .pv { font-family: var(--font-mono); font-size: 15px; font-weight: 600; color: var(--accent); display: block; line-height: 1; }
+        .pts-pill .pl { font-size: 8px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); opacity: .65; margin-top: 2px; }
+
+        @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+        /* Badges */
+        .badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; letter-spacing: .04em; }
+        .badge.bat  { background: rgba(52,152,219,.18); color: #4facfe; }
+        .badge.bowl { background: rgba(231,76,60,.18);  color: #e74c3c; }
+        .badge.ar   { background: rgba(241,196,15,.18); color: #f1c40f; }
+        .badge.wk   { background: rgba(155,89,182,.18); color: #bb8fce; }
+        .badge.team { background: rgba(255,255,255,.08); color: var(--text-secondary); }
         .badge.price { background: var(--accent-soft); color: var(--accent); font-family: var(--font-mono); }
 
         /* ─── C / VC BUTTONS ──────────────────────────── */
-        .role-btns { display: flex; gap: 6px; flex-shrink: 0; }
-        .role-btn { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--text-secondary); font-size: 11px; font-weight: 700; cursor: pointer; transition: all var(--transition); font-family: var(--font-main); }
-        .role-btn.active-c { background: rgba(255,196,0,0.2); border-color: rgba(255,196,0,0.5); color: #ffc400; }
-        .role-btn.active-vc { background: rgba(180,180,200,0.15); border-color: rgba(180,180,200,0.4); color: #b4b4c8; }
-        .role-btn:active { transform: scale(0.92); }
+        .role-btns { display: flex; gap: 5px; flex-shrink: 0; }
+        .role-btn { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--text-secondary); font-size: 11px; font-weight: 800; cursor: pointer; transition: all var(--transition); font-family: var(--font-main); display: flex; align-items: center; justify-content: center; }
+        .role-btn.active-c  { background: rgba(255,196,0,.2); border-color: rgba(255,196,0,.5); color: #ffc400; }
+        .role-btn.active-vc { background: rgba(180,180,200,.15); border-color: rgba(180,180,200,.4); color: #b4b4c8; }
+        .role-btn:active { transform: scale(.88); }
 
         /* ─── MODAL ───────────────────────────────────── */
         .modal { display: none; position: fixed; inset: 0; background: var(--overlay); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 100; align-items: flex-end; justify-content: center; }
@@ -107,6 +138,7 @@
         .filter-chip { flex-shrink: 0; padding: 5px 12px; border-radius: 16px; border: 1px solid var(--glass-border); background: var(--input-bg); color: var(--text-muted); font-size: 11px; font-weight: 600; cursor: pointer; font-family: var(--font-main); transition: all var(--transition); }
         .filter-chip.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
         .empty-state { padding: 30px 20px; text-align: center; color: var(--text-muted); font-size: 14px; }
+        #draft-list-container { padding: 8px 16px 16px; }
 
         /* ─── BOTTOM NAV ──────────────────────────────── */
                 .bottom-nav {
@@ -148,19 +180,14 @@
             <h1>Roster</h1>
             <p class="budget-line">Budget remaining: ₹<span id="budget">100</span> Cr</p>
         </div>
-        <div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
             <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
+            <button onclick="openDraft()" style="background:var(--accent);color:#fff;border:none;padding:7px 14px;border-radius:12px;font-family:var(--font-main);font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.03em;">＋ Draft</button>
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-header">
-            <h3>Current Players</h3>
-            <button class="add-btn" onclick="openDraft()">＋ Draft</button>
-        </div>
-        <div id="my-squad-list">
-            <div class="empty-state">Your squad is empty.<br>Start the draft!</div>
-        </div>
+    <div class="players-list" id="my-squad-list">
+        <div class="empty-state">Your squad is empty.<br>Start the draft!</div>
     </div>
 
     <!-- Draft Modal -->
@@ -250,25 +277,34 @@
                     const cap = localStorage.getItem("captain") || "";
                     const vc  = localStorage.getItem("viceCaptain") || "";
 
-                    container.innerHTML = myPlayers.map(player => {
-                        const enc = encodeURIComponent(player['Player Name']);
+                    const roleEmoji = { BAT:'🏏', BOWL:'⚾', AR:'⚡', WK:'🧤' };
+                    container.innerHTML = myPlayers.map((player, i) => {
+                        const enc  = encodeURIComponent(player['Player Name']);
                         const isC  = cap === player['Player Name'];
                         const isVC = vc  === player['Player Name'];
                         const rc   = roleClass(player['Role']);
+                        const icon = roleEmoji[player['Role']] || '👤';
+                        const pts  = parseInt(player['Total Points']) || 0;
                         return `
-                            <div class="player-row">
-                                <div class="player-avatar">👤</div>
-                                <div class="player-info">
-                                    <div class="player-name">${player['Player Name']}${isC ? ' <span style="font-size:10px;color:#ffc400;font-weight:700;">C</span>' : isVC ? ' <span style="font-size:10px;color:#b4b4c8;font-weight:700;">VC</span>' : ''}</div>
-                                    <div class="badges">
+                            <div class="player-card" style="animation-delay:${i*0.04}s">
+                                <div class="p-avatar">${icon}</div>
+                                <div class="p-info">
+                                    <div class="p-name">${player['Player Name']}${isC ? ' <span style="font-size:10px;color:#ffc400;font-weight:800;margin-left:2px;">C</span>' : isVC ? ' <span style="font-size:10px;color:#b4b4c8;font-weight:800;margin-left:2px;">VC</span>' : ''}</div>
+                                    <div class="p-meta">
                                         <span class="badge ${rc}">${player['Role']}</span>
                                         <span class="badge team">${player['IPL Team']}</span>
                                         <span class="badge price">₹${player['Price Bought']}Cr</span>
                                     </div>
                                 </div>
-                                <div class="role-btns">
-                                    <button class="role-btn ${isC ? 'active-c' : ''}" onclick="setRole('C','${enc}')">C</button>
-                                    <button class="role-btn ${isVC ? 'active-vc' : ''}" onclick="setRole('VC','${enc}')">VC</button>
+                                <div class="p-right">
+                                    <div class="pts-pill">
+                                        <span class="pv">${pts}</span>
+                                        <span class="pl">pts</span>
+                                    </div>
+                                    <div class="role-btns">
+                                        <button class="role-btn ${isC ? 'active-c' : ''}" onclick="setRole('C','${enc}')">C</button>
+                                        <button class="role-btn ${isVC ? 'active-vc' : ''}" onclick="setRole('VC','${enc}')">VC</button>
+                                    </div>
                                 </div>
                             </div>`;
                     }).join('');
@@ -333,22 +369,24 @@
 
             if (!players.length) { container.innerHTML = '<div class="empty-state">No players found.</div>'; return; }
 
-            container.innerHTML = players.map(player => {
+            container.innerHTML = players.map((player, i) => {
                 const isSold  = (player['Status']||'').toLowerCase() === 'sold';
                 const enc     = encodeURIComponent(player['Player Name']);
                 const safeId  = player['Player Name'].replace(/[^a-zA-Z0-9]/g, '');
                 const rc      = roleClass(player['Role']);
+                const roleEmoji = { BAT:'🏏', BOWL:'⚾', AR:'⚡', WK:'🧤' };
+                const icon = roleEmoji[player['Role']] || '👤';
                 return `
-                    <div class="player-row" style="${isSold ? 'opacity:0.45;' : ''}">
-                        <div class="player-avatar">👤</div>
-                        <div class="player-info">
-                            <div class="player-name">${player['Player Name']}</div>
-                            <div class="badges">
+                    <div class="player-card" style="animation-delay:${i*0.03}s;${isSold?'opacity:0.45;':''}">
+                        <div class="p-avatar">${icon}</div>
+                        <div class="p-info">
+                            <div class="p-name">${player['Player Name']}</div>
+                            <div class="p-meta">
                                 <span class="badge ${rc}">${player['Role']}</span>
                                 <span class="badge team">${player['IPL Team']}</span>
                             </div>
                         </div>
-                        <div class="role-btns">
+                        <div class="p-right">
                             ${isSold
                                 ? `<span class="sold-chip">SOLD<br>${player['Sold To']}</span>`
                                 : `<input type="number" id="price-${safeId}" class="price-input" placeholder="₹Cr">
