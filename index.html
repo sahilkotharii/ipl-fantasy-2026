@@ -13,82 +13,72 @@
   --font-mono:'DM Mono',monospace;--t:.25s cubic-bezier(.4,0,.2,1);
 }
 [data-theme="dark"]{
-  --bg:#07101f;
-  --surf:rgba(7,16,31,.78);--brd:rgba(79,172,254,.18);
+  --bg:#07101f;--surf:rgba(7,16,31,.78);--brd:rgba(79,172,254,.18);
   --text-1:#eef2ff;--text-2:rgba(238,242,255,.6);--text-3:rgba(238,242,255,.3);
-  --inp:rgba(0,0,0,.4);--inp-brd:rgba(79,172,254,.22);
-  --overlay:rgba(4,10,22,.78);
+  --inp:rgba(0,0,0,.4);--inp-brd:rgba(79,172,254,.22);--overlay:rgba(4,10,22,.78);
 }
 [data-theme="light"]{
-  --bg:#f0ece6;
-  --surf:rgba(255,255,255,.84);--brd:rgba(255,255,255,.9);
+  --bg:#f0ece6;--surf:rgba(255,255,255,.84);--brd:rgba(255,255,255,.9);
   --text-1:#1a1a2e;--text-2:rgba(26,26,46,.6);--text-3:rgba(26,26,46,.35);
-  --inp:rgba(0,0,0,.06);--inp-brd:rgba(0,0,0,.14);
-  --overlay:rgba(240,236,230,.68);
+  --inp:rgba(0,0,0,.06);--inp-brd:rgba(0,0,0,.14);--overlay:rgba(240,236,230,.68);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-
 body{font-family:var(--font-main);color:var(--text-1);min-height:100vh;position:relative;overflow-x:hidden;}
 
-#bg-img{
-  position:fixed;inset:0;width:100%;height:100%;
-  object-fit:cover;object-position:center top;z-index:0;
-  transform:scale(1.05);transition:transform 9s ease;
-}
+/* BG */
+#bg-img{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:0;transform:scale(1.05);transition:transform 9s ease;}
 body.loaded #bg-img{transform:scale(1);}
-
-#bg-overlay{
-  position:fixed;inset:0;z-index:1;
-  background:var(--overlay);
-}
-#bg-overlay::after{
-  content:'';position:fixed;inset:0;
-  background:linear-gradient(to bottom,rgba(0,0,0,.1) 0%,rgba(4,10,22,.55) 100%);
-  z-index:0;pointer-events:none;
-}
+#bg-overlay{position:fixed;inset:0;z-index:1;background:var(--overlay);}
+#bg-overlay::after{content:'';position:fixed;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 0%,rgba(4,10,22,.5) 100%);z-index:0;pointer-events:none;}
 
 .page{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:24px 16px 70px;}
 
-.theme-btn{
-  position:fixed;top:20px;right:20px;z-index:10;
-  width:40px;height:40px;border-radius:50%;
-  background:var(--surf);border:1px solid var(--brd);
-  color:var(--text-1);font-size:17px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  backdrop-filter:blur(12px);transition:all var(--t);
-}
+/* THEME BTN */
+.theme-btn{position:fixed;top:20px;right:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:var(--surf);border:1px solid var(--brd);color:var(--text-1);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(12px);transition:all var(--t);}
 .theme-btn:hover{transform:scale(1.1);}
 
 /* LOGO */
-.logo-wrap{text-align:center;margin-bottom:28px;margin-top:24px;animation:fadeDown .8s ease both;}
-.logo-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(255,107,53,.15);border:1px solid rgba(255,107,53,.38);
-  border-radius:999px;padding:6px 16px;margin-bottom:14px;
-  font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);
-}
-.live-dot{width:7px;height:7px;background:#FF6B35;border-radius:50%;animation:pulse 1.4s infinite;}
-.logo-title{
-  font-family:var(--font-display);font-size:clamp(52px,13vw,84px);
-  letter-spacing:.05em;line-height:.9;display:block;
-  background:linear-gradient(135deg,#fff 0%,var(--accent2) 45%,var(--accent) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  filter:drop-shadow(0 4px 28px rgba(255,107,53,.45));
-}
-.logo-year{
-  font-family:var(--font-display);font-size:clamp(28px,6vw,44px);
-  letter-spacing:.2em;display:block;margin-top:2px;color:rgba(255,215,0,.75);
-}
+.logo-wrap{text-align:center;margin-bottom:20px;margin-top:24px;animation:fadeDown .8s ease both;}
+.logo-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,107,53,.15);border:1px solid rgba(255,107,53,.38);border-radius:999px;padding:6px 16px;margin-bottom:14px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);}
+.live-dot{width:7px;height:7px;background:#FF6B35;border-radius:50%;animation:pulse-dot 1.4s infinite;}
+.logo-title{font-family:var(--font-display);font-size:clamp(52px,13vw,84px);letter-spacing:.05em;line-height:.9;display:block;background:linear-gradient(135deg,#fff 0%,var(--accent2) 45%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 4px 28px rgba(255,107,53,.45));}
+.logo-year{font-family:var(--font-display);font-size:clamp(28px,6vw,44px);letter-spacing:.2em;display:block;margin-top:2px;color:rgba(255,215,0,.75);}
 .logo-sub{font-size:13px;color:var(--text-2);margin-top:10px;font-weight:500;}
 
-/* AUTH CARD */
-.card{
-  background:var(--surf);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
-  border:1px solid var(--brd);border-radius:24px;padding:28px 24px;
-  width:100%;max-width:390px;
-  box-shadow:0 24px 80px rgba(0,0,0,.5);
-  animation:fadeUp .8s .12s ease both;
+/* COUNTDOWN */
+.countdown-wrap{
+  display:flex;align-items:center;gap:6px;
+  background:var(--surf);backdrop-filter:blur(20px);
+  border:1px solid var(--brd);border-radius:20px;
+  padding:16px 24px;margin-bottom:22px;
+  animation:fadeUp .7s .05s ease both;
+  box-shadow:0 8px 32px rgba(0,0,0,.3);
 }
+.cd-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);margin-right:8px;}
+.cd-block{text-align:center;min-width:44px;}
+.cd-num{font-family:var(--font-display);font-size:28px;line-height:1;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;}
+.cd-unit{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-top:2px;display:block;}
+.cd-sep{font-family:var(--font-display);font-size:24px;color:var(--accent);opacity:.5;padding-bottom:8px;}
+.cd-live{
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:#22c55e;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);
+  border-radius:999px;padding:6px 14px;
+}
+
+/* MANAGERS BADGE */
+.managers-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--surf);backdrop-filter:blur(16px);
+  border:1px solid var(--brd);border-radius:999px;
+  padding:8px 18px;margin-bottom:20px;
+  font-size:13px;font-weight:600;color:var(--text-2);
+  animation:fadeUp .7s .08s ease both;
+}
+.managers-badge strong{color:var(--text-1);}
+.mgr-icon{font-size:16px;}
+
+/* AUTH CARD */
+.card{background:var(--surf);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--brd);border-radius:24px;padding:28px 24px;width:100%;max-width:390px;box-shadow:0 24px 80px rgba(0,0,0,.5);animation:fadeUp .8s .12s ease both;}
 .tabs{display:flex;background:var(--inp);border:1px solid var(--inp-brd);border-radius:12px;padding:3px;margin-bottom:22px;}
 .tab{flex:1;padding:9px;border-radius:10px;border:none;background:transparent;color:var(--text-2);font-family:var(--font-main);font-size:13px;font-weight:700;cursor:pointer;transition:all var(--t);}
 .tab.active{background:var(--accent);color:#fff;box-shadow:0 2px 14px rgba(255,107,53,.4);}
@@ -104,23 +94,17 @@ body.loaded #bg-img{transform:scale(1);}
 .msg{margin-top:12px;padding:10px 14px;border-radius:10px;font-size:13px;font-weight:500;text-align:center;display:none;}
 .msg.err{background:rgba(231,76,60,.12);color:#e74c3c;border:1px solid rgba(231,76,60,.25);}
 .msg.ok{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.25);}
-.hint{text-align:center;font-size:12px;color:rgba(238,242,255,.4);margin-top:14px;}
-.hint b{color:var(--accent);}
 @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
 .shake{animation:shake .3s ease;}
 
 /* HOW TO PLAY */
-.htp-section{width:100%;max-width:860px;margin-top:56px;animation:fadeUp .8s .25s ease both;}
+.htp-section{width:100%;max-width:860px;margin-top:52px;animation:fadeUp .8s .25s ease both;}
 .htp-header{text-align:center;margin-bottom:32px;}
 .htp-eyebrow{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent2);background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.28);border-radius:999px;padding:5px 14px;margin-bottom:12px;}
 .htp-title{font-family:var(--font-display);font-size:clamp(34px,7vw,56px);letter-spacing:.04em;background:linear-gradient(135deg,var(--text-1),var(--text-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 
 .htp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;}
-.htp-card{
-  background:var(--surf);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid var(--brd);border-radius:20px;padding:24px 20px;
-  position:relative;overflow:hidden;transition:transform var(--t),box-shadow var(--t);
-}
+.htp-card{background:var(--surf);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--brd);border-radius:20px;padding:24px 20px;position:relative;overflow:hidden;transition:transform var(--t),box-shadow var(--t);}
 .htp-card:hover{transform:translateY(-5px);box-shadow:0 20px 52px rgba(0,0,0,.4);}
 .htp-card::before{content:'';position:absolute;inset:0;border-radius:20px;background:linear-gradient(135deg,rgba(255,107,53,.07),transparent 60%);pointer-events:none;}
 .step-num{font-family:var(--font-display);font-size:48px;line-height:1;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;display:block;}
@@ -129,19 +113,29 @@ body.loaded #bg-img{transform:scale(1);}
 .step-desc{font-size:13px;color:var(--text-2);line-height:1.65;}
 
 /* SCORING STRIP */
-.scoring-strip{margin-top:36px;background:var(--surf);backdrop-filter:blur(20px);border:1px solid var(--brd);border-radius:20px;padding:24px;}
+.scoring-strip{margin-top:36px;background:var(--surf);backdrop-filter:blur(20px);border:1px solid var(--brd);border-radius:20px;padding:24px;position:relative;}
 .scoring-strip-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);text-align:center;margin-bottom:16px;}
-.pills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
-.pill{display:flex;align-items:center;gap:8px;background:var(--inp);border:1px solid var(--brd);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:600;color:var(--text-1);}
+.pills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:40px;}
+.pill{display:flex;align-items:center;gap:8px;background:var(--inp);border:1px solid var(--brd);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:600;color:var(--text-1);animation:fadeIn .3s ease both;}
 .pill-pts{font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--accent);background:rgba(255,107,53,.12);border-radius:999px;padding:2px 8px;min-width:36px;text-align:center;}
+.pills-loading{color:var(--text-3);font-size:13px;text-align:center;padding:8px;width:100%;}
+.scoring-live-badge{
+  position:absolute;top:14px;right:14px;
+  font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:#22c55e;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);
+  border-radius:999px;padding:3px 10px;
+}
 
 /* ANIMS */
 @keyframes fadeDown{from{opacity:0;transform:translateY(-22px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.75);}}
+@keyframes fadeIn{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:scale(1);}}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.75);}}
 
 @media(max-width:480px){
-  .logo-wrap{margin-top:10px;margin-bottom:18px;}
+  .logo-wrap{margin-top:10px;margin-bottom:16px;}
+  .countdown-wrap{flex-wrap:wrap;justify-content:center;gap:8px;}
+  .cd-label{width:100%;text-align:center;margin-right:0;}
   .htp-section{margin-top:36px;}
 }
 </style>
@@ -149,7 +143,6 @@ body.loaded #bg-img{transform:scale(1);}
 <body>
 <img id="bg-img" src="IPL.jpg" alt="" aria-hidden="true">
 <div id="bg-overlay"></div>
-
 <button class="theme-btn" onclick="toggleTheme()"><span id="ti">☀️</span></button>
 
 <div class="page">
@@ -160,6 +153,24 @@ body.loaded #bg-img{transform:scale(1);}
     <span class="logo-title">IPL Fantasy</span>
     <span class="logo-year">2026</span>
     <div class="logo-sub">Private League · All data synced live to Google Sheets</div>
+  </div>
+
+  <!-- Countdown -->
+  <div class="countdown-wrap" id="countdown-wrap">
+    <span class="cd-label">IPL Starts In</span>
+    <div class="cd-block"><span class="cd-num" id="cd-d">--</span><span class="cd-unit">Days</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-block"><span class="cd-num" id="cd-h">--</span><span class="cd-unit">Hrs</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-block"><span class="cd-num" id="cd-m">--</span><span class="cd-unit">Min</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-block"><span class="cd-num" id="cd-s">--</span><span class="cd-unit">Sec</span></div>
+  </div>
+
+  <!-- Managers joined -->
+  <div class="managers-badge">
+    <span class="mgr-icon">🧑‍🤝‍🧑</span>
+    <span id="mgr-count">…</span> managers have joined
   </div>
 
   <!-- Auth Card -->
@@ -180,7 +191,6 @@ body.loaded #bg-img{transform:scale(1);}
       <button class="submit" id="signup-btn" onclick="doSignup()">Create Account →</button>
     </div>
     <div class="msg" id="msg"></div>
-    <div class="hint">Admin PIN: <b>dont bother</b></b></div>
   </div>
 
   <!-- How to Play -->
@@ -189,13 +199,12 @@ body.loaded #bg-img{transform:scale(1);}
       <div class="htp-eyebrow">🏏 Guide</div>
       <div class="htp-title">How to Play</div>
     </div>
-
     <div class="htp-grid">
       <div class="htp-card">
         <span class="step-num">01</span>
         <span class="step-icon">🙋</span>
         <div class="step-title">Create Your Account</div>
-        <div class="step-desc">Sign up with your name, a unique team name, and a 4-digit PIN. Your account is linked to the shared Google Sheet — no email needed.</div>
+        <div class="step-desc">Sign up with your name, a unique team name, and a 4-digit PIN. Your account links to the shared Google Sheet — no email needed.</div>
       </div>
       <div class="htp-card">
         <span class="step-num">02</span>
@@ -229,25 +238,12 @@ body.loaded #bg-img{transform:scale(1);}
       </div>
     </div>
 
+    <!-- Live Scoring Reference -->
     <div class="scoring-strip">
-      <div class="scoring-strip-title">Quick Scoring Reference</div>
-      <div class="pills">
-        <div class="pill">🏃 Run <span class="pill-pts">+1</span></div>
-        <div class="pill">4️⃣ Four <span class="pill-pts">+4</span></div>
-        <div class="pill">6️⃣ Six <span class="pill-pts">+6</span></div>
-        <div class="pill">🎯 Wicket <span class="pill-pts">+25</span></div>
-        <div class="pill">🧤 Catch <span class="pill-pts">+8</span></div>
-        <div class="pill">🏃 Run Out <span class="pill-pts">+8</span></div>
-        <div class="pill">🧤 Stumping <span class="pill-pts">+12</span></div>
-        <div class="pill">🔵 Maiden <span class="pill-pts">+8</span></div>
-        <div class="pill">⚫ Dot Ball <span class="pill-pts">+1</span></div>
-        <div class="pill">🏅 Half-Century <span class="pill-pts">+12</span></div>
-        <div class="pill">💯 Century <span class="pill-pts">+25</span></div>
-        <div class="pill">🎳 3-Wkt Haul <span class="pill-pts">+8</span></div>
-        <div class="pill">🎳 4-Wkt Haul <span class="pill-pts">+12</span></div>
-        <div class="pill">🎳 5-Wkt Haul <span class="pill-pts">+25</span></div>
-        <div class="pill">⭐ Captain <span class="pill-pts">2×</span></div>
-        <div class="pill">🔰 Vice-Capt <span class="pill-pts">1.5×</span></div>
+      <div class="scoring-strip-title">Scoring Rules</div>
+      <div class="scoring-live-badge" id="scoring-badge">● Live</div>
+      <div class="pills" id="pills-container">
+        <div class="pills-loading">Loading live scoring rules…</div>
       </div>
     </div>
   </div>
@@ -255,69 +251,178 @@ body.loaded #bg-img{transform:scale(1);}
 </div>
 
 <script>
-const URL="https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
+const BASE_URL = "https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
 
-window.addEventListener('load',()=>document.body.classList.add('loaded'));
+// IPL 2026 start date — update this to the real date once announced
+const IPL_START = new Date("2026-03-22T19:30:00+05:30");
 
-const th=localStorage.getItem("theme")||"dark";
-document.documentElement.setAttribute("data-theme",th);
-document.getElementById("ti").textContent=th==="dark"?"☀️":"🌙";
-function toggleTheme(){
-  const n=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
-  document.documentElement.setAttribute("data-theme",n);
-  localStorage.setItem("theme",n);
-  document.getElementById("ti").textContent=n==="dark"?"☀️":"🌙";
+// BG zoom
+window.addEventListener('load', () => document.body.classList.add('loaded'));
+
+// Theme
+const th = localStorage.getItem("theme") || "dark";
+document.documentElement.setAttribute("data-theme", th);
+document.getElementById("ti").textContent = th === "dark" ? "☀️" : "🌙";
+function toggleTheme() {
+  const n = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", n);
+  localStorage.setItem("theme", n);
+  document.getElementById("ti").textContent = n === "dark" ? "☀️" : "🌙";
 }
-function showTab(t){
-  document.getElementById("login-form").style.display=t==="login"?"block":"none";
-  document.getElementById("signup-form").style.display=t==="signup"?"block":"none";
-  document.getElementById("tab-login").classList.toggle("active",t==="login");
-  document.getElementById("tab-signup").classList.toggle("active",t==="signup");
+
+// Tabs
+function showTab(t) {
+  document.getElementById("login-form").style.display = t === "login" ? "block" : "none";
+  document.getElementById("signup-form").style.display = t === "signup" ? "block" : "none";
+  document.getElementById("tab-login").classList.toggle("active", t === "login");
+  document.getElementById("tab-signup").classList.toggle("active", t === "signup");
   hideMsg();
 }
-function showMsg(txt,type){const m=document.getElementById("msg");m.textContent=txt;m.className="msg "+type;m.style.display="block";}
-function hideMsg(){document.getElementById("msg").style.display="none";}
-async function api(body){try{const r=await fetch(URL,{method:"POST",body:JSON.stringify(body)});return r.json();}catch{return null;}}
-async function doLogin(){
-  const name=document.getElementById("l-name").value.trim();
-  const pin=document.getElementById("l-pin").value.trim();
-  if(!name||!pin){showMsg("Please fill in all fields.","err");return;}
-  const btn=document.getElementById("login-btn");
-  btn.textContent="Logging in…";btn.disabled=true;
-  const r=await api({action:"login",name,pin});
-  btn.textContent="Login →";btn.disabled=false;
-  if(!r){showMsg("Connection failed. Try again.","err");return;}
-  if(r.status==="success"){
-    localStorage.setItem("teamName",r.teamName);
-    localStorage.setItem("userName",r.userName||name);
-    showMsg("Welcome back! Redirecting…","ok");
-    setTimeout(()=>window.location.href="dashboard.html",700);
+function showMsg(txt, type) { const m = document.getElementById("msg"); m.textContent = txt; m.className = "msg " + type; m.style.display = "block"; }
+function hideMsg() { document.getElementById("msg").style.display = "none"; }
+
+// API
+async function api(body) {
+  try { const r = await fetch(BASE_URL, { method: "POST", body: JSON.stringify(body) }); return r.json(); }
+  catch { return null; }
+}
+
+// ── COUNTDOWN ────────────────────────────────────────────
+function updateCountdown() {
+  const now = new Date();
+  const diff = IPL_START - now;
+  const wrap = document.getElementById("countdown-wrap");
+
+  if (diff <= 0) {
+    // IPL is live / started
+    wrap.innerHTML = '<span class="cd-live">🔴 IPL 2026 is LIVE!</span>';
+    return;
+  }
+
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+
+  document.getElementById("cd-d").textContent = String(d).padStart(2, "0");
+  document.getElementById("cd-h").textContent = String(h).padStart(2, "0");
+  document.getElementById("cd-m").textContent = String(m).padStart(2, "0");
+  document.getElementById("cd-s").textContent = String(s).padStart(2, "0");
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// ── MANAGER COUNT ─────────────────────────────────────────
+async function loadManagerCount() {
+  const el = document.getElementById("mgr-count");
+  const r = await api({ action: "getUsers" });
+  if (r && r.status === "success") {
+    const count = r.users.length;
+    el.innerHTML = `<strong>${count}</strong>`;
   } else {
-    showMsg(r.message||"Login failed.","err");
-    document.getElementById("login-form").classList.add("shake");
-    setTimeout(()=>document.getElementById("login-form").classList.remove("shake"),400);
+    el.textContent = "Several";
   }
 }
-async function doSignup(){
-  const name=document.getElementById("s-name").value.trim();
-  const team=document.getElementById("s-team").value.trim();
-  const pin=document.getElementById("s-pin").value.trim();
-  if(!name||!team||!pin){showMsg("Please fill in all fields.","err");return;}
-  if(!/^\d{4}$/.test(pin)){showMsg("PIN must be exactly 4 digits.","err");return;}
-  const btn=document.getElementById("signup-btn");
-  btn.textContent="Creating…";btn.disabled=true;
-  const r=await api({action:"signup",name,teamName:team,pin});
-  btn.textContent="Create Account →";btn.disabled=false;
-  if(!r){showMsg("Connection failed. Try again.","err");return;}
-  if(r.status==="success"){showMsg("Account created! Please login.","ok");setTimeout(()=>showTab("login"),1200);}
-  else showMsg(r.message||"Signup failed.","err");
+loadManagerCount();
+
+// ── LIVE SCORING PILLS ────────────────────────────────────
+const EMOJI_MAP = {
+  runs: "🏃", fours: "4️⃣", sixes: "6️⃣", wickets: "🎯",
+  catches: "🧤", runouts: "🏃", stumpings: "🧤", maidens: "🔵",
+  dots: "⚫", fifties: "🏅", hundreds: "💯",
+  threeW: "🎳", fourv: "🎳", fiveW: "🎳",
+};
+const MULTIPLIER_KEYS = new Set();
+
+async function loadScoringPills() {
+  const container = document.getElementById("pills-container");
+  const badge = document.getElementById("scoring-badge");
+  const r = await api({ action: "getPointsConfig" });
+
+  if (!r || r.status !== "success" || !r.config || r.config.length === 0) {
+    container.innerHTML = '<div class="pills-loading">Could not load scoring rules. Check connection.</div>';
+    badge.textContent = "● Offline";
+    badge.style.color = "#e74c3c";
+    badge.style.background = "rgba(231,76,60,.1)";
+    badge.style.borderColor = "rgba(231,76,60,.2)";
+    return;
+  }
+
+  container.innerHTML = "";
+
+  // Captain / VC multipliers (always shown at end)
+  const extras = [
+    { label: "Captain", pts: "2×", emoji: "⭐" },
+    { label: "Vice-Capt", pts: "1.5×", emoji: "🔰" },
+  ];
+
+  r.config.forEach((item, i) => {
+    if (!item.key || item.points === undefined) return;
+    const emoji = EMOJI_MAP[item.key] || "📌";
+    const pill = document.createElement("div");
+    pill.className = "pill";
+    pill.style.animationDelay = (i * 30) + "ms";
+    pill.innerHTML = `${emoji} ${item.label} <span class="pill-pts">+${item.points}</span>`;
+    container.appendChild(pill);
+  });
+
+  extras.forEach((e, i) => {
+    const pill = document.createElement("div");
+    pill.className = "pill";
+    pill.style.animationDelay = ((r.config.length + i) * 30) + "ms";
+    pill.innerHTML = `${e.emoji} ${e.label} <span class="pill-pts">${e.pts}</span>`;
+    container.appendChild(pill);
+  });
+
+  badge.textContent = "● Live";
 }
-document.addEventListener("keydown",e=>{
-  if(e.key!=="Enter") return;
-  if(document.getElementById("login-form").style.display!=="none") doLogin();
+loadScoringPills();
+
+// ── AUTH ──────────────────────────────────────────────────
+async function doLogin() {
+  const name = document.getElementById("l-name").value.trim();
+  const pin  = document.getElementById("l-pin").value.trim();
+  if (!name || !pin) { showMsg("Please fill in all fields.", "err"); return; }
+  const btn = document.getElementById("login-btn");
+  btn.textContent = "Logging in…"; btn.disabled = true;
+  const r = await api({ action: "login", name, pin });
+  btn.textContent = "Login →"; btn.disabled = false;
+  if (!r) { showMsg("Connection failed. Try again.", "err"); return; }
+  if (r.status === "success") {
+    localStorage.setItem("teamName", r.teamName);
+    localStorage.setItem("userName", r.userName || name);
+    showMsg("Welcome back! Redirecting…", "ok");
+    setTimeout(() => window.location.href = "dashboard.html", 700);
+  } else {
+    showMsg(r.message || "Login failed.", "err");
+    document.getElementById("login-form").classList.add("shake");
+    setTimeout(() => document.getElementById("login-form").classList.remove("shake"), 400);
+  }
+}
+
+async function doSignup() {
+  const name = document.getElementById("s-name").value.trim();
+  const team = document.getElementById("s-team").value.trim();
+  const pin  = document.getElementById("s-pin").value.trim();
+  if (!name || !team || !pin) { showMsg("Please fill in all fields.", "err"); return; }
+  if (!/^\d{4}$/.test(pin)) { showMsg("PIN must be exactly 4 digits.", "err"); return; }
+  const btn = document.getElementById("signup-btn");
+  btn.textContent = "Creating…"; btn.disabled = true;
+  const r = await api({ action: "signup", name, teamName: team, pin });
+  btn.textContent = "Create Account →"; btn.disabled = false;
+  if (!r) { showMsg("Connection failed. Try again.", "err"); return; }
+  if (r.status === "success") {
+    showMsg("Account created! Please login.", "ok");
+    loadManagerCount(); // refresh count
+    setTimeout(() => showTab("login"), 1200);
+  } else showMsg(r.message || "Signup failed.", "err");
+}
+
+document.addEventListener("keydown", e => {
+  if (e.key !== "Enter") return;
+  if (document.getElementById("login-form").style.display !== "none") doLogin();
   else doSignup();
 });
 </script>
 </body>
 </html>
-
