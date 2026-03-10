@@ -1,651 +1,559 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Settings | IPL Fantasy</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        :root{--accent:#FF6B35;--accent-soft:rgba(255,107,53,0.15);--radius-card:22px;--font-main:'Outfit',sans-serif;--font-mono:'DM Mono',monospace;--font-display:'Bebas Neue',cursive;--transition:0.25s cubic-bezier(0.4,0,0.2,1);--nav-h:74px;}
-        [data-theme="dark"]{--bg:#07101f;--bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(30,60,100,.45) 0%,transparent 55%),#080d14;--glass-bg:rgba(255,255,255,.04);--glass-border:rgba(255,255,255,.08);--glass-shadow:0 8px 40px rgba(0,0,0,.45);--nav-bg:rgba(8,13,20,.88);--text-primary:#f0f2f5;--text-secondary:rgba(240,242,245,.5);--text-muted:rgba(240,242,245,.28);--divider:rgba(255,255,255,.06);--row-hover:rgba(255,255,255,.04);--input-bg:rgba(0,0,0,.3);--input-border:rgba(255,255,255,.1);--overlay:rgba(0,0,0,.7);--toggle-bg:rgba(255,255,255,.06);--danger:#e74c3c;--danger-bg:rgba(231,76,60,.12);--success:#22c55e;--success-bg:rgba(34,197,94,.12);}
-        [data-theme="light"]{--bg:#f0ece6;--bg-mesh:radial-gradient(ellipse at 20% 10%,rgba(255,200,150,.2) 0%,transparent 55%),#f0ece6;--glass-bg:rgba(255,255,255,.55);--glass-border:rgba(255,255,255,.85);--glass-shadow:0 8px 40px rgba(0,0,0,.09);--nav-bg:rgba(240,236,230,.9);--text-primary:#1a1a2e;--text-secondary:rgba(26,26,46,.55);--text-muted:rgba(26,26,46,.32);--divider:rgba(0,0,0,.07);--row-hover:rgba(0,0,0,.03);--input-bg:rgba(0,0,0,.05);--input-border:rgba(0,0,0,.1);--overlay:rgba(0,0,0,.5);--toggle-bg:rgba(0,0,0,.06);--danger:#c0392b;--danger-bg:rgba(192,57,43,.1);--success:#16a34a;--success-bg:rgba(22,163,74,.1);}
-        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-        body{font-family:var(--font-main);background:var(--bg-mesh);background-color:var(--bg);min-height:100vh;color:var(--text-primary);padding-bottom:calc(68px + 14px + 28px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px);transition:background-color var(--transition),color var(--transition);overflow-x:hidden;}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>Settings | IPL Fantasy 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#FF6B35;--accent-soft:rgba(255,107,53,.14);--accent-glow:rgba(255,107,53,.28);
+  --blue:#4facfe;--blue-soft:rgba(79,172,254,.12);--red:#e74c3c;--green:#22c55e;
+  --gold:#FFD700;--silver:#b8c8d8;--bronze:#cd8050;
+  --font-main:'Outfit',sans-serif;--font-display:'Bebas Neue',cursive;--font-mono:'DM Mono',monospace;
+  --ease:cubic-bezier(.4,0,.2,1);--t:.24s;--r:18px;}
+[data-theme="dark"]{--bg:#07101f;
+  --mesh:radial-gradient(ellipse at 15% 5%,rgba(79,172,254,.1) 0%,transparent 50%),
+        radial-gradient(ellipse at 85% 85%,rgba(255,107,53,.08) 0%,transparent 50%),#07101f;
+  --surf:rgba(255,255,255,.04);--surf2:rgba(15,28,60,.85);--brd:rgba(79,172,254,.1);--brd2:rgba(79,172,254,.2);
+  --nav-bg:rgba(7,16,31,.95);--text-1:#eef2ff;--text-2:rgba(238,242,255,.5);--text-3:rgba(238,242,255,.26);
+  --div:rgba(255,255,255,.055);--tog:rgba(255,255,255,.06);--inp:rgba(0,0,0,.3);--ibrd:rgba(79,172,254,.15);
+  --ov:rgba(0,0,0,.78);--sheet:#0a1628;}
+[data-theme="light"]{--bg:#f0ece6;
+  --mesh:radial-gradient(ellipse at 20% 10%,rgba(79,172,254,.07) 0%,transparent 55%),
+        radial-gradient(ellipse at 80% 80%,rgba(255,107,53,.05) 0%,transparent 50%),#f0ece6;
+  --surf:rgba(255,255,255,.65);--surf2:rgba(255,255,255,.9);--brd:rgba(0,0,0,.08);--brd2:rgba(0,0,0,.14);
+  --nav-bg:rgba(240,236,230,.95);--text-1:#17202e;--text-2:rgba(23,32,46,.56);--text-3:rgba(23,32,46,.34);
+  --div:rgba(0,0,0,.065);--tog:rgba(0,0,0,.06);--inp:rgba(0,0,0,.04);--ibrd:rgba(0,0,0,.12);
+  --ov:rgba(0,0,0,.5);--sheet:#f5f1ec;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-main);background:var(--mesh);background-color:var(--bg);min-height:100vh;
+  color:var(--text-1);padding-bottom:calc(68px + 14px + 28px);
+  padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px);
+  transition:background var(--t),color var(--t);overflow-x:hidden;}
 
-        .topbar{display:flex;justify-content:space-between;align-items:flex-start;padding:28px 20px 16px;}
-        .topbar-left .greeting{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
-        .topbar-left h1{font-family:var(--font-display);font-size:38px;letter-spacing:.04em;line-height:1;}
-        .theme-btn{width:38px;height:38px;border-radius:50%;background:var(--toggle-bg);border:1px solid var(--glass-border);color:var(--text-primary);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);transition:all var(--transition);}
-        .theme-btn:active{transform:scale(.9);}
+/* TOPBAR */
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:22px 20px 0;}
+.topbar-left .greeting{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:4px;}
+.topbar-left h1{font-family:var(--font-display);font-size:34px;letter-spacing:.04em;line-height:1;}
+.theme-btn{width:38px;height:38px;border-radius:12px;background:var(--tog);border:1px solid var(--brd2);
+  color:var(--text-1);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 
-        .section-label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);padding:0 20px;margin-bottom:10px;}
-        .card{background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);box-shadow:var(--glass-shadow);border-radius:var(--radius-card);margin:0 16px 20px;overflow:hidden;}
+/* PROFILE CARD */
+.profile-card{margin:16px 16px 0;border-radius:var(--r);border:1px solid var(--brd2);
+  background:linear-gradient(135deg,rgba(79,172,254,.08),rgba(255,107,53,.05)),var(--surf2);
+  backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
+  padding:18px 20px;display:flex;align-items:center;gap:14px;animation:fUp .3s .05s both;}
+.avatar{width:54px;height:54px;border-radius:16px;
+  background:linear-gradient(135deg,var(--blue-soft),var(--accent-soft));
+  border:1.5px solid var(--brd2);display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:24px;color:var(--blue);flex-shrink:0;}
+.profile-info{flex:1;min-width:0;}
+.profile-name{font-size:18px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.profile-sub{font-size:12px;color:var(--text-2);margin-top:3px;}
+.profile-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:8px;
+  font-size:10px;font-weight:700;letter-spacing:.06em;margin-top:6px;}
+.profile-badge.admin{background:rgba(231,76,60,.15);color:#e74c3c;border:1px solid rgba(231,76,60,.3);}
+.profile-badge.user{background:var(--blue-soft);color:var(--blue);border:1px solid var(--brd2);}
+.edit-btn{background:var(--tog);border:1px solid var(--brd2);color:var(--text-2);padding:8px 14px;
+  border-radius:12px;font-family:var(--font-main);font-size:12px;font-weight:600;cursor:pointer;
+  white-space:nowrap;transition:all var(--t);flex-shrink:0;}
+.edit-btn:active{transform:scale(.94);}
 
-        /* ─── PROFILE BLOCK ─────────────────────────── */
-        .profile-block{padding:20px 20px 0;}
-        .profile-row{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
-        .profile-avatar{width:52px;height:52px;border-radius:16px;background:var(--accent-soft,rgba(255,107,53,.15));display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
-        .profile-name{font-size:18px;font-weight:700;margin-bottom:2px;}
-        .profile-team{font-size:13px;color:var(--text-secondary);}
+/* SECTIONS */
+.sec-label{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--text-3);padding:0 20px;margin:20px 0 10px;}
+.card{background:var(--surf);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid var(--brd);border-radius:var(--r);margin:0 16px;overflow:hidden;animation:fUp .4s var(--ease) both;}
+.row{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;
+  border-bottom:1px solid var(--div);}
+.row:last-child{border-bottom:none;}
+.row-left{display:flex;flex-direction:column;gap:2px;}
+.row-label{font-size:14px;font-weight:600;}
+.row-sub{font-size:11px;color:var(--text-3);}
+.row-right{display:flex;align-items:center;gap:8px;}
 
-        /* ─── ROW ITEMS ─────────────────────────────── */
-        .row-item{display:flex;align-items:center;justify-content:space-between;padding:15px 20px;border-top:1px solid var(--divider);cursor:pointer;transition:background var(--transition);}
-        .row-item:active{background:var(--row-hover);}
-        .row-left{display:flex;align-items:center;gap:12px;}
-        .row-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;}
-        .row-icon.blue{background:rgba(79,172,254,.15);}
-        .row-icon.orange{background:rgba(255,107,53,.15);}
-        .row-icon.red{background:var(--danger-bg);}
-        .row-icon.green{background:var(--success-bg);}
-        .row-icon.yellow{background:rgba(241,196,15,.15);}
-        .row-text{font-size:15px;font-weight:500;}
-        .row-text.danger{color:var(--danger);}
-        .row-sub{font-size:12px;color:var(--text-muted);}
-        .row-chevron{font-size:12px;color:var(--text-muted);}
+/* TOGGLE SWITCH */
+.toggle-wrap{position:relative;width:44px;height:26px;}
+.toggle-wrap input{opacity:0;width:0;height:0;position:absolute;}
+.toggle-slider{position:absolute;inset:0;background:var(--div);border-radius:13px;cursor:pointer;
+  transition:background var(--t);}
+.toggle-slider::before{content:'';position:absolute;height:20px;width:20px;left:3px;bottom:3px;
+  background:var(--text-3);border-radius:50%;transition:transform var(--t),background var(--t);}
+.toggle-wrap input:checked + .toggle-slider{background:var(--accent);}
+.toggle-wrap input:checked + .toggle-slider::before{transform:translateX(18px);background:#fff;}
 
-        /* ─── TOGGLE SWITCH ─────────────────────────── */
-        .toggle-switch{position:relative;width:44px;height:24px;}
-        .toggle-switch input{opacity:0;width:0;height:0;}
-        .toggle-track{position:absolute;inset:0;border-radius:24px;background:var(--input-border);transition:background var(--transition);cursor:pointer;}
-        .toggle-track::before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;border-radius:50%;background:#fff;transition:transform var(--transition);}
-        input:checked + .toggle-track{background:var(--accent);}
-        input:checked + .toggle-track::before{transform:translateX(20px);}
+/* POINTS TABLE */
+.pts-category{border-bottom:1px solid var(--div);}
+.pts-category:last-child{border-bottom:none;}
+.pts-cat-hdr{display:flex;align-items:center;justify-content:space-between;padding:11px 18px;cursor:pointer;}
+.pts-cat-name{font-size:13px;font-weight:700;letter-spacing:.04em;}
+.pts-cat-name.bat{color:var(--blue);}
+.pts-cat-name.bowl{color:#e74c3c;}
+.pts-cat-name.field{color:#52c8ff;}
+.pts-cat-name.milestone{color:var(--gold);}
+.pts-cat-name.custom{color:#a29bfe;}
+.pts-chevron{font-size:11px;color:var(--text-3);transition:transform var(--t);}
+.pts-category.open .pts-chevron{transform:rotate(90deg);}
+.pts-rows{display:none;}
+.pts-category.open .pts-rows{display:block;}
+.pts-row{display:flex;align-items:center;padding:9px 18px 9px 28px;border-top:1px solid var(--div);}
+.pts-row-label{flex:1;font-size:13px;color:var(--text-2);}
+.pts-row-val{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--accent);
+  background:var(--accent-soft);padding:3px 10px;border-radius:8px;min-width:50px;text-align:center;}
 
-        /* ─── MODAL / BOTTOM SHEET ──────────────────── */
-        .modal{display:none;position:fixed;inset:0;background:var(--overlay);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:100;align-items:flex-end;justify-content:center;}
-        .modal.open{display:flex;}
-        .modal-sheet{background:var(--glass-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--glass-border);border-radius:24px 24px 0 0;width:100%;max-height:85vh;overflow-y:auto;padding:20px 0 40px;animation:sheetUp .3s cubic-bezier(0.4,0,0.2,1);box-shadow:0 -16px 60px rgba(0,0,0,.5);}
-        @keyframes sheetUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
-        .sheet-handle{width:36px;height:4px;border-radius:2px;background:var(--text-muted);margin:0 auto 18px;}
-        .sheet-header{display:flex;justify-content:space-between;align-items:center;padding:0 20px 14px;border-bottom:1px solid var(--divider);margin-bottom:4px;}
-        .sheet-header h3{font-size:17px;font-weight:600;}
-        .close-btn{width:30px;height:30px;border-radius:50%;background:var(--input-bg);border:1px solid var(--input-border);color:var(--text-secondary);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+/* ADMIN SECTION */
+.admin-hdr{padding:14px 18px 12px;border-bottom:1px solid var(--div);display:flex;align-items:center;justify-content:space-between;}
+.admin-hdr h3{font-size:14px;font-weight:700;}
+.admin-badge{font-size:9px;font-weight:800;letter-spacing:.1em;padding:3px 8px;border-radius:6px;
+  background:rgba(231,76,60,.15);color:#e74c3c;border:1px solid rgba(231,76,60,.25);}
+.admin-sub{font-size:11px;color:var(--text-3);padding:8px 18px 14px;}
 
-        /* ─── FORM FIELDS ───────────────────────────── */
-        .form-body{padding:16px 20px 0;}
-        .field{margin-bottom:14px;}
-        .field label{display:block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:6px;}
-        .field input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-family:var(--font-main);font-size:15px;outline:none;-webkit-appearance:none;transition:border-color var(--transition);}
-        .field input:focus{border-color:var(--accent);}
-        .field input::placeholder{color:var(--text-muted);}
-        .save-btn{width:100%;padding:13px;margin-top:6px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:var(--font-main);font-size:15px;font-weight:600;cursor:pointer;transition:all var(--transition);}
-        .save-btn:active{transform:scale(.97);}
-        .save-btn:disabled{opacity:.5;cursor:not-allowed;}
+/* Scoring editor */
+.scoring-editor{padding:0 18px 14px;}
+.scoring-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.scoring-row label{flex:1;font-size:12px;color:var(--text-2);}
+.scoring-input{width:64px;padding:7px 8px;border-radius:8px;border:1px solid var(--ibrd);
+  background:var(--inp);color:var(--text-1);font-family:var(--font-mono);font-size:13px;
+  text-align:center;outline:none;-webkit-appearance:none;}
+.scoring-input:focus{border-color:var(--accent);}
+.del-btn{width:28px;height:28px;border-radius:8px;border:1px solid rgba(231,76,60,.3);
+  background:rgba(231,76,60,.1);color:#e74c3c;font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all var(--t);}
+.del-btn:active{transform:scale(.88);}
+.add-attr-row{display:flex;gap:8px;margin-top:4px;}
+.add-attr-inp{flex:1;padding:9px 12px;border-radius:10px;border:1px solid var(--ibrd);
+  background:var(--inp);color:var(--text-1);font-family:var(--font-main);font-size:13px;outline:none;}
+.add-attr-inp:focus{border-color:var(--accent);}
+.add-attr-btn{background:var(--accent);color:#fff;border:none;padding:9px 14px;border-radius:10px;
+  font-family:var(--font-main);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;}
 
-        /* ─── ADMIN SECTION ─────────────────────────── */
-        .admin-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#f1c40f;padding:0 20px;margin-bottom:10px;}
+/* Action buttons */
+.action-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;
+  padding:13px;border-radius:12px;font-family:var(--font-main);font-size:14px;font-weight:700;
+  cursor:pointer;border:none;transition:all var(--t);margin-top:10px;}
+.action-btn:active{transform:scale(.97);}
+.action-btn.primary{background:linear-gradient(90deg,var(--accent),#e8531a);color:#fff;
+  box-shadow:0 4px 18px rgba(255,107,53,.3);}
+.action-btn.danger{background:rgba(231,76,60,.12);color:#e74c3c;border:1px solid rgba(231,76,60,.25);}
+.action-btn.safe{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.25);}
+.action-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 
-        /* User rows */
-        .user-row{display:flex;align-items:center;padding:13px 20px;border-bottom:1px solid var(--divider);gap:12px;}
-        .user-row:last-child{border-bottom:none;}
-        .user-avatar{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-        .user-info{flex:1;min-width:0;}
-        .user-name{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-        .user-meta{font-size:11px;color:var(--text-muted);margin-top:1px;}
-        .user-pin{font-family:var(--font-mono);color:var(--text-secondary);}
-        .kick-btn{background:var(--danger-bg);color:var(--danger);border:none;padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;transition:all var(--transition);font-family:var(--font-main);}
-        .kick-btn:active{transform:scale(.92);}
+/* USERS LIST */
+.user-row{display:flex;align-items:center;padding:11px 18px;border-bottom:1px solid var(--div);gap:12px;}
+.user-row:last-child{border-bottom:none;}
+.user-avatar{width:32px;height:32px;border-radius:10px;background:var(--blue-soft);
+  display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.user-info{flex:1;min-width:0;}
+.user-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.user-sub{font-size:10px;color:var(--text-3);margin-top:1px;}
+.user-pts{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:500;}
 
-        /* Points config rows */
-        .config-row{display:flex;align-items:center;padding:11px 20px;border-bottom:1px solid var(--divider);gap:10px;}
-        .config-row:last-child{border-bottom:none;}
-        .config-cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-        .config-cat-dot.batting{background:#4facfe;}.config-cat-dot.bowling{background:#e74c3c;}
-        .config-cat-dot.fielding{background:#22c55e;}.config-cat-dot.milestone{background:#f1c40f;}.config-cat-dot.custom{background:#a855f7;}
-        .config-label-wrap{flex:1;min-width:0;}
-        .config-label{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-        .config-key{font-size:10px;color:var(--text-muted);font-family:var(--font-mono);}
-        .points-input{width:52px;padding:7px 6px;border-radius:8px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-family:var(--font-mono);font-size:14px;text-align:center;outline:none;-webkit-appearance:none;transition:border-color var(--transition);}
-        .points-input:focus{border-color:var(--accent);}
-        .pts-label{font-size:11px;color:var(--text-muted);margin-left:2px;flex-shrink:0;}
-        .del-attr-btn{width:28px;height:28px;border-radius:7px;background:var(--danger-bg);border:none;color:var(--danger);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-        .save-config-btn{margin:14px 20px 0;padding:12px;background:var(--success-bg);color:var(--success);border:1px solid rgba(34,197,94,.25);border-radius:12px;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;width:calc(100% - 40px);transition:all var(--transition);}
-        .save-config-btn:active{transform:scale(.97);}
+/* SIGN OUT */
+.signout-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:calc(100% - 32px);
+  margin:16px;padding:14px;border-radius:14px;border:1px solid rgba(231,76,60,.25);
+  background:rgba(231,76,60,.08);color:#e74c3c;font-family:var(--font-main);font-size:14px;
+  font-weight:700;cursor:pointer;transition:all var(--t);}
+.signout-btn:active{transform:scale(.97);}
 
-        /* Add attribute form */
-        .add-attr-section{padding:14px 20px 0;border-top:1px solid var(--divider);margin-top:4px;}
-        .add-attr-title{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;}
-        .attr-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
-        .mini-field label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary);display:block;margin-bottom:4px;}
-        .mini-field input,.mini-field select{width:100%;padding:9px 10px;border-radius:10px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-family:var(--font-main);font-size:13px;outline:none;-webkit-appearance:none;}
-        .mini-field select option{background:var(--bg);}
-        .add-btn-full{width:100%;padding:11px;background:rgba(255,107,53,.15);color:var(--accent);border:1px solid rgba(255,107,53,.3);border-radius:10px;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;transition:all var(--transition);margin-top:2px;}
-        .add-btn-full:active{transform:scale(.97);}
+/* MODAL */
+.modal{display:none;position:fixed;inset:0;background:var(--ov);backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);z-index:200;align-items:flex-end;justify-content:center;}
+.modal.open{display:flex;}
+.modal-sheet{background:var(--sheet);border:1px solid var(--brd);border-radius:24px 24px 0 0;
+  width:100%;max-height:80vh;overflow-y:auto;padding:20px 0 40px;
+  animation:sheetUp .28s var(--ease);box-shadow:0 -16px 60px rgba(0,0,0,.5);}
+@keyframes sheetUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.sheet-handle{width:36px;height:4px;border-radius:2px;background:var(--text-3);margin:0 auto 16px;opacity:.4;}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;padding:0 20px 16px;
+  border-bottom:1px solid var(--div);margin-bottom:4px;}
+.sheet-head h3{font-size:17px;font-weight:700;}
+.close-x{width:30px;height:30px;border-radius:50%;background:var(--inp);border:1px solid var(--ibrd);
+  color:var(--text-2);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.form-group{padding:14px 20px 0;}
+.form-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text-3);margin-bottom:7px;display:block;}
+.form-input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--ibrd);
+  background:var(--inp);color:var(--text-1);font-family:var(--font-main);font-size:15px;
+  outline:none;-webkit-appearance:none;}
+.form-input:focus{border-color:var(--accent);}
+.form-note{font-size:11px;color:var(--text-3);margin-top:6px;line-height:1.5;}
+.form-footer{padding:16px 20px 0;}
 
-
-        /* ─── POINTS TABLE (all users) ──────────────── */
-        .pts-table-wrap{overflow:hidden;}
-        .pts-category-block{border-bottom:1px solid var(--divider);}
-        .pts-category-block:last-child{border-bottom:none;}
-        .pts-cat-header{
-            display:flex;align-items:center;gap:10px;
-            padding:12px 20px;cursor:pointer;
-            transition:background var(--transition);
-        }
-        .pts-cat-header:active{background:var(--row-hover);}
-        .pts-cat-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
-        .pts-cat-dot.batting  {background:#4facfe;}
-        .pts-cat-dot.bowling  {background:#e74c3c;}
-        .pts-cat-dot.fielding {background:#22c55e;}
-        .pts-cat-dot.milestone{background:#f1c40f;}
-        .pts-cat-dot.custom   {background:#a855f7;}
-        .pts-cat-name{font-size:13px;font-weight:700;flex:1;text-transform:capitalize;}
-        .pts-cat-count{font-size:11px;color:var(--text-muted);font-family:var(--font-mono);}
-        .pts-cat-chevron{font-size:11px;color:var(--text-muted);transition:transform var(--transition);}
-        .pts-category-block.open .pts-cat-chevron{transform:rotate(90deg);}
-        .pts-cat-rows{display:none;background:rgba(0,0,0,.06);}
-        [data-theme="light"] .pts-cat-rows{background:rgba(0,0,0,.02);}
-        .pts-category-block.open .pts-cat-rows{display:block;}
-        .pts-stat-row{
-            display:flex;align-items:center;
-            padding:10px 20px 10px 38px;
-            border-top:1px solid var(--divider);
-            gap:10px;
-        }
-        .pts-stat-name{flex:1;font-size:14px;color:var(--text-primary);}
-        .pts-stat-key{font-size:10px;font-family:var(--font-mono);color:var(--text-muted);margin-top:1px;}
-        .pts-stat-pill{
-            background:var(--accent-soft);border:1px solid rgba(255,107,53,.2);
-            border-radius:8px;padding:4px 10px;
-            font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--accent);
-            white-space:nowrap;flex-shrink:0;
-        }
-        .pts-stat-pill.zero{background:rgba(255,255,255,.04);border-color:var(--glass-border);color:var(--text-muted);}
-
-        /* ─── HOW TO PLAY ────────────────────────────── */
-        .htp-block{padding:16px 20px;border-bottom:1px solid var(--divider);}
-        .htp-block:last-child{border-bottom:none;}
-        .htp-step{display:flex;gap:12px;align-items:flex-start;}
-        .htp-num{
-            width:28px;height:28px;border-radius:9px;
-            background:var(--accent-soft);color:var(--accent);
-            font-size:13px;font-weight:700;
-            display:flex;align-items:center;justify-content:center;
-            flex-shrink:0;margin-top:1px;
-        }
-        .htp-text{flex:1;}
-        .htp-title{font-size:14px;font-weight:600;margin-bottom:3px;}
-        .htp-desc{font-size:13px;color:var(--text-secondary);line-height:1.5;}
-        .htp-tip{
-            margin-top:12px;padding:10px 14px;
-            background:rgba(241,196,15,.08);border:1px solid rgba(241,196,15,.2);
-            border-radius:10px;font-size:12px;color:var(--text-secondary);line-height:1.5;
-        }
-        .htp-tip strong{color:#f1c40f;}
-        .empty-state{padding:24px 20px;text-align:center;color:var(--text-muted);font-size:14px;}
-        .section-note{font-size:12px;color:var(--text-muted);padding:10px 20px 14px;border-bottom:1px solid var(--divider);}
-
-                .bottom-nav {
-            position: fixed;
-            bottom: 14px;
-            left: 50%; transform: translateX(-50%);
-            width: calc(100% - 28px); max-width: 480px;
-            height: 68px;
-            background: var(--nav-bg);
-            backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
-            border: 1px solid var(--border2, var(--glass-border));
-            border-radius: 28px;
-            display: flex; justify-content: space-around; align-items: center;
-            padding: 6px 2px;
-            box-shadow: 0 8px 40px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.04);
-            z-index: 100;
-        }
-        .nav-item {
-            text-align: center; color: var(--text-muted, var(--text-3)); text-decoration: none;
-            font-size: 8px; font-weight: 600; letter-spacing: .04em;
-            flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
-            transition: color 0.24s cubic-bezier(0.4,0,0.2,1);
-        }
-        .nav-item.active { color: var(--accent); }
-        .nav-icon-wrap {
-            width: 36px; height: 28px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            transition: background 0.24s cubic-bezier(0.4,0,0.2,1);
-        }
-        .nav-item.active .nav-icon-wrap { background: var(--accent-soft); }
-        .nav-icon { font-size: 16px; line-height: 1; }
-    </style>
+/* NAV */
+.bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+  width:calc(100% - 28px);max-width:480px;height:68px;
+  background:var(--nav-bg);backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);
+  border:1px solid var(--brd2);border-radius:28px;
+  display:flex;justify-content:space-around;align-items:center;padding:6px 2px;
+  box-shadow:0 8px 40px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04);z-index:100;}
+.nav-item{text-align:center;color:var(--text-3);text-decoration:none;font-size:8px;font-weight:600;
+  letter-spacing:.04em;flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;transition:color var(--t);}
+.nav-item.active{color:var(--accent);}
+.nav-icon-wrap{width:36px;height:28px;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:background var(--t);}
+.nav-item.active .nav-icon-wrap{background:var(--accent-soft);}
+.nav-icon{font-size:16px;line-height:1;}
+.loading-row{padding:20px;text-align:center;color:var(--text-3);font-size:13px;}
+@keyframes fUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+</style>
 </head>
 <body>
 
-    <div class="topbar">
-        <div class="topbar-left"><p class="greeting">Account</p><h1>Settings</h1></div>
-        <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
+<div class="topbar">
+  <div class="topbar-left">
+    <p class="greeting">IPL Fantasy 2026</p>
+    <h1>Settings</h1>
+  </div>
+  <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
+</div>
+
+<!-- PROFILE CARD -->
+<div class="profile-card" id="profile-card">
+  <div class="avatar" id="profile-initial">?</div>
+  <div class="profile-info">
+    <div class="profile-name" id="profile-name">Loading…</div>
+    <div class="profile-sub" id="profile-team">—</div>
+    <span class="profile-badge user" id="profile-badge">User</span>
+  </div>
+  <button class="edit-btn" onclick="openEditModal()">✏️ Edit</button>
+</div>
+
+<!-- APPEARANCE -->
+<p class="sec-label" style="animation-delay:.08s">Appearance</p>
+<div class="card" style="animation-delay:.1s">
+  <div class="row">
+    <div class="row-left">
+      <span class="row-label">Dark Mode</span>
+      <span class="row-sub">Toggle between light and dark theme</span>
     </div>
+    <label class="toggle-wrap">
+      <input type="checkbox" id="dark-toggle" onchange="onToggleTheme(this)">
+      <span class="toggle-slider"></span>
+    </label>
+  </div>
+</div>
 
-    <!-- ─── PROFILE ──────────────────────────────────── -->
-    <p class="section-label">Profile</p>
-    <div class="card">
-        <div class="profile-block">
-            <div class="profile-row">
-                <div class="profile-avatar">🏏</div>
-                <div>
-                    <div class="profile-name" id="display-name">Loading…</div>
-                    <div class="profile-team" id="display-team">…</div>
-                </div>
-            </div>
-        </div>
+<!-- POINTS SYSTEM -->
+<p class="sec-label" style="animation-delay:.12s">⚡ Scoring Rules</p>
+<div class="card" style="animation-delay:.14s">
+  <div id="pts-table-body"><div class="loading-row">Loading scoring rules…</div></div>
+</div>
 
-        <div class="row-item" onclick="openEditProfile()">
-            <div class="row-left">
-                <div class="row-icon orange">✏️</div>
-                <div><div class="row-text">Edit Profile</div><div class="row-sub">Change name or team name</div></div>
-            </div>
-            <span class="row-chevron">❯</span>
-        </div>
+<!-- ADMIN SECTION (shown only for Admin) -->
+<div id="admin-section" style="display:none">
+  <p class="sec-label" style="animation-delay:.18s">🔧 Admin Panel</p>
 
-        <div class="row-item" onclick="toggleTheme()">
-            <div class="row-left">
-                <div class="row-icon blue">🌙</div>
-                <div><div class="row-text">Dark Mode</div><div class="row-sub">Toggle appearance</div></div>
-            </div>
-            <label class="toggle-switch" onclick="event.stopPropagation()">
-                <input type="checkbox" id="theme-checkbox" onchange="toggleTheme()">
-                <span class="toggle-track"></span>
-            </label>
-        </div>
-
-        <div class="row-item" onclick="signOut()">
-            <div class="row-left">
-                <div class="row-icon red">🚪</div>
-                <div><div class="row-text danger">Sign Out</div><div class="row-sub">Return to login screen</div></div>
-            </div>
-            <span class="row-chevron">❯</span>
-        </div>
+  <!-- Scoring editor -->
+  <div class="card" style="animation-delay:.2s;margin-bottom:12px;">
+    <div class="admin-hdr"><h3>Edit Scoring Rules</h3><span class="admin-badge">ADMIN</span></div>
+    <p class="admin-sub">Changes update all player points automatically.</p>
+    <div class="scoring-editor" id="scoring-editor"><div class="loading-row">Loading…</div></div>
+    <div style="padding:0 18px 14px;display:flex;flex-direction:column;gap:6px;">
+      <div class="add-attr-row">
+        <input class="add-attr-inp" id="new-attr-label" placeholder="Attribute name (e.g. Run Outs)">
+        <input class="add-attr-inp" id="new-attr-pts" type="number" placeholder="Pts" style="width:64px;flex:none;">
+        <button class="add-attr-btn" onclick="addAttribute()">＋ Add</button>
+      </div>
+      <button class="action-btn primary" id="save-scoring-btn" onclick="saveScoringRules()">💾 Save & Recalculate All Points</button>
     </div>
+  </div>
 
+  <!-- User management -->
+  <div class="card" style="animation-delay:.22s;margin-bottom:12px;">
+    <div class="admin-hdr"><h3>All Users</h3><span class="admin-badge">ADMIN</span></div>
+    <div id="users-list"><div class="loading-row">Loading users…</div></div>
+  </div>
 
-    <!-- ─── POINTS TABLE (visible to all) ──────────── -->
-    <p class="section-label">🏆 Points Table</p>
-    <div class="card">
-        <div class="pts-table-wrap" id="pts-table-wrap">
-            <div class="empty-state">Loading scoring rules…</div>
-        </div>
+  <!-- Recalc button -->
+  <div class="card" style="animation-delay:.26s;margin-bottom:12px;">
+    <div class="admin-hdr"><h3>Data Actions</h3><span class="admin-badge">ADMIN</span></div>
+    <div style="padding:14px 18px;">
+      <button class="action-btn safe" id="recalc-btn" onclick="recalcAll()">🔄 Recalculate All Player Points</button>
+      <p style="font-size:11px;color:var(--text-3);margin-top:8px;line-height:1.5;">
+        Re-computes Total Points for every player from their raw stats using current scoring rules. Use this after changing rules or if points appear incorrect.
+      </p>
     </div>
+  </div>
+</div>
 
-    <!-- ─── HOW TO PLAY ──────────────────────────────── -->
-    <p class="section-label">📖 How to Play</p>
-    <div class="card">
-        <div class="htp-block">
-            <div class="htp-step">
-                <div class="htp-num">1</div>
-                <div class="htp-text">
-                    <div class="htp-title">Sign up &amp; join the league</div>
-                    <div class="htp-desc">Create an account with your name and a team name. Your admin will share the app link — everyone plays in the same private league.</div>
-                </div>
-            </div>
-        </div>
-        <div class="htp-block">
-            <div class="htp-step">
-                <div class="htp-num">2</div>
-                <div class="htp-text">
-                    <div class="htp-title">Draft your players at auction</div>
-                    <div class="htp-desc">Go to <strong>Squad</strong> → tap any player → enter your bid price to buy them. Once a player is bought they're locked to your team. Build your squad before the tournament starts.</div>
-                </div>
-            </div>
-        </div>
-        <div class="htp-block">
-            <div class="htp-step">
-                <div class="htp-num">3</div>
-                <div class="htp-text">
-                    <div class="htp-title">Pick a Captain &amp; Vice Captain</div>
-                    <div class="htp-desc">In your Squad page, set one player as Captain and one as Vice Captain. Your Captain earns <strong>2×</strong> points and your VC earns <strong>1.5×</strong> points for every match.</div>
-                </div>
-            </div>
-        </div>
-        <div class="htp-block">
-            <div class="htp-step">
-                <div class="htp-num">4</div>
-                <div class="htp-text">
-                    <div class="htp-title">Enter match stats after each game</div>
-                    <div class="htp-desc">After a match, go to <strong>Stats</strong> and tap the <strong>＋</strong> button next to each of your players. Enter runs, wickets, catches etc. and hit Add Stats — points are calculated automatically.</div>
-                </div>
-            </div>
-        </div>
-        <div class="htp-block">
-            <div class="htp-step">
-                <div class="htp-num">5</div>
-                <div class="htp-text">
-                    <div class="htp-title">Track the leaderboard</div>
-                    <div class="htp-desc">Check <strong>Home</strong> for the live leaderboard, Orange Cap (top run scorer), Purple Cap (top wicket taker), and other tournament leaders.</div>
-                </div>
-            </div>
-        </div>
-        <div class="htp-block">
-            <div class="htp-step">
-                <div class="htp-num">6</div>
-                <div class="htp-text">
-                    <div class="htp-title">Made a mistake? Use Edit mode</div>
-                    <div class="htp-desc">Tap the <strong>✏️</strong> button next to a player in Stats to open Edit mode. It pre-fills the current stats — correct any value and hit Replace. Points recalculate from scratch automatically.</div>
-                </div>
-            </div>
-        </div>
-        <div class="htp-tip">
-            💡 <strong>Tip:</strong> The points each stat is worth is shown in the Points Table above. Your admin can change these anytime from the Admin scoring rules section.
-        </div>
+<!-- APP INFO -->
+<p class="sec-label" style="animation-delay:.28s">About</p>
+<div class="card" style="animation-delay:.3s">
+  <div class="row">
+    <div class="row-left"><span class="row-label">App Version</span></div>
+    <span style="font-family:var(--font-mono);font-size:12px;color:var(--text-3);">v2.0.0 · IPL 2026</span>
+  </div>
+  <div class="row">
+    <div class="row-left"><span class="row-label">Data Source</span></div>
+    <span style="font-size:12px;color:var(--text-3);">Google Sheets</span>
+  </div>
+  <div class="row">
+    <div class="row-left"><span class="row-label">Season</span></div>
+    <span style="font-size:12px;color:var(--text-3);">IPL 2026</span>
+  </div>
+</div>
+
+<!-- SIGN OUT -->
+<button class="signout-btn" style="animation:fUp .4s .32s both" onclick="signOut()">🚪 Sign Out</button>
+
+<!-- EDIT PROFILE MODAL -->
+<div id="edit-modal" class="modal" onclick="handleOverlay(event,'edit-modal')">
+  <div class="modal-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <h3>Edit Profile</h3>
+      <button class="close-x" onclick="closeModal('edit-modal')">✕</button>
     </div>
-
-    <!-- ─── ADMIN SECTION ────────────────────────────── -->
-    <div id="admin-section" style="display:none;">
-
-        <!-- Points Config -->
-        <p class="admin-label">⚡ Scoring Rules</p>
-        <div class="card">
-            <p class="section-note">Adjust points per stat. Changes apply to all future stat submissions.</p>
-            <div id="points-config-list"><div class="empty-state">Loading config…</div></div>
-            <button class="save-config-btn" onclick="saveAllPoints()">💾 Save All Changes</button>
-
-            <!-- Add Attribute -->
-            <div class="add-attr-section">
-                <div class="add-attr-title">＋ Add Custom Attribute</div>
-                <div class="attr-form-grid">
-                    <div class="mini-field"><label>Key (no spaces)</label><input type="text" id="new-key" placeholder="e.g. lbw_bonus"></div>
-                    <div class="mini-field"><label>Display Label</label><input type="text" id="new-label" placeholder="e.g. LBW Bonus"></div>
-                    <div class="mini-field"><label>Points</label><input type="number" id="new-points" placeholder="e.g. 5" value="0"></div>
-                    <div class="mini-field">
-                        <label>Category</label>
-                        <select id="new-category">
-                            <option value="batting">Batting</option>
-                            <option value="bowling">Bowling</option>
-                            <option value="fielding">Fielding</option>
-                            <option value="milestone">Milestone</option>
-                            <option value="custom">Custom</option>
-                        </select>
-                    </div>
-                </div>
-                <button class="add-btn-full" onclick="addAttribute()">Add Attribute</button>
-            </div>
-        </div>
-
-        <!-- User Management -->
-        <p class="admin-label">👥 Player Management</p>
-        <div class="card">
-            <div id="admin-user-list"><div class="empty-state">Loading users…</div></div>
-        </div>
+    <div class="form-group">
+      <label class="form-label">Your Name</label>
+      <input class="form-input" id="edit-name" type="text" placeholder="Your display name">
     </div>
-
-    <!-- ─── EDIT PROFILE MODAL ───────────────────────── -->
-    <div id="edit-modal" class="modal" onclick="handleOverlay(event)">
-        <div class="modal-sheet">
-            <div class="sheet-handle"></div>
-            <div class="sheet-header">
-                <h3>Edit Profile</h3>
-                <button class="close-btn" onclick="closeEditProfile()">✕</button>
-            </div>
-            <div class="form-body">
-                <div class="field">
-                    <label>Your Name</label>
-                    <input type="text" id="edit-name" placeholder="Enter your name">
-                </div>
-                <div class="field">
-                    <label>Team Name</label>
-                    <input type="text" id="edit-team" placeholder="Enter team name">
-                </div>
-                <button class="save-btn" id="edit-save-btn" onclick="saveProfile()">Save Changes</button>
-            </div>
-        </div>
+    <div class="form-group">
+      <label class="form-label">Team Name</label>
+      <input class="form-input" id="edit-team" type="text" placeholder="Your fantasy team name">
+      <p class="form-note">⚠️ Changing team name will require re-login. Your squad data is tied to the team name in the sheet.</p>
     </div>
+    <div class="form-group">
+      <label class="form-label">New PIN (4 digits, optional)</label>
+      <input class="form-input" id="edit-pin" type="number" placeholder="Leave blank to keep current PIN" maxlength="4" inputmode="numeric">
+    </div>
+    <div class="form-footer">
+      <button class="action-btn primary" onclick="saveProfile()">✓ Save Changes</button>
+    </div>
+  </div>
+</div>
 
-            <nav class="bottom-nav">
-        <a href="dashboard.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🏠</span></div>Home</a>
-        <a href="squad.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad</a>
-        <a href="players.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🃏</span></div>Cards</a>
-        <a href="teams.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">👥</span></div>Teams</a>
-        <a href="stats.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">📊</span></div>Stats</a>
-        <a href="settings.html" class="nav-item active"><div class="nav-icon-wrap"><span class="nav-icon">⚙️</span></div>Settings</a>
-    </nav>
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="dashboard.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🏠</span></div>Home</a>
+  <a href="squad.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad</a>
+  <a href="players.html"   class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🃏</span></div>Cards</a>
+  <a href="teams.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">👥</span></div>Teams</a>
+  <a href="stats.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">📊</span></div>Stats</a>
+  <a href="settings.html"  class="nav-item active"><div class="nav-icon-wrap"><span class="nav-icon">⚙️</span></div>Settings</a>
+</nav>
 
-    <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
-        let myName = localStorage.getItem("userName") || "";
-        let myTeam = localStorage.getItem("teamName") || "";
-        let configData = [];
+<script>
+const WEB_APP_URL="https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
+const myTeam=localStorage.getItem("teamName")||"";
+const myName=localStorage.getItem("userName")||"";
+if(!myTeam){window.location.href="index.html";}
+const isAdmin=myTeam==="Admin";
 
-        // ─── THEME ─────────────────────────────────────
-        function applyTheme(t) {
-            document.documentElement.setAttribute("data-theme", t);
-            localStorage.setItem("theme", t);
-            document.getElementById("theme-icon").textContent = t === "dark" ? "☀️" : "🌙";
-            document.getElementById("theme-checkbox").checked = t === "dark";
-        }
-        function toggleTheme() {
-            applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
-        }
-        applyTheme(localStorage.getItem("theme") || "dark");
+let pointsConfig=[];
 
-        document.addEventListener("DOMContentLoaded", () => {
-            refreshProfileDisplay();
-            loadPointsTable();
-            if (myTeam === "Admin") {
-                document.getElementById("admin-section").style.display = "block";
-                loadPointsConfig();
-                loadAdminUsers();
-            }
-        });
+// ── THEME ──────────────────────────────────────────────────────────────
+const savedTheme=localStorage.getItem("theme")||"dark";
+document.documentElement.setAttribute("data-theme",savedTheme);
+document.getElementById("theme-icon").textContent=savedTheme==="dark"?"☀️":"🌙";
+document.getElementById("dark-toggle").checked=savedTheme==="dark";
 
-        function refreshProfileDisplay() {
-            document.getElementById("display-name").innerText = myName || "Guest";
-            document.getElementById("display-team").innerText = myTeam ? `Team: ${myTeam}` : "No team";
-        }
+function toggleTheme(){
+  const next=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
+  applyTheme(next);
+}
+function onToggleTheme(chk){applyTheme(chk.checked?"dark":"light");}
+function applyTheme(t){
+  document.documentElement.setAttribute("data-theme",t);
+  localStorage.setItem("theme",t);
+  document.getElementById("theme-icon").textContent=t==="dark"?"☀️":"🌙";
+  document.getElementById("dark-toggle").checked=t==="dark";
+}
 
-        // ─── SIGN OUT ───────────────────────────────────
-        function signOut() {
-            if (!confirm("Sign out of IPL Fantasy?")) return;
-            localStorage.removeItem("userName"); localStorage.removeItem("teamName");
-            localStorage.removeItem("captain"); localStorage.removeItem("viceCaptain");
-            window.location.href = "index.html";
-        }
+// ── API ─────────────────────────────────────────────────────────────────
+async function api(body){
+  try{const r=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify(body)});return r.json();}
+  catch{return null;}
+}
 
-        // ─── EDIT PROFILE ───────────────────────────────
-        function openEditProfile() {
-            document.getElementById("edit-name").value = myName;
-            document.getElementById("edit-team").value = myTeam;
-            document.getElementById("edit-modal").classList.add("open");
-        }
-        function closeEditProfile() { document.getElementById("edit-modal").classList.remove("open"); }
-        function handleOverlay(e) { if (e.target === document.getElementById("edit-modal")) closeEditProfile(); }
+// ── INIT ────────────────────────────────────────────────────────────────
+document.addEventListener("DOMContentLoaded",async()=>{
+  // Profile
+  const initial=myName?myName[0].toUpperCase():myTeam[0].toUpperCase()||"?";
+  document.getElementById("profile-initial").innerText=initial;
+  document.getElementById("profile-name").innerText=myName||myTeam;
+  document.getElementById("profile-team").innerText="Team: "+myTeam;
+  if(isAdmin){
+    document.getElementById("profile-badge").textContent="Admin";
+    document.getElementById("profile-badge").className="profile-badge admin";
+    document.getElementById("admin-section").style.display="block";
+  }
 
-        async function saveProfile() {
-            const btn = document.getElementById("edit-save-btn");
-            const newName = document.getElementById("edit-name").value.trim();
-            const newTeam = document.getElementById("edit-team").value.trim();
-            if (!newName || !newTeam) { alert("Name and team name cannot be empty."); return; }
-            btn.innerText = "Saving…"; btn.disabled = true;
-            try {
-                const res = await fetch(WEB_APP_URL, {
-                    method:'POST',
-                    body: JSON.stringify({ action:'updateProfile', oldName: myName, oldTeamName: myTeam, newName, newTeamName: newTeam })
-                });
-                const result = await res.json();
-                if (result.status === "success") {
-                    myName = result.newName; myTeam = result.newTeamName;
-                    localStorage.setItem("userName", myName);
-                    localStorage.setItem("teamName", myTeam);
-                    refreshProfileDisplay();
-                    closeEditProfile();
-                    alert("Profile updated!");
-                } else alert(result.message);
-            } catch { alert("Failed to update profile."); }
-            finally { btn.innerText = "Save Changes"; btn.disabled = false; }
-        }
+  // Load config
+  const cfgRes=await api({action:"getPointsConfig"});
+  if(cfgRes?.status==="success") pointsConfig=cfgRes.config;
+  buildPointsTable();
 
-        // ─── POINTS CONFIG ──────────────────────────────
-        async function loadPointsConfig() {
-            const container = document.getElementById('points-config-list');
-            try {
-                const res = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify({action:'getPointsConfig'}) });
-                const result = await res.json();
-                if (result.status === "success") {
-                    configData = result.config;
-                    renderConfig(configData);
-                }
-            } catch { container.innerHTML = '<div class="empty-state" style="color:#e74c3c;">Failed to load config.</div>'; }
-        }
+  if(isAdmin){
+    buildScoringEditor();
+    loadUsers();
+  }
+});
 
-        function catColor(cat) {
-            const map = {batting:'batting',bowling:'bowling',fielding:'fielding',milestone:'milestone',custom:'custom'};
-            return map[cat] || 'custom';
-        }
+// ── POINTS TABLE ────────────────────────────────────────────────────────
+function buildPointsTable(){
+  const catOrder=["batting","bowling","fielding","milestone","custom"];
+  const catMeta={
+    batting:{name:"Batting",cls:"bat"},
+    bowling:{name:"Bowling",cls:"bowl"},
+    fielding:{name:"Fielding",cls:"field"},
+    milestone:{name:"Milestones",cls:"milestone"},
+    custom:{name:"Custom",cls:"custom"}
+  };
+  const groups={};
+  pointsConfig.forEach(a=>{
+    const cat=(a.category||"custom").toLowerCase();
+    if(!groups[cat])groups[cat]=[];
+    groups[cat].push(a);
+  });
 
-        function renderConfig(config) {
-            const container = document.getElementById('points-config-list');
-            container.innerHTML = config.map(item => `
-                <div class="config-row" data-key="${item.key}">
-                    <div class="config-cat-dot ${catColor(item.category)}"></div>
-                    <div class="config-label-wrap">
-                        <div class="config-label">${item.label}</div>
-                        <div class="config-key">${item.key} · ${item.category}</div>
-                    </div>
-                    <input type="number" class="points-input" id="pts-${item.key.replace(/[^a-z0-9]/gi,'')}" value="${item.points}" min="0" step="0.5" inputmode="decimal">
-                    <span class="pts-label">pts</span>
-                    <button class="del-attr-btn" onclick="deleteAttribute('${item.key}','${item.label}')" title="Delete">✕</button>
-                </div>`).join('');
-        }
+  let html="";
+  const renderCat=(cat,meta)=>{
+    const items=groups[cat];
+    if(!items?.length) return;
+    html+=`<div class="pts-category" onclick="toggleCat(this)">
+      <div class="pts-cat-hdr">
+        <span class="pts-cat-name ${meta.cls}">${meta.name} (${items.length})</span>
+        <span class="pts-chevron">›</span>
+      </div>
+      <div class="pts-rows">`;
+    items.forEach(a=>{
+      html+=`<div class="pts-row"><span class="pts-row-label">${a.label}</span><span class="pts-row-val">+${a.points}</span></div>`;
+    });
+    html+=`</div></div>`;
+  };
 
-        async function saveAllPoints() {
-            const btn = document.querySelector('.save-config-btn');
-            btn.innerText = "Saving…"; btn.disabled = true;
-            const updates = configData.map(item => {
-                const safeKey = item.key.replace(/[^a-z0-9]/gi,'');
-                const input = document.getElementById(`pts-${safeKey}`);
-                return { key: item.key, points: input ? parseFloat(input.value) || 0 : item.points };
-            });
-            let allOk = true;
-            for (const u of updates) {
-                try {
-                    const res = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify({action:'updateAttributePoints', key:u.key, points:u.points}) });
-                    const result = await res.json();
-                    if (result.status !== "success") { allOk = false; break; }
-                } catch { allOk = false; break; }
-            }
-            btn.innerText = "💾 Save All Changes"; btn.disabled = false;
-            alert(allOk ? "All scoring rules saved!" : "Some updates failed. Please try again.");
-            if (allOk) loadPointsConfig();
-        }
+  catOrder.forEach(cat=>renderCat(cat,catMeta[cat]||{name:cat,cls:"custom"}));
+  Object.keys(groups).forEach(cat=>{if(!catOrder.includes(cat))renderCat(cat,{name:cat,cls:"custom"});});
 
-        async function addAttribute() {
-            const key = document.getElementById('new-key').value.trim();
-            const label = document.getElementById('new-label').value.trim();
-            const points = document.getElementById('new-points').value;
-            const category = document.getElementById('new-category').value;
-            if (!key || !label) { alert("Key and label are required."); return; }
-            try {
-                const res = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify({action:'addAttribute', key, label, points, category}) });
-                const result = await res.json();
-                alert(result.message);
-                if (result.status === "success") {
-                    document.getElementById('new-key').value='';
-                    document.getElementById('new-label').value='';
-                    document.getElementById('new-points').value='0';
-                    loadPointsConfig();
-                }
-            } catch { alert("Failed to add attribute."); }
-        }
+  if(!html) html='<div class="loading-row">No scoring rules configured. Ask admin to set them up.</div>';
+  document.getElementById("pts-table-body").innerHTML=html;
+}
+function toggleCat(el){el.classList.toggle("open");}
 
-        async function deleteAttribute(key, label) {
-            if (!confirm(`Delete attribute "${label}"? This affects future point calculations.`)) return;
-            try {
-                const res = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify({action:'deleteAttribute', key}) });
-                const result = await res.json();
-                alert(result.message);
-                if (result.status === "success") loadPointsConfig();
-            } catch { alert("Failed to delete."); }
-        }
+// ── SCORING EDITOR (Admin) ───────────────────────────────────────────────
+function buildScoringEditor(){
+  if(!pointsConfig.length){document.getElementById("scoring-editor").innerHTML='<div class="loading-row">No attributes yet.</div>';return;}
+  let html="";
+  pointsConfig.forEach((a,i)=>{
+    html+=`<div class="scoring-row">
+      <label>${a.label} <span style="font-size:10px;color:var(--text-3)">(${a.category||"custom"})</span></label>
+      <input class="scoring-input" type="number" id="pts-val-${i}" value="${a.points}" min="0" step="1">
+      <button class="del-btn" onclick="deleteAttr(${i})">✕</button>
+    </div>`;
+  });
+  document.getElementById("scoring-editor").innerHTML=html;
+}
 
+function deleteAttr(idx){
+  if(!confirm(`Delete "${pointsConfig[idx].label}"? This will remove the scoring rule.`))return;
+  pointsConfig.splice(idx,1);
+  buildScoringEditor();
+}
 
-        // ─── POINTS TABLE (all users) ─────────────────────
-        async function loadPointsTable() {
-            const wrap = document.getElementById('pts-table-wrap');
-            try {
-                const res    = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify({action:'getPointsConfig'}) });
-                const result = await res.json();
-                if (result.status !== 'success' || !result.config.length) {
-                    wrap.innerHTML = '<div class="empty-state">No scoring rules found.</div>';
-                    return;
-                }
+function addAttribute(){
+  const label=document.getElementById("new-attr-label").value.trim();
+  const pts=parseInt(document.getElementById("new-attr-pts").value)||0;
+  if(!label){alert("Enter an attribute name.");return;}
+  const key=label.toLowerCase().replace(/[^a-z0-9]/g,"");
+  pointsConfig.push({key,label,points:pts,category:"custom"});
+  document.getElementById("new-attr-label").value="";
+  document.getElementById("new-attr-pts").value="";
+  buildScoringEditor();
+}
 
-                // Group by category
-                const catOrder = ['batting','bowling','fielding','milestone','custom'];
-                const groups   = {};
-                result.config.forEach(item => {
-                    const cat = (item.category || 'custom').toLowerCase();
-                    if (!groups[cat]) groups[cat] = [];
-                    groups[cat].push(item);
-                });
+async function saveScoringRules(){
+  // Read current values from inputs
+  const updated=pointsConfig.map((a,i)=>({
+    ...a,
+    points:parseInt(document.getElementById(`pts-val-${i}`)?.value||a.points)||0
+  }));
 
-                // Also handle any category not in catOrder
-                Object.keys(groups).forEach(c => { if (!catOrder.includes(c)) catOrder.push(c); });
+  const btn=document.getElementById("save-scoring-btn");
+  btn.disabled=true;btn.textContent="Saving…";
+  const res=await api({action:"updatePointsConfig",config:updated});
+  if(res?.status==="success"){
+    pointsConfig=updated;
+    buildPointsTable();
+    buildScoringEditor();
+    alert("✅ Scoring rules saved! Points recalculated for all players.");
+  } else {
+    alert(res?.message||"Failed to save scoring rules.");
+  }
+  btn.disabled=false;btn.textContent="💾 Save & Recalculate All Points";
+}
 
-                let html = '';
-                catOrder.forEach(cat => {
-                    if (!groups[cat] || !groups[cat].length) return;
-                    const items = groups[cat];
-                    html += `<div class="pts-category-block" data-cat="${cat}">
-                        <div class="pts-cat-header" onclick="toggleCatBlock(this)">
-                            <div class="pts-cat-dot ${cat}"></div>
-                            <div class="pts-cat-name">${cat}</div>
-                            <div class="pts-cat-count">${items.length} stat${items.length>1?'s':''}</div>
-                            <div class="pts-cat-chevron">❯</div>
-                        </div>
-                        <div class="pts-cat-rows">`;
-                    items.forEach(item => {
-                        const isZero = !item.points || item.points === 0;
-                        html += `<div class="pts-stat-row">
-                            <div>
-                                <div class="pts-stat-name">${item.label}</div>
-                                <div class="pts-stat-key">${item.key}</div>
-                            </div>
-                            <div class="pts-stat-pill ${isZero?'zero':''}">${item.points} pts</div>
-                        </div>`;
-                    });
-                    html += `</div></div>`;
-                });
-                wrap.innerHTML = html;
+async function recalcAll(){
+  const btn=document.getElementById("recalc-btn");
+  btn.disabled=true;btn.textContent="Recalculating…";
+  const res=await api({action:"recalcAllPoints"});
+  if(res?.status==="success") alert("✅ All player points recalculated!");
+  else alert(res?.message||"Recalculation failed.");
+  btn.disabled=false;btn.textContent="🔄 Recalculate All Player Points";
+}
 
-                // Auto-open first category
-                const first = wrap.querySelector('.pts-category-block');
-                if (first) first.classList.add('open');
+// ── USERS LIST (Admin) ───────────────────────────────────────────────────
+async function loadUsers(){
+  const el=document.getElementById("users-list");
+  const res=await api({action:"getLeaderboard"});
+  if(!res||res.status!=="success"){el.innerHTML='<div class="loading-row" style="color:#e74c3c">Failed to load users.</div>';return;}
+  const teams=(res.leaderboard||[]).filter(t=>t.teamName!=="Admin");
+  if(!teams.length){el.innerHTML='<div class="loading-row">No users yet.</div>';return;}
+  el.innerHTML=teams.map(t=>`
+    <div class="user-row">
+      <div class="user-avatar">${(t.teamName[0]||"?").toUpperCase()}</div>
+      <div class="user-info">
+        <div class="user-name">${t.teamName}</div>
+        <div class="user-sub">${t.ownerName||"—"} · Rank #${teams.indexOf(t)+1}</div>
+      </div>
+      <span class="user-pts">${t.points} pts</span>
+    </div>`).join("");
+}
 
-            } catch {
-                wrap.innerHTML = '<div class="empty-state" style="color:#e74c3c;">Failed to load.</div>';
-            }
-        }
+// ── EDIT PROFILE ─────────────────────────────────────────────────────────
+function openEditModal(){
+  document.getElementById("edit-name").value=myName||"";
+  document.getElementById("edit-team").value=myTeam||"";
+  document.getElementById("edit-pin").value="";
+  document.getElementById("edit-modal").classList.add("open");
+}
 
-        function toggleCatBlock(hdr) {
-            hdr.closest('.pts-category-block').classList.toggle('open');
-        }
+async function saveProfile(){
+  const newName=document.getElementById("edit-name").value.trim();
+  const newTeam=document.getElementById("edit-team").value.trim();
+  const newPin=document.getElementById("edit-pin").value.trim();
 
-        // ─── ADMIN USER MANAGEMENT ───────────────────────
-        async function loadAdminUsers() {
-            const container = document.getElementById('admin-user-list');
-            try {
-                const res = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify({action:'getUsers'}) });
-                const result = await res.json();
-                if (result.status === "success") {
-                    if (!result.users.length) { container.innerHTML = '<div class="empty-state">No users yet.</div>'; return; }
-                    container.innerHTML = result.users.map(u => `
-                        <div class="user-row">
-                            <div class="user-avatar">👤</div>
-                            <div class="user-info">
-                                <div class="user-name">${u.teamName}</div>
-                                <div class="user-meta">${u.name} · PIN: <span class="user-pin">${u.pin}</span></div>
-                            </div>
-                            ${u.teamName !== 'Admin' ? `<button class="kick-btn" onclick="deleteUser('${u.teamName.replace(/'/g,"\\'")}')">Kick</button>` : ''}
-                        </div>`).join('');
-                }
-            } catch { container.innerHTML = '<div class="empty-state" style="color:#e74c3c;">Failed to load.</div>'; }
-        }
+  if(!newName||!newTeam){alert("Name and Team Name are required.");return;}
+  if(newPin&&(newPin.length!==4||isNaN(newPin))){alert("PIN must be exactly 4 digits.");return;}
 
-        async function deleteUser(team) {
-            if (!confirm(`Remove ${team} from the league?`)) return;
-            try {
-                const res = await fetch(WEB_APP_URL, { method:'POST', body: JSON.stringify({action:'deleteUser', teamToDelete:team}) });
-                const result = await res.json();
-                alert(result.message);
-                if (result.status === "success") loadAdminUsers();
-            } catch { alert("Failed."); }
-        }
-    </script>
+  const body={action:"updateProfile",teamName:myTeam,newName,newTeam};
+  if(newPin) body.newPin=newPin;
+
+  const res=await api(body);
+  if(res?.status==="success"){
+    localStorage.setItem("userName",newName);
+    localStorage.setItem("teamName",newTeam);
+    alert("✅ Profile updated!");
+    closeModal("edit-modal");
+    location.reload();
+  } else {
+    alert(res?.message||"Failed to update profile.");
+  }
+}
+
+// ── SIGN OUT ─────────────────────────────────────────────────────────────
+function signOut(){
+  if(!confirm("Sign out of your account?"))return;
+  localStorage.removeItem("teamName");
+  localStorage.removeItem("userName");
+  localStorage.removeItem("captain");
+  localStorage.removeItem("viceCaptain");
+  window.location.href="index.html";
+}
+
+// ── MODAL HELPERS ─────────────────────────────────────────────────────────
+function closeModal(id){document.getElementById(id).classList.remove("open");}
+function handleOverlay(e,id){if(e.target===document.getElementById(id))closeModal(id);}
+</script>
 </body>
 </html>
