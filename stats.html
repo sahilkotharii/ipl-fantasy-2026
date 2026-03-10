@@ -115,7 +115,7 @@
         .badge.unsold{background:rgba(255,255,255,.06);color:var(--text-muted);}
 
         /* Points + actions column */
-        .p-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+        .p-right{display:flex;align-items:center;gap:6px;flex-shrink:0;}
 
         /* Points pill */
         .pts-pill{
@@ -125,10 +125,10 @@
         .pts-pill .pv{font-family:var(--font-mono);font-size:15px;font-weight:600;color:var(--accent);display:block;line-height:1;}
         .pts-pill .pl{font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);opacity:.65;margin-top:2px;}
 
-        /* Action buttons */
-        .p-actions{display:flex;flex-direction:column;gap:5px;}
+        /* Action buttons — horizontal row */
+        .p-actions{display:flex;flex-direction:row;gap:5px;}
         .act-btn{
-            width:32px;height:32px;border-radius:9px;
+            width:36px;height:36px;border-radius:10px;
             border:1px solid var(--glass-border);
             background:var(--glass-bg);
             color:var(--text-secondary);
@@ -138,7 +138,7 @@
             -webkit-tap-highlight-color:transparent;
             touch-action:manipulation;
         }
-        .act-btn.add{background:var(--accent-soft);border-color:var(--accent-glow);color:var(--accent);font-size:18px;font-weight:300;}
+        .act-btn.add{background:var(--accent-soft);border-color:var(--accent-glow);color:var(--accent);font-size:20px;font-weight:300;}
         .act-btn:active{transform:scale(.85);}
 
         /* ── EMPTY / LOADING ───────────────────────────────── */
