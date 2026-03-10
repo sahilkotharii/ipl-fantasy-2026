@@ -127,22 +127,59 @@
     .sec-title.c-ms    {color:#f1c40f;}
     .sec-title.c-custom{color:#a29bfe;}
     .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+    /* ── STAT INPUT ITEM ──────────────────────── */
     .sig{display:flex;flex-direction:column;}
     .sig label{
-        font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
-        color:var(--text-secondary);margin-bottom:6px;
-        white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+        font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+        color:var(--text-secondary);margin-bottom:7px;
+        /* Allow wrap so long labels never get clipped */
+        white-space:normal;line-height:1.3;min-height:22px;
     }
+    /* Stepper wrapper: [ − ] [ input ] [ + ] */
+    .sig-ctrl{
+        display:grid;
+        grid-template-columns:36px 1fr 36px;
+        border:1px solid var(--input-border);
+        border-radius:12px;
+        overflow:hidden;
+        background:var(--input-bg);
+        transition:border-color var(--transition),box-shadow var(--transition);
+    }
+    .sig-ctrl:focus-within{
+        border-color:var(--accent);
+        box-shadow:0 0 0 3px var(--accent-soft);
+    }
+    .step-btn{
+        background:transparent;
+        border:none;
+        color:var(--text-secondary);
+        font-size:18px;
+        font-weight:300;
+        cursor:pointer;
+        display:flex;align-items:center;justify-content:center;
+        padding:0;
+        height:46px;
+        /* Separate from input with subtle dividers */
+        border-right:1px solid var(--input-border);
+        transition:background var(--transition),color var(--transition);
+        -webkit-tap-highlight-color:transparent;
+        touch-action:manipulation;
+    }
+    .step-btn.plus{border-right:none;border-left:1px solid var(--input-border);}
+    .step-btn:active{background:var(--accent-soft);color:var(--accent);}
     .sig input{
-        width:100%;padding:12px 8px;border-radius:12px;
-        border:1px solid var(--input-border);background:var(--input-bg);
+        width:100%;padding:8px 4px;
+        border:none;background:transparent;
         color:var(--text-primary);font-family:var(--font-mono);
         font-size:18px;font-weight:600;text-align:center;
         outline:none;-webkit-appearance:none;
-        transition:border-color var(--transition),box-shadow var(--transition);
         min-width:0;
     }
-    .sig input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+    /* Hide native number spinners */
+    .sig input::-webkit-outer-spin-button,
+    .sig input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+    .sig input[type=number]{-moz-appearance:textfield;}
 
     /* ── STICKY FOOTER ───────────────────────── */
     .sheet-footer{flex-shrink:0;padding:12px 20px 32px;border-top:1px solid var(--divider);background:var(--glass-bg);backdrop-filter:blur(28px);}
@@ -465,10 +502,15 @@ function buildForm() {
             <p class="sec-title ${m.cls}">${m.title}</p>
             <div class="stat-grid">`;
         groups[cat].forEach(attr => {
+            const sid = 'si-' + attr.key;
             html += `<div class="sig">
                 <label>${attr.label}</label>
-                <input type="number" id="si-${attr.key}" value="0" min="0"
-                       inputmode="numeric" data-key="${attr.key}">
+                <div class="sig-ctrl">
+                    <button type="button" class="step-btn minus" onclick="stepVal('${sid}',-1)">−</button>
+                    <input type="number" id="${sid}" value="0" min="0"
+                           inputmode="numeric" data-key="${attr.key}">
+                    <button type="button" class="step-btn plus" onclick="stepVal('${sid}',1)">+</button>
+                </div>
             </div>`;
         });
         // Handle leftover categories not in catOrder
@@ -482,10 +524,15 @@ function buildForm() {
             <p class="sec-title c-custom">${cat}</p>
             <div class="stat-grid">`;
         groups[cat].forEach(attr => {
+            const sid = 'si-' + attr.key;
             html += `<div class="sig">
                 <label>${attr.label}</label>
-                <input type="number" id="si-${attr.key}" value="0" min="0"
-                       inputmode="numeric" data-key="${attr.key}">
+                <div class="sig-ctrl">
+                    <button type="button" class="step-btn minus" onclick="stepVal('${sid}',-1)">−</button>
+                    <input type="number" id="${sid}" value="0" min="0"
+                           inputmode="numeric" data-key="${attr.key}">
+                    <button type="button" class="step-btn plus" onclick="stepVal('${sid}',1)">+</button>
+                </div>
             </div>`;
         });
         html += `</div></div>`;
@@ -538,6 +585,14 @@ function prefillInputs() {
         const key = inp.getAttribute("data-key");
         inp.value = n(curPlayer[key]) || n(curPlayer[keyAlias(key)]);
     });
+}
+
+// ── STEPPER ────────────────────────────────────────────────
+function stepVal(id, delta) {
+    const inp = document.getElementById(id);
+    if (!inp) return;
+    const cur = parseInt(inp.value) || 0;
+    inp.value = Math.max(0, cur + delta);
 }
 
 function closeModal()   { document.getElementById("stat-modal").classList.remove("open"); }
