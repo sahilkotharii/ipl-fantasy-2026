@@ -486,8 +486,26 @@ body{
   </div>
 </div>
 
+<!-- RESET C/VC SECTION -->
+<p class="sec-label" style="animation-delay:.3s">⚠️ Reset</p>
+<div class="settings-card" style="animation-delay:.31s;border-color:rgba(231,76,60,.2);">
+  <div style="padding:16px 18px 6px;display:flex;align-items:flex-start;gap:12px;">
+    <div style="font-size:22px;flex-shrink:0;margin-top:2px;">🔓</div>
+    <div style="flex:1;">
+      <div style="font-size:14px;font-weight:800;margin-bottom:4px;">Reset Captain &amp; Vice-Captain</div>
+      <div style="font-size:11px;color:var(--text-3);line-height:1.6;margin-bottom:14px;">
+        Use this if your C/VC was set to a player who no longer exists in your squad. 
+        This will clear both roles from the sheet and allow you to re-pick.
+      </div>
+      <button class="action-btn danger" onclick="resetCVC()" id="reset-cvc-btn" style="width:100%">
+        🔓 Reset Captain &amp; Vice-Captain
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- SIGN OUT -->
-<button class="signout-btn" style="animation:fadeUp .4s .32s both" onclick="signOut()">🚪 Sign Out</button>
+<button class="signout-btn" style="animation:fadeUp .4s .36s both" onclick="signOut()">🚪 Sign Out</button>
 
 <!-- EDIT PROFILE MODAL -->
 <div id="edit-modal" class="modal" onclick="handleOverlay(event,'edit-modal')">
@@ -744,6 +762,51 @@ async function saveProfile(){
     location.reload();
   } else {
     alert(res?.message||"Failed to update profile.");
+  }
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────
+function showToast(msg,type="info"){
+  const colors={success:"#22c55e",warn:"#f1c40f",info:"#4facfe"};
+  const t=document.createElement("div");
+  t.style.cssText=`position:fixed;bottom:calc(68px + 28px);left:50%;transform:translateX(-50%);
+    background:rgba(10,20,38,.96);border:1px solid ${colors[type]||"#4facfe"};color:#fff;
+    padding:10px 20px;border-radius:14px;font-size:13px;font-weight:700;z-index:600;
+    box-shadow:0 4px 24px rgba(0,0,0,.5);backdrop-filter:blur(12px);
+    animation:toastIn .35s cubic-bezier(.34,1.56,.64,1) both;white-space:nowrap;max-width:90vw;text-align:center;`;
+  t.textContent=msg;
+  const s=document.createElement("style");
+  s.textContent=`@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(12px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}`;
+  document.head.appendChild(s);
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),3000);
+}
+
+// ── RESET CAPTAIN / VC ───────────────────────────────────────────────────
+async function resetCVC(){
+  const cap=localStorage.getItem("captain")||"";
+  const vc=localStorage.getItem("viceCaptain")||"";
+  if(!cap&&!vc){
+    showToast("No Captain or Vice-Captain is set — nothing to reset.","info");return;
+  }
+  const names=[];
+  if(cap) names.push("C: "+cap);
+  if(vc)  names.push("VC: "+vc);
+  if(!confirm("Reset your Captain & Vice-Captain?\n\n"+names.join("\n")+"\n\nThis cannot be undone without re-picking."))return;
+
+  const btn=document.getElementById("reset-cvc-btn");
+  btn.disabled=true;btn.textContent="Resetting…";
+
+  // Clear sheet first (source of truth)
+  const res=await api({action:"setRoles",teamName:myTeam,captain:"",viceCaptain:""});
+  if(res?.status==="success"){
+    localStorage.removeItem("captain");
+    localStorage.removeItem("viceCaptain");
+    showToast("✅ Captain & Vice-Captain have been reset. Head to Squad to re-pick.","success");
+    btn.textContent="✓ Done — go to Squad to re-pick";
+  }else{
+    showToast("⚠️ Failed to clear from sheet. Try again.","warn");
+    btn.disabled=false;btn.textContent="🔓 Reset Captain & Vice-Captain";
   }
 }
 
