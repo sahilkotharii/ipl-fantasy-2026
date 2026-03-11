@@ -3,377 +3,385 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
-<title>Settings | IPL Fantasy 2026</title>
+<title>Squad | IPL Fantasy 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --accent:#FF6B35;--accent-soft:rgba(255,107,53,.14);--accent-glow:rgba(255,107,53,.3);
-  --blue:#4facfe;--blue-soft:rgba(79,172,254,.12);--blue-glow:rgba(79,172,254,.25);
-  --red:#e74c3c;--red-soft:rgba(231,76,60,.12);--red-glow:rgba(231,76,60,.28);
-  --green:#22c55e;--green-soft:rgba(34,197,94,.12);
-  --gold:#FFD700;--silver:#b8c8d8;--bronze:#cd8050;--neon:#39ff85;
-  --font-main:'Outfit',sans-serif;--font-display:'Bebas Neue',cursive;--font-mono:'DM Mono',monospace;
-  --ease:cubic-bezier(.4,0,.2,1);--bounce:cubic-bezier(.34,1.56,.64,1);--t:.24s;--r:22px;
+  --blue:#4facfe;--blue-soft:rgba(79,172,254,.12);
+  --neon:#39ff85;
+  --font-main:'Outfit',sans-serif;--font-mono:'DM Mono',monospace;--font-display:'Bebas Neue',cursive;
+  --ease:cubic-bezier(.4,0,.2,1);--bounce:cubic-bezier(.34,1.56,.64,1);
 }
 [data-theme="dark"]{
-  --bg:#07101f;
-  --mesh:radial-gradient(ellipse at 15% 5%,rgba(79,172,254,.13) 0%,transparent 50%),
-        radial-gradient(ellipse at 85% 85%,rgba(255,107,53,.1) 0%,transparent 50%),#07101f;
-  --surf:rgba(255,255,255,.04);--surf2:rgba(8,16,38,.9);
-  --brd:rgba(79,172,254,.12);--brd2:rgba(79,172,254,.22);
-  --nav-bg:rgba(7,16,31,.95);--text-1:#eef2ff;--text-2:rgba(238,242,255,.52);--text-3:rgba(238,242,255,.28);
-  --div:rgba(255,255,255,.055);--tog:rgba(255,255,255,.06);--inp:rgba(0,0,0,.3);--ibrd:rgba(79,172,254,.15);
-  --ov:rgba(0,0,0,.88);--sheet:#0a1628;--card-bg:rgba(255,255,255,.035);
+  --bg:#080d14;
+  --mesh:radial-gradient(ellipse at 15% 5%,rgba(79,172,254,.12) 0%,transparent 50%),
+        radial-gradient(ellipse at 85% 90%,rgba(255,107,53,.09) 0%,transparent 50%),#080d14;
+  --surf:rgba(255,255,255,.04);--surf2:rgba(10,20,40,.92);
+  --brd:rgba(79,172,254,.12);--brd2:rgba(79,172,254,.2);
+  --nav:rgba(8,13,20,.92);--t1:#eef2ff;--t2:rgba(238,242,255,.52);--t3:rgba(238,242,255,.28);
+  --div:rgba(255,255,255,.055);--inp:rgba(0,0,0,.3);--ibrd:rgba(79,172,254,.15);
+  --ov:rgba(0,0,0,.88);--tog:rgba(255,255,255,.06);
+  --card-shadow:0 4px 24px rgba(0,0,0,.5);
 }
 [data-theme="light"]{
   --bg:#f0ece6;
   --mesh:radial-gradient(ellipse at 20% 10%,rgba(255,200,150,.2) 0%,transparent 55%),#f0ece6;
-  --surf:rgba(255,255,255,.65);--surf2:rgba(255,255,255,.97);
+  --surf:rgba(255,255,255,.65);--surf2:rgba(255,255,255,.95);
   --brd:rgba(0,0,0,.07);--brd2:rgba(0,0,0,.13);
-  --nav-bg:rgba(240,236,230,.92);--text-1:#17202e;--text-2:rgba(23,32,46,.56);--text-3:rgba(23,32,46,.32);
-  --div:rgba(0,0,0,.065);--tog:rgba(0,0,0,.06);--inp:rgba(0,0,0,.05);--ibrd:rgba(0,0,0,.12);
-  --ov:rgba(0,0,0,.82);--sheet:#f5f1ec;--card-bg:rgba(255,255,255,.6);
+  --nav:rgba(240,236,230,.92);--t1:#1a1a2e;--t2:rgba(26,26,46,.55);--t3:rgba(26,26,46,.32);
+  --div:rgba(0,0,0,.07);--inp:rgba(0,0,0,.05);--ibrd:rgba(0,0,0,.1);
+  --ov:rgba(0,0,0,.82);--tog:rgba(0,0,0,.06);
+  --card-shadow:0 4px 20px rgba(0,0,0,.08);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
 body{
   font-family:var(--font-main);background:var(--mesh);background-color:var(--bg);
-  min-height:100vh;color:var(--text-1);padding-bottom:calc(68px + 14px + 28px);
+  min-height:100vh;color:var(--t1);padding-bottom:calc(68px + 14px + 28px);
   overflow-x:hidden;transition:background-color .3s,color .3s;
 }
 
 /* ── PARTICLES ── */
-#pitch-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.25;}
+#pitch-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.3;}
 
 /* ── TOPBAR ── */
 .topbar{
   position:relative;z-index:1;
-  display:flex;justify-content:space-between;align-items:center;padding:24px 20px 8px;
+  display:flex;justify-content:space-between;align-items:flex-start;padding:28px 20px 16px;
   animation:slideDown .5s var(--bounce) both;
 }
 @keyframes slideDown{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:none;}}
 .topbar-left .greeting{
-  font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);
-  margin-bottom:3px;display:flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:3px;display:flex;align-items:center;gap:5px;
 }
-.topbar-left .greeting::before{content:'';width:16px;height:2px;background:linear-gradient(90deg,var(--blue),transparent);border-radius:1px;}
+.topbar-left .greeting::before{content:'';width:16px;height:2px;background:linear-gradient(90deg,var(--accent),transparent);border-radius:1px;}
 .topbar-left h1{
-  font-family:var(--font-display);font-size:34px;letter-spacing:.06em;line-height:1;
-  background:linear-gradient(90deg,var(--text-1),var(--blue));
+  font-family:var(--font-display);font-size:36px;letter-spacing:.05em;line-height:1;
+  background:linear-gradient(90deg,var(--t1),var(--accent));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
+.budget-bar{
+  margin-top:8px;display:flex;flex-direction:column;gap:4px;
+}
+.budget-label{font-size:11px;color:var(--t3);font-weight:600;}
+.budget-track{height:6px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden;width:160px;}
+[data-theme="light"] .budget-track{background:rgba(0,0,0,.08);}
+.budget-fill{height:100%;border-radius:3px;transition:width .8s var(--ease);
+  background:linear-gradient(90deg,var(--neon),var(--blue));}
+.budget-fill.warn{background:linear-gradient(90deg,#f1c40f,var(--accent));}
+.budget-fill.danger{background:linear-gradient(90deg,var(--accent),#e74c3c);}
+.budget-num{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--neon);}
+.budget-num.warn{color:#f1c40f;}.budget-num.danger{color:#e74c3c;}
+.top-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
 .theme-btn{
   width:40px;height:40px;border-radius:14px;background:var(--tog);border:1px solid var(--brd2);
-  color:var(--text-1);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:transform .2s var(--bounce);flex-shrink:0;
+  color:var(--t1);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:transform .2s var(--bounce),background .3s;
 }
 .theme-btn:active{transform:scale(.86);}
-
-/* ── PROFILE CARD ── */
-.profile-card{
-  position:relative;z-index:1;
-  margin:14px 16px 0;border-radius:24px;overflow:hidden;
-  border:1px solid var(--brd2);
-  box-shadow:0 8px 40px rgba(0,0,0,.35);
-  animation:fadeUp .4s var(--bounce) .05s both;
-}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
-.profile-card-bg{
-  position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(79,172,254,.1) 0%,rgba(255,107,53,.07) 60%,transparent 100%);
-  pointer-events:none;
-}
-[data-theme="dark"] .profile-card-inner{background:rgba(8,18,42,.82);}
-[data-theme="light"] .profile-card-inner{background:rgba(255,255,255,.8);}
-.profile-card-inner{
-  position:relative;z-index:1;backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);
-  padding:20px;display:flex;align-items:center;gap:14px;
-}
-.avatar{
-  width:58px;height:58px;border-radius:18px;
-  background:linear-gradient(135deg,rgba(79,172,254,.25),rgba(255,107,53,.18));
-  border:1.5px solid var(--brd2);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-display);font-size:26px;color:var(--blue);flex-shrink:0;
-  box-shadow:0 4px 20px rgba(79,172,254,.2);
-  transition:transform .2s var(--bounce);
-}
-.profile-card:hover .avatar{transform:scale(1.06) rotate(-4deg);}
-.profile-info{flex:1;min-width:0;}
-.profile-name{font-size:18px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.01em;}
-.profile-sub{font-size:12px;color:var(--text-2);margin-top:3px;font-weight:500;}
-.profile-badge{
-  display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:8px;
-  font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-top:7px;
-}
-.profile-badge.admin{background:var(--red-soft);color:var(--red);border:1px solid var(--red-glow);}
-.profile-badge.user{background:var(--blue-soft);color:var(--blue);border:1px solid var(--blue-glow);}
-.edit-btn{
-  background:var(--accent-soft);border:1px solid var(--accent-glow);color:var(--accent);
-  padding:9px 16px;border-radius:14px;font-family:var(--font-main);font-size:12px;font-weight:800;
-  cursor:pointer;white-space:nowrap;letter-spacing:.03em;
-  transition:transform .2s var(--bounce),box-shadow .2s;flex-shrink:0;
-}
-.edit-btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(255,107,53,.3);}
-.edit-btn:active{transform:scale(.92);}
-
-/* ── SECTION LABEL ── */
-.sec-label{
-  position:relative;z-index:1;
-  font-size:10px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--text-3);padding:0 20px;margin:20px 0 10px;
-  display:flex;align-items:center;gap:8px;
-}
-.sec-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--div),transparent);}
-
-/* ── CARD ── */
-.card{
-  position:relative;z-index:1;
-  background:var(--card-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border:1px solid var(--brd);border-radius:var(--r);margin:0 16px;overflow:hidden;
-  box-shadow:0 4px 24px rgba(0,0,0,.25);
-  animation:fadeUp .4s var(--ease) both;
-  transition:box-shadow .25s;
-}
-
-/* ── ROW ── */
-.row{
-  display:flex;align-items:center;justify-content:space-between;padding:15px 18px;
-  border-bottom:1px solid var(--div);
-  transition:background .18s;
-}
-.row:last-child{border-bottom:none;}
-.row:hover{background:rgba(255,255,255,.02);}
-[data-theme="light"] .row:hover{background:rgba(0,0,0,.02);}
-.row-left{display:flex;flex-direction:column;gap:2px;}
-.row-label{font-size:14px;font-weight:700;}
-.row-sub{font-size:11px;color:var(--text-3);}
-.row-right{display:flex;align-items:center;gap:8px;}
-
-/* ── TOGGLE SWITCH ── */
-.toggle-wrap{position:relative;width:48px;height:28px;}
-.toggle-wrap input{opacity:0;width:0;height:0;position:absolute;}
-.toggle-slider{
-  position:absolute;inset:0;background:var(--div);border-radius:14px;cursor:pointer;
-  border:1px solid var(--brd);
-  transition:background var(--t),border-color var(--t);
-}
-.toggle-slider::before{
-  content:'';position:absolute;height:22px;width:22px;left:2px;bottom:2px;
-  background:var(--text-3);border-radius:50%;
-  transition:transform .25s var(--bounce),background .2s;
-  box-shadow:0 2px 6px rgba(0,0,0,.3);
-}
-.toggle-wrap input:checked + .toggle-slider{background:var(--accent);border-color:var(--accent-glow);}
-.toggle-wrap input:checked + .toggle-slider::before{transform:translateX(20px);background:#fff;}
-
-/* ── POINTS TABLE ── */
-.pts-category{border-bottom:1px solid var(--div);}
-.pts-category:last-child{border-bottom:none;}
-.pts-cat-hdr{
-  display:flex;align-items:center;justify-content:space-between;padding:13px 18px;cursor:pointer;
-  transition:background .15s;
-}
-.pts-cat-hdr:hover{background:rgba(255,255,255,.02);}
-[data-theme="light"] .pts-cat-hdr:hover{background:rgba(0,0,0,.02);}
-.pts-cat-name{font-size:13px;font-weight:800;letter-spacing:.03em;}
-.pts-cat-name.bat{color:var(--blue);}
-.pts-cat-name.bowl{color:#e74c3c;}
-.pts-cat-name.field{color:#52c8ff;}
-.pts-cat-name.milestone{color:var(--gold);}
-.pts-cat-name.custom{color:#a29bfe;}
-.pts-chevron{font-size:12px;color:var(--text-3);transition:transform .25s var(--bounce);}
-.pts-category.open .pts-chevron{transform:rotate(90deg);color:var(--accent);}
-.pts-rows{display:none;}
-.pts-category.open .pts-rows{display:block;animation:expandIn .25s var(--ease);}
-@keyframes expandIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:none;}}
-.pts-row{
-  display:flex;align-items:center;padding:9px 18px 9px 28px;border-top:1px solid var(--div);
-  transition:background .15s;
-}
-.pts-row:hover{background:rgba(255,255,255,.015);}
-[data-theme="light"] .pts-row:hover{background:rgba(0,0,0,.015);}
-.pts-row-label{flex:1;font-size:13px;color:var(--text-2);}
-.pts-row-val{
-  font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--accent);
-  background:var(--accent-soft);padding:3px 10px;border-radius:8px;min-width:46px;text-align:center;
-  border:1px solid rgba(255,107,53,.15);
-}
-
-/* ── ADMIN SECTION ── */
-.admin-hdr{
-  padding:14px 18px;border-bottom:1px solid var(--div);
-  display:flex;align-items:center;justify-content:space-between;
-}
-.admin-hdr h3{font-size:14px;font-weight:800;letter-spacing:.02em;}
-.admin-badge{
-  font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
-  padding:3px 9px;border-radius:7px;
-  background:var(--red-soft);color:var(--red);border:1px solid var(--red-glow);
-}
-.admin-sub{font-size:11px;color:var(--text-3);padding:8px 18px 10px;line-height:1.55;}
-
-/* Scoring editor */
-.scoring-editor{padding:0 18px 12px;}
-.scoring-row{
-  display:flex;align-items:center;gap:9px;padding:7px 0;
-  border-bottom:1px solid var(--div);
-}
-.scoring-row:last-child{border-bottom:none;}
-.scoring-row label{flex:1;font-size:12px;color:var(--text-2);}
-.scoring-input{
-  width:64px;padding:7px 8px;border-radius:10px;border:1px solid var(--ibrd);
-  background:var(--inp);color:var(--text-1);font-family:var(--font-mono);font-size:13px;
-  text-align:center;outline:none;-webkit-appearance:none;
-  transition:border-color .2s,box-shadow .2s;
-}
-.scoring-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,107,53,.12);}
-.del-btn{
-  width:30px;height:30px;border-radius:9px;border:1px solid var(--red-glow);
-  background:var(--red-soft);color:var(--red);font-size:13px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  transition:transform .18s var(--bounce),background .2s;
-}
-.del-btn:hover{background:rgba(231,76,60,.25);transform:scale(1.1);}
-.del-btn:active{transform:scale(.88);}
-
-.add-attr-row{display:flex;gap:8px;margin-top:6px;padding:0 18px 4px;}
-.add-attr-inp{
-  flex:1;padding:10px 12px;border-radius:12px;border:1px solid var(--ibrd);
-  background:var(--inp);color:var(--text-1);font-family:var(--font-main);font-size:13px;outline:none;
-  transition:border-color .2s;
-}
-.add-attr-inp:focus{border-color:var(--accent);}
-.add-attr-btn{
+.draft-btn{
   background:linear-gradient(135deg,var(--accent),#ff8c5a);color:#fff;border:none;
-  padding:10px 16px;border-radius:12px;font-family:var(--font-main);font-size:12px;font-weight:800;
-  cursor:pointer;white-space:nowrap;letter-spacing:.03em;
+  padding:9px 18px;border-radius:14px;font-family:var(--font-main);font-size:12px;font-weight:800;
+  cursor:pointer;letter-spacing:.05em;box-shadow:0 4px 18px rgba(255,107,53,.35);
   transition:transform .2s var(--bounce),box-shadow .2s;
 }
-.add-attr-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(255,107,53,.35);}
-.add-attr-btn:active{transform:scale(.93);}
+.draft-btn:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(255,107,53,.45);}
+.draft-btn:active{transform:scale(.94);}
 
-/* Action buttons */
-.action-btn{
-  display:flex;align-items:center;justify-content:center;gap:7px;width:100%;
-  padding:14px;border-radius:14px;font-family:var(--font-main);font-size:14px;font-weight:800;
-  cursor:pointer;border:none;letter-spacing:.02em;
-  transition:transform .2s var(--bounce),box-shadow .2s,opacity .2s;
-  margin-top:10px;
+/* ── SECTION HEADER ── */
+.sec{
+  font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--t3);padding:0 20px;margin:4px 0 10px;
+  display:flex;align-items:center;gap:8px;position:relative;z-index:1;
 }
-.action-btn:hover:not(:disabled){transform:translateY(-2px);}
-.action-btn:active:not(:disabled){transform:scale(.97);}
-.action-btn:disabled{opacity:.5;cursor:not-allowed;}
-.action-btn.primary{
-  background:linear-gradient(135deg,var(--accent),#ff8c5a);color:#fff;
-  box-shadow:0 5px 20px rgba(255,107,53,.35);
-}
-.action-btn.primary:hover:not(:disabled){box-shadow:0 8px 28px rgba(255,107,53,.5);}
-.action-btn.danger{background:var(--red-soft);color:var(--red);border:1px solid var(--red-glow);}
-.action-btn.danger:hover:not(:disabled){background:rgba(231,76,60,.2);}
-.action-btn.safe{background:var(--green-soft);color:var(--green);border:1px solid rgba(34,197,94,.25);}
-.action-btn.safe:hover:not(:disabled){background:rgba(34,197,94,.2);}
+.sec::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--div),transparent);}
+.sec-count{font-family:var(--font-mono);font-size:10px;color:var(--blue);background:var(--blue-soft);padding:2px 7px;border-radius:6px;}
 
-/* Users list */
-.user-row{
-  display:flex;align-items:center;padding:12px 18px;border-bottom:1px solid var(--div);gap:12px;
-  transition:background .15s;
-}
-.user-row:last-child{border-bottom:none;}
-.user-row:hover{background:rgba(255,255,255,.015);}
-[data-theme="light"] .user-row:hover{background:rgba(0,0,0,.02);}
-.user-avatar{
-  width:34px;height:34px;border-radius:11px;background:var(--blue-soft);
-  display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;
-  flex-shrink:0;border:1px solid var(--brd);color:var(--blue);font-family:var(--font-display);
-}
-.user-info{flex:1;min-width:0;}
-.user-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.user-sub{font-size:10px;color:var(--text-3);margin-top:1px;}
-.user-pts{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:500;}
-.del-user-btn{
-  width:30px;height:30px;border-radius:9px;border:1px solid var(--red-glow);
-  background:var(--red-soft);color:var(--red);font-size:13px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  transition:transform .18s var(--bounce),background .2s;
-}
-.del-user-btn:hover{background:rgba(231,76,60,.25);transform:scale(1.1);}
-.del-user-btn:active{transform:scale(.88);}
+/* ── SQUAD CARDS ── */
+.players-list{padding:0 16px;position:relative;z-index:1;}
 
-/* ── APP INFO VALUES ── */
-.info-val{font-family:var(--font-mono);font-size:12px;color:var(--text-3);}
+.player-card{
+  border-radius:22px;margin-bottom:10px;overflow:hidden;
+  border:1px solid var(--brd);
+  box-shadow:var(--card-shadow);
+  position:relative;
+  animation:cardIn .4s var(--ease) both;
+  transition:transform .2s var(--bounce),box-shadow .2s;
+}
+.player-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.4);}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px) scale(.97);}to{opacity:1;transform:none;}}
 
-/* ── SIGN OUT ── */
-.signout-btn{
+/* Team gradient BG per card */
+.card-bg{
+  position:absolute;inset:0;pointer-events:none;
+  opacity:.22;transition:opacity .3s;
+}
+[data-theme="light"] .card-bg{opacity:.1;}
+.player-card:hover .card-bg{opacity:.34;}
+[data-theme="light"] .player-card:hover .card-bg{opacity:.18;}
+
+/* Shimmer */
+.card-shimmer{
+  position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
+  transform:translateX(-100%);
+}
+.player-card:hover .card-shimmer{animation:shimmerSlide .6s var(--ease);}
+@keyframes shimmerSlide{to{transform:translateX(100%);}}
+
+/* Left accent */
+.card-accent{
+  position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:0 2px 2px 0;
+}
+
+/* Card inner */
+.card-inner{
   position:relative;z-index:1;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  width:calc(100% - 32px);margin:16px;padding:15px;border-radius:18px;
-  border:1px solid var(--red-glow);background:var(--red-soft);
-  color:var(--red);font-family:var(--font-main);font-size:14px;font-weight:800;
-  cursor:pointer;letter-spacing:.03em;
-  transition:transform .2s var(--bounce),box-shadow .2s,background .2s;
+  display:flex;align-items:center;padding:14px 16px 14px 20px;gap:12px;
+  background:var(--surf);
 }
-.signout-btn:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(231,76,60,.25);background:rgba(231,76,60,.2);}
-.signout-btn:active{transform:scale(.97);}
+[data-theme="dark"] .card-inner{background:rgba(8,13,20,.7);}
+[data-theme="light"] .card-inner{background:rgba(255,255,255,.72);}
 
-/* ── MODAL / SHEET ── */
+.p-avatar{
+  width:44px;height:44px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;
+  border:1px solid rgba(255,255,255,.1);
+  transition:transform .2s var(--bounce);
+}
+[data-theme="light"] .p-avatar{border-color:rgba(0,0,0,.07);}
+.player-card:hover .p-avatar{transform:scale(1.1) rotate(-4deg);}
+
+.p-info{flex:1;min-width:0;}
+.p-name{
+  font-size:15px;font-weight:800;margin-bottom:5px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.01em;
+}
+.p-meta{display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
+.badge{font-size:9px;font-weight:800;padding:3px 8px;border-radius:7px;letter-spacing:.05em;text-transform:uppercase;}
+.badge.bat{background:rgba(79,172,254,.15);color:#4facfe;}
+.badge.bowl{background:rgba(231,76,60,.15);color:#e74c3c;}
+.badge.ar{background:rgba(241,196,15,.15);color:#f1c40f;}
+.badge.wk{background:rgba(155,89,182,.15);color:#bb8fce;}
+.badge.team{background:rgba(255,255,255,.07);color:var(--t2);}
+[data-theme="light"] .badge.team{background:rgba(0,0,0,.06);}
+.badge.price{background:var(--accent-soft);color:var(--accent);font-family:var(--font-mono);}
+
+.p-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+
+/* Points pill */
+.pts-pill{
+  background:var(--blue-soft);border:1px solid rgba(79,172,254,.22);
+  border-radius:12px;padding:6px 10px;text-align:center;
+  transition:transform .2s var(--bounce);
+}
+.player-card:hover .pts-pill{transform:scale(1.05);}
+.pts-pill .pv{font-family:var(--font-mono);font-size:15px;font-weight:600;color:var(--blue);display:block;line-height:1;}
+.pts-pill .pl{font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);opacity:.6;margin-top:2px;}
+
+/* C / VC badges ON the card */
+.role-badge-c,.role-badge-vc{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:9px;
+  font-size:11px;font-weight:900;letter-spacing:.02em;cursor:pointer;
+  border:1.5px solid;transition:transform .2s var(--bounce),box-shadow .2s;
+  font-family:var(--font-main);
+}
+.role-badge-c{background:rgba(255,196,0,.18);border-color:rgba(255,196,0,.5);color:#ffc400;}
+.role-badge-vc{background:rgba(180,180,200,.13);border-color:rgba(180,180,200,.4);color:#b4b4c8;}
+.role-badge-c.active{
+  background:rgba(255,196,0,.3);border-color:#ffc400;color:#ffc400;
+  box-shadow:0 0 14px rgba(255,196,0,.4);
+  animation:capPulse 2s ease infinite;
+}
+.role-badge-vc.active{
+  background:rgba(180,180,200,.25);border-color:#b4b4c8;color:#b4b4c8;
+  box-shadow:0 0 12px rgba(180,180,200,.3);
+}
+.role-badge-c:hover,.role-badge-vc:hover{transform:scale(1.15);}
+@keyframes capPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,196,0,.4);}60%{box-shadow:0 0 0 6px rgba(255,196,0,0);}}
+
+/* Locked C/VC — greyed out, no pointer */
+.role-badge-c.locked,.role-badge-vc.locked{
+  opacity:.28;cursor:not-allowed;pointer-events:none;
+  filter:grayscale(1);
+}
+.role-badge-c.active.locked,.role-badge-vc.active.locked{
+  opacity:1;cursor:default;filter:none;pointer-events:none;
+}
+
+/* Empty state */
+.empty-state{padding:50px 20px;text-align:center;color:var(--t3);font-size:14px;line-height:1.8;position:relative;z-index:1;}
+.empty-emoji{font-size:48px;display:block;margin-bottom:12px;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+
+/* ══════════════════════════════════
+   C / VC CONFIRMATION POPUP
+══════════════════════════════════ */
+.confirm-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  z-index:500;align-items:center;justify-content:center;padding:24px;
+}
+.confirm-overlay.open{display:flex;animation:overlayIn .25s var(--ease);}
+@keyframes overlayIn{from{opacity:0;}to{opacity:1;}}
+
+.confirm-card{
+  background:var(--surf2);border:1px solid var(--brd2);border-radius:28px;
+  padding:32px 28px 28px;width:100%;max-width:340px;
+  box-shadow:0 24px 80px rgba(0,0,0,.7);
+  animation:cardPop .4s var(--bounce) both;
+  position:relative;overflow:hidden;
+  text-align:center;
+}
+@keyframes cardPop{from{opacity:0;transform:scale(.8) translateY(24px);}to{opacity:1;transform:none;}}
+
+/* Gradient glow behind confirm card */
+.confirm-card::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  border-radius:28px;opacity:.15;
+}
+.confirm-card.type-c::before{background:radial-gradient(circle at 50% 0%,#ffc400,transparent 60%);}
+.confirm-card.type-vc::before{background:radial-gradient(circle at 50% 0%,#b4b4c8,transparent 60%);}
+
+.confirm-icon{
+  font-size:52px;margin-bottom:14px;display:block;
+  animation:iconBounce .6s var(--bounce) .1s both;
+}
+@keyframes iconBounce{from{transform:scale(0) rotate(-20deg);}to{transform:none;}}
+
+.confirm-title{
+  font-family:var(--font-display);font-size:28px;letter-spacing:.06em;margin-bottom:6px;
+}
+.confirm-title.type-c{color:#ffc400;text-shadow:0 0 20px rgba(255,196,0,.35);}
+.confirm-title.type-vc{color:#b4b4c8;text-shadow:0 0 20px rgba(180,180,200,.25);}
+
+.confirm-player{
+  font-size:18px;font-weight:800;margin-bottom:6px;
+  color:var(--t1);
+}
+.confirm-sub{font-size:12px;color:var(--t3);margin-bottom:24px;line-height:1.5;}
+.confirm-sub b{color:var(--t2);font-weight:700;}
+
+/* Bonus info pill */
+.confirm-bonus{
+  display:inline-flex;align-items:center;gap:6px;
+  border-radius:12px;padding:8px 16px;margin-bottom:22px;
+  font-size:12px;font-weight:700;
+}
+.confirm-bonus.type-c{background:rgba(255,196,0,.15);border:1px solid rgba(255,196,0,.3);color:#ffc400;}
+.confirm-bonus.type-vc{background:rgba(180,180,200,.12);border:1px solid rgba(180,180,200,.28);color:#b4b4c8;}
+
+.confirm-actions{display:flex;gap:10px;}
+.confirm-cancel{
+  flex:1;padding:13px;border-radius:14px;
+  background:var(--tog);border:1px solid var(--brd);
+  color:var(--t2);font-family:var(--font-main);font-size:14px;font-weight:700;
+  cursor:pointer;transition:transform .2s var(--bounce),background .2s;
+}
+.confirm-cancel:hover{transform:scale(1.03);background:rgba(255,255,255,.09);}
+.confirm-cancel:active{transform:scale(.96);}
+.confirm-ok{
+  flex:1.3;padding:13px;border-radius:14px;border:none;
+  font-family:var(--font-main);font-size:14px;font-weight:800;
+  cursor:pointer;transition:transform .2s var(--bounce),box-shadow .2s;
+  letter-spacing:.03em;
+}
+.confirm-ok.type-c{
+  background:linear-gradient(135deg,#ffc400,#ffb300);color:#1a0f00;
+  box-shadow:0 4px 18px rgba(255,196,0,.4);
+}
+.confirm-ok.type-vc{
+  background:linear-gradient(135deg,#9aa0b4,#b4b4c8);color:#111;
+  box-shadow:0 4px 18px rgba(180,180,200,.3);
+}
+.confirm-ok:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 8px 28px rgba(255,196,0,.45);}
+.confirm-ok.type-vc:hover{box-shadow:0 8px 28px rgba(180,180,200,.38);}
+.confirm-ok:active{transform:scale(.95);}
+
+/* ══════════════════════════════════
+   DRAFT MODAL
+══════════════════════════════════ */
 .modal{
-  display:none;position:fixed;inset:0;background:var(--ov);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  display:none;position:fixed;inset:0;
+  background:var(--ov);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   z-index:200;align-items:flex-end;justify-content:center;
 }
 .modal.open{display:flex;}
 .modal-sheet{
-  background:var(--sheet);border:1px solid var(--brd2);border-radius:28px 28px 0 0;
-  width:100%;max-height:80vh;overflow-y:auto;padding:20px 0 40px;
-  animation:sheetUp .32s var(--ease);
-  box-shadow:0 -20px 60px rgba(0,0,0,.55);
+  background:var(--surf2);backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);
+  border:1px solid var(--brd2);border-radius:28px 28px 0 0;
+  width:100%;max-height:86vh;overflow-y:auto;
+  padding:20px 0 30px;
+  animation:sheetUp .35s var(--ease);
+  box-shadow:0 -16px 60px rgba(0,0,0,.55);
 }
 @keyframes sheetUp{from{transform:translateY(100%);}to{transform:none;}}
-.sheet-handle{width:36px;height:4px;border-radius:2px;background:var(--text-3);margin:0 auto 16px;opacity:.4;}
-.sheet-head{
-  display:flex;justify-content:space-between;align-items:center;padding:0 20px 16px;
-  border-bottom:1px solid var(--div);margin-bottom:4px;
-}
-.sheet-head h3{
-  font-family:var(--font-display);font-size:22px;letter-spacing:.06em;
-  background:linear-gradient(90deg,var(--text-1),var(--blue));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.close-x{
-  width:32px;height:32px;border-radius:11px;background:var(--tog);border:1px solid var(--brd);
-  color:var(--text-2);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+.sheet-handle{width:36px;height:4px;border-radius:2px;background:var(--t3);margin:0 auto 18px;opacity:.4;}
+.sheet-header{display:flex;justify-content:space-between;align-items:center;padding:0 20px 14px;border-bottom:1px solid var(--div);margin-bottom:4px;}
+.sheet-header h3{font-family:var(--font-display);font-size:22px;letter-spacing:.05em;}
+.close-btn{
+  width:32px;height:32px;border-radius:10px;background:var(--tog);border:1px solid var(--brd);
+  color:var(--t2);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;
   transition:transform .2s var(--bounce),background .2s;
 }
-.close-x:hover{transform:scale(1.1) rotate(90deg);background:var(--red-soft);}
-
-.form-group{padding:14px 20px 0;}
-.form-label{
-  font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--text-3);margin-bottom:8px;display:block;
+.close-btn:hover{transform:scale(1.1) rotate(90deg);background:rgba(255,80,50,.2);}
+.draft-search-wrap{padding:12px 16px 8px;position:relative;}
+.draft-search-icon{position:absolute;left:28px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
+.draft-search{
+  width:100%;padding:11px 14px 11px 42px;border-radius:14px;
+  border:1px solid var(--ibrd);background:var(--inp);color:var(--t1);
+  font-family:var(--font-main);font-size:14px;outline:none;-webkit-appearance:none;
+  transition:border-color .2s,box-shadow .2s;
 }
-.form-input{
-  width:100%;padding:13px 14px;border-radius:14px;border:1px solid var(--ibrd);
-  background:var(--inp);color:var(--text-1);font-family:var(--font-main);font-size:15px;
-  outline:none;-webkit-appearance:none;
-  transition:border-color .25s,box-shadow .25s;
+.draft-search:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,107,53,.12);}
+.draft-search::placeholder{color:var(--t3);}
+.draft-filter-row{display:flex;gap:6px;padding:0 16px 10px;overflow-x:auto;scrollbar-width:none;}
+.draft-filter-row::-webkit-scrollbar{display:none;}
+.filter-chip{
+  flex-shrink:0;padding:6px 14px;border-radius:18px;border:1px solid var(--ibrd);
+  background:var(--inp);color:var(--t2);font-family:var(--font-main);font-size:11px;font-weight:700;
+  cursor:pointer;transition:all .2s var(--bounce);white-space:nowrap;
 }
-.form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,107,53,.12);}
-.form-note{font-size:11px;color:var(--text-3);margin-top:7px;line-height:1.6;padding:8px 10px;background:var(--inp);border-radius:10px;border:1px solid var(--ibrd);}
-.form-footer{padding:16px 20px 0;}
+.filter-chip.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);}
+#draft-list-container{padding:8px 16px 16px;}
+.draft-row{
+  display:flex;align-items:center;padding:12px 16px;margin-bottom:8px;
+  background:var(--surf);border:1px solid var(--brd);border-radius:16px;gap:11px;
+  animation:cardIn .3s var(--ease) both;
+  transition:background .2s;
+}
+.draft-row.sold{opacity:.45;}
+.sold-chip{font-size:9px;font-weight:700;padding:5px 9px;border-radius:8px;background:rgba(79,172,254,.12);color:#4facfe;text-align:right;line-height:1.5;letter-spacing:.04em;}
+.price-input{
+  width:60px;padding:8px 8px;border-radius:10px;border:1px solid var(--ibrd);
+  background:var(--inp);color:var(--t1);font-size:13px;font-family:var(--font-mono);
+  text-align:center;outline:none;-webkit-appearance:none;
+  transition:border-color .2s;
+}
+.price-input:focus{border-color:var(--accent);}
+.buy-btn{
+  background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;
+  padding:8px 14px;border-radius:10px;font-size:12px;font-weight:800;cursor:pointer;
+  font-family:var(--font-main);transition:transform .2s var(--bounce),box-shadow .2s;
+  box-shadow:0 3px 12px rgba(34,197,94,.3);letter-spacing:.03em;
+}
+.buy-btn:hover{transform:scale(1.05);}
+.buy-btn:active{transform:scale(.94);}
 
 /* ── BOTTOM NAV ── */
 .bottom-nav{
   position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
   width:calc(100% - 28px);max-width:480px;height:68px;
-  background:var(--nav-bg);backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);
+  background:var(--nav);backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);
   border:1px solid var(--brd);border-radius:28px;
   display:flex;justify-content:space-around;align-items:center;
   padding:6px 2px;box-shadow:0 8px 40px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04);z-index:100;
 }
 .nav-item{
-  text-align:center;color:var(--text-3);text-decoration:none;font-size:8px;font-weight:700;letter-spacing:.05em;
+  text-align:center;color:var(--t3);text-decoration:none;font-size:8px;font-weight:700;letter-spacing:.05em;
   flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;transition:color .25s;
 }
 .nav-item.active{color:var(--accent);}
@@ -381,8 +389,6 @@ body{
 .nav-item.active .nav-icon-wrap{background:var(--accent-soft);box-shadow:0 0 12px rgba(255,107,53,.2);}
 .nav-item:hover .nav-icon-wrap{transform:translateY(-2px);}
 .nav-icon{font-size:16px;line-height:1;}
-
-.loading-row{padding:20px;text-align:center;color:var(--text-3);font-size:13px;}
 </style>
 </head>
 <body>
@@ -391,177 +397,98 @@ body{
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="topbar-left">
-    <p class="greeting">IPL Fantasy 2026</p>
-    <h1>Settings</h1>
-  </div>
-  <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
-</div>
-
-<!-- PROFILE CARD -->
-<div class="profile-card" id="profile-card" style="animation-delay:.05s">
-  <div class="profile-card-bg"></div>
-  <div class="profile-card-inner">
-    <div class="avatar" id="profile-initial">?</div>
-    <div class="profile-info">
-      <div class="profile-name" id="profile-name">Loading…</div>
-      <div class="profile-sub" id="profile-team">—</div>
-      <span class="profile-badge user" id="profile-badge">User</span>
-    </div>
-    <button class="edit-btn" onclick="openEditModal()">✏️ Edit</button>
-  </div>
-</div>
-
-<!-- APPEARANCE -->
-<p class="sec-label" style="animation-delay:.1s">Appearance</p>
-<div class="card" style="animation-delay:.12s">
-  <div class="row">
-    <div class="row-left">
-      <span class="row-label">Dark Mode</span>
-      <span class="row-sub">Toggle between light and dark theme</span>
-    </div>
-    <label class="toggle-wrap">
-      <input type="checkbox" id="dark-toggle" onchange="onToggleTheme(this)">
-      <span class="toggle-slider"></span>
-    </label>
-  </div>
-</div>
-
-<!-- POINTS SYSTEM -->
-<p class="sec-label" style="animation-delay:.14s">⚡ Scoring Rules</p>
-<div class="card" style="animation-delay:.16s">
-  <div id="pts-table-body"><div class="loading-row">Loading scoring rules…</div></div>
-</div>
-
-<!-- ADMIN SECTION -->
-<div id="admin-section" style="display:none">
-  <p class="sec-label" style="animation-delay:.18s">🔧 Admin Panel</p>
-
-  <!-- Scoring editor -->
-  <div class="card" style="animation-delay:.2s;margin-bottom:12px;">
-    <div class="admin-hdr"><h3>Edit Scoring Rules</h3><span class="admin-badge">ADMIN</span></div>
-    <p class="admin-sub">Changes update all player points automatically.</p>
-    <div class="scoring-editor" id="scoring-editor"><div class="loading-row">Loading…</div></div>
-    <div style="padding:0 18px 14px;display:flex;flex-direction:column;gap:6px;">
-      <div class="add-attr-row" style="padding:0;">
-        <input class="add-attr-inp" id="new-attr-label" placeholder="Attribute name (e.g. Run Outs)">
-        <input class="add-attr-inp" id="new-attr-pts" type="number" placeholder="Pts" style="width:64px;flex:none;">
-        <button class="add-attr-btn" onclick="addAttribute()">＋ Add</button>
-      </div>
-      <button class="action-btn primary" id="save-scoring-btn" onclick="saveScoringRules()">💾 Save & Recalculate All Points</button>
+    <p class="greeting">My Squad</p>
+    <h1>Roster</h1>
+    <div class="budget-bar">
+      <div class="budget-label">Budget remaining</div>
+      <div class="budget-track"><div class="budget-fill" id="budget-fill" style="width:100%"></div></div>
+      <div class="budget-num" id="budget-num">₹100.00 Cr</div>
     </div>
   </div>
-
-  <!-- User management -->
-  <div class="card" style="animation-delay:.22s;margin-bottom:12px;">
-    <div class="admin-hdr"><h3>All Users</h3><span class="admin-badge">ADMIN</span></div>
-    <div id="users-list"><div class="loading-row">Loading users…</div></div>
+  <div class="top-right">
+    <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
+    <button class="draft-btn" onclick="openDraft()">＋ Draft</button>
   </div>
+</div>
 
-  <!-- Recalc -->
-  <div class="card" style="animation-delay:.26s;margin-bottom:12px;">
-    <div class="admin-hdr"><h3>Data Actions</h3><span class="admin-badge">ADMIN</span></div>
-    <div style="padding:14px 18px;">
-      <button class="action-btn safe" id="recalc-btn" onclick="recalcAll()">🔄 Recalculate All Player Points</button>
-      <p style="font-size:11px;color:var(--text-3);margin-top:8px;line-height:1.6;">
-        Re-computes Total Points for every player from their raw stats using current scoring rules. Use this after changing rules or if points appear incorrect.
-      </p>
+<p class="sec"><span>Squad Players</span><span class="sec-count" id="squad-count">0</span></p>
+<div class="players-list" id="my-squad-list">
+  <div class="empty-state"><span class="empty-emoji">🏏</span>Your squad is empty.<br>Start the draft!</div>
+</div>
+
+<!-- ══ C/VC CONFIRMATION POPUP ══ -->
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-card" id="confirm-card">
+    <span class="confirm-icon" id="confirm-icon">🏆</span>
+    <div class="confirm-title" id="confirm-title">SET CAPTAIN</div>
+    <div class="confirm-player" id="confirm-player">Player Name</div>
+    <div class="confirm-sub" id="confirm-sub">Are you sure?</div>
+    <div class="confirm-bonus" id="confirm-bonus">+2× points multiplier</div>
+    <div class="confirm-actions">
+      <button class="confirm-cancel" onclick="closeConfirm()">Cancel</button>
+      <button class="confirm-ok" id="confirm-ok" onclick="doSetRole()">Confirm</button>
     </div>
   </div>
 </div>
 
-<!-- APP INFO -->
-<p class="sec-label" style="animation-delay:.28s">About</p>
-<div class="card" style="animation-delay:.3s">
-  <div class="row">
-    <div class="row-left"><span class="row-label">App Version</span></div>
-    <span class="info-val">v2.0.0 · IPL 2026</span>
-  </div>
-  <div class="row">
-    <div class="row-left"><span class="row-label">Data Source</span></div>
-    <span class="info-val">Google Sheets</span>
-  </div>
-  <div class="row">
-    <div class="row-left"><span class="row-label">Season</span></div>
-    <span class="info-val">IPL 2026</span>
-  </div>
-</div>
-
-<!-- RESET C/VC SECTION -->
-<p class="sec-label" style="animation-delay:.3s">⚠️ Reset</p>
-<div class="settings-card" style="animation-delay:.31s;border-color:rgba(231,76,60,.2);">
-  <div style="padding:16px 18px 6px;display:flex;align-items:flex-start;gap:12px;">
-    <div style="font-size:22px;flex-shrink:0;margin-top:2px;">🔓</div>
-    <div style="flex:1;">
-      <div style="font-size:14px;font-weight:800;margin-bottom:4px;">Reset Captain &amp; Vice-Captain</div>
-      <div style="font-size:11px;color:var(--text-3);line-height:1.6;margin-bottom:14px;">
-        Use this if your C/VC was set to a player who no longer exists in your squad. 
-        This will clear both roles from the sheet and allow you to re-pick.
-      </div>
-      <button class="action-btn danger" onclick="resetCVC()" id="reset-cvc-btn" style="width:100%">
-        🔓 Reset Captain &amp; Vice-Captain
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- SIGN OUT -->
-<button class="signout-btn" style="animation:fadeUp .4s .36s both" onclick="signOut()">🚪 Sign Out</button>
-
-<!-- EDIT PROFILE MODAL -->
-<div id="edit-modal" class="modal" onclick="handleOverlay(event,'edit-modal')">
+<!-- ══ DRAFT MODAL ══ -->
+<div id="draft-modal" class="modal" onclick="handleOverlay(event)">
   <div class="modal-sheet">
     <div class="sheet-handle"></div>
-    <div class="sheet-head">
-      <h3>Edit Profile</h3>
-      <button class="close-x" onclick="closeModal('edit-modal')">✕</button>
+    <div class="sheet-header">
+      <h3>Auction Draft</h3>
+      <button class="close-btn" onclick="closeDraft()">✕</button>
     </div>
-    <div class="form-group">
-      <label class="form-label">Your Name</label>
-      <input class="form-input" id="edit-name" type="text" placeholder="Your display name">
+    <div class="draft-search-wrap">
+      <span class="draft-search-icon">🔍</span>
+      <input class="draft-search" id="draft-search" type="text" placeholder="Search players, teams…" oninput="renderDraftList()">
     </div>
-    <div class="form-group">
-      <label class="form-label">Team Name</label>
-      <input class="form-input" id="edit-team" type="text" placeholder="Your fantasy team name">
-      <p class="form-note">⚠️ Changing team name will require re-login. Your squad data is tied to the team name in the sheet.</p>
+    <div class="draft-filter-row">
+      <button class="filter-chip active" onclick="setFilter('ALL',this)">All</button>
+      <button class="filter-chip" onclick="setFilter('Available',this)">⭕ Available</button>
+      <button class="filter-chip" onclick="setFilter('BAT',this)">🏏 BAT</button>
+      <button class="filter-chip" onclick="setFilter('BOWL',this)">🎳 BOWL</button>
+      <button class="filter-chip" onclick="setFilter('AR',this)">⚡ AR</button>
+      <button class="filter-chip" onclick="setFilter('WK',this)">🧤 WK</button>
     </div>
-    <div class="form-group">
-      <label class="form-label">New PIN (4 digits, optional)</label>
-      <input class="form-input" id="edit-pin" type="number" placeholder="Leave blank to keep current PIN" maxlength="4" inputmode="numeric">
-    </div>
-    <div class="form-footer">
-      <button class="action-btn primary" onclick="saveProfile()">✓ Save Changes</button>
-    </div>
+    <div id="draft-list-container"><div class="empty-state">Loading players…</div></div>
   </div>
 </div>
 
-<!-- BOTTOM NAV -->
 <nav class="bottom-nav">
   <a href="dashboard.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🏠</span></div>Home</a>
-  <a href="squad.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad</a>
+  <a href="squad.html"     class="nav-item active"><div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad</a>
   <a href="players.html"   class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🃏</span></div>Cards</a>
   <a href="teams.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">👥</span></div>Teams</a>
   <a href="stats.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">📊</span></div>Stats</a>
-  <a href="settings.html"  class="nav-item active"><div class="nav-icon-wrap"><span class="nav-icon">⚙️</span></div>Settings</a>
+  <a href="settings.html"  class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">⚙️</span></div>Settings</a>
 </nav>
 
 <script>
 const WEB_APP_URL="https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
-const myTeam=localStorage.getItem("teamName")||"";
-const myName=localStorage.getItem("userName")||"";
-if(!myTeam){window.location.href="index.html";}
-const isAdmin=myTeam==="Admin";
+const myTeamName=localStorage.getItem("teamName");
+if(!myTeamName){window.location.href="index.html";}
 
-let pointsConfig=[];
+/* ── THEME ── */
+const savedTheme=localStorage.getItem("theme")||"dark";
+document.documentElement.setAttribute("data-theme",savedTheme);
+document.getElementById("theme-icon").textContent=savedTheme==="dark"?"☀️":"🌙";
+function toggleTheme(){
+  const next=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
+  document.documentElement.setAttribute("data-theme",next);
+  localStorage.setItem("theme",next);
+  document.getElementById("theme-icon").textContent=next==="dark"?"☀️":"🌙";
+}
 
 /* ── PARTICLES ── */
 (function(){
   const canvas=document.getElementById("pitch-canvas");
   const ctx=canvas.getContext("2d");
   let W,H,p=[];
-  const EM=["⚙️","⚡","✨","🌟","💫","•","•","•","•"];
+  const EM=["🏏","⚡","✨","🌟","💫","•","•","•","•"];
   function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
-  function mk(){return{x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.3,vy:-Math.random()*.4-.1,s:Math.random()*7+4,e:EM[Math.floor(Math.random()*EM.length)],a:Math.random()*.18+.04,l:Math.random()*200+100};}
-  function init(){p=Array.from({length:16},mk);}
+  function mk(){return{x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.3,vy:-Math.random()*.4-.1,s:Math.random()*7+4,e:EM[Math.floor(Math.random()*EM.length)],a:Math.random()*.22+.04,l:Math.random()*200+100};}
+  function init(){p=Array.from({length:18},mk);}
   function tick(){
     ctx.clearRect(0,0,W,H);
     const dark=document.documentElement.getAttribute("data-theme")==="dark";
@@ -572,257 +499,292 @@ let pointsConfig=[];
   window.addEventListener("resize",()=>{resize();init();});resize();init();tick();
 })();
 
-// ── THEME ──────────────────────────────────────────────────────────────
-const savedTheme=localStorage.getItem("theme")||"dark";
-document.documentElement.setAttribute("data-theme",savedTheme);
-document.getElementById("theme-icon").textContent=savedTheme==="dark"?"☀️":"🌙";
-document.getElementById("dark-toggle").checked=savedTheme==="dark";
-
-function toggleTheme(){
-  const next=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
-  applyTheme(next);
-}
-function onToggleTheme(chk){applyTheme(chk.checked?"dark":"light");}
-function applyTheme(t){
-  document.documentElement.setAttribute("data-theme",t);
-  localStorage.setItem("theme",t);
-  document.getElementById("theme-icon").textContent=t==="dark"?"☀️":"🌙";
-  document.getElementById("dark-toggle").checked=t==="dark";
+/* ── TEAM COLOURS ── */
+const TEAMS={
+  MI:{c1:"#004BA0",c2:"#1a6fd4"},CSK:{c1:"#c07c08",c2:"#FFD700"},RCB:{c1:"#8B0000",c2:"#ff4560"},
+  KKR:{c1:"#3A225D",c2:"#8b5cf6"},DC:{c1:"#17479E",c2:"#4facfe"},PBKS:{c1:"#c41920",c2:"#ff6b6b"},
+  RR:{c1:"#254AA5",c2:"#f542b3"},SRH:{c1:"#c04010",c2:"#ff8c00"},GT:{c1:"#1B2133",c2:"#3a5a9a"},LSG:{c1:"#1d6b42",c2:"#5ec48a"},
+};
+function getTeamColors(n){
+  const u=(n||"").toUpperCase();
+  for(const k of Object.keys(TEAMS)) if(u.includes(k)) return TEAMS[k];
+  return{c1:"#2a3a5a",c2:"#4facfe"};
 }
 
-// ── API ─────────────────────────────────────────────────────────────────
-async function api(body){
-  try{const r=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify(body)});return r.json();}
-  catch{return null;}
-}
+function getPts(p){return parseFloat(p["Total Points"]||p["Current Points"]||0)||0;}
+function roleClass(r){return r==="BOWL"?"bowl":r==="AR"?"ar":r==="WK"?"wk":"bat";}
+const ROLE_EMOJI={BAT:"🏏",BOWL:"🎳",AR:"⚡",WK:"🧤"};
 
-// ── INIT ────────────────────────────────────────────────────────────────
-document.addEventListener("DOMContentLoaded",async()=>{
-  const initial=myName?myName[0].toUpperCase():myTeam[0].toUpperCase()||"?";
-  document.getElementById("profile-initial").innerText=initial;
-  document.getElementById("profile-name").innerText=myName||myTeam;
-  document.getElementById("profile-team").innerText="Team: "+myTeam;
-  if(isAdmin){
-    document.getElementById("profile-badge").textContent="Admin";
-    document.getElementById("profile-badge").className="profile-badge admin";
-    document.getElementById("admin-section").style.display="block";
+/* ══════════════════════════════
+   C / VC CONFIRMATION SYSTEM
+══════════════════════════════ */
+let pendingRole=null,pendingName=null;
+
+function askSetRole(role,idx){
+  const p=window._squadPlayers&&window._squadPlayers[idx];
+  if(!p)return;
+  const name=p["Player Name"];
+  const isC=role==="C";
+  const curCap=localStorage.getItem("captain")||"";
+  const curVC=localStorage.getItem("viceCaptain")||"";
+
+  // ── LOCK: once set, C and VC cannot be changed ──
+  if(isC && curCap){
+    if(curCap===name) showToast("👑 "+name+" is locked as Captain!","info");
+    else showToast("🔒 Captain is locked — "+curCap+" cannot be replaced.","warn");
+    return;
   }
-  const cfgRes=await api({action:"getPointsConfig"});
-  if(cfgRes?.status==="success") pointsConfig=cfgRes.config;
-  buildPointsTable();
-  if(isAdmin){buildScoringEditor();loadUsers();}
-});
-
-// ── POINTS TABLE ────────────────────────────────────────────────────────
-function buildPointsTable(){
-  const catOrder=["batting","bowling","fielding","milestone","custom"];
-  const catMeta={
-    batting:{name:"Batting",cls:"bat"},bowling:{name:"Bowling",cls:"bowl"},
-    fielding:{name:"Fielding",cls:"field"},milestone:{name:"Milestones",cls:"milestone"},custom:{name:"Custom",cls:"custom"}
-  };
-  const groups={};
-  pointsConfig.forEach(a=>{
-    const cat=(a.category||"custom").toLowerCase();
-    if(!groups[cat])groups[cat]=[];
-    groups[cat].push(a);
-  });
-  let html="";
-  const renderCat=(cat,meta)=>{
-    const items=groups[cat];
-    if(!items?.length) return;
-    html+=`<div class="pts-category" onclick="toggleCat(this)">
-      <div class="pts-cat-hdr">
-        <span class="pts-cat-name ${meta.cls}">${meta.name} <span style="opacity:.55;font-weight:600">(${items.length})</span></span>
-        <span class="pts-chevron">❯</span>
-      </div>
-      <div class="pts-rows">`;
-    items.forEach(a=>{
-      html+=`<div class="pts-row"><span class="pts-row-label">${a.label}</span><span class="pts-row-val">+${a.points}</span></div>`;
-    });
-    html+=`</div></div>`;
-  };
-  catOrder.forEach(cat=>renderCat(cat,catMeta[cat]||{name:cat,cls:"custom"}));
-  Object.keys(groups).forEach(cat=>{if(!catOrder.includes(cat))renderCat(cat,{name:cat,cls:"custom"});});
-  if(!html) html='<div class="loading-row">No scoring rules configured.</div>';
-  document.getElementById("pts-table-body").innerHTML=html;
-}
-function toggleCat(el){el.classList.toggle("open");}
-
-// ── SCORING EDITOR (Admin) ───────────────────────────────────────────────
-function buildScoringEditor(){
-  if(!pointsConfig.length){document.getElementById("scoring-editor").innerHTML='<div class="loading-row">No attributes yet.</div>';return;}
-  let html="";
-  pointsConfig.forEach((a,i)=>{
-    html+=`<div class="scoring-row">
-      <label>${a.label} <span style="font-size:10px;color:var(--text-3)">(${a.category||"custom"})</span></label>
-      <input class="scoring-input" type="number" id="pts-val-${i}" value="${a.points}" min="0" step="1">
-      <button class="del-btn" onclick="deleteAttr(${i})">✕</button>
-    </div>`;
-  });
-  document.getElementById("scoring-editor").innerHTML=html;
-}
-
-function deleteAttr(idx){
-  if(!confirm(`Delete "${pointsConfig[idx].label}"? This will remove the scoring rule.`))return;
-  pointsConfig.splice(idx,1);
-  buildScoringEditor();
-}
-
-function addAttribute(){
-  const label=document.getElementById("new-attr-label").value.trim();
-  const pts=parseInt(document.getElementById("new-attr-pts").value)||0;
-  if(!label){alert("Enter an attribute name.");return;}
-  const key=label.toLowerCase().replace(/[^a-z0-9]/g,"");
-  pointsConfig.push({key,label,points:pts,category:"custom"});
-  document.getElementById("new-attr-label").value="";
-  document.getElementById("new-attr-pts").value="";
-  buildScoringEditor();
-}
-
-async function saveScoringRules(){
-  const updated=pointsConfig.map((a,i)=>({
-    ...a,
-    points:parseInt(document.getElementById(`pts-val-${i}`)?.value||a.points)||0
-  }));
-  const btn=document.getElementById("save-scoring-btn");
-  btn.disabled=true;btn.textContent="Saving…";
-  const res=await api({action:"updatePointsConfig",config:updated});
-  if(res?.status==="success"){
-    pointsConfig=updated;buildPointsTable();buildScoringEditor();
-    alert("✅ Scoring rules saved! Points recalculated for all players.");
-  } else {
-    alert(res?.message||"Failed to save scoring rules.");
+  if(!isC && curVC){
+    if(curVC===name) showToast("⭐ "+name+" is locked as Vice-Captain!","info");
+    else showToast("🔒 Vice-Captain is locked — "+curVC+" cannot be replaced.","warn");
+    return;
   }
-  btn.disabled=false;btn.textContent="💾 Save & Recalculate All Points";
+
+  if(isC && curVC===name){showToast(`${name} is already your Vice-Captain!`,"warn");return;}
+  if(!isC && curCap===name){showToast(`${name} is already your Captain!`,"warn");return;}
+
+  pendingRole=role;pendingName=name;
+
+  const card=document.getElementById("confirm-card");
+  const overlay=document.getElementById("confirm-overlay");
+  card.className="confirm-card type-"+(isC?"c":"vc");
+  document.getElementById("confirm-icon").textContent=isC?"👑":"⭐";
+  document.getElementById("confirm-title").className="confirm-title type-"+(isC?"c":"vc");
+  document.getElementById("confirm-title").textContent=isC?"SET CAPTAIN":"SET VICE-CAPTAIN";
+  document.getElementById("confirm-player").textContent=name;
+  document.getElementById("confirm-ok").className="confirm-ok type-"+(isC?"c":"vc");
+  document.getElementById("confirm-ok").textContent=isC?"✓ Make Captain":"✓ Make Vice-Captain";
+
+  // Info about what will change
+  const replacing=isC?(curCap?`Replacing: ${curCap}`:""):(curVC?`Replacing: ${curVC}`:"");
+  document.getElementById("confirm-sub").innerHTML=
+    `Your <b>${isC?"Captain":"Vice-Captain"}</b> earns a points bonus.<br>${replacing}`;
+
+  const bonusEl=document.getElementById("confirm-bonus");
+  bonusEl.className="confirm-bonus type-"+(isC?"c":"vc");
+  bonusEl.textContent=isC?"👑 2× Captain Points Multiplier":"⭐ 1.5× Vice-Captain Multiplier";
+
+  overlay.classList.add("open");
 }
 
-async function recalcAll(){
-  const btn=document.getElementById("recalc-btn");
-  btn.disabled=true;btn.textContent="Recalculating…";
-  const res=await api({action:"recalcAll"});
-  if(res?.status==="success") alert("✅ All player points recalculated!");
-  else alert(res?.message||"Recalculation failed.");
-  btn.disabled=false;btn.textContent="🔄 Recalculate All Player Points";
+function closeConfirm(){
+  document.getElementById("confirm-overlay").classList.remove("open");
+  pendingRole=null;pendingName=null;
 }
 
-// ── USERS LIST (Admin) ───────────────────────────────────────────────────
-async function loadUsers(){
-  const el=document.getElementById("users-list");
-  const res=await api({action:"getUsers"});
-  if(!res||res.status!=="success"){el.innerHTML='<div class="loading-row" style="color:#e74c3c">Failed to load users.</div>';return;}
-  const users=(res.users||[]).filter(u=>u.teamName!=="Admin");
-  if(!users.length){el.innerHTML='<div class="loading-row">No users yet.</div>';return;}
-  el.innerHTML=users.map((u,i)=>`
-    <div class="user-row" id="urow-${i}">
-      <div class="user-avatar">${(u.teamName[0]||"?").toUpperCase()}</div>
-      <div class="user-info">
-        <div class="user-name">${u.teamName}</div>
-        <div class="user-sub">${u.name||"—"} · C: ${u.captain||"None"} · VC: ${u.vc||"None"}</div>
-      </div>
-      <button class="del-user-btn" onclick="deleteUser('${encodeURIComponent(u.teamName)}',${i})" title="Delete user">🗑️</button>
-    </div>`).join("");
+async function doSetRole(){
+  if(!pendingRole||!pendingName)return;
+  const role=pendingRole,name=pendingName;
+  closeConfirm();
+
+  if(role==="C") localStorage.setItem("captain",name);
+  else           localStorage.setItem("viceCaptain",name);
+
+  showToast(role==="C"?`👑 ${name} is now Captain!`:`⭐ ${name} is now Vice-Captain!`,"success");
+  loadMySquad();
+
+  try{
+    await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({
+      action:"setRoles",teamName:myTeamName,
+      captain:localStorage.getItem("captain")||"",
+      viceCaptain:localStorage.getItem("viceCaptain")||""
+    })});
+  }catch{}
 }
 
-async function deleteUser(encTeam,rowIdx){
-  const teamName=decodeURIComponent(encTeam);
-  if(!confirm(`Delete "${teamName}" and all their data? This cannot be undone.`)) return;
-  const row=document.getElementById("urow-"+rowIdx);
-  if(row){row.style.opacity="0.4";row.style.pointerEvents="none";}
-  const res=await api({action:"deleteUser",teamToDelete:teamName});
-  if(res?.status==="success"){
-    alert(`✅ "${teamName}" has been deleted.`);loadUsers();
-  } else {
-    alert(res?.message||"Failed to delete user.");
-    if(row){row.style.opacity="";row.style.pointerEvents="";}
-  }
-}
-
-// ── EDIT PROFILE ─────────────────────────────────────────────────────────
-function openEditModal(){
-  document.getElementById("edit-name").value=myName||"";
-  document.getElementById("edit-team").value=myTeam||"";
-  document.getElementById("edit-pin").value="";
-  document.getElementById("edit-modal").classList.add("open");
-}
-
-async function saveProfile(){
-  const newName=document.getElementById("edit-name").value.trim();
-  const newTeam=document.getElementById("edit-team").value.trim();
-  const newPin=document.getElementById("edit-pin").value.trim();
-  if(!newName||!newTeam){alert("Name and Team Name are required.");return;}
-  if(newPin&&(newPin.length!==4||isNaN(newPin))){alert("PIN must be exactly 4 digits.");return;}
-  const body={action:"updateProfile",teamName:myTeam,newName,newTeam};
-  if(newPin) body.newPin=newPin;
-  const res=await api(body);
-  if(res?.status==="success"){
-    localStorage.setItem("userName",newName);
-    localStorage.setItem("teamName",newTeam);
-    alert("✅ Profile updated!");
-    closeModal("edit-modal");
-    location.reload();
-  } else {
-    alert(res?.message||"Failed to update profile.");
-  }
-}
-
-// ── TOAST ─────────────────────────────────────────────────────────────────
+/* ── TOAST ── */
 function showToast(msg,type="info"){
-  const colors={success:"#22c55e",warn:"#f1c40f",info:"#4facfe"};
   const t=document.createElement("div");
+  const colors={success:"#22c55e",warn:"#f1c40f",info:"#4facfe"};
   t.style.cssText=`position:fixed;bottom:calc(68px + 28px);left:50%;transform:translateX(-50%);
     background:rgba(10,20,38,.96);border:1px solid ${colors[type]||"#4facfe"};color:#fff;
     padding:10px 20px;border-radius:14px;font-size:13px;font-weight:700;z-index:600;
     box-shadow:0 4px 24px rgba(0,0,0,.5);backdrop-filter:blur(12px);
-    animation:toastIn .35s cubic-bezier(.34,1.56,.64,1) both;white-space:nowrap;max-width:90vw;text-align:center;`;
+    animation:toastIn .35s cubic-bezier(.34,1.56,.64,1) both;white-space:nowrap;`;
   t.textContent=msg;
-  const s=document.createElement("style");
-  s.textContent=`@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(12px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}`;
-  document.head.appendChild(s);
+  const style=document.createElement("style");
+  style.textContent=`@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(12px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}`;
+  document.head.appendChild(style);
   document.body.appendChild(t);
-  setTimeout(()=>t.remove(),3000);
+  setTimeout(()=>t.remove(),2600);
 }
 
-// ── RESET CAPTAIN / VC ───────────────────────────────────────────────────
-async function resetCVC(){
-  const cap=localStorage.getItem("captain")||"";
-  const vc=localStorage.getItem("viceCaptain")||"";
-  if(!cap&&!vc){
-    showToast("No Captain or Vice-Captain is set — nothing to reset.","info");return;
+/* ── LOAD SQUAD ── */
+document.addEventListener("DOMContentLoaded",loadMySquad);
+function handleOverlay(e){if(e.target===document.getElementById("draft-modal"))closeDraft();}
+
+async function loadMySquad(){
+  const container=document.getElementById("my-squad-list");
+  container.innerHTML='<div class="empty-state"><span style="font-size:32px">⏳</span><br>Loading squad…</div>';
+  try{
+    // Fetch roles
+    const rolesRes=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"getRoles",teamName:myTeamName})});
+    const rolesData=await rolesRes.json();
+    if(rolesData.status==="success"){
+      if(rolesData.captain)     localStorage.setItem("captain",rolesData.captain);
+      if(rolesData.viceCaptain) localStorage.setItem("viceCaptain",rolesData.viceCaptain);
+    }
+    // Fetch players
+    const res=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"getPlayers"})});
+    const result=await res.json();
+    if(result.status==="success"){
+      const myPlayers=result.players.filter(p=>p["Sold To"]===myTeamName);
+      document.getElementById("squad-count").textContent=myPlayers.length;
+      // Disable draft button if squad is full
+      const draftBtn=document.querySelector(".draft-btn");
+      if(draftBtn){
+        if(myPlayers.length>=15){
+          draftBtn.disabled=true;draftBtn.style.opacity=".4";draftBtn.style.cursor="not-allowed";
+          draftBtn.textContent="Squad Full";
+        }else{
+          draftBtn.disabled=false;draftBtn.style.opacity="";draftBtn.style.cursor="";
+          draftBtn.textContent="＋ Draft";
+        }
+      }
+      const spent=myPlayers.reduce((s,p)=>s+(Number(p["Price Bought"])||0),0);
+      const remaining=100-spent;
+      const pct=Math.max(0,Math.min(100,remaining));
+      const fill=document.getElementById("budget-fill");
+      const num=document.getElementById("budget-num");
+      fill.style.width=pct+"%";
+      if(pct>40){fill.className="budget-fill";num.className="budget-num";}
+      else if(pct>15){fill.className="budget-fill warn";num.className="budget-num warn";}
+      else{fill.className="budget-fill danger";num.className="budget-num danger";}
+      num.textContent=`₹${remaining.toFixed(2)} Cr`;
+
+      // Store globally for buy-validation
+      window._remainingBudget = remaining;
+      window._squadCount = myPlayers.length;
+
+      if(!myPlayers.length){
+        container.innerHTML='<div class="empty-state"><span class="empty-emoji">🏏</span>Your squad is empty.<br>Tap <b>+ Draft</b> to get started!</div>';
+        return;
+      }
+      // Store globally so askSetRole can look up by index (avoids all encoding issues)
+      window._squadPlayers = myPlayers;
+      const cap=localStorage.getItem("captain")||"";
+      const vc =localStorage.getItem("viceCaptain")||"";
+      // A role slot is "filled" once set — regardless of which player
+      const capFilled = !!cap;
+      const vcFilled  = !!vc;
+      container.innerHTML=myPlayers.map((p,i)=>{
+        const name=p["Player Name"];
+        const isC=cap===name;const isVC=vc===name;
+        const rc=roleClass(p["Role"]);
+        const icon=ROLE_EMOJI[p["Role"]]||"👤";
+        const pts=getPts(p);
+        const tc=getTeamColors(p["IPL Team"]||"");
+        // Lock logic: active badge is always locked (can't re-pick), 
+        // inactive badge is locked if that slot is already filled by someone else
+        const cLocked = isC || capFilled;   // locked if I AM captain OR slot already taken
+        const vcLocked = isVC || vcFilled;  // locked if I AM VC OR slot already taken
+        return`<div class="player-card" style="animation-delay:${i*.05}s">
+          <div class="card-bg" style="background:linear-gradient(110deg,${tc.c1}CC 0%,${tc.c2}55 45%,transparent 72%)"></div>
+          <div class="card-shimmer"></div>
+          <div class="card-accent" style="background:linear-gradient(180deg,${tc.c2},${tc.c1})"></div>
+          <div class="card-inner">
+            <div class="p-avatar" style="background:linear-gradient(135deg,${tc.c1}55,${tc.c2}33);border-color:${tc.c2}44">${icon}</div>
+            <div class="p-info">
+              <div class="p-name">${name}</div>
+              <div class="p-meta">
+                <span class="badge ${rc}">${p["Role"]}</span>
+                <span class="badge team">${p["IPL Team"]}</span>
+                <span class="badge price">₹${p["Price Bought"]}Cr</span>
+              </div>
+            </div>
+            <div class="p-right">
+              <div class="pts-pill">
+                <span class="pv">${pts}</span>
+                <span class="pl">pts</span>
+              </div>
+              <button class="role-badge-c ${isC?"active":""} ${cLocked?"locked":""}" onclick="askSetRole('C',${i})" title="${isC?"You are Captain (locked)":capFilled?"Captain already set — locked":"Set as Captain"}">${isC?"👑":"C"}</button>
+              <button class="role-badge-vc ${isVC?"active":""} ${vcLocked?"locked":""}" onclick="askSetRole('VC',${i})" title="${isVC?"You are Vice-Captain (locked)":vcFilled?"Vice-Captain already set — locked":"Set as Vice-Captain"}">${isVC?"⭐":"VC"}</button>
+            </div>
+          </div>
+        </div>`;
+      }).join("");
+    }
+  }catch(err){
+    container.innerHTML='<div class="empty-state" style="color:#e74c3c">⚠️ Failed to load squad.</div>';
   }
-  const names=[];
-  if(cap) names.push("C: "+cap);
-  if(vc)  names.push("VC: "+vc);
-  if(!confirm("Reset your Captain & Vice-Captain?\n\n"+names.join("\n")+"\n\nThis cannot be undone without re-picking."))return;
+}
 
-  const btn=document.getElementById("reset-cvc-btn");
-  btn.disabled=true;btn.textContent="Resetting…";
+/* ── DRAFT ── */
+let allDraftPlayers=[],draftFilter="ALL";
+function openDraft(){document.getElementById("draft-modal").classList.add("open");fetchDraftPlayers();}
+function closeDraft(){document.getElementById("draft-modal").classList.remove("open");}
 
-  // Clear sheet first (source of truth)
-  const res=await api({action:"setRoles",teamName:myTeam,captain:"",viceCaptain:""});
-  if(res?.status==="success"){
-    localStorage.removeItem("captain");
-    localStorage.removeItem("viceCaptain");
-    showToast("✅ Captain & Vice-Captain have been reset. Head to Squad to re-pick.","success");
-    btn.textContent="✓ Done — go to Squad to re-pick";
-  }else{
-    showToast("⚠️ Failed to clear from sheet. Try again.","warn");
-    btn.disabled=false;btn.textContent="🔓 Reset Captain & Vice-Captain";
+async function fetchDraftPlayers(){
+  const c=document.getElementById("draft-list-container");
+  c.innerHTML='<div class="empty-state">Loading…</div>';
+  try{
+    const res=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"getPlayers"})});
+    const r=await res.json();
+    if(r.status==="success"){allDraftPlayers=r.players;renderDraftList();}
+  }catch{c.innerHTML='<div class="empty-state" style="color:#e74c3c">Failed to connect.</div>';}
+}
+
+function setFilter(f,btn){
+  draftFilter=f;
+  document.querySelectorAll(".filter-chip").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");renderDraftList();
+}
+
+function renderDraftList(){
+  const c=document.getElementById("draft-list-container");
+  const q=(document.getElementById("draft-search")?.value||"").toLowerCase();
+  let players=[...allDraftPlayers];
+  if(draftFilter==="Available") players=players.filter(p=>(p["Status"]||"").toLowerCase()!=="sold");
+  else if(["BAT","BOWL","AR","WK"].includes(draftFilter)) players=players.filter(p=>p["Role"]===draftFilter);
+  if(q) players=players.filter(p=>p["Player Name"].toLowerCase().includes(q)||(p["IPL Team"]||"").toLowerCase().includes(q));
+  if(!players.length){c.innerHTML='<div class="empty-state">No players found.</div>';return;}
+  c.innerHTML=players.map((p,i)=>{
+    const isSold=(p["Status"]||"").toLowerCase()==="sold";
+    const enc=encodeURIComponent(p["Player Name"]);
+    const sid="p"+i;
+    const rc=roleClass(p["Role"]);
+    const icon=ROLE_EMOJI[p["Role"]]||"👤";
+    return`<div class="draft-row${isSold?" sold":""}" style="animation-delay:${Math.min(i*.03,.4)}s">
+      <div style="font-size:20px;flex-shrink:0">${icon}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px">${p["Player Name"]}</div>
+        <div style="display:flex;gap:5px"><span class="badge ${rc}">${p["Role"]}</span><span class="badge team">${p["IPL Team"]}</span></div>
+      </div>
+      ${isSold
+        ?`<span class="sold-chip">SOLD<br>${p["Sold To"]}</span>`
+        :`<input type="number" id="${sid}" class="price-input" placeholder="₹Cr" min="0.5" step="0.5">
+           <button class="buy-btn" onclick="buyPlayer('${enc}','${sid}')">Buy</button>`}
+    </div>`;
+  }).join("");
+}
+
+async function buyPlayer(enc,inputId){
+  const name=decodeURIComponent(enc);
+  const price=document.getElementById(inputId)?.value;
+  if(!price||price<=0){showToast("Enter a valid price!","warn");return;}
+
+  // ── RULE 1: 15-player squad limit ──
+  const currentCount=window._squadCount||0;
+  if(currentCount>=15){
+    showToast("🚫 Squad full! Maximum 15 players allowed.","warn");return;
   }
-}
 
-// ── SIGN OUT ─────────────────────────────────────────────────────────────
-function signOut(){
-  if(!confirm("Sign out of your account?"))return;
-  localStorage.removeItem("teamName");
-  localStorage.removeItem("userName");
-  localStorage.removeItem("captain");
-  localStorage.removeItem("viceCaptain");
-  window.location.href="index.html";
-}
+  // ── RULE 2: 100 Cr budget cap ──
+  const remaining=window._remainingBudget!==undefined?window._remainingBudget:100;
+  if(parseFloat(price)>remaining){
+    showToast(`💸 Not enough budget! Only ₹${remaining.toFixed(2)} Cr left.`,"warn");return;
+  }
 
-// ── MODAL HELPERS ─────────────────────────────────────────────────────────
-function closeModal(id){document.getElementById(id).classList.remove("open");}
-function handleOverlay(e,id){if(e.target===document.getElementById(id))closeModal(id);}
+  if(!confirm(`Buy ${name} for ₹${price} Cr?`))return;
+  const btn=document.getElementById(inputId)?.nextElementSibling;
+  if(btn){btn.disabled=true;btn.textContent="…";}
+  try{
+    const res=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"buyPlayer",teamName:myTeamName,playerName:name,price})});
+    const r=await res.json();
+    if(r.status==="success"){showToast(`✅ ${name} signed!`,"success");fetchDraftPlayers();loadMySquad();}
+    else{showToast(r.message,"warn");if(btn){btn.disabled=false;btn.textContent="Buy";}}
+  }catch{showToast("Transaction failed.","warn");if(btn){btn.disabled=false;btn.textContent="Buy";}}
+}
 </script>
 </body>
 </html>
