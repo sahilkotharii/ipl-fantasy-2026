@@ -203,6 +203,15 @@ body{
 .role-badge-c:hover,.role-badge-vc:hover{transform:scale(1.15);}
 @keyframes capPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,196,0,.4);}60%{box-shadow:0 0 0 6px rgba(255,196,0,0);}}
 
+/* Locked C/VC — greyed out, no pointer */
+.role-badge-c.locked,.role-badge-vc.locked{
+  opacity:.28;cursor:not-allowed;pointer-events:none;
+  filter:grayscale(1);
+}
+.role-badge-c.active.locked,.role-badge-vc.active.locked{
+  opacity:1;cursor:default;filter:none;pointer-events:none;
+}
+
 /* Empty state */
 .empty-state{padding:50px 20px;text-align:center;color:var(--t3);font-size:14px;line-height:1.8;position:relative;z-index:1;}
 .empty-emoji{font-size:48px;display:block;margin-bottom:12px;animation:float 3s ease-in-out infinite;}
@@ -519,10 +528,20 @@ function askSetRole(role,idx){
   const curCap=localStorage.getItem("captain")||"";
   const curVC=localStorage.getItem("viceCaptain")||"";
 
+  // ── LOCK: once set, C and VC cannot be changed ──
+  if(isC && curCap){
+    if(curCap===name) showToast("👑 "+name+" is locked as Captain!","info");
+    else showToast("🔒 Captain is locked — "+curCap+" cannot be replaced.","warn");
+    return;
+  }
+  if(!isC && curVC){
+    if(curVC===name) showToast("⭐ "+name+" is locked as Vice-Captain!","info");
+    else showToast("🔒 Vice-Captain is locked — "+curVC+" cannot be replaced.","warn");
+    return;
+  }
+
   if(isC && curVC===name){showToast(`${name} is already your Vice-Captain!`,"warn");return;}
   if(!isC && curCap===name){showToast(`${name} is already your Captain!`,"warn");return;}
-  if(isC && curCap===name){showToast("Already Captain!","info");return;}
-  if(!isC && curVC===name){showToast("Already Vice-Captain!","info");return;}
 
   pendingRole=role;pendingName=name;
 
@@ -611,6 +630,17 @@ async function loadMySquad(){
     if(result.status==="success"){
       const myPlayers=result.players.filter(p=>p["Sold To"]===myTeamName);
       document.getElementById("squad-count").textContent=myPlayers.length;
+      // Disable draft button if squad is full
+      const draftBtn=document.querySelector(".draft-btn");
+      if(draftBtn){
+        if(myPlayers.length>=15){
+          draftBtn.disabled=true;draftBtn.style.opacity=".4";draftBtn.style.cursor="not-allowed";
+          draftBtn.textContent="Squad Full";
+        }else{
+          draftBtn.disabled=false;draftBtn.style.opacity="";draftBtn.style.cursor="";
+          draftBtn.textContent="＋ Draft";
+        }
+      }
       const spent=myPlayers.reduce((s,p)=>s+(Number(p["Price Bought"])||0),0);
       const remaining=100-spent;
       const pct=Math.max(0,Math.min(100,remaining));
@@ -622,6 +652,10 @@ async function loadMySquad(){
       else{fill.className="budget-fill danger";num.className="budget-num danger";}
       num.textContent=`₹${remaining.toFixed(2)} Cr`;
 
+      // Store globally for buy-validation
+      window._remainingBudget = remaining;
+      window._squadCount = myPlayers.length;
+
       if(!myPlayers.length){
         container.innerHTML='<div class="empty-state"><span class="empty-emoji">🏏</span>Your squad is empty.<br>Tap <b>+ Draft</b> to get started!</div>';
         return;
@@ -630,6 +664,9 @@ async function loadMySquad(){
       window._squadPlayers = myPlayers;
       const cap=localStorage.getItem("captain")||"";
       const vc =localStorage.getItem("viceCaptain")||"";
+      // A role slot is "filled" once set — regardless of which player
+      const capFilled = !!cap;
+      const vcFilled  = !!vc;
       container.innerHTML=myPlayers.map((p,i)=>{
         const name=p["Player Name"];
         const isC=cap===name;const isVC=vc===name;
@@ -637,6 +674,10 @@ async function loadMySquad(){
         const icon=ROLE_EMOJI[p["Role"]]||"👤";
         const pts=getPts(p);
         const tc=getTeamColors(p["IPL Team"]||"");
+        // Lock logic: active badge is always locked (can't re-pick), 
+        // inactive badge is locked if that slot is already filled by someone else
+        const cLocked = isC || capFilled;   // locked if I AM captain OR slot already taken
+        const vcLocked = isVC || vcFilled;  // locked if I AM VC OR slot already taken
         return`<div class="player-card" style="animation-delay:${i*.05}s">
           <div class="card-bg" style="background:linear-gradient(110deg,${tc.c1}CC 0%,${tc.c2}55 45%,transparent 72%)"></div>
           <div class="card-shimmer"></div>
@@ -656,8 +697,8 @@ async function loadMySquad(){
                 <span class="pv">${pts}</span>
                 <span class="pl">pts</span>
               </div>
-              <button class="role-badge-c ${isC?"active":""}" onclick="askSetRole('C',${i})">C</button>
-              <button class="role-badge-vc ${isVC?"active":""}" onclick="askSetRole('VC',${i})">VC</button>
+              <button class="role-badge-c ${isC?"active":""} ${cLocked?"locked":""}" onclick="askSetRole('C',${i})" title="${isC?"You are Captain (locked)":capFilled?"Captain already set — locked":"Set as Captain"}">${isC?"👑":"C"}</button>
+              <button class="role-badge-vc ${isVC?"active":""} ${vcLocked?"locked":""}" onclick="askSetRole('VC',${i})" title="${isVC?"You are Vice-Captain (locked)":vcFilled?"Vice-Captain already set — locked":"Set as Vice-Captain"}">${isVC?"⭐":"VC"}</button>
             </div>
           </div>
         </div>`;
@@ -721,6 +762,19 @@ async function buyPlayer(enc,inputId){
   const name=decodeURIComponent(enc);
   const price=document.getElementById(inputId)?.value;
   if(!price||price<=0){showToast("Enter a valid price!","warn");return;}
+
+  // ── RULE 1: 15-player squad limit ──
+  const currentCount=window._squadCount||0;
+  if(currentCount>=15){
+    showToast("🚫 Squad full! Maximum 15 players allowed.","warn");return;
+  }
+
+  // ── RULE 2: 100 Cr budget cap ──
+  const remaining=window._remainingBudget!==undefined?window._remainingBudget:100;
+  if(parseFloat(price)>remaining){
+    showToast(`💸 Not enough budget! Only ₹${remaining.toFixed(2)} Cr left.`,"warn");return;
+  }
+
   if(!confirm(`Buy ${name} for ₹${price} Cr?`))return;
   const btn=document.getElementById(inputId)?.nextElementSibling;
   if(btn){btn.disabled=true;btn.textContent="…";}
