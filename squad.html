@@ -525,8 +525,8 @@ function askSetRole(role,idx){
   if(!p)return;
   const name=p["Player Name"];
   const isC=role==="C";
-  const curCap=localStorage.getItem("captain")||"";
-  const curVC=localStorage.getItem("viceCaptain")||"";
+  const curCap=localStorage.removeItem("captain")||"";
+  const curVC=localStorage.removeItem("viceCaptain")||"";
 
   // ── LOCK: once set, C and VC cannot be changed ──
   if(isC && curCap){
@@ -788,3 +788,4 @@ async function buyPlayer(enc,inputId){
 </script>
 </body>
 </html>
+
