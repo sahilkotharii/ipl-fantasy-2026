@@ -48,7 +48,7 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .topbar-left .greeting{font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(–blue);margin-bottom:3px;display:flex;align-items:center;gap:5px;}
 .topbar-left .greeting::before{content:’’;width:16px;height:2px;background:linear-gradient(90deg,var(–blue),transparent);border-radius:1px;}
 .topbar-left h1{font-family:var(–font-display);font-size:30px;letter-spacing:.06em;background:linear-gradient(90deg,var(–t1),var(–blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.topbar-left p{font-size:11px;color:var(–t3);margin-top:2px;font-weight:500;}
+.topbar-left .player-count-sub{font-size:11px;color:var(–t3);margin-top:2px;font-weight:500;}
 .theme-btn{width:40px;height:40px;border-radius:14px;background:var(–tog);border:1px solid var(–brd);color:var(–t1);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s var(–bounce),background .3s;}
 .theme-btn:active{transform:scale(.85);}
 
@@ -175,7 +175,7 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .field{position:relative;padding:12px 8px 14px;background-color:#174d1a;background-image:repeating-linear-gradient(180deg,rgba(0,0,0,.05) 0px,rgba(0,0,0,.05) 28px,transparent 28px,transparent 56px),radial-gradient(ellipse at 50% 50%,#2a7a2e 0%,#1e5c22 45%,#0f3811 100%);}
 [data-theme=“light”] .field{background-color:#256326;background-image:repeating-linear-gradient(180deg,rgba(0,0,0,.04) 0px,rgba(0,0,0,.04) 28px,transparent 28px,transparent 56px),radial-gradient(ellipse at 50% 50%,#3a9e3f 0%,#2e7d32 45%,#1b4d1e 100%);}
 .field::before{content:’’;position:absolute;inset:10px;border-radius:50%;border:1.5px dashed var(–boundary);pointer-events:none;}
-.pitch-strip{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:38px;height:210px;background:linear-gradient(180deg,var(–pitch-c1),var(–pitch-c2),var(–pitch-c1));border-radius:5px;border:1px solid rgba(255,255,255,.2);box-shadow:0 0 20px rgba(0,0,0,.4);pointer-events:none;z-index:0;}
+.pitch-strip{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:38px;height:210px;background:linear-gradient(180deg,#d4b882 0%,#c8a55c 40%,#b89040 60%,#c8a55c 100%);border-radius:5px;border:1px solid rgba(255,255,255,.25);box-shadow:0 0 20px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.2);pointer-events:none;z-index:0;}
 .pitch-strip::before,.pitch-strip::after{content:’’;position:absolute;left:-8px;right:-8px;height:2px;background:rgba(255,255,255,.6);border-radius:1px;}
 .pitch-strip::before{top:22px;}.pitch-strip::after{bottom:22px;}
 .role-row{position:relative;z-index:1;display:flex;justify-content:center;align-items:flex-end;gap:6px;padding:6px 4px 4px;flex-wrap:wrap;}
@@ -205,33 +205,51 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .fm-modal{display:none;position:fixed;inset:0;z-index:250;background:rgba(0,0,0,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);align-items:flex-end;justify-content:center;}
 .fm-modal.open{display:flex;animation:fmIn .22s var(–ease);}
 @keyframes fmIn{from{opacity:0;}to{opacity:1;}}
-.fm-sheet{width:100%;max-width:480px;max-height:88vh;overflow-y:auto;border-radius:28px 28px 0 0;background:var(–surf2);border:1px solid var(–brd2);border-bottom:none;box-shadow:0 -16px 60px rgba(0,0,0,.7);animation:fmUp .35s var(–bounce) both;position:relative;}
+/* Sheet = fixed height card, NO overflow-y so children control scrolling */
+.fm-sheet{
+width:100%;max-width:480px;
+max-height:82vh;
+border-radius:24px 24px 0 0;
+background:var(–surf2);
+border:1px solid var(–brd2);border-bottom:none;
+box-shadow:0 -16px 60px rgba(0,0,0,.7);
+animation:fmUp .38s var(–bounce) both;
+position:relative;
+display:flex;flex-direction:column;
+overflow:hidden;
+}
 @keyframes fmUp{from{transform:translateY(100%);}to{transform:none;}}
-.fm-header{padding:20px 20px 16px;position:relative;overflow:hidden;}
-.fm-handle{width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.25);margin:0 auto 16px;position:relative;z-index:1;}
+/* Sticky top section */
+.fm-sticky{flex-shrink:0;}
+.fm-header{padding:16px 20px 14px;position:relative;overflow:hidden;}
+.fm-handle{width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.3);margin:0 auto 14px;position:relative;z-index:1;}
 .fm-top{display:flex;align-items:center;gap:14px;position:relative;z-index:1;}
-.fm-team-logo{width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.3);box-shadow:0 4px 20px rgba(0,0,0,.4);flex-shrink:0;}
+.fm-team-logo{width:58px;height:58px;border-radius:16px;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.3);box-shadow:0 4px 20px rgba(0,0,0,.4);flex-shrink:0;}
 .fm-player-info{flex:1;min-width:0;}
-.fm-player-name{font-family:var(–font-display);font-size:28px;letter-spacing:.04em;line-height:1;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.4);}
-.fm-player-sub{font-size:12px;color:rgba(255,255,255,.7);margin-top:4px;font-weight:500;}
-.fm-badges{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
-.fmbadge{font-size:10px;font-weight:800;padding:3px 9px;border-radius:7px;display:flex;align-items:center;gap:4px;}
+.fm-player-name{font-family:var(–font-display);font-size:26px;letter-spacing:.04em;line-height:1;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.4);}
+.fm-player-sub{font-size:11px;color:rgba(255,255,255,.7);margin-top:3px;font-weight:500;}
+.fm-badges{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap;}
+.fmbadge{font-size:10px;font-weight:800;padding:3px 8px;border-radius:7px;display:flex;align-items:center;gap:4px;}
 .fmbadge.role{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);}
 .fmbadge.captain{background:rgba(255,196,0,.25);color:#ffc400;border:1px solid rgba(255,196,0,.4);}
 .fmbadge.vc{background:rgba(180,180,200,.2);color:#c8d0dc;border:1px solid rgba(180,180,200,.3);}
 .fmbadge.ocap{background:rgba(255,107,53,.2);color:#ff8c5a;border:1px solid rgba(255,107,53,.4);}
 .fmbadge.pcap{background:rgba(155,89,182,.2);color:#bb8fce;border:1px solid rgba(155,89,182,.4);}
 .fmbadge.price{background:rgba(255,215,0,.15);color:var(–gold);border:1px solid rgba(255,215,0,.25);font-family:var(–font-mono);}
-.fm-close{position:absolute;top:16px;right:16px;z-index:2;width:32px;height:32px;border-radius:10px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s var(–bounce),background .2s;}
+.fm-close{position:absolute;top:14px;right:16px;z-index:10;width:30px;height:30px;border-radius:10px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s var(–bounce),background .2s;}
 .fm-close:hover{transform:scale(1.1) rotate(90deg);background:rgba(231,76,60,.4);}
-.fm-rank-strip{margin:0 20px;padding:12px 16px;border-radius:14px;display:flex;align-items:center;gap:12px;background:rgba(79,172,254,.08);border:1px solid rgba(79,172,254,.2);}
-.fm-rank-num{font-family:var(–font-display);font-size:36px;line-height:1;color:var(–blue);}
+/* Rank strip — sticky below header */
+.fm-rank-strip{margin:0 16px 14px;padding:11px 16px;border-radius:14px;display:flex;align-items:center;gap:12px;background:rgba(79,172,254,.08);border:1px solid rgba(79,172,254,.2);}
+.fm-rank-num{font-family:var(–font-display);font-size:34px;line-height:1;color:var(–blue);}
 .fm-rank-label{font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(–t3);}
-.fm-rank-sub{font-size:12px;color:var(–t2);margin-top:2px;font-weight:500;}
-.fm-pts-big{font-family:var(–font-display);font-size:36px;line-height:1;color:var(–t1);text-align:right;}
+.fm-rank-sub{font-size:11px;color:var(–t2);margin-top:2px;font-weight:500;}
+.fm-pts-big{font-family:var(–font-display);font-size:34px;line-height:1;color:var(–t1);text-align:right;}
 .fm-pts-big-label{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(–t3);text-align:right;}
-.fm-stats-section{padding:14px 20px 24px;}
-.fm-stats-title{font-size:9px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(–t3);margin:14px 0 8px;display:flex;align-items:center;gap:7px;}
+/* Scrollable stats body */
+.fm-scroll-body{flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
+.fm-scroll-body::-webkit-scrollbar{display:none;}
+.fm-stats-section{padding:4px 16px 32px;}
+.fm-stats-title{font-size:9px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(–t3);margin:12px 0 8px;display:flex;align-items:center;gap:7px;}
 .fm-stats-title::after{content:’’;flex:1;height:1px;background:linear-gradient(90deg,var(–div),transparent);}
 .fm-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
 .fm-stat-box{background:var(–surf);border:1px solid var(–brd);border-radius:14px;padding:11px 12px;transition:transform .2s var(–bounce);}
@@ -257,9 +275,9 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 
 <div class="topbar">
   <div class="topbar-left">
-    <p class="greeting">IPL Fantasy 2026</p>
+    <p class="greeting">Player Cards</p>
     <h1 id="page-title">All Players</h1>
-    <p id="player-count">Loading…</p>
+    <p class="player-count-sub" id="player-count">Loading…</p>
   </div>
   <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
 </div>
@@ -330,19 +348,20 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 
 <div class="fm-modal" id="fm-modal" onclick="handleFmOverlay(event)">
   <div class="fm-sheet">
-    <button class="fm-close" onclick="closeFmModal()">✕</button>
-    <div class="fm-header" id="fm-header">
-      <div class="fm-handle"></div>
-      <div class="fm-top">
-        <div class="fm-team-logo" id="fm-logo"></div>
-        <div class="fm-player-info">
-          <div class="fm-player-name" id="fm-name">—</div>
-          <div class="fm-player-sub" id="fm-sub">—</div>
-          <div class="fm-badges" id="fm-badges"></div>
+    <!-- Sticky top: header + rank strip -->
+    <div class="fm-sticky">
+      <button class="fm-close" onclick="closeFmModal()">✕</button>
+      <div class="fm-header" id="fm-header">
+        <div class="fm-handle"></div>
+        <div class="fm-top">
+          <div class="fm-team-logo" id="fm-logo"></div>
+          <div class="fm-player-info">
+            <div class="fm-player-name" id="fm-name">—</div>
+            <div class="fm-player-sub" id="fm-sub">—</div>
+            <div class="fm-badges" id="fm-badges"></div>
+          </div>
         </div>
       </div>
-    </div>
-    <div style="padding:14px 20px 0">
       <div class="fm-rank-strip">
         <div>
           <div class="fm-rank-label">Universal Rank</div>
@@ -356,7 +375,10 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
         </div>
       </div>
     </div>
-    <div class="fm-stats-section" id="fm-stats"></div>
+    <!-- Scrollable stats -->
+    <div class="fm-scroll-body">
+      <div class="fm-stats-section" id="fm-stats"></div>
+    </div>
   </div>
 </div>
 
