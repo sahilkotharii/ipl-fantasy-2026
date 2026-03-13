@@ -47,17 +47,33 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 @keyframes slideDown{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:none;}}
 .topbar-left .greeting{font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(–blue);margin-bottom:3px;display:flex;align-items:center;gap:5px;}
 .topbar-left .greeting::before{content:’’;width:16px;height:2px;background:linear-gradient(90deg,var(–blue),transparent);border-radius:1px;}
-.topbar-left h1{font-family:var(–font-display);font-size:30px;letter-spacing:.06em;background:linear-gradient(90deg,var(–t1),var(–blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.topbar-left .player-count-sub{font-size:11px;color:var(–t3);margin-top:2px;font-weight:500;}
+.topbar-left h1{font-family:var(–font-display);font-size:36px;letter-spacing:.06em;line-height:1;background:linear-gradient(90deg,var(–t1),var(–blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.topbar-left .player-count-sub{font-size:11px;color:var(–t3);margin-top:3px;font-weight:500;}
 .theme-btn{width:40px;height:40px;border-radius:14px;background:var(–tog);border:1px solid var(–brd);color:var(–t1);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s var(–bounce),background .3s;}
 .theme-btn:active{transform:scale(.85);}
 
 /* VIEW TOGGLE */
-.view-toggle{display:flex;margin:0 16px 14px;background:var(–inp);border:1px solid var(–ibrd);border-radius:18px;padding:4px;position:relative;z-index:1;animation:fadeUp .4s var(–ease) .06s both;}
+.view-toggle{
+display:flex;margin:0 16px 14px;
+background:var(–inp);border:1px solid var(–ibrd);border-radius:18px;padding:4px;
+position:relative;z-index:1;
+animation:fadeUp .4s var(–ease) .06s both;
+}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
-.vt-btn{flex:1;padding:10px 8px;border-radius:13px;border:none;background:transparent;color:var(–t2);font-family:var(–font-main);font-size:12px;font-weight:800;cursor:pointer;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .25s var(–bounce);}
-.vt-btn.active{background:linear-gradient(135deg,var(–accent),#ff8c5a);color:#fff;box-shadow:0 4px 18px rgba(255,107,53,.4);transform:scale(1.02);}
-.vt-btn:not(.active):hover{color:var(–t1);background:rgba(255,255,255,.05);}
+.vt-btn{
+flex:1;padding:11px 10px;border-radius:14px;border:none;background:transparent;
+color:var(–t2);font-family:var(–font-main);font-size:13px;font-weight:800;
+cursor:pointer;letter-spacing:.03em;
+display:flex;align-items:center;justify-content:center;gap:7px;
+transition:all .25s var(–bounce);
+}
+.vt-btn.active{
+background:linear-gradient(135deg,var(–accent),#ff8c5a);
+color:#fff;
+box-shadow:0 4px 18px rgba(255,107,53,.4);
+transform:scale(1.02);
+}
+.vt-btn:not(.active):hover{color:var(–t1);}
 
 /* SEARCH */
 .search-wrap{margin:0 16px 10px;position:relative;z-index:1;animation:fadeUp .4s var(–ease) .1s both;}
@@ -201,28 +217,30 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .field-loading-emoji{font-size:42px;animation:floatBounce 2.5s ease-in-out infinite;}
 @keyframes floatBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
 
-/* FIELD PLAYER DETAIL SHEET */
-.fm-modal{display:none;position:fixed;inset:0;z-index:250;background:rgba(0,0,0,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);align-items:flex-end;justify-content:center;}
+/* FIELD PLAYER DETAIL SHEET — centered floating card */
+.fm-modal{
+display:none;position:fixed;inset:0;z-index:250;
+background:rgba(0,0,0,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+align-items:center;justify-content:center;
+padding:24px 16px;
+}
 .fm-modal.open{display:flex;animation:fmIn .22s var(–ease);}
 @keyframes fmIn{from{opacity:0;}to{opacity:1;}}
-/* Sheet = fixed height card, NO overflow-y so children control scrolling */
 .fm-sheet{
-width:100%;max-width:480px;
+width:100%;max-width:420px;
 max-height:82vh;
-border-radius:24px 24px 0 0;
+border-radius:24px;
 background:var(–surf2);
-border:1px solid var(–brd2);border-bottom:none;
-box-shadow:0 -16px 60px rgba(0,0,0,.7);
-animation:fmUp .38s var(–bounce) both;
+border:1px solid var(–brd2);
+box-shadow:0 24px 80px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.04) inset;
+animation:fmPop .38s var(–bounce) both;
 position:relative;
 display:flex;flex-direction:column;
 overflow:hidden;
 }
-@keyframes fmUp{from{transform:translateY(100%);}to{transform:none;}}
-/* Sticky top section */
+@keyframes fmPop{from{opacity:0;transform:scale(.9) translateY(16px);}to{opacity:1;transform:none;}}
 .fm-sticky{flex-shrink:0;}
-.fm-header{padding:16px 20px 14px;position:relative;overflow:hidden;}
-.fm-handle{width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.3);margin:0 auto 14px;position:relative;z-index:1;}
+.fm-header{padding:18px 20px 14px;position:relative;overflow:hidden;}
 .fm-top{display:flex;align-items:center;gap:14px;position:relative;z-index:1;}
 .fm-team-logo{width:58px;height:58px;border-radius:16px;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.3);box-shadow:0 4px 20px rgba(0,0,0,.4);flex-shrink:0;}
 .fm-player-info{flex:1;min-width:0;}
@@ -285,28 +303,28 @@ overflow:hidden;
 <!-- VIEW TOGGLE -->
 
 <div class="view-toggle">
-  <button class="vt-btn active" id="vt-cards" onclick="switchView('cards')">&#127183; Player Cards</button>
-  <button class="vt-btn" id="vt-field" onclick="switchView('field')">&#127967; Team Field</button>
+  <button class="vt-btn active" id="vt-cards" onclick="switchView('cards')">🃏 Player Cards</button>
+  <button class="vt-btn" id="vt-field" onclick="switchView('field')">🏟️ Team Field</button>
 </div>
 
 <!-- CARDS VIEW -->
 
 <div id="view-cards">
   <div class="search-wrap">
-    <span class="search-icon">&#128269;</span>
+    <span class="search-icon">🔍</span>
     <input type="text" class="search-bar" id="search-bar" placeholder="Search players…" oninput="applyFilters()">
   </div>
   <div class="filter-row">
     <button class="filter-btn active" onclick="setFilter('ALL',this)">All</button>
-    <button class="filter-btn" onclick="setFilter('BAT',this)">&#127987; Bat</button>
-    <button class="filter-btn" onclick="setFilter('BOWL',this)">&#127923; Bowl</button>
-    <button class="filter-btn" onclick="setFilter('AR',this)">&#9889; All-R</button>
-    <button class="filter-btn" onclick="setFilter('WK',this)">&#129396; WK</button>
-    <button class="filter-btn" onclick="setFilter('GOLD',this)">&#129351; Gold</button>
-    <button class="filter-btn" onclick="setFilter('SILVER',this)">&#129352; Silver</button>
-    <button class="filter-btn" onclick="setFilter('BRONZE',this)">&#129353; Bronze</button>
-    <button class="filter-btn" onclick="setFilter('SOLD',this)">&#9989; Sold</button>
-    <button class="filter-btn" onclick="setFilter('UNSOLD',this)">&#11093; Unsold</button>
+    <button class="filter-btn" onclick="setFilter('BAT',this)">🏏 Bat</button>
+    <button class="filter-btn" onclick="setFilter('BOWL',this)">🎳 Bowl</button>
+    <button class="filter-btn" onclick="setFilter('AR',this)">⚡ All-R</button>
+    <button class="filter-btn" onclick="setFilter('WK',this)">🧤 WK</button>
+    <button class="filter-btn" onclick="setFilter('GOLD',this)">🥇 Gold</button>
+    <button class="filter-btn" onclick="setFilter('SILVER',this)">🥈 Silver</button>
+    <button class="filter-btn" onclick="setFilter('BRONZE',this)">🥉 Bronze</button>
+    <button class="filter-btn" onclick="setFilter('SOLD',this)">✅ Sold</button>
+    <button class="filter-btn" onclick="setFilter('UNSOLD',this)">⭕ Unsold</button>
   </div>
   <div class="list-wrap">
     <div id="player-list"><div class="empty-state">Loading players…</div></div>
@@ -317,16 +335,16 @@ overflow:hidden;
 
 <div id="view-field" style="display:none">
   <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#ffc400;color:#000">&#128081;</div>Captain</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#9ca8b4;color:#000">&#11088;</div>Vice-Capt</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#FF6B35">&#129346;</div>Orange Cap</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#9b59b6">&#127913;</div>Purple Cap</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ffc400;color:#000">👑</div>Captain</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#9ca8b4;color:#000">⭐</div>Vice-Capt</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#FF6B35">🧢</div>Orange Cap</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#9b59b6">🎩</div>Purple Cap</div>
   </div>
   <div class="field-outer">
     <div class="field" id="field-container">
       <div class="pitch-strip"></div>
       <div class="field-loading" id="field-loading">
-        <span class="field-loading-emoji">&#127987;</span>Loading your squad…
+        <span class="field-loading-emoji">🏏</span>Loading your squad…
       </div>
     </div>
   </div>
@@ -352,7 +370,6 @@ overflow:hidden;
     <div class="fm-sticky">
       <button class="fm-close" onclick="closeFmModal()">✕</button>
       <div class="fm-header" id="fm-header">
-        <div class="fm-handle"></div>
         <div class="fm-top">
           <div class="fm-team-logo" id="fm-logo"></div>
           <div class="fm-player-info">
@@ -383,12 +400,12 @@ overflow:hidden;
 </div>
 
 <nav class="bottom-nav">
-  <a href="dashboard.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">&#127968;</span></div>Home</a>
-  <a href="squad.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">&#128737;&#65039;</span></div>Squad</a>
-  <a href="players.html"   class="nav-item active"><div class="nav-icon-wrap"><span class="nav-icon">&#127183;</span></div>Cards</a>
-  <a href="teams.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">&#128101;</span></div>Teams</a>
-  <a href="stats.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">&#128202;</span></div>Stats</a>
-  <a href="settings.html"  class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">&#9881;&#65039;</span></div>Settings</a>
+  <a href="dashboard.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🏠</span></div>Home</a>
+  <a href="squad.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad</a>
+  <a href="players.html"   class="nav-item active"><div class="nav-icon-wrap"><span class="nav-icon">🃏</span></div>Cards</a>
+  <a href="teams.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">👥</span></div>Teams</a>
+  <a href="stats.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">📊</span></div>Stats</a>
+  <a href="settings.html"  class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">⚙️</span></div>Settings</a>
 </nav>
 
 <script>
