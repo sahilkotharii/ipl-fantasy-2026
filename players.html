@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
-<title>Players | IPL Fantasy 2026</title>
+<title>Players | IPL Fantasy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 :root{
-  --accent:#FF6B35;--accent-soft:rgba(255,107,53,.14);--accent-glow:rgba(255,107,53,.3);
-  --blue:#4facfe;--blue-soft:rgba(79,172,254,.12);--gold:#FFD700;--silver:#b8c8d8;
+  --accent:#FF6B35;--accent-soft:rgba(255,107,53,.14);
+  --blue:#4facfe;--gold:#FFD700;--silver:#b8c8d8;
   --font-main:'Outfit',sans-serif;--font-mono:'DM Mono',monospace;--font-display:'Bebas Neue',cursive;
   --ease:cubic-bezier(.4,0,.2,1);--bounce:cubic-bezier(.34,1.56,.64,1);
 }
@@ -20,9 +20,7 @@
   --surf:rgba(255,255,255,.04);--surf2:rgba(10,20,40,.97);
   --brd:rgba(79,172,254,.14);--brd2:rgba(79,172,254,.22);--nav:rgba(7,16,31,.95);
   --t1:#eef2ff;--t2:rgba(238,242,255,.52);--t3:rgba(238,242,255,.28);--div:rgba(255,255,255,.055);
-  --inp:rgba(0,0,0,.3);--ibrd:rgba(79,172,254,.15);--ov:rgba(0,0,0,.9);--tog:rgba(255,255,255,.06);
-  --field-bg1:#1e5c22;--field-bg2:#174d1a;--field-bg3:#0f3811;
-  --pitch-c1:#c8a55c;--pitch-c2:#b8914a;
+  --inp:rgba(0,0,0,.3);--ibrd:rgba(79,172,254,.15);--tog:rgba(255,255,255,.06);
   --boundary:rgba(255,255,255,.2);--row-label:rgba(255,255,255,.55);--name-chip:rgba(0,0,0,.75);
 }
 [data-theme="light"]{
@@ -31,9 +29,7 @@
   --surf:rgba(255,255,255,.65);--surf2:rgba(255,255,255,.98);
   --brd:rgba(0,0,0,.07);--brd2:rgba(0,0,0,.14);--nav:rgba(240,236,230,.92);
   --t1:#1a1a2e;--t2:rgba(26,26,46,.55);--t3:rgba(26,26,46,.32);--div:rgba(0,0,0,.07);
-  --inp:rgba(0,0,0,.05);--ibrd:rgba(0,0,0,.1);--ov:rgba(0,0,0,.85);--tog:rgba(0,0,0,.06);
-  --field-bg1:#2e7d32;--field-bg2:#256326;--field-bg3:#1b4d1e;
-  --pitch-c1:#d4b882;--pitch-c2:#c4a86c;
+  --inp:rgba(0,0,0,.05);--ibrd:rgba(0,0,0,.1);--tog:rgba(0,0,0,.06);
   --boundary:rgba(255,255,255,.28);--row-label:rgba(255,255,255,.8);--name-chip:rgba(0,0,0,.78);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -51,37 +47,17 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .theme-btn{width:40px;height:40px;border-radius:14px;background:var(--tog);border:1px solid var(--brd);color:var(--t1);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s var(--bounce),background .3s;}
 .theme-btn:active{transform:scale(.85);}
 
-/* VIEW TOGGLE */
-.view-toggle{
-  display:flex;margin:0 16px 14px;
-  background:var(--inp);border:1px solid var(--ibrd);border-radius:18px;padding:4px;
-  position:relative;z-index:1;
-  animation:fadeUp .4s var(--ease) .06s both;
-}
+/* VIEW TOGGLE & SEARCH & FILTERS */
+.view-toggle{display:flex;margin:0 16px 14px;background:var(--inp);border:1px solid var(--ibrd);border-radius:18px;padding:4px;position:relative;z-index:1;animation:fadeUp .4s var(--ease) .06s both;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
-.vt-btn{
-  flex:1;padding:11px 10px;border-radius:14px;border:none;background:transparent;
-  color:var(--t2);font-family:var(--font-main);font-size:13px;font-weight:800;
-  cursor:pointer;letter-spacing:.03em;
-  display:flex;align-items:center;justify-content:center;gap:7px;
-  transition:all .25s var(--bounce);
-}
-.vt-btn.active{
-  background:linear-gradient(135deg,var(--accent),#ff8c5a);
-  color:#fff;
-  box-shadow:0 4px 18px rgba(255,107,53,.4);
-  transform:scale(1.02);
-}
+.vt-btn{flex:1;padding:11px 10px;border-radius:14px;border:none;background:transparent;color:var(--t2);font-family:var(--font-main);font-size:13px;font-weight:800;cursor:pointer;letter-spacing:.03em;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .25s var(--bounce);}
+.vt-btn.active{background:linear-gradient(135deg,var(--accent),#ff8c5a);color:#fff;box-shadow:0 4px 18px rgba(255,107,53,.4);transform:scale(1.02);}
 .vt-btn:not(.active):hover{color:var(--t1);}
-
-/* SEARCH */
 .search-wrap{margin:0 16px 10px;position:relative;z-index:1;animation:fadeUp .4s var(--ease) .1s both;}
 .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
 .search-bar{width:100%;padding:13px 14px 13px 42px;border-radius:16px;border:1px solid var(--ibrd);background:var(--inp);color:var(--t1);font-family:var(--font-main);font-size:14px;outline:none;-webkit-appearance:none;transition:border-color .25s,box-shadow .25s;}
 .search-bar:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,107,53,.12);}
 .search-bar::placeholder{color:var(--t3);}
-
-/* FILTER ROW */
 .filter-row{display:flex;gap:7px;padding:0 16px 14px;overflow-x:auto;scrollbar-width:none;animation:fadeUp .4s var(--ease) .15s both;z-index:1;position:relative;}
 .filter-row::-webkit-scrollbar{display:none;}
 .filter-btn{flex-shrink:0;padding:7px 16px;border-radius:20px;border:1px solid var(--ibrd);background:var(--inp);color:var(--t2);font-family:var(--font-main);font-size:11px;font-weight:700;cursor:pointer;transition:all .22s var(--bounce);white-space:nowrap;letter-spacing:.03em;}
@@ -94,7 +70,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .player-row{display:flex;align-items:center;padding:0;border-bottom:1px solid var(--div);cursor:pointer;position:relative;overflow:hidden;animation:rowIn .35s var(--ease) both;transition:transform .2s var(--bounce);}
 .player-row:last-child{border-bottom:none;}
 .player-row:active{transform:scale(.99);}
-/* Stronger team bg */
 .row-bg{position:absolute;inset:0;pointer-events:none;transition:opacity .25s;}
 .row-shimmer{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.07) 50%,transparent 100%);transform:translateX(-100%);opacity:0;}
 .player-row:hover .row-shimmer{animation:shimmerSlide .55s var(--ease) both;}
@@ -102,24 +77,21 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .row-accent-line{position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:0 3px 3px 0;opacity:.9;transition:width .2s var(--bounce);}
 .player-row:hover .row-accent-line{width:6px;}
 .row-content{position:relative;z-index:1;display:flex;align-items:center;gap:12px;padding:10px 14px 10px 18px;width:100%;}
-/* Circle avatar — matches field token */
 .row-avatar-wrap{position:relative;flex-shrink:0;}
 .row-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2.5px solid;box-shadow:0 4px 16px rgba(0,0,0,.45);transition:transform .2s var(--bounce),box-shadow .2s;position:relative;overflow:hidden;}
 .player-row:hover .row-avatar{transform:scale(1.1);box-shadow:0 8px 22px rgba(0,0,0,.6);}
 .row-avatar::after{content:'';position:absolute;inset:0;border-radius:50%;background:linear-gradient(145deg,rgba(255,255,255,.22),transparent 60%);pointer-events:none;}
 .row-avatar img{width:30px;height:30px;object-fit:contain;position:relative;z-index:1;}
-.row-avatar-fb{font-size:20px;position:relative;z-index:1;}
-/* Mini badges on avatar */
 .row-av-badge{position:absolute;line-height:1;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;z-index:2;}
 .row-av-badge.c-badge{top:-3px;right:-3px;background:#ffc400;color:#1a0f00;box-shadow:0 0 8px rgba(255,196,0,.7);}
 .row-av-badge.vc-badge{top:-3px;right:-3px;background:#9ca8b4;color:#111;box-shadow:0 0 6px rgba(180,180,200,.5);}
 .row-av-badge.oc-badge{top:-3px;left:-3px;background:#FF6B35;color:#fff;box-shadow:0 0 8px rgba(255,107,53,.6);}
 .row-av-badge.pc-badge{bottom:-3px;left:-3px;background:#9b59b6;color:#fff;box-shadow:0 0 8px rgba(155,89,182,.6);}
-/* Tier dot bottom-right */
 .row-av-tier{position:absolute;bottom:-2px;right:-2px;width:14px;height:14px;border-radius:50%;z-index:2;border:2px solid var(--bg);}
 .row-av-tier.gold{background:#FFD700;box-shadow:0 0 8px rgba(255,215,0,.6);}
 .row-av-tier.silver{background:#C0C8D8;box-shadow:0 0 6px rgba(192,200,216,.5);}
 .row-av-tier.bronze{background:#CD7F32;box-shadow:0 0 6px rgba(205,127,50,.4);}
+.row-av-tier.elite{background:#4facfe;box-shadow:0 0 8px rgba(79,172,254,.8);}
 .row-info{flex:1;min-width:0;}
 .row-name{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px;letter-spacing:.01em;}
 .row-meta{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
@@ -134,9 +106,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .rb-owned{background:rgba(255,107,53,.12);color:var(--accent);}
 .rb-unsold{background:rgba(255,255,255,.05);color:var(--t3);}
 [data-theme="light"] .rb-unsold{background:rgba(0,0,0,.05);}
-.rb-cap{background:rgba(255,215,0,.2);color:#ffd700;animation:capPulse 2s ease infinite;}
-.rb-vc{background:rgba(180,180,200,.15);color:#b4b4c8;}
-@keyframes capPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,215,0,.5);}50%{box-shadow:0 0 0 5px rgba(255,215,0,0);}}
 .row-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0;}
 .row-pts{font-family:var(--font-mono);font-size:14px;font-weight:500;transition:transform .2s var(--bounce);}
 .player-row:hover .row-pts{transform:scale(1.1);}
@@ -147,11 +116,11 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 @keyframes rowIn{from{opacity:0;transform:translateX(-18px);}to{opacity:1;transform:none;}}
 
 /* ════════════════════════════════════
-   CARD MODAL
+   CARD MODAL (FIFA ULTIMATE TEAM STYLE)
 ════════════════════════════════════ */
 .modal{
   display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  background:rgba(0,0,0,.85);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   z-index:200;align-items:center;justify-content:center;padding:20px;
 }
 .modal.open{display:flex;animation:modalIn .3s var(--ease) both;}
@@ -166,28 +135,17 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .modal-hint{
   position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
   font-size:11px;font-weight:600;letter-spacing:.06em;
-  color:rgba(255,255,255,.38);pointer-events:none;
+  color:rgba(255,255,255,.5);pointer-events:none;
   animation:fadeUp .6s .5s both;white-space:nowrap;
 }
 
-/* ── Card scene & outer glow ── */
+/* Card Scene & Shape */
 .card-scene-wrap{position:relative;display:flex;align-items:center;justify-content:center;}
-
-/* The animated card glow follows the FIFA shape */
-.card-glow-ring{
-  position:absolute;inset:-6px;
-  pointer-events:none;z-index:0;
-  clip-path:polygon(8% 0%,92% 0%,100% 8%,100% 78%,50% 100%,0% 78%,0% 8%);
-  /* filled by JS */
-  animation:glowPulse 2.2s ease-in-out infinite alternate;
-  filter:blur(12px);
-}
-@keyframes glowPulse{from{opacity:.55;}to{opacity:1;}}
 
 .card-scene{
   perspective:1400px;
-  width:min(72vw,270px);
-  aspect-ratio:.66;
+  width:min(76vw,300px);
+  aspect-ratio:0.68;
   cursor:pointer;
   animation:cardPop .5s var(--bounce) .05s both;
   position:relative;z-index:1;
@@ -200,351 +158,188 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 }
 .card-flip.flipped{transform:rotateY(180deg);}
 
-/* ── FIFA card shape ── */
+/* ── EXACT FIFA CARD SHAPE ── */
 .card-face{
   position:absolute;inset:0;
   backface-visibility:hidden;-webkit-backface-visibility:hidden;
-  clip-path:polygon(8% 0%,92% 0%,100% 8%,100% 80%,50% 100%,0% 80%,0% 8%);
+  clip-path: polygon(10% 0, 90% 0, 100% 12%, 100% 75%, 50% 100%, 0 75%, 0 12%);
   overflow:hidden;
   display:flex;flex-direction:column;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5); /* Inner depth */
 }
 .card-back-face{transform:rotateY(180deg);}
 
-/* ── Standard tier gradients ── */
+/* ── Standard tier gradients based on RATING ── */
 .card-face.bronze{
   background:
-    linear-gradient(125deg,rgba(255,255,255,.13) 0%,transparent 45%,rgba(255,255,255,.06) 100%),
-    linear-gradient(165deg,#2e1000 0%,#6a3008 18%,#be6820 36%,#e89840 50%,#be6820 65%,#6a3008 82%,#2e1000 100%);
-  color:#280e00;
+    linear-gradient(125deg,rgba(255,255,255,.15) 0%,transparent 45%,rgba(255,255,255,.05) 100%),
+    linear-gradient(165deg,#4a2511 0%,#8a4921 18%,#cd7f32 36%,#e6a56c 50%,#cd7f32 65%,#8a4921 82%,#4a2511 100%);
+  color:#2e1500;
 }
 .card-face.silver{
   background:
-    linear-gradient(125deg,rgba(255,255,255,.16) 0%,transparent 45%,rgba(255,255,255,.08) 100%),
-    linear-gradient(165deg,#141414 0%,#484848 18%,#b0b0b0 36%,#e0e0e0 50%,#b0b0b0 65%,#484848 82%,#141414 100%);
-  color:#0e0e0e;
+    linear-gradient(125deg,rgba(255,255,255,.2) 0%,transparent 45%,rgba(255,255,255,.1) 100%),
+    linear-gradient(165deg,#2a2a2a 0%,#666 18%,#b8c8d8 36%,#eef2f5 50%,#b8c8d8 65%,#666 82%,#2a2a2a 100%);
+  color:#111;
 }
 .card-face.gold{
   background:
-    linear-gradient(125deg,rgba(255,255,255,.18) 0%,transparent 45%,rgba(255,255,255,.09) 100%),
-    linear-gradient(165deg,#362000 0%,#7a5400 18%,#d8a800 36%,#f8d840 50%,#d8a800 65%,#7a5400 82%,#362000 100%);
-  color:#261600;
+    linear-gradient(125deg,rgba(255,255,255,.25) 0%,transparent 45%,rgba(255,255,255,.1) 100%),
+    linear-gradient(165deg,#4a3500 0%,#997300 18%,#ffd700 36%,#fff080 50%,#ffd700 65%,#997300 82%,#4a3500 100%);
+  color:#2d2000;
 }
 
-/* ── Special animated gradient cards ── */
-/* Elite (96-99 pts) — electric blue, gold outer border */
+/* ── Special Animated Cards ── */
+/* Elite (95-99 pts) — electric blue, gold outer border handled via glow ring */
 .card-face.elite{
   background-size:300% 300%;
   animation:eliteGrad 4s ease infinite;
-  color:#b8f0ff;
+  color:#cceeff;
 }
 @keyframes eliteGrad{
-  0%  {background:linear-gradient(165deg,#020c1e 0%,#04204a 25%,#0840a0 45%,#2090e0 55%,#0840a0 70%,#04204a 85%,#020c1e 100%);}
-  50% {background:linear-gradient(200deg,#04204a 0%,#0840a0 20%,#2090e0 40%,#60c8ff 55%,#2090e0 70%,#0840a0 88%,#020c1e 100%);}
-  100%{background:linear-gradient(165deg,#020c1e 0%,#04204a 25%,#0840a0 45%,#2090e0 55%,#0840a0 70%,#04204a 85%,#020c1e 100%);}
+  0%  {background:linear-gradient(165deg,#031332 0%,#093375 25%,#115bc2 45%,#3aa1ff 55%,#115bc2 70%,#093375 85%,#031332 100%);}
+  50% {background:linear-gradient(200deg,#093375 0%,#115bc2 20%,#3aa1ff 40%,#80caff 55%,#3aa1ff 70%,#115bc2 88%,#031332 100%);}
+  100%{background:linear-gradient(165deg,#031332 0%,#093375 25%,#115bc2 45%,#3aa1ff 55%,#115bc2 70%,#093375 85%,#031332 100%);}
 }
 
-/* Orange cap */
 .card-face.orange-special{
+  background-size:300% 300%;
   animation:orangeGrad 4s ease infinite;
-  color:#ffe8b8;
+  color:#ffeedd;
 }
 @keyframes orangeGrad{
-  0%  {background:linear-gradient(165deg,#1a0400 0%,#501000 25%,#c03800 45%,#ff6800 55%,#c03800 70%,#501000 85%,#1a0400 100%);}
-  50% {background:linear-gradient(200deg,#501000 0%,#c03800 20%,#ff6800 40%,#ffaa00 55%,#ff6800 70%,#c03800 88%,#1a0400 100%);}
-  100%{background:linear-gradient(165deg,#1a0400 0%,#501000 25%,#c03800 45%,#ff6800 55%,#c03800 70%,#501000 85%,#1a0400 100%);}
+  0%  {background:linear-gradient(165deg,#2e0d00 0%,#7a2100 25%,#d84900 45%,#ff8c3a 55%,#d84900 70%,#7a2100 85%,#2e0d00 100%);}
+  50% {background:linear-gradient(200deg,#7a2100 0%,#d84900 20%,#ff8c3a 40%,#ffb980 55%,#ff8c3a 70%,#d84900 88%,#2e0d00 100%);}
+  100%{background:linear-gradient(165deg,#2e0d00 0%,#7a2100 25%,#d84900 45%,#ff8c3a 55%,#d84900 70%,#7a2100 85%,#2e0d00 100%);}
 }
 
-/* Purple cap */
 .card-face.purple-special{
+  background-size:300% 300%;
   animation:purpleGrad 4s ease infinite;
-  color:#e8c8ff;
+  color:#f2e6ff;
 }
 @keyframes purpleGrad{
-  0%  {background:linear-gradient(165deg,#0c0018 0%,#280850 25%,#6010a8 45%,#a040e0 55%,#6010a8 70%,#280850 85%,#0c0018 100%);}
-  50% {background:linear-gradient(200deg,#280850 0%,#6010a8 20%,#a040e0 40%,#d080ff 55%,#a040e0 70%,#6010a8 88%,#0c0018 100%);}
-  100%{background:linear-gradient(165deg,#0c0018 0%,#280850 25%,#6010a8 45%,#a040e0 55%,#6010a8 70%,#280850 85%,#0c0018 100%);}
+  0%  {background:linear-gradient(165deg,#15002e 0%,#3f0082 25%,#7b12d6 45%,#b152ff 55%,#7b12d6 70%,#3f0082 85%,#15002e 100%);}
+  50% {background:linear-gradient(200deg,#3f0082 0%,#7b12d6 20%,#b152ff 40%,#d799ff 55%,#b152ff 70%,#7b12d6 88%,#15002e 100%);}
+  100%{background:linear-gradient(165deg,#15002e 0%,#3f0082 25%,#7b12d6 45%,#b152ff 55%,#7b12d6 70%,#3f0082 85%,#15002e 100%);}
 }
 
-/* Player of Tournament — gold shimmer */
 .card-face.pot{
+  background-size:300% 300%;
   animation:potGrad 4s ease infinite;
-  color:#fff8e0;
+  color:#fff;
 }
 @keyframes potGrad{
-  0%  {background:linear-gradient(165deg,#1a1200 0%,#604000 20%,#c89000 36%,#ffd040 50%,#c89000 65%,#604000 82%,#1a1200 100%);}
-  33% {background:linear-gradient(210deg,#604000 0%,#c89000 22%,#ffd040 42%,#fff080 52%,#ffd040 68%,#c89000 85%,#1a1200 100%);}
-  66% {background:linear-gradient(140deg,#1a1200 0%,#c89000 28%,#fff080 46%,#ffd040 54%,#c89000 72%,#604000 88%,#1a1200 100%);}
-  100%{background:linear-gradient(165deg,#1a1200 0%,#604000 20%,#c89000 36%,#ffd040 50%,#c89000 65%,#604000 82%,#1a1200 100%);}
+  0%  {background:linear-gradient(165deg,#2b2000 0%,#735600 20%,#cca000 36%,#ffe14d 50%,#cca000 65%,#735600 82%,#2b2000 100%);}
+  33% {background:linear-gradient(210deg,#735600 0%,#cca000 22%,#ffe14d 42%,#fff3b3 52%,#ffe14d 68%,#cca000 85%,#2b2000 100%);}
+  66% {background:linear-gradient(140deg,#2b2000 0%,#cca000 28%,#fff3b3 46%,#ffe14d 54%,#cca000 72%,#735600 88%,#2b2000 100%);}
+  100%{background:linear-gradient(165deg,#2b2000 0%,#735600 20%,#cca000 36%,#ffe14d 50%,#cca000 65%,#735600 82%,#2b2000 100%);}
 }
 
-/* ── Outer gold border ring for elite cards ── */
-.card-face.elite::before{
-  content:'';position:absolute;inset:3px;z-index:0;pointer-events:none;
-  clip-path:polygon(8% 0%,92% 0%,100% 8%,100% 80%,50% 100%,0% 80%,0% 8%);
-  border:2px solid rgba(255,215,0,.0);
-  box-shadow:inset 0 0 0 2px rgba(255,215,0,.7);
-  animation:goldBorder 2.5s ease-in-out infinite alternate;
+/* Inner border shine on special cards */
+.card-face.elite::after, .card-face.orange-special::after, .card-face.purple-special::after, .card-face.pot::after {
+  content:''; position:absolute; inset:0; z-index:10; pointer-events:none;
+  box-shadow: inset 0 0 0 3px rgba(255,215,0,0.8);
+  animation: shinePulse 2s infinite alternate;
 }
-@keyframes goldBorder{
-  from{box-shadow:inset 0 0 0 2px rgba(255,215,0,.4),inset 0 0 12px rgba(255,215,0,.1);}
-  to  {box-shadow:inset 0 0 0 2px rgba(255,215,0,1),  inset 0 0 20px rgba(255,215,0,.3);}
-}
-.card-face.orange-special::before{
-  content:'';position:absolute;inset:3px;z-index:0;pointer-events:none;
-  clip-path:polygon(8% 0%,92% 0%,100% 8%,100% 80%,50% 100%,0% 80%,0% 8%);
-  animation:orangeBorder 2.5s ease-in-out infinite alternate;
-}
-@keyframes orangeBorder{
-  from{box-shadow:inset 0 0 0 2px rgba(255,140,40,.4),inset 0 0 10px rgba(255,140,40,.1);}
-  to  {box-shadow:inset 0 0 0 2px rgba(255,180,60,1), inset 0 0 20px rgba(255,140,40,.3);}
-}
-.card-face.purple-special::before{
-  content:'';position:absolute;inset:3px;z-index:0;pointer-events:none;
-  clip-path:polygon(8% 0%,92% 0%,100% 8%,100% 80%,50% 100%,0% 80%,0% 8%);
-  animation:purpleBorder 2.5s ease-in-out infinite alternate;
-}
-@keyframes purpleBorder{
-  from{box-shadow:inset 0 0 0 2px rgba(180,80,255,.4),inset 0 0 10px rgba(180,80,255,.1);}
-  to  {box-shadow:inset 0 0 0 2px rgba(200,120,255,1), inset 0 0 20px rgba(180,80,255,.3);}
-}
-.card-face.pot::before{
-  content:'';position:absolute;inset:3px;z-index:0;pointer-events:none;
-  clip-path:polygon(8% 0%,92% 0%,100% 8%,100% 80%,50% 100%,0% 80%,0% 8%);
-  animation:potBorder 2s ease-in-out infinite alternate;
-}
-@keyframes potBorder{
-  from{box-shadow:inset 0 0 0 2px rgba(255,220,80,.5),inset 0 0 14px rgba(255,220,80,.1);}
-  to  {box-shadow:inset 0 0 0 2.5px rgba(255,255,180,1),inset 0 0 28px rgba(255,220,80,.4);}
+@keyframes shinePulse {
+  from { box-shadow: inset 0 0 0 2px rgba(255,255,255,0.4), inset 0 0 15px rgba(255,215,0,0.2); }
+  to   { box-shadow: inset 0 0 0 4px rgba(255,215,0,1), inset 0 0 30px rgba(255,215,0,0.6); }
 }
 
-/* Diagonal shine on all cards */
-.card-face::after{
-  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(105deg,transparent 28%,rgba(255,255,255,.06) 50%,transparent 72%);
+/* The Animated Outer Glow Ring matches the FIFA shape perfectly */
+.card-glow-ring{
+  position:absolute; inset:-4px; /* Extends slightly outside */
+  pointer-events:none; z-index:0;
+  clip-path: polygon(10% 0, 90% 0, 100% 12%, 100% 75%, 50% 100%, 0 75%, 0 12%);
+  animation: glowPulse 2s ease-in-out infinite alternate;
+  filter: blur(14px);
+  opacity: 0.8;
+}
+@keyframes glowPulse{from{opacity:0.6; filter:blur(10px);}to{opacity:1; filter:blur(18px); transform:scale(1.02);}}
+
+/* Diagonal shine across card */
+.cf-shine {
+  position:absolute; inset:0; z-index:5; pointer-events:none;
+  background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,.15) 45%,transparent 70%);
 }
 
 /* ════════════════════════════════════
-   CARD FRONT FACE (FIFA layout)
+   CARD FRONT FACE (Exact Screenshot Match)
 ════════════════════════════════════ */
 .cf-wrap{position:relative;width:100%;height:100%;display:flex;flex-direction:column;z-index:2;}
-
-/* Animated particles canvas (special cards) */
 .cf-canvas{position:absolute;inset:0;z-index:0;pointer-events:none;}
 
-/* Photo zone: top 55% */
-.cf-photo-zone{position:relative;flex:0 0 55%;overflow:hidden;}
-.cf-player-photo{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;position:relative;z-index:1;}
+/* Photo zone: Top half */
+.cf-photo-zone{position:relative;flex:0 0 48%;overflow:hidden; display:flex; justify-content:center;}
+.cf-player-photo{width:90%;height:100%;object-fit:cover;object-position:bottom center;display:block;position:relative;z-index:1; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));}
 .cf-photo-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:clamp(48px,15vw,72px);background:rgba(0,0,0,.15);position:relative;z-index:1;}
-/* Gradient fade photo → info zone */
-.cf-photo-fade{position:absolute;bottom:0;left:0;right:0;height:45%;background:linear-gradient(to bottom,transparent,rgba(0,0,0,.4));pointer-events:none;z-index:2;}
-/* Rating overlay top-left */
-.cf-rating-block{position:absolute;top:7%;left:8%;z-index:3;line-height:1;}
-.cf-rating{font-family:var(--font-display);font-size:clamp(28px,8.5vw,44px);line-height:.9;display:block;text-shadow:0 2px 8px rgba(0,0,0,.45);}
-.cf-role-lbl{font-family:var(--font-display);font-size:clamp(10px,3vw,14px);letter-spacing:.04em;display:block;opacity:.88;text-shadow:0 1px 4px rgba(0,0,0,.4);}
-/* Team logo bottom-left of photo */
-.cf-team-logo-zone{position:absolute;bottom:9%;left:8%;z-index:3;width:clamp(26px,8vw,36px);height:clamp(26px,8vw,36px);}
-.cf-team-logo-zone img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 5px rgba(0,0,0,.55));}
-/* Special badge top-right */
+
+/* Rating Top-Left */
+.cf-rating-block{position:absolute;top:10%;left:12%;z-index:3;line-height:0.9;text-align:center;}
+.cf-rating{font-family:var(--font-display);font-size:clamp(32px,10vw,48px);display:block;text-shadow:0 2px 6px rgba(0,0,0,.4);}
+.cf-role-lbl{font-family:var(--font-display);font-size:clamp(12px,4vw,16px);letter-spacing:.04em;display:block;opacity:.9;text-shadow:0 1px 4px rgba(0,0,0,.4);}
+
+/* Team Logo Middle-Left (Under Rating) */
+.cf-team-logo-zone{position:absolute;top:42%;left:14%;z-index:3;width:clamp(28px,9vw,38px);height:clamp(28px,9vw,38px);}
+.cf-team-logo-zone img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4));}
+
+/* Special Badge Top Right */
 .cf-special-badge{
-  position:absolute;top:6%;right:6%;z-index:3;
-  font-size:clamp(6px,1.7vw,8px);font-weight:900;letter-spacing:.1em;text-transform:uppercase;
-  padding:3px 6px;border-radius:4px;
-  background:rgba(0,0,0,.45);backdrop-filter:blur(6px);
-  border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.9);
-  line-height:1.3;text-align:center;
+  position:absolute;top:8%;right:8%;z-index:3;
+  font-size:clamp(7px,2vw,9px);font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 8px;border-radius:6px;
+  background:rgba(0,0,0,.5);backdrop-filter:blur(6px);
+  border:1px solid rgba(255,215,0,.4);color:rgba(255,215,0,1);
+  line-height:1.2;text-align:center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
-/* Info zone: bottom 45% — extra padding bottom to prevent clip */
+/* Info zone: Bottom half */
 .cf-info-zone{
   flex:1;display:flex;flex-direction:column;
-  padding:3% 8% 26% 8%;
+  padding:2% 10% 12% 10%; /* Extra bottom padding for the v-shape clip */
   position:relative;z-index:2;
 }
 .cf-name{
   font-family:var(--font-display);
-  font-size:clamp(13px,4.2vw,20px);
+  font-size:clamp(18px,5.5vw,26px);
   letter-spacing:.06em;line-height:1;
   text-align:center;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  text-shadow:0 1px 4px rgba(0,0,0,.2);
+  text-shadow:0 1px 4px rgba(0,0,0,.3);
   margin-bottom:2%;
 }
 .cf-owner-badge{
-  font-size:clamp(6px,1.8vw,8px);font-weight:700;letter-spacing:.04em;
-  text-align:center;opacity:.68;margin-bottom:4%;
-  background:rgba(0,0,0,.18);border-radius:3px;padding:1px 6px;
+  font-size:clamp(8px,2.5vw,11px);font-weight:800;letter-spacing:.05em;
+  text-align:center; opacity:0.85; margin-bottom:5%;
+  background:rgba(0,0,0,.25);border-radius:10px;padding:3px 12px;
   display:inline-block;align-self:center;
+  text-shadow:0 1px 2px rgba(0,0,0,.5);
 }
-.cf-divider-line{height:1px;background:currentColor;opacity:.22;margin:0 0 4%;border-radius:1px;}
-/* 2-col stats matching FIFA card */
+.cf-divider-line{height:1px;background:currentColor;opacity:.3;margin:0 0 5%;border-radius:1px;}
+
+/* 2-col stats EXACTLY matching the screenshot layout */
 .cf-stats-row{display:flex;align-items:stretch;flex:1;}
-.cf-stat-col{flex:1;display:flex;flex-direction:column;gap:clamp(3px,1vw,6px);}
-.cf-stat-col.left{padding-right:5%;}
-.cf-stat-col.right{padding-left:5%;}
-.cf-stat-vdiv{width:1px;background:currentColor;opacity:.2;flex-shrink:0;margin:2px 0;}
-.cf-stat-item{display:flex;align-items:baseline;justify-content:space-between;gap:3px;}
-.cf-sv{font-family:var(--font-display);font-size:clamp(11px,3.5vw,17px);line-height:1;flex-shrink:0;font-weight:400;}
-.cf-sl{font-family:var(--font-display);font-size:clamp(8px,2.4vw,12px);opacity:.55;white-space:nowrap;}
+.cf-stat-col{flex:1;display:flex;flex-direction:column;gap:clamp(4px,1.5vw,8px);}
+.cf-stat-col.left{padding-right:8%; border-right: 1px solid rgba(0,0,0,0.2);}
+.cf-stat-col.right{padding-left:8%;}
+.cf-stat-item{display:flex;align-items:baseline;justify-content:space-between;}
+.cf-sv{font-family:var(--font-display);font-size:clamp(15px,4.5vw,22px);line-height:1;font-weight:400; text-shadow:0 1px 2px rgba(0,0,0,.3);}
+.cf-sl{font-family:var(--font-display);font-size:clamp(10px,3vw,14px);opacity:.7;white-space:nowrap; letter-spacing: 0.05em;}
 
 /* ════════════════════════════════════
    CARD BACK FACE
 ════════════════════════════════════ */
-.cb-wrap{position:relative;z-index:2;display:flex;flex-direction:column;height:100%;padding:8% 8% 26% 8%;}
-.cb-header{text-align:center;margin-bottom:4%;padding-bottom:4%;border-bottom:1px solid rgba(0,0,0,.18);}
-.cb-name{font-family:var(--font-display);font-size:clamp(13px,4.2vw,20px);letter-spacing:.05em;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.cb-sub{font-size:clamp(7px,1.9vw,9px);opacity:.68;margin-top:3px;font-weight:700;letter-spacing:.03em;}
-.cb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(3px,1vw,5px);flex:1;}
-.cb-stat{display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.12);border-radius:5px;padding:clamp(3px,1vw,6px) 2px;border:1px solid rgba(0,0,0,.1);}
-.cb-sv{font-family:var(--font-display);font-size:clamp(11px,3.5vw,17px);line-height:1;}
-.cb-sl{font-size:clamp(6px,1.5vw,8px);font-weight:700;text-transform:uppercase;letter-spacing:.04em;opacity:.55;margin-top:1px;text-align:center;}
-.cb-footer{margin-top:4%;text-align:center;font-size:clamp(7px,2vw,9px);font-weight:700;opacity:.78;padding:4px 8px;background:rgba(0,0,0,.14);border-radius:5px;border:1px solid rgba(0,0,0,.08);}
-@keyframes capPulse2{0%,100%{box-shadow:0 0 0 0 rgba(255,215,0,.5);}50%{box-shadow:0 0 0 5px rgba(255,215,0,0);}}
-.rb-cap{animation:capPulse2 2s ease infinite;}
-
-/* ════════════════════════════════════
-   FIELD PLAYER DETAIL SHEET
-   — Small floating card, NOT full screen
-   — Player image left, info right (sticky)
-   — Stats scrollable below
-════════════════════════════════════ */
-.fm-modal{
-  display:none;position:fixed;inset:0;z-index:250;
-  background:rgba(0,0,0,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  align-items:center;justify-content:center;
-  padding:16px;
-}
-.fm-modal.open{display:flex;animation:fmIn .24s var(--ease) both;}
-@keyframes fmIn{from{opacity:0;transform:scale(.94);}to{opacity:1;transform:none;}}
-
-.fm-card{
-  width:100%;max-width:440px;
-  max-height:min(88vh,640px);
-  border-radius:24px;
-  background:var(--surf2);
-  border:1px solid var(--brd2);
-  box-shadow:0 20px 60px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.06);
-  display:flex;flex-direction:column;
-  overflow:hidden;
-  position:relative;
-  animation:fmPop .38s var(--bounce) both;
-}
-@keyframes fmPop{from{opacity:0;transform:scale(.88) translateY(16px);}to{opacity:1;transform:none;}}
-
-/* Close button */
-.fm-close{
-  position:absolute;top:12px;right:14px;z-index:20;
-  width:30px;height:30px;border-radius:9px;
-  background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.2);
-  color:#fff;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:transform .2s var(--bounce),background .2s;
-}
-.fm-close:hover{transform:scale(1.12) rotate(90deg);background:rgba(231,76,60,.5);}
-
-/* ── STICKY HEADER: image LEFT + info RIGHT ── */
-.fm-header{
-  flex-shrink:0;
-  display:flex;align-items:stretch;
-  min-height:140px;
-  position:relative;overflow:hidden;
-}
-/* Team colour gradient fills header */
-.fm-header-bg{
-  position:absolute;inset:0;z-index:0;pointer-events:none;
-  /* filled via JS */
-}
-.fm-header-bg::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:50px;
-  background:linear-gradient(to bottom,transparent,var(--surf2));
-  z-index:1;
-}
-
-/* Player image — left column */
-.fm-img-col{
-  flex-shrink:0;width:110px;
-  position:relative;z-index:2;
-  overflow:hidden;
-}
-.fm-img-col img.fm-player-img{
-  width:100%;height:100%;
-  object-fit:cover;object-position:top center;
-  display:block;
-}
-.fm-img-fallback{
-  width:100%;height:100%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:44px;
-}
-/* Fade right edge of image */
-.fm-img-col::after{
-  content:'';position:absolute;top:0;right:0;bottom:0;width:50%;
-  background:linear-gradient(to right,transparent,var(--surf2));
-  pointer-events:none;z-index:3;
-}
-
-/* Info column — right */
-.fm-info-col{
-  flex:1;min-width:0;
-  padding:16px 46px 14px 8px;
-  position:relative;z-index:2;
-  display:flex;flex-direction:column;justify-content:flex-end;
-}
-.fm-player-name{
-  font-family:var(--font-display);font-size:22px;letter-spacing:.05em;line-height:1;
-  color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5);
-  margin-bottom:3px;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-.fm-player-sub{font-size:11px;color:rgba(255,255,255,.65);margin-bottom:8px;font-weight:500;}
-.fm-badges{display:flex;gap:4px;flex-wrap:wrap;}
-.fmbadge{font-size:9px;font-weight:800;padding:2px 7px;border-radius:6px;display:flex;align-items:center;gap:3px;}
-.fmbadge.role{background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.28);}
-.fmbadge.captain{background:rgba(255,196,0,.28);color:#ffc400;border:1px solid rgba(255,196,0,.45);}
-.fmbadge.vc{background:rgba(180,180,200,.22);color:#c8d0dc;border:1px solid rgba(180,180,200,.32);}
-.fmbadge.ocap{background:rgba(255,107,53,.22);color:#ff9060;border:1px solid rgba(255,107,53,.42);}
-.fmbadge.pcap{background:rgba(155,89,182,.22);color:#cc99ff;border:1px solid rgba(155,89,182,.42);}
-.fmbadge.price{background:rgba(255,215,0,.15);color:#ffd700;border:1px solid rgba(255,215,0,.28);font-family:var(--font-mono);}
-
-/* ── Rank + pts row (inside sticky header, below image) ── */
-.fm-rank-row{
-  flex-shrink:0;
-  display:flex;align-items:center;gap:0;
-  border-top:1px solid var(--div);
-  position:relative;z-index:2;
-}
-.fm-rank-cell{
-  flex:1;padding:10px 16px;
-  display:flex;flex-direction:column;
-  border-right:1px solid var(--div);
-}
-.fm-rank-cell:last-child{border-right:none;}
-.fm-rc-label{font-size:8px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);margin-bottom:2px;}
-.fm-rc-val{font-family:var(--font-display);font-size:28px;line-height:1;color:var(--blue);}
-.fm-rc-val.pts{color:var(--t1);}
-.fm-rc-sub{font-size:10px;color:var(--t2);margin-top:1px;font-weight:500;}
-
-/* ── Scrollable stats ── */
-.fm-scroll-body{
-  flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
-}
-.fm-scroll-body::-webkit-scrollbar{display:none;}
-.fm-stats-section{padding:8px 14px 32px;}
-.fm-stats-title{
-  font-size:8.5px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--t3);margin:12px 0 7px;
-  display:flex;align-items:center;gap:7px;
-}
-.fm-stats-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--div),transparent);}
-.fm-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
-.fm-stat-box{
-  background:var(--surf);border:1px solid var(--brd);border-radius:12px;
-  padding:10px 8px;transition:transform .18s var(--bounce),border-color .2s;
-  text-align:center;
-}
-.fm-stat-box:hover{transform:scale(1.04);border-color:var(--brd2);}
-.fm-stat-icon{font-size:14px;margin-bottom:3px;display:block;}
-.fm-stat-val{font-family:var(--font-display);font-size:20px;color:var(--t1);line-height:1;margin-bottom:2px;}
-.fm-stat-val.zero{color:var(--t3);}
-.fm-stat-label{font-size:7.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);}
+.cb-wrap{position:relative;z-index:2;display:flex;flex-direction:column;height:100%;padding:10% 8% 18% 8%;}
+.cb-header{text-align:center;margin-bottom:6%;padding-bottom:6%;border-bottom:1px solid rgba(0,0,0,.2);}
+.cb-name{font-family:var(--font-display);font-size:clamp(16px,5vw,24px);letter-spacing:.05em;line-height:1;white-space:nowrap;}
+.cb-sub{font-size:clamp(8px,2.2vw,10px);opacity:.8;margin-top:4px;font-weight:700;letter-spacing:.03em;}
+.cb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(4px,1.5vw,6px);flex:1;}
+.cb-stat{display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.15);border-radius:6px;padding:clamp(4px,1.5vw,8px) 2px;border:1px solid rgba(0,0,0,.15);}
+.cb-sv{font-family:var(--font-display);font-size:clamp(14px,4vw,20px);line-height:1;}
+.cb-sl{font-size:clamp(7px,1.8vw,9px);font-weight:800;text-transform:uppercase;letter-spacing:.04em;opacity:.7;margin-top:2px;text-align:center;}
+.cb-footer{margin-top:6%;text-align:center;font-size:clamp(8px,2.2vw,10px);font-weight:800;opacity:.9;padding:6px 8px;background:rgba(0,0,0,.2);border-radius:6px;border:1px solid rgba(0,0,0,.15);}
 
 /* FIELD VIEW */
 .field-centering{display:flex;justify-content:center;padding:0 12px;}
@@ -584,149 +379,115 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 @keyframes floatBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
 
 /* ════════════════════════════════════
-   FIELD PLAYER DETAIL SHEET
-   — Bottom sheet, sticky hero header,
-     overflowing player image, scrollable stats
+   FIELD PLAYER DETAIL SHEET (Consolidated & Fixed Layout)
 ════════════════════════════════════ */
 .fm-modal{
-  display:none;position:fixed;inset:0;z-index:250;
-  background:rgba(0,0,0,.86);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  align-items:flex-end;justify-content:center;
+  display:none;position:fixed;inset:0;z-index:350;
+  background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;padding:20px;
 }
-.fm-modal.open{display:flex;animation:fmIn .22s var(--ease);}
-@keyframes fmIn{from{opacity:0;}to{opacity:1;}}
-/* The whole sheet incl. overflowing image */
-.fm-shell{
-  width:100%;max-width:480px;
-  /* extra top space for the overflowing player image */
-  padding-top:90px;
-  position:relative;
-  animation:fmSlide .42s var(--bounce) both;
-}
-@keyframes fmSlide{from{opacity:0;transform:translateY(60px);}to{opacity:1;transform:none;}}
+.fm-modal.open{display:flex;animation:fmIn .25s var(--ease) both;}
+@keyframes fmIn{from{opacity:0;transform:scale(0.95) translateY(10px);}to{opacity:1;transform:none;}}
 
-/* Overflowing player image — sits above the sheet */
-.fm-hero-img-wrap{
-  position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:140px;height:168px;
-  z-index:10;
-}
-.fm-hero-img{
-  width:100%;height:100%;
-  object-fit:cover;object-position:top center;
-  border-radius:20px;
-  box-shadow:0 12px 40px rgba(0,0,0,.7);
-  display:block;
-}
-.fm-hero-img-fallback{
-  width:100%;height:100%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:56px;border-radius:20px;
-}
-/* Gradient fade at bottom of hero image */
-.fm-hero-fade{
-  position:absolute;bottom:0;left:0;right:0;height:50%;
-  border-radius:0 0 20px 20px;
-  pointer-events:none;
+.fm-card{
+  width:100%;max-width:420px; max-height:85vh;
+  border-radius:24px; background:var(--surf2);
+  border:1px solid var(--brd2);
+  box-shadow:0 20px 60px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.1);
+  display:flex;flex-direction:column; position:relative; overflow:hidden;
 }
 
-/* The actual sheet card */
-.fm-sheet{
-  width:100%;
-  max-height:82vh;
-  border-radius:28px 28px 0 0;
-  background:var(--surf2);
-  border:1px solid var(--brd2);border-bottom:none;
-  box-shadow:0 -12px 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.06);
-  display:flex;flex-direction:column;
-  overflow:hidden;
-  position:relative;
+/* Close button */
+.fm-close{
+  position:absolute;top:12px;right:14px;z-index:30;
+  width:32px;height:32px;border-radius:10px;
+  background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.2);
+  color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:transform .2s var(--bounce),background .2s; backdrop-filter:blur(4px);
 }
+.fm-close:hover{transform:scale(1.1) rotate(90deg);background:rgba(231,76,60,.7);}
 
-/* Sticky header inside sheet */
-.fm-sticky{
-  flex-shrink:0;
-  /* Enough padding-top so content starts below the overflowing image */
-  padding-top:90px;
-  position:relative;z-index:1;
+/* STICKY HEADER: image LEFT + info RIGHT */
+.fm-header{
+  flex-shrink:0; display:flex; align-items:center; gap:16px;
+  padding:20px; position:sticky; top:0; z-index:20;
+  border-bottom: 1px solid var(--div);
 }
-/* Team colour gradient fills the header + blends into sheet */
-.fm-header-gradient{
-  position:absolute;top:0;left:0;right:0;height:200px;
-  z-index:0;pointer-events:none;
+.fm-header-bg{
+  position:absolute;inset:0;z-index:0;pointer-events:none;
 }
-/* Bottom blend of header gradient into sheet bg */
-.fm-header-gradient::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:70px;
-  background:linear-gradient(to bottom,transparent,var(--surf2));
+.fm-header-bg::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to right, rgba(0,0,0,0.2), var(--surf2) 80%);
   z-index:1;
 }
 
-.fm-header-content{
-  position:relative;z-index:2;
-  padding:0 20px 14px;
-  text-align:center;
+/* Player Image Col */
+.fm-img-col{
+  width:90px;height:90px; flex-shrink:0; position:relative; z-index:2;
+  border-radius:50%; border:3px solid rgba(255,255,255,0.2);
+  overflow:hidden; box-shadow:0 8px 20px rgba(0,0,0,0.5);
+  background: var(--bg);
+}
+.fm-player-img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+.fm-img-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:36px;}
+
+/* Info Col */
+.fm-info-col{
+  flex:1;min-width:0; position:relative; z-index:2;
+  display:flex;flex-direction:column;justify-content:center;
 }
 .fm-player-name{
-  font-family:var(--font-display);font-size:28px;letter-spacing:.05em;line-height:1;
-  color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.5);
-  margin-bottom:4px;
+  font-family:var(--font-display);font-size:26px;letter-spacing:.05em;line-height:1;
+  color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.6);
+  margin-bottom:4px; white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-.fm-player-sub{font-size:12px;color:rgba(255,255,255,.7);margin-bottom:10px;font-weight:500;}
-.fm-badges{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;}
-.fmbadge{font-size:10px;font-weight:800;padding:3px 9px;border-radius:7px;display:flex;align-items:center;gap:4px;}
-.fmbadge.role{background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3);}
-.fmbadge.captain{background:rgba(255,196,0,.3);color:#ffc400;border:1px solid rgba(255,196,0,.5);}
-.fmbadge.vc{background:rgba(180,180,200,.25);color:#c8d0dc;border:1px solid rgba(180,180,200,.35);}
-.fmbadge.ocap{background:rgba(255,107,53,.25);color:#ff9060;border:1px solid rgba(255,107,53,.45);}
-.fmbadge.pcap{background:rgba(155,89,182,.25);color:#cc99ff;border:1px solid rgba(155,89,182,.45);}
-.fmbadge.price{background:rgba(255,215,0,.18);color:#ffd700;border:1px solid rgba(255,215,0,.3);font-family:var(--font-mono);}
-.fm-close{
-  position:absolute;top:14px;right:16px;z-index:20;
-  width:32px;height:32px;border-radius:10px;
-  background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.2);
-  color:#fff;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:transform .2s var(--bounce),background .2s;
-}
-.fm-close:hover{transform:scale(1.1) rotate(90deg);background:rgba(231,76,60,.5);}
+.fm-player-sub{font-size:12px;color:rgba(255,255,255,.75);margin-bottom:8px;font-weight:600;}
+.fm-badges{display:flex;gap:5px;flex-wrap:wrap;}
+.fmbadge{font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px;display:flex;align-items:center;gap:3px;}
+.fmbadge.role{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);}
+.fmbadge.captain{background:rgba(255,196,0,.25);color:#ffc400;border:1px solid rgba(255,196,0,.4);}
+.fmbadge.vc{background:rgba(180,180,200,.2);color:#c8d0dc;border:1px solid rgba(180,180,200,.3);}
+.fmbadge.ocap{background:rgba(255,107,53,.2);color:#ff9060;border:1px solid rgba(255,107,53,.4);}
+.fmbadge.pcap{background:rgba(155,89,182,.2);color:#cc99ff;border:1px solid rgba(155,89,182,.4);}
+.fmbadge.price{background:rgba(255,215,0,.15);color:#ffd700;border:1px solid rgba(255,215,0,.3);font-family:var(--font-mono);}
 
-/* Rank + pts strip */
-.fm-rank-strip{
-  margin:0 16px 0;padding:12px 18px;border-radius:16px;
-  display:flex;align-items:center;gap:12px;
-  background:rgba(79,172,254,.08);border:1px solid rgba(79,172,254,.18);
-  position:relative;z-index:2;
+/* Rank + pts row */
+.fm-rank-row{
+  flex-shrink:0; display:flex;align-items:center;
+  background:rgba(0,0,0,0.2); border-bottom:1px solid var(--div);
+  position:relative;z-index:10;
 }
-.fm-rank-left{flex:1;}
-.fm-rank-label{font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);}
-.fm-rank-num{font-family:var(--font-display);font-size:38px;line-height:1;color:var(--blue);}
-.fm-rank-sub{font-size:11px;color:var(--t2);margin-top:1px;font-weight:500;}
-.fm-pts-right{text-align:right;}
-.fm-pts-big-label{font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);}
-.fm-pts-big{font-family:var(--font-display);font-size:38px;line-height:1;color:var(--t1);}
+.fm-rank-cell{
+  flex:1;padding:12px 16px; display:flex;flex-direction:column; align-items:center; text-align:center;
+  border-right:1px solid var(--div);
+}
+.fm-rank-cell:last-child{border-right:none;}
+.fm-rc-label{font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;color:var(--t3);margin-bottom:4px;}
+.fm-rc-val{font-family:var(--font-display);font-size:32px;line-height:1;color:var(--blue);}
+.fm-rc-val.pts{color:var(--t1);}
+.fm-rc-sub{font-size:10px;color:var(--t2);margin-top:2px;font-weight:500;}
 
 /* Scrollable stats */
 .fm-scroll-body{
   flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
-  padding-top:14px;
+  padding:0 20px 30px;
 }
 .fm-scroll-body::-webkit-scrollbar{display:none;}
-.fm-stats-section{padding:0 16px 48px;}
 .fm-stats-title{
-  font-size:9px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--t3);margin:14px 0 8px;
-  display:flex;align-items:center;gap:7px;
+  font-size:10px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--t3);margin:20px 0 10px; display:flex;align-items:center;gap:8px;
 }
 .fm-stats-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--div),transparent);}
 .fm-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
 .fm-stat-box{
-  background:var(--surf);border:1px solid var(--brd);border-radius:14px;
-  padding:12px 10px;transition:transform .2s var(--bounce),border-color .2s;
+  background:var(--surf);border:1px solid var(--brd);border-radius:12px;
+  padding:12px 8px;transition:transform .2s var(--bounce),border-color .2s;
   text-align:center;
 }
-.fm-stat-box:hover{transform:scale(1.04);border-color:var(--brd2);}
-.fm-stat-icon{font-size:15px;margin-bottom:4px;display:block;}
-.fm-stat-val{font-family:var(--font-display);font-size:22px;font-weight:500;color:var(--t1);line-height:1;margin-bottom:3px;}
+.fm-stat-box:hover{transform:scale(1.05);border-color:var(--brd2);}
+.fm-stat-icon{font-size:16px;margin-bottom:4px;display:block;}
+.fm-stat-val{font-family:var(--font-display);font-size:24px;color:var(--t1);line-height:1;margin-bottom:2px;}
 .fm-stat-val.zero{color:var(--t3);}
 .fm-stat-label{font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);}
 
@@ -752,13 +513,11 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
 </div>
 
-<!-- VIEW TOGGLE -->
 <div class="view-toggle">
   <button class="vt-btn active" id="vt-cards" onclick="switchView('cards')">🃏 Player Cards</button>
   <button class="vt-btn" id="vt-field" onclick="switchView('field')">🏟️ Team Field</button>
 </div>
 
-<!-- CARDS VIEW -->
 <div id="view-cards">
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
@@ -770,10 +529,10 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
     <button class="filter-btn" onclick="setFilter('BOWL',this)">🎳 Bowl</button>
     <button class="filter-btn" onclick="setFilter('AR',this)">⚡ All-R</button>
     <button class="filter-btn" onclick="setFilter('WK',this)">🧤 WK</button>
+    <button class="filter-btn" onclick="setFilter('ELITE',this)">🔵 Elite</button>
     <button class="filter-btn" onclick="setFilter('GOLD',this)">🥇 Gold</button>
     <button class="filter-btn" onclick="setFilter('SILVER',this)">🥈 Silver</button>
     <button class="filter-btn" onclick="setFilter('BRONZE',this)">🥉 Bronze</button>
-    <button class="filter-btn" onclick="setFilter('ELITE',this)">🔵 Elite</button>
     <button class="filter-btn" onclick="setFilter('SOLD',this)">✅ Sold</button>
     <button class="filter-btn" onclick="setFilter('UNSOLD',this)">⭕ Unsold</button>
   </div>
@@ -782,7 +541,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   </div>
 </div>
 
-<!-- FIELD VIEW -->
 <div id="view-field" style="display:none">
   <div class="legend">
     <div class="legend-item"><div class="legend-dot" style="background:#ffc400;color:#000">👑</div>Captain</div>
@@ -802,7 +560,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   </div>
 </div>
 
-<!-- CARD MODAL -->
 <div id="card-modal" class="modal" onclick="handleCardOverlay(event)">
   <button class="modal-close" onclick="closeCardModal()">✕</button>
   <div class="card-scene-wrap">
@@ -817,21 +574,17 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   <div class="modal-hint">Tap card to flip</div>
 </div>
 
-<!-- FIELD PLAYER DETAIL SHEET -->
 <div class="fm-modal" id="fm-modal" onclick="handleFmOverlay(event)">
   <div class="fm-card" onclick="event.stopPropagation()">
     <button class="fm-close" onclick="closeFmModal()">✕</button>
 
-    <!-- Sticky header: image LEFT + info RIGHT -->
     <div class="fm-header" id="fm-header">
       <div class="fm-header-bg" id="fm-header-bg"></div>
 
-      <!-- Left: player photo -->
       <div class="fm-img-col" id="fm-img-col">
         <div id="fm-img-slot" style="width:100%;height:100%"></div>
       </div>
 
-      <!-- Right: name, sub, badges -->
       <div class="fm-info-col">
         <div class="fm-player-name" id="fm-name">—</div>
         <div class="fm-player-sub" id="fm-sub">—</div>
@@ -839,7 +592,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
       </div>
     </div>
 
-    <!-- Rank + pts strip (sticky, below header) -->
     <div class="fm-rank-row" id="fm-rank-row">
       <div class="fm-rank-cell">
         <div class="fm-rc-label">Universal Rank</div>
@@ -851,16 +603,10 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
         <div class="fm-rc-val pts" id="fm-pts">—</div>
         <div class="fm-rc-sub">total</div>
       </div>
-      <div class="fm-rank-cell">
-        <div class="fm-rc-label">Price</div>
-        <div class="fm-rc-val" id="fm-price" style="font-size:22px">—</div>
-        <div class="fm-rc-sub">auction</div>
-      </div>
     </div>
 
-    <!-- Scrollable stats -->
     <div class="fm-scroll-body">
-      <div class="fm-stats-section" id="fm-stats"></div>
+      <div id="fm-stats"></div>
     </div>
   </div>
 </div>
@@ -881,18 +627,18 @@ const myTeam=localStorage.getItem("teamName")||"";
 /* THEME */
 const savedTheme=localStorage.getItem("theme")||"dark";
 document.documentElement.setAttribute("data-theme",savedTheme);
-document.getElementById("theme-icon").textContent=savedTheme==="dark"?"\u2600\ufe0f":"\ud83c\udf19";
+document.getElementById("theme-icon").textContent=savedTheme==="dark"?"☀️":"🌙";
 function toggleTheme(){
   const next=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
   document.documentElement.setAttribute("data-theme",next);localStorage.setItem("theme",next);
-  document.getElementById("theme-icon").textContent=next==="dark"?"\u2600\ufe0f":"\ud83c\udf19";
+  document.getElementById("theme-icon").textContent=next==="dark"?"☀️":"🌙";
 }
 
-/* PARTICLES */
+/* PARTICLES FOR BG */
 (function(){
   const canvas=document.getElementById("pitch-canvas"),ctx=canvas.getContext("2d");
   let W,H,P=[];
-  const EM=["\ud83c\udfcf","\u26a1","\u2728","\ud83c\udf1f","\ud83d\udcab","\u2022","\u2022","\u2022","\u2022","\u2022"];
+  const EM=["🏏","⚡","✨","🌟","💫","•","•","•","•","•"];
   function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
   function make(){return{x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:-Math.random()*.45-.1,size:Math.random()*7+5,emoji:EM[Math.floor(Math.random()*EM.length)],alpha:Math.random()*.28+.04,life:Math.random()*200+100};}
   function init(){P=Array.from({length:22},make);}
@@ -906,30 +652,29 @@ function toggleTheme(){
   window.addEventListener("resize",()=>{resize();init();});resize();init();tick();
 })();
 
-/* TEAM DATA - unified for both views */
+/* TEAM DATA */
 const TEAMS={
-  MI:{color:"#004BA0",color2:"#1a6fd4",c1:"#004BA0",c2:"#1a6fd4",grad:"linear-gradient(110deg,#004BA0,#1a6fd4,#0090ff)",logo:"ipl team logo/mi.webp",fb:"\ud83d\udd35",full:"Mumbai Indians"},
-  CSK:{color:"#c07c08",color2:"#f5a623",c1:"#c07c08",c2:"#FFD700",grad:"linear-gradient(110deg,#7a4f00,#c07c08,#FFD700)",logo:"ipl team logo/csk.jpg",fb:"\ud83d\udfe1",full:"Chennai Super Kings"},
-  RCB:{color:"#8B0000",color2:"#ff1a35",c1:"#8B0000",c2:"#ff4560",grad:"linear-gradient(110deg,#4a0000,#b0001a,#ff4560)",logo:"ipl team logo/rcb.jpg",fb:"\ud83d\udd34",full:"Royal Challengers"},
-  KKR:{color:"#3A225D",color2:"#6b3aaa",c1:"#3A225D",c2:"#8b5cf6",grad:"linear-gradient(110deg,#1a0a2e,#3A225D,#8b5cf6)",logo:"ipl team logo/kkr.webp",fb:"\ud83d\ufe35",full:"Kolkata Knight Riders"},
-  DC:{color:"#17479E",color2:"#2a5fc0",c1:"#17479E",c2:"#4facfe",grad:"linear-gradient(110deg,#0a1f4e,#17479E,#4facfe)",logo:"ipl team logo/dc.webp",fb:"\ud83d\udd37",full:"Delhi Capitals"},
-  PBKS:{color:"#c41920",color2:"#ED1F27",c1:"#c41920",c2:"#ff6b6b",grad:"linear-gradient(110deg,#6a0008,#c41920,#ff6b6b)",logo:"ipl team logo/pk.webp",fb:"\ud83e\udd81",full:"Punjab Kings"},
-  RR:{color:"#254AA5",color2:"#f542b3",c1:"#254AA5",c2:"#f542b3",grad:"linear-gradient(110deg,#102060,#254AA5,#f542b3)",logo:"ipl team logo/rr.webp",fb:"\ud83d\udc97",full:"Rajasthan Royals"},
-  SRH:{color:"#c04010",color2:"#F7591A",c1:"#c04010",c2:"#ff8c00",grad:"linear-gradient(110deg,#6a2000,#c04010,#ff8c00)",logo:"ipl team logo/srh.webp",fb:"\ud83d\udfe0",full:"Sunrisers Hyderabad"},
-  GT:{color:"#1B2133",color2:"#3a5a9a",c1:"#1B2133",c2:"#3a5a9a",grad:"linear-gradient(110deg,#0a0e18,#1B2133,#3a5a9a)",logo:"ipl team logo/gt.webp",fb:"\ud83d\udee1\ufe0f",full:"Gujarat Titans"},
-  LSG:{color:"#1d6b42",color2:"#5ec48a",c1:"#1d6b42",c2:"#5ec48a",grad:"linear-gradient(110deg,#0a3020,#1d6b42,#5ec48a)",logo:"ipl team logo/lsg.jpg",fb:"\ud83d\udfe2",full:"Lucknow Super Giants"},
+  MI:{color:"#004BA0",color2:"#1a6fd4",c1:"#004BA0",c2:"#1a6fd4",logo:"ipl team logo/mi.webp",fb:"🔵",full:"Mumbai Indians"},
+  CSK:{color:"#c07c08",color2:"#f5a623",c1:"#c07c08",c2:"#FFD700",logo:"ipl team logo/csk.jpg",fb:"🟡",full:"Chennai Super Kings"},
+  RCB:{color:"#8B0000",color2:"#ff1a35",c1:"#8B0000",c2:"#ff4560",logo:"ipl team logo/rcb.jpg",fb:"🔴",full:"Royal Challengers"},
+  KKR:{color:"#3A225D",color2:"#6b3aaa",c1:"#3A225D",c2:"#8b5cf6",logo:"ipl team logo/kkr.webp",fb:"🟣",full:"Kolkata Knight Riders"},
+  DC:{color:"#17479E",color2:"#2a5fc0",c1:"#17479E",c2:"#4facfe",logo:"ipl team logo/dc.webp",fb:"💠",full:"Delhi Capitals"},
+  PBKS:{color:"#c41920",color2:"#ED1F27",c1:"#c41920",c2:"#ff6b6b",logo:"ipl team logo/pk.webp",fb:"🦁",full:"Punjab Kings"},
+  RR:{color:"#254AA5",color2:"#f542b3",c1:"#254AA5",c2:"#f542b3",logo:"ipl team logo/rr.webp",fb:"💗",full:"Rajasthan Royals"},
+  SRH:{color:"#c04010",color2:"#F7591A",c1:"#c04010",c2:"#ff8c00",logo:"ipl team logo/srh.webp",fb:"🟠",full:"Sunrisers Hyderabad"},
+  GT:{color:"#1B2133",color2:"#3a5a9a",c1:"#1B2133",c2:"#3a5a9a",logo:"ipl team logo/gt.webp",fb:"🛡️",full:"Gujarat Titans"},
+  LSG:{color:"#1d6b42",color2:"#5ec48a",c1:"#1d6b42",c2:"#5ec48a",logo:"ipl team logo/lsg.jpg",fb:"🟢",full:"Lucknow Super Giants"},
 };
 function getTeam(n){
   const u=(n||"").toUpperCase();
   for(const k of Object.keys(TEAMS)) if(u.includes(k)) return{abbr:k,...TEAMS[k]};
-  return{abbr:(u.slice(0,3)||"IPL"),color:"#2a3a5a",color2:"#4facfe",c1:"#2a3a5a",c2:"#4facfe",grad:"linear-gradient(110deg,#0d1a2e,#2a3a5a,#4facfe)",logo:"",fb:"\ud83c\udfcf",full:"IPL Team"};
+  return{abbr:(u.slice(0,3)||"IPL"),color:"#2a3a5a",color2:"#4facfe",c1:"#2a3a5a",c2:"#4facfe",logo:"",fb:"🏏",full:"IPL Team"};
 }
 
 /* HELPERS */
 function getPts(p){return parseFloat(p["Total Points"]||p["Current Points"]||0)||0;}
 function gi(p,...keys){for(const k of keys){const v=p[k];if(v!==undefined&&v!==null&&v!=="")return parseInt(v)||0;}return 0;}
 function roleClass(r){return r==="BOWL"?"rb-bowl":r==="AR"?"rb-ar":r==="WK"?"rb-wk":"rb-bat";}
-const TIER_PTS_COLOR={gold:"#FFD700",silver:"#C0C8D8",bronze:"#CD7F32"};
 
 /* STATE */
 let allPlayers=[],activeFilter="ALL",tierMap={},ratingMap={};
@@ -943,14 +688,14 @@ function calcTiersAndRatings(players){
     const pts=getPts(p),name=p["Player Name"];
     if(pts<=0){tierMap[name]="bronze";ratingMap[name]=35;return;}
     const rank=withPts.findIndex(x=>x["Player Name"]===name);
-    if(rank<goldCount){tierMap[name]="gold";ratingMap[name]=Math.max(80,99-Math.round((rank/Math.max(goldCount-1,1))*19));}
-    else if(rank<goldCount+silverCount){const r=rank-goldCount;tierMap[name]="silver";ratingMap[name]=Math.max(60,79-Math.round((r/Math.max(silverCount-1,1))*19));}
-    else{const r=rank-goldCount-silverCount,bc=Math.max(total-goldCount-silverCount,1);tierMap[name]="bronze";ratingMap[name]=Math.max(40,59-Math.round((r/Math.max(bc-1,1))*19));}
+    // Rating Calculation mapped accurately for tiers
+    if(rank<goldCount){tierMap[name]="gold";ratingMap[name]=Math.max(81,99-Math.round((rank/Math.max(goldCount-1,1))*18));}
+    else if(rank<goldCount+silverCount){const r=rank-goldCount;tierMap[name]="silver";ratingMap[name]=Math.max(36,80-Math.round((r/Math.max(silverCount-1,1))*44));}
+    else{const r=rank-goldCount-silverCount,bc=Math.max(total-goldCount-silverCount,1);tierMap[name]="bronze";ratingMap[name]=Math.max(1,35-Math.round((r/Math.max(bc-1,1))*34));}
   });
 }
 
 /* VIEW SWITCH */
-let currentView="cards";
 function switchView(view){
   currentView=view;
   document.getElementById("view-cards").style.display=view==="cards"?"block":"none";
@@ -971,7 +716,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
     if(r.status==="success"){allPlayers=r.players;calcTiersAndRatings(allPlayers);applyFilters();}
     else throw new Error();
   }catch{
-    document.getElementById("player-list").innerHTML='<div class="empty-state" style="color:#e74c3c">\u26a0\ufe0f Failed to load players.</div>';
+    document.getElementById("player-list").innerHTML='<div class="empty-state" style="color:#e74c3c">⚠️ Failed to load players.</div>';
   }
 });
 
@@ -986,14 +731,15 @@ function applyFilters(){
   const f=allPlayers.filter(p=>{
     const mq=!q||p["Player Name"].toLowerCase().includes(q)||(p["IPL Team"]||"").toLowerCase().includes(q);
     const role=(p["Role"]||"").toUpperCase(),tier=tierMap[p["Player Name"]]||"bronze",sold=p["Sold To"]&&p["Sold To"].trim();
+    const rating = ratingMap[p["Player Name"]] || 35;
     if(activeFilter==="BAT")    return mq&&role==="BAT";
     if(activeFilter==="BOWL")   return mq&&role==="BOWL";
     if(activeFilter==="AR")     return mq&&role==="AR";
     if(activeFilter==="WK")     return mq&&role==="WK";
-    if(activeFilter==="GOLD")   return mq&&tier==="gold";
-    if(activeFilter==="SILVER") return mq&&tier==="silver";
-    if(activeFilter==="BRONZE") return mq&&tier==="bronze";
-    if(activeFilter==="ELITE")  return mq&&getCardType(p,leadersGlobal)!=="bronze"&&getCardType(p,leadersGlobal)!=="silver"&&getCardType(p,leadersGlobal)!=="gold";
+    if(activeFilter==="ELITE")  return mq&&rating>=95;
+    if(activeFilter==="GOLD")   return mq&&rating>=81&&rating<95;
+    if(activeFilter==="SILVER") return mq&&rating>=36&&rating<81;
+    if(activeFilter==="BRONZE") return mq&&rating<36;
     if(activeFilter==="SOLD")   return mq&&!!sold;
     if(activeFilter==="UNSOLD") return mq&&!sold;
     return mq;
@@ -1008,24 +754,29 @@ function renderList(players){
   const myCap=localStorage.getItem("captain")||"",myVC=localStorage.getItem("viceCaptain")||"";
   const ocName=(leadersGlobal?.orangeCap?.name||"").trim().toLowerCase();
   const pcName=(leadersGlobal?.purpleCap?.name||"").trim().toLowerCase();
+  
   el.innerHTML=players.map((p,i)=>{
-    const tier=tierMap[p["Player Name"]]||"bronze",team=getTeam(p["IPL Team"]||""),pts=getPts(p);
+    const rating=ratingMap[p["Player Name"]]||35;
+    const tier=rating>=95?"elite":rating>=81?"gold":rating>=36?"silver":"bronze";
+    const team=getTeam(p["IPL Team"]||""),pts=getPts(p);
     const role=(p["Role"]||"BAT").toUpperCase(),name=p["Player Name"]||"",owned=p["Sold To"]&&p["Sold To"].trim();
     const isCap=myCap===name&&p["Sold To"]===myTeam,isVC=myVC===name&&p["Sold To"]===myTeam;
     const pnl=name.trim().toLowerCase(),isOC=ocName&&pnl===ocName,isPC=pcName&&pnl===pcName;
-    const tierColor=TIER_PTS_COLOR[tier];
-    // Circle avatar — player headshot > team logo > emoji fallback
+    
+    let tierColor = tier==="elite"?"#4facfe":tier==="gold"?"#FFD700":tier==="silver"?"#C0C8D8":"#CD7F32";
+    
     const playerImg=p["Image"]&&p["Image"].toString().trim();
     const logoImg=playerImg
       ?`<img src="${playerImg}" style="width:46px;height:46px;object-fit:cover;object-position:top center;position:relative;z-index:1;border-radius:50%;" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`+
-       (team.logo?`<img src="${team.logo}" style="width:30px;height:30px;object-fit:contain;position:relative;z-index:1;display:none" alt="${team.abbr}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="font-size:20px;display:none">${team.fb}</span>`:`<span style="font-size:20px;display:none">${team.fb}</span>`)
-      :(team.logo?`<img src="${team.logo}" style="width:30px;height:30px;object-fit:contain;position:relative;z-index:1" alt="${team.abbr}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="font-size:20px;display:none">${team.fb}</span>`:`<span style="font-size:20px">${team.fb}</span>`);
-    // Small badges around the circle
+       `<span style="font-size:20px;display:none">${team.fb}</span>`
+      : `<span style="font-size:20px">${team.fb}</span>`;
+      
     let avBadges=`<div class="row-av-tier ${tier}"></div>`;
     if(isCap)     avBadges+=`<div class="row-av-badge c-badge">C</div>`;
     else if(isVC) avBadges+=`<div class="row-av-badge vc-badge">VC</div>`;
     if(isOC)      avBadges+=`<div class="row-av-badge oc-badge">🧢</div>`;
     if(isPC)      avBadges+=`<div class="row-av-badge pc-badge">🎩</div>`;
+    
     return`<div class="player-row" style="animation-delay:${Math.min(i*.04,.5)}s" onclick="openCard(${i})">
       <div class="row-bg" style="background:linear-gradient(110deg,${team.color}44 0%,${team.color2}18 50%,transparent 80%)"></div>
       <div class="row-shimmer"></div>
@@ -1054,29 +805,30 @@ function renderList(players){
   window._fp=players;
 }
 
-/* OPEN CARD */
-// Helper: determine card type from pts + special roles
+/* OPEN CARD LOGIC */
 function getCardType(p, leaders){
-  const pts=getPts(p);
   const name=(p["Player Name"]||"").trim().toLowerCase();
+  const rating = ratingMap[p["Player Name"]] || 35; 
   const ocName=(leaders?.orangeCap?.name||"").trim().toLowerCase();
   const pcName=(leaders?.purpleCap?.name||"").trim().toLowerCase();
   const potName=(leaders?.highestPts?.name||"").trim().toLowerCase();
+  
   if(potName&&name===potName) return "pot";
   if(ocName&&name===ocName)   return "orange-special";
   if(pcName&&name===pcName)   return "purple-special";
-  if(pts>=96)  return "elite";
-  if(pts>=81)  return "gold";
-  if(pts>=36)  return "silver";
+  
+  // Rating logic from Prompt
+  if(rating >= 95) return "elite";
+  if(rating >= 81) return "gold";
+  if(rating >= 36) return "silver";
   return "bronze";
 }
 
-// Particle colours per card type
 const PARTICLE_COLORS={
-  elite:       ["#60c8ff","#2080e0","#ffd700","#ffffff"],
+  elite:         ["#60c8ff","#2080e0","#ffd700","#ffffff"],
   "orange-special":["#ffaa40","#ff7020","#ffcc60","#ffffff"],
   "purple-special":["#c060ff","#8030d0","#e0b0ff","#ffffff"],
-  pot:         ["#ffd040","#fff080","#c89000","#ffffff","#ffe0a0"],
+  pot:           ["#ffd040","#fff080","#c89000","#ffffff","#ffe0a0"],
 };
 
 function spawnParticles(canvas, cardType){
@@ -1085,13 +837,13 @@ function spawnParticles(canvas, cardType){
   const ctx=canvas.getContext("2d");
   const W=canvas.width=canvas.offsetWidth;
   const H=canvas.height=canvas.offsetHeight;
-  let particles=Array.from({length:28},()=>({
+  let particles=Array.from({length:35},()=>({
     x:Math.random()*W,y:H+8,
-    vx:(Math.random()-.5)*.8,vy:-(Math.random()*1.2+.4),
-    size:Math.random()*3+1.5,
+    vx:(Math.random()-.5)*1,vy:-(Math.random()*1.5+.5),
+    size:Math.random()*3.5+1.5,
     color:colors[Math.floor(Math.random()*colors.length)],
-    alpha:Math.random()*.7+.3,
-    life:Math.random()*120+60,maxLife:180
+    alpha:Math.random()*.8+.2,
+    life:Math.random()*140+60,maxLife:200
   }));
   let raf;
   function tick(){
@@ -1099,9 +851,9 @@ function spawnParticles(canvas, cardType){
     particles.forEach((p,i)=>{
       p.x+=p.vx;p.y+=p.vy;p.life--;
       if(p.life<=0||p.y<-10){
-        particles[i]={x:Math.random()*W,y:H+8,vx:(Math.random()-.5)*.8,vy:-(Math.random()*1.2+.4),
-          size:Math.random()*3+1.5,color:colors[Math.floor(Math.random()*colors.length)],
-          alpha:Math.random()*.7+.3,life:Math.random()*120+60,maxLife:180};
+        particles[i]={x:Math.random()*W,y:H+8,vx:(Math.random()-.5)*1,vy:-(Math.random()*1.5+.5),
+          size:Math.random()*3.5+1.5,color:colors[Math.floor(Math.random()*colors.length)],
+          alpha:Math.random()*.8+.2,life:Math.random()*140+60,maxLife:200};
         return;
       }
       ctx.save();
@@ -1122,66 +874,69 @@ function openCard(idx){
   if(!p)return;
   const name=p["Player Name"]||"";
   const cardType=getCardType(p,leadersGlobal);
-  const tier=tierMap[name]||"bronze";
   const team=getTeam(p["IPL Team"]||"");
   const pts=getPts(p);
   const rating=ratingMap[name]||35;
   const role=(p["Role"]||"BAT").toUpperCase();
   const owned=p["Sold To"]&&p["Sold To"].trim();
-  const myCap_=localStorage.getItem("captain")||"";
-  const myVC_=localStorage.getItem("viceCaptain")||"";
-  const isCap=myCap_===name&&p["Sold To"]===myTeam;
-  const isVC=myVC_===name&&p["Sold To"]===myTeam;
-  const price=p["Price Bought"]?`₹${p["Price Bought"]}Cr`:"Unsold";
   const fantasyTeam=owned||"Unsold";
+  
   const runs=gi(p,"Runs","runs"),wkts=gi(p,"Wickets","wickets"),cats=gi(p,"Catches","catches");
   const fours=gi(p,"4s","fours"),sixes=gi(p,"6s","sixes"),fifties=gi(p,"50s","fifties");
   const hunds=gi(p,"100s","hundreds"),threeW=gi(p,"3W","threew"),fiveW=gi(p,"5W","fivew");
   const fourW=gi(p,"fourv"),maidens=gi(p,"Maidens","maidens"),dots=gi(p,"Dots","dots");
 
-  // Glow ring colour + animation
+  // Outer Animated Glow matches the card shape & tier
   const glowColors={
-    bronze:"rgba(180,100,30,.55)",silver:"rgba(180,180,180,.5)",gold:"rgba(220,170,0,.65)",
-    elite:"rgba(40,160,255,.7)","orange-special":"rgba(255,130,30,.7)","purple-special":"rgba(170,60,255,.7)",pot:"rgba(255,210,40,.75)"
+    bronze:"rgba(205,127,50, 0.4)", silver:"rgba(184,200,216, 0.4)", gold:"rgba(255,215,0, 0.5)",
+    elite:"rgba(79,172,254, 0.8)", "orange-special":"rgba(255,107,53, 0.8)", "purple-special":"rgba(155,89,182, 0.8)", pot:"rgba(255,215,0, 0.9)"
   };
   const glowRing=document.getElementById("card-glow-ring");
-  glowRing.style.background=glowColors[cardType]||"transparent";
+  
+  if (["elite", "orange-special", "purple-special", "pot"].includes(cardType)) {
+     // Golden shiny border behind special cards
+     glowRing.style.background="linear-gradient(45deg, #ffd700, #ff8c00, #ffd700, #ffeb80)";
+     glowRing.style.backgroundSize="300% 300%";
+     glowRing.style.animation="glowPulse 1.5s ease-in-out infinite alternate, eliteGrad 3s linear infinite";
+  } else {
+     glowRing.style.background=glowColors[cardType]||"transparent";
+     glowRing.style.animation="glowPulse 2s ease-in-out infinite alternate";
+  }
 
-  // Set card classes
   const front=document.getElementById("card-front");
   const back=document.getElementById("card-back");
   front.className=`card-face ${cardType}`;
   back.className=`card-face card-back-face ${cardType}`;
   document.getElementById("card-flip").classList.remove("flipped");
 
-  // Player photo
+  // Player photo + Fallback
   const pImg=p["Image"]&&p["Image"].toString().trim();
   const photoHTML=pImg
     ?`<img class="cf-player-photo" src="${pImg}" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`+
-     `<div class="cf-photo-fallback" style="display:none">${team.logo?`<img src="${team.logo}" style="width:55%;height:55%;object-fit:contain">`:`<span>${team.fb}</span>`}</div>`
-    :`<div class="cf-photo-fallback">${team.logo?`<img src="${team.logo}" style="width:55%;height:55%;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))" alt="${team.abbr}">`:`<span style="font-size:clamp(44px,14vw,64px)">${team.fb}</span>`}</div>`;
+     `<div class="cf-photo-fallback" style="display:none">${team.logo?`<img src="${team.logo}" style="width:50%;height:50%;object-fit:contain">`:`<span>${team.fb}</span>`}</div>`
+    :`<div class="cf-photo-fallback">${team.logo?`<img src="${team.logo}" style="width:50%;height:50%;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))" alt="${team.abbr}">`:`<span style="font-size:clamp(44px,14vw,64px)">${team.fb}</span>`}</div>`;
 
-  // Team logo
+  // Team logo (Left side below rating)
   const tLogoHTML=team.logo
-    ?`<img src="${team.logo}" style="width:100%;height:100%;object-fit:contain;" alt="${team.abbr}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-size:clamp(22px,7vw,30px)">${team.fb}</span>`
+    ?`<img src="${team.logo}" alt="${team.abbr}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-size:clamp(22px,7vw,30px)">${team.fb}</span>`
     :`<span style="font-size:clamp(22px,7vw,30px)">${team.fb}</span>`;
 
   // Special badge
   const specialLabels={
-    elite:"🔵 Elite",
-    "orange-special":"🧢 Orange Cap",
-    "purple-special":"🎩 Purple Cap",
-    pot:"🏆 Player of Tournament"
+    elite:"🔵 ELITE",
+    "orange-special":"🧢 ORANGE CAP",
+    "purple-special":"🎩 PURPLE CAP",
+    pot:"🏆 PLAYER OF THE TOURNAMENT"
   };
   const specialBadge=specialLabels[cardType]?`<div class="cf-special-badge">${specialLabels[cardType]}</div>`:"";
 
-  // Front innerHTML
+  // Front Setup (Exactly matching desired format)
   front.innerHTML=`
+  <div class="cf-shine"></div>
   <canvas class="cf-canvas" id="cf-canvas"></canvas>
   <div class="cf-wrap">
     <div class="cf-photo-zone">
       ${photoHTML}
-      <div class="cf-photo-fade"></div>
       <div class="cf-rating-block"><span class="cf-rating">${rating}</span><span class="cf-role-lbl">${role}</span></div>
       <div class="cf-team-logo-zone">${tLogoHTML}</div>
       ${specialBadge}
@@ -1196,22 +951,22 @@ function openCard(idx){
           <div class="cf-stat-item"><span class="cf-sv">${wkts}</span><span class="cf-sl">WKT</span></div>
           <div class="cf-stat-item"><span class="cf-sv">${cats}</span><span class="cf-sl">CAT</span></div>
         </div>
-        <div class="cf-stat-vdiv"></div>
         <div class="cf-stat-col right">
-          <div class="cf-stat-item"><span class="cf-sv">${fours}</span><span class="cf-sl">4s</span></div>
-          <div class="cf-stat-item"><span class="cf-sv">${sixes}</span><span class="cf-sl">6s</span></div>
+          <div class="cf-stat-item"><span class="cf-sv">${fours}</span><span class="cf-sl">4S</span></div>
+          <div class="cf-stat-item"><span class="cf-sv">${sixes}</span><span class="cf-sl">6S</span></div>
           <div class="cf-stat-item"><span class="cf-sv">${pts}</span><span class="cf-sl">PTS</span></div>
         </div>
       </div>
     </div>
   </div>`;
 
-  // Back innerHTML
+  // Back Setup
   back.innerHTML=`
+  <div class="cf-shine"></div>
   <div class="cb-wrap">
     <div class="cb-header">
       <div class="cb-name">${name.toUpperCase()}</div>
-      <div class="cb-sub">${team.abbr} · ${pts} pts · ${price} · ${fantasyTeam}</div>
+      <div class="cb-sub">${team.abbr} · ${pts} pts · ${fantasyTeam}</div>
     </div>
     <div class="cb-grid">
       <div class="cb-stat"><div class="cb-sv">${runs}</div><div class="cb-sl">Runs</div></div>
@@ -1227,12 +982,11 @@ function openCard(idx){
       <div class="cb-stat"><div class="cb-sv">${fiveW}</div><div class="cb-sl">5W</div></div>
       <div class="cb-stat"><div class="cb-sv">${fourW}</div><div class="cb-sl">4W</div></div>
     </div>
-    <div class="cb-footer">${pts} pts · Rating ${rating}${isCap?" · Captain 👑":isVC?" · Vice-Captain ⭐":""}</div>
+    <div class="cb-footer">RATING ${rating}</div>
   </div>`;
 
   document.getElementById("card-modal").classList.add("open");
 
-  // Spawn particles after render
   cancelAnimationFrame(_particleRaf);
   requestAnimationFrame(()=>{
     const canvas=document.getElementById("cf-canvas");
@@ -1250,7 +1004,7 @@ function closeCardModal(){
 function handleCardOverlay(e){if(e.target===document.getElementById("card-modal"))closeCardModal();}
 
 /* ========================
-   FIELD VIEW
+   FIELD VIEW LOGIC
 ======================== */
 async function loadField(){
   fieldLoaded=true;
@@ -1262,7 +1016,7 @@ async function loadField(){
   leadersGlobal=lr?.leaders||{};
   myPlayersGlobal=allPlayers.filter(p=>p["Sold To"]===myTeam);
   const loadEl=document.getElementById("field-loading");
-  if(!myPlayersGlobal.length){loadEl.innerHTML='<span style="font-size:42px">\ud83c\udfcf</span><br>Your squad is empty.<br>Head to Squad to draft players!';return;}
+  if(!myPlayersGlobal.length){loadEl.innerHTML='<span style="font-size:42px">🏏</span><br>Your squad is empty.<br>Head to Squad to draft players!';return;}
   loadEl.style.display="none";
   renderField();
 }
@@ -1273,8 +1027,7 @@ function renderField(){
   const pcName=(leadersGlobal.purpleCap?.name||"").trim().toLowerCase();
   const groups={WK:[],BAT:[],AR:[],BOWL:[]};
   myPlayersGlobal.forEach(p=>{const r=p["Role"];if(groups[r])groups[r].push(p);else groups.BAT.push(p);});
-  const sorted=[...allPlayers].sort((a,b)=>getPts(b)-getPts(a));
-  const rankMap={};sorted.forEach((p,i)=>{rankMap[(p["Player Name"]||"").trim()]=i+1;});
+  
   const container=document.getElementById("field-container");
   const rows=[{label:"BOWLERS",key:"BOWL"},{label:"ALL-ROUNDERS",key:"AR"},{label:"BATTERS",key:"BAT"},{label:"WICKET-KEEPERS",key:"WK"}];
   let html="";
@@ -1287,13 +1040,14 @@ function renderField(){
       let badges="";
       if(isC) badges+='<div class="fp-badge cap-c">C</div>';
       else if(isVC_) badges+='<div class="fp-badge cap-vc">VC</div>';
-      if(isOC) badges+='<div class="fp-badge orange-cap">\ud83e\udde2</div>';
-      if(isPC) badges+='<div class="fp-badge purple-cap">\ud83c\udfa9</div>';
+      if(isOC) badges+='<div class="fp-badge orange-cap">🧢</div>';
+      if(isPC) badges+='<div class="fp-badge purple-cap">🎩</div>';
+      
       const pImg=p["Image"]&&p["Image"].toString().trim();
       const logoHTML=pImg
         ?`<img src="${pImg}" style="width:46px;height:46px;object-fit:cover;object-position:top center;border-radius:50%;position:relative;z-index:1;" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">`+
-         (tc.logo?`<img src="${tc.logo}" style="width:34px;height:34px;object-fit:contain;display:none" alt="${tc.abbr}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-size:22px">${tc.fb}</span>`:`<span style="display:none;font-size:22px">${tc.fb}</span>`)
-        :(tc.logo?`<img src="${tc.logo}" style="width:34px;height:34px;object-fit:contain;" alt="${tc.abbr}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-size:22px">${tc.fb}</span>`:`<span style="font-size:22px">${tc.fb}</span>`);
+         `<span style="display:none;font-size:22px">${tc.fb}</span>`
+        :`<span style="font-size:22px">${tc.fb}</span>`;
       return`<div class="fp" style="animation-delay:${delay}s" onclick="openFmModal('${encodeURIComponent(name)}')">
         <div class="fp-avatar-wrap">
           <div class="fp-avatar" style="background:linear-gradient(135deg,${tc.c1},${tc.c2});border-color:${tc.c2}88">${logoHTML}</div>
@@ -1310,7 +1064,7 @@ function renderField(){
   const d=document.createElement("div");d.innerHTML=html;container.appendChild(d);
 }
 
-/* FIELD PLAYER DETAIL MODAL */
+/* FIELD PLAYER DETAIL MODAL (Consolidated) */
 function openFmModal(enc){
   const name=decodeURIComponent(enc);
   const p=myPlayersGlobal.find(x=>(x["Player Name"]||"")===name);
@@ -1324,26 +1078,21 @@ function openFmModal(enc){
   const pts=getPts(p);
   const sorted=[...allPlayers].sort((a,b)=>getPts(b)-getPts(a));
   const rank=sorted.findIndex(x=>(x["Player Name"]||"").trim()===name.trim())+1;
-  const total=sorted.length;
 
-  // Header background — team colour gradient
+  // Header background (Team gradient + fade to dark)
   const bg=document.getElementById("fm-header-bg");
-  bg.style.background=`linear-gradient(135deg,${tc.c1} 0%,${tc.c2} 55%,rgba(0,0,0,0) 100%)`;
+  bg.style.background=`linear-gradient(135deg, ${tc.color} 0%, ${tc.color2} 100%)`;
 
-  // Player image (left column)
+  // Image Setup (Left Col)
   const fmImg=p["Image"]&&p["Image"].toString().trim();
   const imgSlot=document.getElementById("fm-img-slot");
   if(fmImg){
-    imgSlot.innerHTML=`<img class="fm-player-img" src="${fmImg}" alt="${name}" style="width:100%;height:100%;object-fit:cover;object-position:top center;" onerror="this.parentNode.innerHTML='<div class=fm-img-fallback style=background:linear-gradient(135deg,${tc.c1},${tc.c2})>${tc.fb}</div>'">`;
+    imgSlot.innerHTML=`<img class="fm-player-img" src="${fmImg}" alt="${name}" onerror="this.parentNode.innerHTML='<div class=fm-img-fallback>${tc.fb}</div>'">`;
   }else{
-    const tl=tc.logo?`<img src="${tc.logo}" style="width:60%;height:60%;object-fit:contain" alt="${tc.abbr}">`:`<span style="font-size:44px">${tc.fb}</span>`;
-    imgSlot.innerHTML=`<div class="fm-img-fallback" style="background:linear-gradient(135deg,${tc.c1},${tc.c2})">${tl}</div>`;
+    imgSlot.innerHTML=`<div class="fm-img-fallback">${tc.fb}</div>`;
   }
-  // Image right-edge fade: blend into header bg
-  const imgCol=document.getElementById("fm-img-col");
-  imgCol.style.setProperty("--fade-color",tc.c2);
 
-  // Player info
+  // Info Text
   document.getElementById("fm-name").textContent=name;
   document.getElementById("fm-sub").textContent=(p["IPL Team"]||"—")+" · "+(p["Role"]||"—");
 
@@ -1355,13 +1104,12 @@ function openFmModal(enc){
   if(pcName&&pnl===pcName)bh+=`<span class="fmbadge pcap">🎩 Purple Cap</span>`;
   document.getElementById("fm-badges").innerHTML=bh;
 
-  // Rank, pts, price
+  // Rank / Pts
   document.getElementById("fm-rank").textContent="#"+rank;
-  document.getElementById("fm-rank-sub").textContent="of "+total+" players";
+  document.getElementById("fm-rank-sub").textContent="of "+sorted.length+" players";
   document.getElementById("fm-pts").textContent=pts;
-  document.getElementById("fm-price").textContent=p["Price Bought"]?`₹${p["Price Bought"]} Cr`:"—";
 
-  // Stats
+  // Scrollable Stats Grid
   const statDefs={
     Batting:[{k:"Runs",i:"🏃",l:"Runs"},{k:"6s",i:"💥",l:"Sixes"},{k:"4s",i:"4️⃣",l:"Fours"},{k:"50s",i:"⭐",l:"50s"},{k:"100s",i:"💯",l:"100s"}],
     Bowling:[{k:"Wickets",i:"🎯",l:"Wickets"},{k:"Maidens",i:"🔵",l:"Maidens"},{k:"Dots",i:"⚫",l:"Dots"},{k:"3W",i:"🎳",l:"3W Haul"},{k:"5W",i:"🔥",l:"5W Haul"},{k:"fourv",i:"⚡",l:"4W Haul"}],
@@ -1379,9 +1127,13 @@ function openFmModal(enc){
   document.getElementById("fm-stats").innerHTML=sh;
 
   document.getElementById("fm-modal").classList.add("open");
-  document.body.style.overflow="hidden";
+  document.body.style.overflow="hidden"; // Prevent background scroll
 }
-function closeFmModal(){document.getElementById("fm-modal").classList.remove("open");document.body.style.overflow="";}
+
+function closeFmModal(){
+  document.getElementById("fm-modal").classList.remove("open");
+  document.body.style.overflow="";
+}
 function handleFmOverlay(e){if(e.target===document.getElementById("fm-modal"))closeFmModal();}
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCardModal();closeFmModal();}});
 </script>
