@@ -352,8 +352,8 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .pitch-strip{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:38px;height:210px;background:linear-gradient(180deg,#d4b882 0%,#c8a55c 40%,#b89040 60%,#c8a55c 100%);border-radius:5px;border:1px solid rgba(255,255,255,.25);box-shadow:0 0 20px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.2);pointer-events:none;z-index:0;}
 .pitch-strip::before,.pitch-strip::after{content:'';position:absolute;left:-8px;right:-8px;height:2px;background:rgba(255,255,255,.6);border-radius:1px;}
 .pitch-strip::before{top:22px;}.pitch-strip::after{bottom:22px;}
-.role-row{position:relative;z-index:1;display:flex;justify-content:center;align-items:flex-end;gap:12px;padding:6px 8px 4px;flex-wrap:wrap;}
-.role-label{text-align:center;font-size:8px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--row-label);text-shadow:0 1px 4px rgba(0,0,0,.6);margin-bottom:2px;margin-top:6px;}
+.role-row{position:relative;z-index:2;display:flex;justify-content:center;align-items:flex-end;gap:12px;padding:6px 8px 4px;flex-wrap:wrap;}
+.role-label{position:relative;z-index:2;text-align:center;font-size:8px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--row-label);text-shadow:0 1px 4px rgba(0,0,0,.6);margin-bottom:2px;margin-top:6px;}
 .fp{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;-webkit-tap-highlight-color:transparent;animation:tokenIn .45s var(--bounce) both;}
 @keyframes tokenIn{from{opacity:0;transform:translateY(12px) scale(.8);}to{opacity:1;transform:none;}}
 .fp:active .fp-avatar{transform:scale(.9);}
@@ -361,6 +361,16 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .fp-avatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;border:2.5px solid;box-shadow:0 4px 16px rgba(0,0,0,.5);transition:transform .2s var(--bounce),box-shadow .2s;position:relative;overflow:hidden;}
 .fp:hover .fp-avatar{transform:scale(1.1);box-shadow:0 8px 24px rgba(0,0,0,.6);}
 .fp-avatar::after{content:'';position:absolute;inset:0;border-radius:50%;background:linear-gradient(145deg,rgba(255,255,255,.18),transparent 60%);pointer-events:none;}
+
+/* Badges for field players */
+.fp-badge{position:absolute;line-height:1;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;z-index:5;font-family:var(--font-mono);box-shadow:0 2px 6px rgba(0,0,0,.6);}
+.fp-badge.left{top:-4px;left:-4px;}
+.fp-badge.right{top:-4px;right:-4px;}
+.fp-badge.cap-c{background:#ffc400;color:#1a0f00;}
+.fp-badge.cap-vc{background:#9ca8b4;color:#111;}
+.fp-badge.cap-oc{background:#FF6B35;color:#fff;font-size:10px;}
+.fp-badge.cap-pc{background:#9b59b6;color:#fff;font-size:10px;}
+
 .fp-name{background:var(--name-chip);backdrop-filter:blur(8px);border-radius:8px;padding:3px 7px;font-size:9.5px;font-weight:800;color:#fff;white-space:nowrap;max-width:74px;overflow:hidden;text-overflow:ellipsis;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.5);text-shadow:0 1px 3px rgba(0,0,0,.6);}
 .fp-pts{font-family:var(--font-mono);font-size:9px;font-weight:600;color:rgba(255,255,255,.85);text-shadow:0 1px 3px rgba(0,0,0,.7);}
 .legend{display:flex;gap:10px;padding:0 16px 12px;flex-wrap:wrap;position:relative;z-index:1;}
@@ -1038,8 +1048,6 @@ async function loadField(){
     if(r?.status==="success"){if(r.captain)localStorage.setItem("captain",r.captain);if(r.viceCaptain)localStorage.setItem("viceCaptain",r.viceCaptain);}
   }catch{}
   
-  // No longer fetching getLeaders from API here, relying on robust local calculateLeaders
-  
   myPlayersGlobal=allPlayers.filter(p=>p["Sold To"]===myTeam);
   const loadEl=document.getElementById("field-loading");
   if(!myPlayersGlobal.length){loadEl.innerHTML='<span style="font-size:42px">🏏</span><br>Your squad is empty.<br>Head to Squad to draft players!';return;}
@@ -1048,6 +1056,11 @@ async function loadField(){
 }
 
 function renderField(){
+  const cap=localStorage.getItem("captain")||"";
+  const vc=localStorage.getItem("viceCaptain")||"";
+  const ocName=(leadersGlobal?.orangeCap?.name||"").trim().toLowerCase();
+  const pcName=(leadersGlobal?.purpleCap?.name||"").trim().toLowerCase();
+  
   const groups={WK:[],BAT:[],AR:[],BOWL:[]};
   myPlayersGlobal.forEach(p=>{const r=p["Role"];if(groups[r])groups[r].push(p);else groups.BAT.push(p);});
   
@@ -1057,7 +1070,9 @@ function renderField(){
   rows.forEach(({label,key})=>{
     const pl=groups[key];if(!pl.length)return;
     const tokens=pl.map((p,idx)=>{
-      const name=p["Player Name"]||"";
+      const name=p["Player Name"]||"", nl=name.trim().toLowerCase();
+      const isC = cap === name, isVC = vc === name;
+      const isOC = ocName && nl === ocName, isPC = pcName && nl === pcName;
       const pts=getPts(p),tc=getTeam(p["IPL Team"]||""),sn=name.split(" ").slice(-1)[0],delay=idx*.06+.1;
       
       const pImg=p["Image"]&&p["Image"].toString().trim();
@@ -1065,10 +1080,21 @@ function renderField(){
         ?`<img src="${pImg}" style="width:100%;height:100%;object-fit:cover;object-position:top center;border-radius:50%;position:relative;z-index:1;" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">`+
          `<span style="display:none;font-size:22px">${tc.fb}</span>`
         :`<span style="font-size:22px">${tc.fb}</span>`;
+
+      // Determine Left/Right Badges for Field Tokens
+      let leftBadge = "";
+      if(isC) leftBadge = `<div class="fp-badge left cap-c">C</div>`;
+      else if(isVC) leftBadge = `<div class="fp-badge left cap-vc">VC</div>`;
+
+      let rightBadge = "";
+      if(isOC) rightBadge = `<div class="fp-badge right cap-oc">🧢</div>`;
+      else if(isPC) rightBadge = `<div class="fp-badge right cap-pc">🎩</div>`;
         
       return`<div class="fp" style="animation-delay:${delay}s" onclick="openFmModal('${encodeURIComponent(name)}')">
         <div class="fp-avatar-wrap">
           <div class="fp-avatar" style="background:linear-gradient(135deg,${tc.c1},${tc.c2});border-color:${tc.c2}88">${logoHTML}</div>
+          ${leftBadge}
+          ${rightBadge}
         </div>
         <div class="fp-name">${sn}</div>
         <div class="fp-pts">${pts} pts</div>
@@ -1078,7 +1104,13 @@ function renderField(){
   });
   const pitchStrip=container.querySelector(".pitch-strip");
   container.innerHTML="";container.appendChild(pitchStrip);
-  const d=document.createElement("div");d.innerHTML=html;container.appendChild(d);
+  
+  // Wrap contents with relative position and z-index to bring above pitch box
+  const d=document.createElement("div");
+  d.style.position = "relative";
+  d.style.zIndex = "2";
+  d.innerHTML=html;
+  container.appendChild(d);
 }
 
 /* FIELD PLAYER DETAIL MODAL (Frameless Header & Ribbons) */
