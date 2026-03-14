@@ -9,7 +9,7 @@
 <style>
 :root{
   --accent:#FF6B35;--accent-soft:rgba(255,107,53,.14);
-  --blue:#4facfe;--gold:#FFD700;--silver:#b8c8d8;
+  --blue:#4facfe;--gold:#FFD700;--silver:#b8c8d8;--bronze:#CD7F32;--grey:#888888;
   --font-main:'Outfit',sans-serif;--font-mono:'DM Mono',monospace;--font-display:'Bebas Neue',cursive;
   --ease:cubic-bezier(.4,0,.2,1);--bounce:cubic-bezier(.34,1.56,.64,1);
 }
@@ -88,10 +88,12 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .row-av-badge.oc-badge{top:-3px;left:-3px;background:#FF6B35;color:#fff;box-shadow:0 0 8px rgba(255,107,53,.6);}
 .row-av-badge.pc-badge{bottom:-3px;left:-3px;background:#9b59b6;color:#fff;box-shadow:0 0 8px rgba(155,89,182,.6);}
 .row-av-tier{position:absolute;bottom:-2px;right:-2px;width:14px;height:14px;border-radius:50%;z-index:2;border:2px solid var(--bg);}
+.row-av-tier.pot{background:#FFD700;box-shadow:0 0 10px rgba(255,215,0,.8);}
+.row-av-tier.elite{background:#4facfe;box-shadow:0 0 8px rgba(79,172,254,.8);}
 .row-av-tier.gold{background:#FFD700;box-shadow:0 0 8px rgba(255,215,0,.6);}
 .row-av-tier.silver{background:#C0C8D8;box-shadow:0 0 6px rgba(192,200,216,.5);}
 .row-av-tier.bronze{background:#CD7F32;box-shadow:0 0 6px rgba(205,127,50,.4);}
-.row-av-tier.elite{background:#4facfe;box-shadow:0 0 8px rgba(79,172,254,.8);}
+.row-av-tier.grey{background:#888888;box-shadow:0 0 4px rgba(136,136,136,.4);}
 .row-info{flex:1;min-width:0;}
 .row-name{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px;letter-spacing:.01em;}
 .row-meta{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
@@ -141,11 +143,10 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 
 /* Card Scene & Shape */
 .card-scene-wrap{position:relative;display:flex;align-items:center;justify-content:center;}
-
 .card-scene{
   perspective:1400px;
-  width:min(76vw,300px);
-  aspect-ratio:0.68;
+  width:min(80vw,320px);
+  aspect-ratio:0.64; /* Made slightly taller to prevent data cutoff at bottom */
   cursor:pointer;
   animation:cardPop .5s var(--bounce) .05s both;
   position:relative;z-index:1;
@@ -165,11 +166,17 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   clip-path: polygon(10% 0, 90% 0, 100% 12%, 100% 75%, 50% 100%, 0 75%, 0 12%);
   overflow:hidden;
   display:flex;flex-direction:column;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.5); /* Inner depth */
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
 }
 .card-back-face{transform:rotateY(180deg);}
 
-/* ── Standard tier gradients based on RATING ── */
+/* ── TIER GRADIENTS ── */
+.card-face.grey{
+  background:
+    linear-gradient(125deg,rgba(255,255,255,.1) 0%,transparent 45%,rgba(255,255,255,.05) 100%),
+    linear-gradient(165deg,#444 0%,#666 18%,#888 36%,#aaa 50%,#888 65%,#666 82%,#444 100%);
+  color:#111;
+}
 .card-face.bronze{
   background:
     linear-gradient(125deg,rgba(255,255,255,.15) 0%,transparent 45%,rgba(255,255,255,.05) 100%),
@@ -188,9 +195,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
     linear-gradient(165deg,#4a3500 0%,#997300 18%,#ffd700 36%,#fff080 50%,#ffd700 65%,#997300 82%,#4a3500 100%);
   color:#2d2000;
 }
-
-/* ── Special Animated Cards ── */
-/* Elite (95-99 pts) — electric blue, gold outer border handled via glow ring */
 .card-face.elite{
   background-size:300% 300%;
   animation:eliteGrad 4s ease infinite;
@@ -201,7 +205,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   50% {background:linear-gradient(200deg,#093375 0%,#115bc2 20%,#3aa1ff 40%,#80caff 55%,#3aa1ff 70%,#115bc2 88%,#031332 100%);}
   100%{background:linear-gradient(165deg,#031332 0%,#093375 25%,#115bc2 45%,#3aa1ff 55%,#115bc2 70%,#093375 85%,#031332 100%);}
 }
-
 .card-face.orange-special{
   background-size:300% 300%;
   animation:orangeGrad 4s ease infinite;
@@ -212,7 +215,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   50% {background:linear-gradient(200deg,#7a2100 0%,#d84900 20%,#ff8c3a 40%,#ffb980 55%,#ff8c3a 70%,#d84900 88%,#2e0d00 100%);}
   100%{background:linear-gradient(165deg,#2e0d00 0%,#7a2100 25%,#d84900 45%,#ff8c3a 55%,#d84900 70%,#7a2100 85%,#2e0d00 100%);}
 }
-
 .card-face.purple-special{
   background-size:300% 300%;
   animation:purpleGrad 4s ease infinite;
@@ -223,7 +225,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   50% {background:linear-gradient(200deg,#3f0082 0%,#7b12d6 20%,#b152ff 40%,#d799ff 55%,#b152ff 70%,#7b12d6 88%,#15002e 100%);}
   100%{background:linear-gradient(165deg,#15002e 0%,#3f0082 25%,#7b12d6 45%,#b152ff 55%,#7b12d6 70%,#3f0082 85%,#15002e 100%);}
 }
-
 .card-face.pot{
   background-size:300% 300%;
   animation:potGrad 4s ease infinite;
@@ -247,14 +248,12 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   to   { box-shadow: inset 0 0 0 4px rgba(255,215,0,1), inset 0 0 30px rgba(255,215,0,0.6); }
 }
 
-/* The Animated Outer Glow Ring matches the FIFA shape perfectly */
+/* Outer Glow Ring matches shape */
 .card-glow-ring{
-  position:absolute; inset:-4px; /* Extends slightly outside */
-  pointer-events:none; z-index:0;
+  position:absolute; inset:-4px; pointer-events:none; z-index:0;
   clip-path: polygon(10% 0, 90% 0, 100% 12%, 100% 75%, 50% 100%, 0 75%, 0 12%);
   animation: glowPulse 2s ease-in-out infinite alternate;
-  filter: blur(14px);
-  opacity: 0.8;
+  filter: blur(14px); opacity: 0.8;
 }
 @keyframes glowPulse{from{opacity:0.6; filter:blur(10px);}to{opacity:1; filter:blur(18px); transform:scale(1.02);}}
 
@@ -265,45 +264,47 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 }
 
 /* ════════════════════════════════════
-   CARD FRONT FACE (Exact Screenshot Match)
+   CARD FRONT FACE
 ════════════════════════════════════ */
 .cf-wrap{position:relative;width:100%;height:100%;display:flex;flex-direction:column;z-index:2;}
 .cf-canvas{position:absolute;inset:0;z-index:0;pointer-events:none;}
 
-/* Photo zone: Top half */
-.cf-photo-zone{position:relative;flex:0 0 48%;overflow:hidden; display:flex; justify-content:center;}
-.cf-player-photo{width:90%;height:100%;object-fit:cover;object-position:bottom center;display:block;position:relative;z-index:1; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));}
+/* Photo zone */
+.cf-photo-zone{position:relative;flex:0 0 46%;overflow:hidden; display:flex; justify-content:center;}
+/* Adjusted object-fit to contain to prevent head clipping */
+.cf-player-photo{width:90%;height:100%;object-fit:contain;object-position:bottom center;display:block;position:relative;z-index:1; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));}
 .cf-photo-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:clamp(48px,15vw,72px);background:rgba(0,0,0,.15);position:relative;z-index:1;}
 
 /* Rating Top-Left */
 .cf-rating-block{position:absolute;top:10%;left:12%;z-index:3;line-height:0.9;text-align:center;}
-.cf-rating{font-family:var(--font-display);font-size:clamp(32px,10vw,48px);display:block;text-shadow:0 2px 6px rgba(0,0,0,.4);}
-.cf-role-lbl{font-family:var(--font-display);font-size:clamp(12px,4vw,16px);letter-spacing:.04em;display:block;opacity:.9;text-shadow:0 1px 4px rgba(0,0,0,.4);}
+.cf-rating{font-family:var(--font-display);font-size:clamp(32px,9vw,44px);display:block;text-shadow:0 2px 6px rgba(0,0,0,.4);}
+.cf-role-lbl{font-family:var(--font-display);font-size:clamp(11px,3vw,14px);letter-spacing:.04em;display:block;opacity:.9;text-shadow:0 1px 4px rgba(0,0,0,.4);}
 
-/* Team Logo Middle-Left (Under Rating) */
-.cf-team-logo-zone{position:absolute;top:42%;left:14%;z-index:3;width:clamp(28px,9vw,38px);height:clamp(28px,9vw,38px);}
+/* Team Logo Middle-Left */
+.cf-team-logo-zone{position:absolute;top:44%;left:14%;z-index:3;width:clamp(26px,8vw,36px);height:clamp(26px,8vw,36px);}
 .cf-team-logo-zone img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4));}
 
-/* Special Badge Top Right */
+/* Special Badge Top Right (Orange/Purple Cap & POT) */
 .cf-special-badge{
   position:absolute;top:8%;right:8%;z-index:3;
   font-size:clamp(7px,2vw,9px);font-weight:900;letter-spacing:.1em;text-transform:uppercase;
   padding:4px 8px;border-radius:6px;
-  background:rgba(0,0,0,.5);backdrop-filter:blur(6px);
-  border:1px solid rgba(255,215,0,.4);color:rgba(255,215,0,1);
+  background:rgba(0,0,0,.6);backdrop-filter:blur(6px);
+  border:1px solid rgba(255,215,0,.6);color:rgba(255,215,0,1);
   line-height:1.2;text-align:center;
   box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  max-width: 40%;
 }
 
-/* Info zone: Bottom half */
+/* Info zone */
 .cf-info-zone{
   flex:1;display:flex;flex-direction:column;
-  padding:2% 10% 12% 10%; /* Extra bottom padding for the v-shape clip */
+  padding:0 8% 22% 8%; /* Kept padding away from the v-shape clip */
   position:relative;z-index:2;
 }
 .cf-name{
   font-family:var(--font-display);
-  font-size:clamp(18px,5.5vw,26px);
+  font-size:clamp(16px,5vw,24px);
   letter-spacing:.06em;line-height:1;
   text-align:center;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
@@ -311,22 +312,22 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   margin-bottom:2%;
 }
 .cf-owner-badge{
-  font-size:clamp(8px,2.5vw,11px);font-weight:800;letter-spacing:.05em;
-  text-align:center; opacity:0.85; margin-bottom:5%;
+  font-size:clamp(8px,2.2vw,10px);font-weight:800;letter-spacing:.05em;
+  text-align:center; opacity:0.85; margin-bottom:4%;
   background:rgba(0,0,0,.25);border-radius:10px;padding:3px 12px;
   display:inline-block;align-self:center;
   text-shadow:0 1px 2px rgba(0,0,0,.5);
 }
-.cf-divider-line{height:1px;background:currentColor;opacity:.3;margin:0 0 5%;border-radius:1px;}
+.cf-divider-line{height:1px;background:currentColor;opacity:.3;margin:0 0 4%;border-radius:1px;}
 
-/* 2-col stats EXACTLY matching the screenshot layout */
+/* 2-col stats */
 .cf-stats-row{display:flex;align-items:stretch;flex:1;}
-.cf-stat-col{flex:1;display:flex;flex-direction:column;gap:clamp(4px,1.5vw,8px);}
+.cf-stat-col{flex:1;display:flex;flex-direction:column;gap:clamp(3px,1vw,6px);}
 .cf-stat-col.left{padding-right:8%; border-right: 1px solid rgba(0,0,0,0.2);}
 .cf-stat-col.right{padding-left:8%;}
 .cf-stat-item{display:flex;align-items:baseline;justify-content:space-between;}
-.cf-sv{font-family:var(--font-display);font-size:clamp(15px,4.5vw,22px);line-height:1;font-weight:400; text-shadow:0 1px 2px rgba(0,0,0,.3);}
-.cf-sl{font-family:var(--font-display);font-size:clamp(10px,3vw,14px);opacity:.7;white-space:nowrap; letter-spacing: 0.05em;}
+.cf-sv{font-family:var(--font-display);font-size:clamp(14px,4vw,20px);line-height:1;font-weight:400; text-shadow:0 1px 2px rgba(0,0,0,.3);}
+.cf-sl{font-family:var(--font-display);font-size:clamp(9px,2.5vw,13px);opacity:.7;white-space:nowrap; letter-spacing: 0.05em;}
 
 /* ════════════════════════════════════
    CARD BACK FACE
@@ -355,20 +356,16 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .pitch-strip{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:38px;height:210px;background:linear-gradient(180deg,#d4b882 0%,#c8a55c 40%,#b89040 60%,#c8a55c 100%);border-radius:5px;border:1px solid rgba(255,255,255,.25);box-shadow:0 0 20px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.2);pointer-events:none;z-index:0;}
 .pitch-strip::before,.pitch-strip::after{content:'';position:absolute;left:-8px;right:-8px;height:2px;background:rgba(255,255,255,.6);border-radius:1px;}
 .pitch-strip::before{top:22px;}.pitch-strip::after{bottom:22px;}
-.role-row{position:relative;z-index:1;display:flex;justify-content:center;align-items:flex-end;gap:8px;padding:6px 8px 4px;flex-wrap:wrap;}
+.role-row{position:relative;z-index:1;display:flex;justify-content:center;align-items:flex-end;gap:12px;padding:6px 8px 4px;flex-wrap:wrap;}
 .role-label{text-align:center;font-size:8px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--row-label);text-shadow:0 1px 4px rgba(0,0,0,.6);margin-bottom:2px;margin-top:6px;}
 .fp{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;-webkit-tap-highlight-color:transparent;animation:tokenIn .45s var(--bounce) both;}
 @keyframes tokenIn{from{opacity:0;transform:translateY(12px) scale(.8);}to{opacity:1;transform:none;}}
 .fp:active .fp-avatar{transform:scale(.9);}
 .fp-avatar-wrap{position:relative;}
-.fp-avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;border:2.5px solid;box-shadow:0 4px 16px rgba(0,0,0,.5);transition:transform .2s var(--bounce),box-shadow .2s;position:relative;overflow:hidden;}
+/* Badges on field removed as requested */
+.fp-avatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;border:2.5px solid;box-shadow:0 4px 16px rgba(0,0,0,.5);transition:transform .2s var(--bounce),box-shadow .2s;position:relative;overflow:hidden;}
 .fp:hover .fp-avatar{transform:scale(1.1);box-shadow:0 8px 24px rgba(0,0,0,.6);}
 .fp-avatar::after{content:'';position:absolute;inset:0;border-radius:50%;background:linear-gradient(145deg,rgba(255,255,255,.18),transparent 60%);pointer-events:none;}
-.fp-badge{position:absolute;font-size:10px;line-height:1;background:rgba(0,0,0,.7);border-radius:4px;padding:1px 3px;font-weight:900;font-family:var(--font-mono);backdrop-filter:blur(4px);}
-.fp-badge.cap-c{top:-4px;right:-4px;background:#ffc400;color:#1a0f00;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;box-shadow:0 0 10px rgba(255,196,0,.6);}
-.fp-badge.cap-vc{top:-4px;right:-4px;background:#9ca8b4;color:#111;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;box-shadow:0 0 8px rgba(180,180,200,.4);}
-.fp-badge.orange-cap{top:-4px;left:-4px;background:#FF6B35;color:#fff;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px;box-shadow:0 0 10px rgba(255,107,53,.6);}
-.fp-badge.purple-cap{bottom:-4px;left:-4px;background:#9b59b6;color:#fff;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px;box-shadow:0 0 10px rgba(155,89,182,.6);}
 .fp-name{background:var(--name-chip);backdrop-filter:blur(8px);border-radius:8px;padding:3px 7px;font-size:9.5px;font-weight:800;color:#fff;white-space:nowrap;max-width:74px;overflow:hidden;text-overflow:ellipsis;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.5);text-shadow:0 1px 3px rgba(0,0,0,.6);}
 .fp-pts{font-family:var(--font-mono);font-size:9px;font-weight:600;color:rgba(255,255,255,.85);text-shadow:0 1px 3px rgba(0,0,0,.7);}
 .legend{display:flex;gap:10px;padding:0 16px 12px;flex-wrap:wrap;position:relative;z-index:1;}
@@ -379,99 +376,71 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 @keyframes floatBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
 
 /* ════════════════════════════════════
-   FIELD PLAYER DETAIL SHEET (Consolidated & Fixed Layout)
+   FIELD PLAYER DETAIL SHEET (Frameless Ribbon Layout)
 ════════════════════════════════════ */
 .fm-modal{
   display:none;position:fixed;inset:0;z-index:350;
-  background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  align-items:center;justify-content:center;padding:20px;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  align-items:center;justify-content:center;padding:16px;
 }
 .fm-modal.open{display:flex;animation:fmIn .25s var(--ease) both;}
 @keyframes fmIn{from{opacity:0;transform:scale(0.95) translateY(10px);}to{opacity:1;transform:none;}}
 
-.fm-card{
-  width:100%;max-width:420px; max-height:85vh;
-  border-radius:24px; background:var(--surf2);
-  border:1px solid var(--brd2);
-  box-shadow:0 20px 60px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.1);
-  display:flex;flex-direction:column; position:relative; overflow:hidden;
+.fm-wrapper {
+  width:100%; max-width:440px; display:flex; flex-direction:column; max-height:92vh; position:relative;
 }
 
-/* Close button */
+/* Close Button (Attached to Wrapper) */
 .fm-close{
-  position:absolute;top:12px;right:14px;z-index:30;
-  width:32px;height:32px;border-radius:10px;
-  background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.2);
-  color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  position:absolute;top:0;right:0;z-index:30;
+  width:36px;height:36px;border-radius:12px;
+  background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.2);
+  color:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;
   transition:transform .2s var(--bounce),background .2s; backdrop-filter:blur(4px);
 }
 .fm-close:hover{transform:scale(1.1) rotate(90deg);background:rgba(231,76,60,.7);}
 
-/* STICKY HEADER: image LEFT + info RIGHT */
-.fm-header{
-  flex-shrink:0; display:flex; align-items:center; gap:16px;
-  padding:20px; position:sticky; top:0; z-index:20;
-  border-bottom: 1px solid var(--div);
+/* Frameless Header: Float Image Left, Ribbons Right */
+.fm-frameless-header {
+  display:flex; align-items:flex-end; gap:12px; margin-bottom:12px; padding:0 8px; margin-top:-20px;
+  position:relative; z-index:10;
 }
-.fm-header-bg{
-  position:absolute;inset:0;z-index:0;pointer-events:none;
+.fm-float-img {
+  width:140px; height:170px; flex-shrink:0; filter:drop-shadow(0 12px 20px rgba(0,0,0,0.6));
 }
-.fm-header-bg::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(to right, rgba(0,0,0,0.2), var(--surf2) 80%);
-  z-index:1;
+.fm-float-img img {
+  width:100%; height:100%; object-fit:contain; object-position:bottom center;
 }
+.fm-ribbon-stack {
+  flex:1; display:flex; flex-direction:column; justify-content:flex-end; gap:8px; padding-bottom:10px;
+}
+.fm-ribbon {
+  color:#fff; padding:10px 14px;
+  border-radius:8px 16px 16px 8px; box-shadow:0 6px 16px rgba(0,0,0,0.5);
+  position:relative; overflow:hidden; border: 1px solid rgba(255,255,255,0.15);
+}
+.fm-ribbon::after {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(110deg, transparent 20%, rgba(255,255,255,0.15) 50%, transparent 80%);
+}
+.fm-ribbon-name { font-family:var(--font-display); font-size:26px; line-height:1; text-shadow:0 2px 4px rgba(0,0,0,0.5); letter-spacing:0.04em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.fm-ribbon-sub { font-size:11px; font-weight:600; opacity:0.9; margin-top:4px; text-shadow:0 1px 2px rgba(0,0,0,0.4); display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
+.fm-ribbon-stat-row { display:flex; gap:16px; align-items:center; }
+.fm-ribbon-stat { font-family:var(--font-display); font-size:24px; line-height:1; text-shadow:0 2px 4px rgba(0,0,0,0.4); }
+.fm-ribbon-stat span { font-family:var(--font-main); font-size:9px; opacity:0.85; letter-spacing:1px; text-transform:uppercase; display:block; margin-top:2px; font-weight:700;}
+.fmbadge {font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.3);}
 
-/* Player Image Col */
-.fm-img-col{
-  width:90px;height:90px; flex-shrink:0; position:relative; z-index:2;
-  border-radius:50%; border:3px solid rgba(255,255,255,0.2);
-  overflow:hidden; box-shadow:0 8px 20px rgba(0,0,0,0.5);
-  background: var(--bg);
+/* Bounding Box for Stats */
+.fm-card-body {
+  flex:1; background:var(--surf2); border-radius:20px; border:1px solid var(--brd2);
+  box-shadow:0 20px 60px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.1);
+  display:flex; flex-direction:column; overflow:hidden; position:relative; z-index:1;
 }
-.fm-player-img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
-.fm-img-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:36px;}
-
-/* Info Col */
-.fm-info-col{
-  flex:1;min-width:0; position:relative; z-index:2;
-  display:flex;flex-direction:column;justify-content:center;
-}
-.fm-player-name{
-  font-family:var(--font-display);font-size:26px;letter-spacing:.05em;line-height:1;
-  color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.6);
-  margin-bottom:4px; white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-.fm-player-sub{font-size:12px;color:rgba(255,255,255,.75);margin-bottom:8px;font-weight:600;}
-.fm-badges{display:flex;gap:5px;flex-wrap:wrap;}
-.fmbadge{font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px;display:flex;align-items:center;gap:3px;}
-.fmbadge.role{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);}
-.fmbadge.captain{background:rgba(255,196,0,.25);color:#ffc400;border:1px solid rgba(255,196,0,.4);}
-.fmbadge.vc{background:rgba(180,180,200,.2);color:#c8d0dc;border:1px solid rgba(180,180,200,.3);}
-.fmbadge.ocap{background:rgba(255,107,53,.2);color:#ff9060;border:1px solid rgba(255,107,53,.4);}
-.fmbadge.pcap{background:rgba(155,89,182,.2);color:#cc99ff;border:1px solid rgba(155,89,182,.4);}
-.fmbadge.price{background:rgba(255,215,0,.15);color:#ffd700;border:1px solid rgba(255,215,0,.3);font-family:var(--font-mono);}
-
-/* Rank + pts row */
-.fm-rank-row{
-  flex-shrink:0; display:flex;align-items:center;
-  background:rgba(0,0,0,0.2); border-bottom:1px solid var(--div);
-  position:relative;z-index:10;
-}
-.fm-rank-cell{
-  flex:1;padding:12px 16px; display:flex;flex-direction:column; align-items:center; text-align:center;
-  border-right:1px solid var(--div);
-}
-.fm-rank-cell:last-child{border-right:none;}
-.fm-rc-label{font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;color:var(--t3);margin-bottom:4px;}
-.fm-rc-val{font-family:var(--font-display);font-size:32px;line-height:1;color:var(--blue);}
-.fm-rc-val.pts{color:var(--t1);}
-.fm-rc-sub{font-size:10px;color:var(--t2);margin-top:2px;font-weight:500;}
 
 /* Scrollable stats */
 .fm-scroll-body{
-  flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
-  padding:0 20px 30px;
+  flex:1; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch;
+  padding:10px 20px 30px;
 }
 .fm-scroll-body::-webkit-scrollbar{display:none;}
 .fm-stats-title{
@@ -533,6 +502,7 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
     <button class="filter-btn" onclick="setFilter('GOLD',this)">🥇 Gold</button>
     <button class="filter-btn" onclick="setFilter('SILVER',this)">🥈 Silver</button>
     <button class="filter-btn" onclick="setFilter('BRONZE',this)">🥉 Bronze</button>
+    <button class="filter-btn" onclick="setFilter('GREY',this)">⚪ Grey</button>
     <button class="filter-btn" onclick="setFilter('SOLD',this)">✅ Sold</button>
     <button class="filter-btn" onclick="setFilter('UNSOLD',this)">⭕ Unsold</button>
   </div>
@@ -575,39 +545,33 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 </div>
 
 <div class="fm-modal" id="fm-modal" onclick="handleFmOverlay(event)">
-  <div class="fm-card" onclick="event.stopPropagation()">
+  <div class="fm-wrapper" onclick="event.stopPropagation()">
     <button class="fm-close" onclick="closeFmModal()">✕</button>
 
-    <div class="fm-header" id="fm-header">
-      <div class="fm-header-bg" id="fm-header-bg"></div>
-
-      <div class="fm-img-col" id="fm-img-col">
+    <div class="fm-frameless-header" id="fm-header">
+      <div class="fm-float-img">
         <div id="fm-img-slot" style="width:100%;height:100%"></div>
       </div>
-
-      <div class="fm-info-col">
-        <div class="fm-player-name" id="fm-name">—</div>
-        <div class="fm-player-sub" id="fm-sub">—</div>
-        <div class="fm-badges" id="fm-badges"></div>
+      <div class="fm-ribbon-stack">
+        <div class="fm-ribbon name-ribbon" id="fm-ribbon-1">
+          <div class="fm-ribbon-name" id="fm-name">—</div>
+          <div class="fm-ribbon-sub" id="fm-sub">—</div>
+        </div>
+        <div class="fm-ribbon stat-ribbon" id="fm-ribbon-2">
+          <div class="fm-ribbon-stat-row">
+            <div class="fm-ribbon-stat" id="fm-rank">—<span>Univ Rank</span></div>
+            <div class="fm-ribbon-stat" id="fm-pts">—<span>Total Pts</span></div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="fm-rank-row" id="fm-rank-row">
-      <div class="fm-rank-cell">
-        <div class="fm-rc-label">Universal Rank</div>
-        <div class="fm-rc-val" id="fm-rank">#—</div>
-        <div class="fm-rc-sub" id="fm-rank-sub">of all players</div>
-      </div>
-      <div class="fm-rank-cell">
-        <div class="fm-rc-label">Fantasy Pts</div>
-        <div class="fm-rc-val pts" id="fm-pts">—</div>
-        <div class="fm-rc-sub">total</div>
+    <div class="fm-card-body">
+      <div class="fm-scroll-body">
+        <div id="fm-stats"></div>
       </div>
     </div>
 
-    <div class="fm-scroll-body">
-      <div id="fm-stats"></div>
-    </div>
   </div>
 </div>
 
@@ -681,17 +645,33 @@ let allPlayers=[],activeFilter="ALL",tierMap={},ratingMap={};
 let leadersGlobal={},myPlayersGlobal=[];
 let fieldLoaded=false;
 
+/* Distributes rating 1-100 hitting exact tiers based on rank */
 function calcTiersAndRatings(players){
   const withPts=players.filter(p=>getPts(p)>0).sort((a,b)=>getPts(b)-getPts(a));
-  const total=withPts.length,goldCount=Math.ceil(total*.33),silverCount=Math.ceil(total*.33);
+  const total=withPts.length;
   players.forEach(p=>{
     const pts=getPts(p),name=p["Player Name"];
-    if(pts<=0){tierMap[name]="bronze";ratingMap[name]=35;return;}
+    if(pts<=0){tierMap[name]="grey";ratingMap[name]=30;return;}
     const rank=withPts.findIndex(x=>x["Player Name"]===name);
-    // Rating Calculation mapped accurately for tiers
-    if(rank<goldCount){tierMap[name]="gold";ratingMap[name]=Math.max(81,99-Math.round((rank/Math.max(goldCount-1,1))*18));}
-    else if(rank<goldCount+silverCount){const r=rank-goldCount;tierMap[name]="silver";ratingMap[name]=Math.max(36,80-Math.round((r/Math.max(silverCount-1,1))*44));}
-    else{const r=rank-goldCount-silverCount,bc=Math.max(total-goldCount-silverCount,1);tierMap[name]="bronze";ratingMap[name]=Math.max(1,35-Math.round((r/Math.max(bc-1,1))*34));}
+    
+    // Percentile 1.0 (top) to 0.0 (bottom)
+    const pct = 1 - (rank / Math.max(total - 1, 1)); 
+    let rating;
+    if (rank === 0) rating = 100;
+    else if (pct >= 0.90) rating = Math.floor(95 + ((pct - 0.90) / 0.10) * 4); // 95-99 Elite
+    else if (pct >= 0.60) rating = Math.floor(80 + ((pct - 0.60) / 0.30) * 14); // 80-94 Gold
+    else if (pct >= 0.25) rating = Math.floor(56 + ((pct - 0.25) / 0.35) * 23); // 56-79 Silver
+    else rating = Math.floor(36 + (pct / 0.25) * 19); // 36-55 Bronze
+
+    if(rating>100) rating=100;
+    
+    ratingMap[name]=rating;
+    if(rating===100) tierMap[name]="pot";
+    else if(rating>=95) tierMap[name]="elite";
+    else if(rating>=80) tierMap[name]="gold";
+    else if(rating>=56) tierMap[name]="silver";
+    else if(rating>=36) tierMap[name]="bronze";
+    else tierMap[name]="grey";
   });
 }
 
@@ -730,16 +710,17 @@ function applyFilters(){
   const q=document.getElementById("search-bar").value.toLowerCase().trim();
   const f=allPlayers.filter(p=>{
     const mq=!q||p["Player Name"].toLowerCase().includes(q)||(p["IPL Team"]||"").toLowerCase().includes(q);
-    const role=(p["Role"]||"").toUpperCase(),tier=tierMap[p["Player Name"]]||"bronze",sold=p["Sold To"]&&p["Sold To"].trim();
-    const rating = ratingMap[p["Player Name"]] || 35;
+    const role=(p["Role"]||"").toUpperCase(),sold=p["Sold To"]&&p["Sold To"].trim();
+    const rating = ratingMap[p["Player Name"]] || 30;
     if(activeFilter==="BAT")    return mq&&role==="BAT";
     if(activeFilter==="BOWL")   return mq&&role==="BOWL";
     if(activeFilter==="AR")     return mq&&role==="AR";
     if(activeFilter==="WK")     return mq&&role==="WK";
     if(activeFilter==="ELITE")  return mq&&rating>=95;
-    if(activeFilter==="GOLD")   return mq&&rating>=81&&rating<95;
-    if(activeFilter==="SILVER") return mq&&rating>=36&&rating<81;
-    if(activeFilter==="BRONZE") return mq&&rating<36;
+    if(activeFilter==="GOLD")   return mq&&rating>=80&&rating<95;
+    if(activeFilter==="SILVER") return mq&&rating>=56&&rating<80;
+    if(activeFilter==="BRONZE") return mq&&rating>=36&&rating<56;
+    if(activeFilter==="GREY")   return mq&&rating<36;
     if(activeFilter==="SOLD")   return mq&&!!sold;
     if(activeFilter==="UNSOLD") return mq&&!sold;
     return mq;
@@ -756,14 +737,15 @@ function renderList(players){
   const pcName=(leadersGlobal?.purpleCap?.name||"").trim().toLowerCase();
   
   el.innerHTML=players.map((p,i)=>{
-    const rating=ratingMap[p["Player Name"]]||35;
-    const tier=rating>=95?"elite":rating>=81?"gold":rating>=36?"silver":"bronze";
+    const name=p["Player Name"]||"";
+    const rating=ratingMap[name]||30;
+    const tier=tierMap[name]||"grey";
     const team=getTeam(p["IPL Team"]||""),pts=getPts(p);
-    const role=(p["Role"]||"BAT").toUpperCase(),name=p["Player Name"]||"",owned=p["Sold To"]&&p["Sold To"].trim();
+    const role=(p["Role"]||"BAT").toUpperCase(),owned=p["Sold To"]&&p["Sold To"].trim();
     const isCap=myCap===name&&p["Sold To"]===myTeam,isVC=myVC===name&&p["Sold To"]===myTeam;
     const pnl=name.trim().toLowerCase(),isOC=ocName&&pnl===ocName,isPC=pcName&&pnl===pcName;
     
-    let tierColor = tier==="elite"?"#4facfe":tier==="gold"?"#FFD700":tier==="silver"?"#C0C8D8":"#CD7F32";
+    let tierColor = tier==="pot"?"#FFD700":tier==="elite"?"#4facfe":tier==="gold"?"#FFD700":tier==="silver"?"#C0C8D8":tier==="bronze"?"#CD7F32":"#888888";
     
     const playerImg=p["Image"]&&p["Image"].toString().trim();
     const logoImg=playerImg
@@ -808,20 +790,18 @@ function renderList(players){
 /* OPEN CARD LOGIC */
 function getCardType(p, leaders){
   const name=(p["Player Name"]||"").trim().toLowerCase();
-  const rating = ratingMap[p["Player Name"]] || 35; 
+  const rating = ratingMap[p["Player Name"]] || 30; 
   const ocName=(leaders?.orangeCap?.name||"").trim().toLowerCase();
   const pcName=(leaders?.purpleCap?.name||"").trim().toLowerCase();
   const potName=(leaders?.highestPts?.name||"").trim().toLowerCase();
   
+  // Special badges completely override
   if(potName&&name===potName) return "pot";
   if(ocName&&name===ocName)   return "orange-special";
   if(pcName&&name===pcName)   return "purple-special";
   
-  // Rating logic from Prompt
-  if(rating >= 95) return "elite";
-  if(rating >= 81) return "gold";
-  if(rating >= 36) return "silver";
-  return "bronze";
+  // Return standard tier
+  return tierMap[p["Player Name"]] || "grey";
 }
 
 const PARTICLE_COLORS={
@@ -876,7 +856,7 @@ function openCard(idx){
   const cardType=getCardType(p,leadersGlobal);
   const team=getTeam(p["IPL Team"]||"");
   const pts=getPts(p);
-  const rating=ratingMap[name]||35;
+  const rating=ratingMap[name]||30;
   const role=(p["Role"]||"BAT").toUpperCase();
   const owned=p["Sold To"]&&p["Sold To"].trim();
   const fantasyTeam=owned||"Unsold";
@@ -886,15 +866,14 @@ function openCard(idx){
   const hunds=gi(p,"100s","hundreds"),threeW=gi(p,"3W","threew"),fiveW=gi(p,"5W","fivew");
   const fourW=gi(p,"fourv"),maidens=gi(p,"Maidens","maidens"),dots=gi(p,"Dots","dots");
 
-  // Outer Animated Glow matches the card shape & tier
+  // Glow Rings
   const glowColors={
-    bronze:"rgba(205,127,50, 0.4)", silver:"rgba(184,200,216, 0.4)", gold:"rgba(255,215,0, 0.5)",
+    grey:"rgba(136,136,136, 0.4)", bronze:"rgba(205,127,50, 0.4)", silver:"rgba(184,200,216, 0.4)", gold:"rgba(255,215,0, 0.5)",
     elite:"rgba(79,172,254, 0.8)", "orange-special":"rgba(255,107,53, 0.8)", "purple-special":"rgba(155,89,182, 0.8)", pot:"rgba(255,215,0, 0.9)"
   };
   const glowRing=document.getElementById("card-glow-ring");
   
   if (["elite", "orange-special", "purple-special", "pot"].includes(cardType)) {
-     // Golden shiny border behind special cards
      glowRing.style.background="linear-gradient(45deg, #ffd700, #ff8c00, #ffd700, #ffeb80)";
      glowRing.style.backgroundSize="300% 300%";
      glowRing.style.animation="glowPulse 1.5s ease-in-out infinite alternate, eliteGrad 3s linear infinite";
@@ -909,19 +888,17 @@ function openCard(idx){
   back.className=`card-face card-back-face ${cardType}`;
   document.getElementById("card-flip").classList.remove("flipped");
 
-  // Player photo + Fallback
+  // Player photo (using contain to prevent clipping heads)
   const pImg=p["Image"]&&p["Image"].toString().trim();
   const photoHTML=pImg
     ?`<img class="cf-player-photo" src="${pImg}" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`+
      `<div class="cf-photo-fallback" style="display:none">${team.logo?`<img src="${team.logo}" style="width:50%;height:50%;object-fit:contain">`:`<span>${team.fb}</span>`}</div>`
     :`<div class="cf-photo-fallback">${team.logo?`<img src="${team.logo}" style="width:50%;height:50%;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))" alt="${team.abbr}">`:`<span style="font-size:clamp(44px,14vw,64px)">${team.fb}</span>`}</div>`;
 
-  // Team logo (Left side below rating)
   const tLogoHTML=team.logo
     ?`<img src="${team.logo}" alt="${team.abbr}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-size:clamp(22px,7vw,30px)">${team.fb}</span>`
     :`<span style="font-size:clamp(22px,7vw,30px)">${team.fb}</span>`;
 
-  // Special badge
   const specialLabels={
     elite:"🔵 ELITE",
     "orange-special":"🧢 ORANGE CAP",
@@ -930,7 +907,6 @@ function openCard(idx){
   };
   const specialBadge=specialLabels[cardType]?`<div class="cf-special-badge">${specialLabels[cardType]}</div>`:"";
 
-  // Front Setup (Exactly matching desired format)
   front.innerHTML=`
   <div class="cf-shine"></div>
   <canvas class="cf-canvas" id="cf-canvas"></canvas>
@@ -960,7 +936,6 @@ function openCard(idx){
     </div>
   </div>`;
 
-  // Back Setup
   back.innerHTML=`
   <div class="cf-shine"></div>
   <div class="cb-wrap">
@@ -1022,9 +997,6 @@ async function loadField(){
 }
 
 function renderField(){
-  const cap=localStorage.getItem("captain")||"",vc=localStorage.getItem("viceCaptain")||"";
-  const ocName=(leadersGlobal.orangeCap?.name||"").trim().toLowerCase();
-  const pcName=(leadersGlobal.purpleCap?.name||"").trim().toLowerCase();
   const groups={WK:[],BAT:[],AR:[],BOWL:[]};
   myPlayersGlobal.forEach(p=>{const r=p["Role"];if(groups[r])groups[r].push(p);else groups.BAT.push(p);});
   
@@ -1034,24 +1006,19 @@ function renderField(){
   rows.forEach(({label,key})=>{
     const pl=groups[key];if(!pl.length)return;
     const tokens=pl.map((p,idx)=>{
-      const name=p["Player Name"]||"",nl=name.trim().toLowerCase();
-      const isC=cap===name,isVC_=vc===name,isOC=ocName&&nl===ocName,isPC=pcName&&nl===pcName;
+      const name=p["Player Name"]||"";
       const pts=getPts(p),tc=getTeam(p["IPL Team"]||""),sn=name.split(" ").slice(-1)[0],delay=idx*.06+.1;
-      let badges="";
-      if(isC) badges+='<div class="fp-badge cap-c">C</div>';
-      else if(isVC_) badges+='<div class="fp-badge cap-vc">VC</div>';
-      if(isOC) badges+='<div class="fp-badge orange-cap">🧢</div>';
-      if(isPC) badges+='<div class="fp-badge purple-cap">🎩</div>';
       
       const pImg=p["Image"]&&p["Image"].toString().trim();
       const logoHTML=pImg
-        ?`<img src="${pImg}" style="width:46px;height:46px;object-fit:cover;object-position:top center;border-radius:50%;position:relative;z-index:1;" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">`+
+        ?`<img src="${pImg}" style="width:100%;height:100%;object-fit:cover;object-position:top center;border-radius:50%;position:relative;z-index:1;" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">`+
          `<span style="display:none;font-size:22px">${tc.fb}</span>`
         :`<span style="font-size:22px">${tc.fb}</span>`;
+        
+      // Removed the circle badges completely from the field tokens as requested
       return`<div class="fp" style="animation-delay:${delay}s" onclick="openFmModal('${encodeURIComponent(name)}')">
         <div class="fp-avatar-wrap">
           <div class="fp-avatar" style="background:linear-gradient(135deg,${tc.c1},${tc.c2});border-color:${tc.c2}88">${logoHTML}</div>
-          ${badges}
         </div>
         <div class="fp-name">${sn}</div>
         <div class="fp-pts">${pts} pts</div>
@@ -1064,7 +1031,7 @@ function renderField(){
   const d=document.createElement("div");d.innerHTML=html;container.appendChild(d);
 }
 
-/* FIELD PLAYER DETAIL MODAL (Consolidated) */
+/* FIELD PLAYER DETAIL MODAL (Frameless Header & Ribbons) */
 function openFmModal(enc){
   const name=decodeURIComponent(enc);
   const p=myPlayersGlobal.find(x=>(x["Player Name"]||"")===name);
@@ -1079,35 +1046,34 @@ function openFmModal(enc){
   const sorted=[...allPlayers].sort((a,b)=>getPts(b)-getPts(a));
   const rank=sorted.findIndex(x=>(x["Player Name"]||"").trim()===name.trim())+1;
 
-  // Header background (Team gradient + fade to dark)
-  const bg=document.getElementById("fm-header-bg");
-  bg.style.background=`linear-gradient(135deg, ${tc.color} 0%, ${tc.color2} 100%)`;
+  // Header Ribbons Backgrounds (Team gradient)
+  const grad = `linear-gradient(115deg, ${tc.color} 0%, ${tc.color2} 100%)`;
+  document.getElementById("fm-ribbon-1").style.background=grad;
+  document.getElementById("fm-ribbon-2").style.background=grad;
 
-  // Image Setup (Left Col)
+  // Float Image Setup (No bounding box)
   const fmImg=p["Image"]&&p["Image"].toString().trim();
   const imgSlot=document.getElementById("fm-img-slot");
   if(fmImg){
-    imgSlot.innerHTML=`<img class="fm-player-img" src="${fmImg}" alt="${name}" onerror="this.parentNode.innerHTML='<div class=fm-img-fallback>${tc.fb}</div>'">`;
+    imgSlot.innerHTML=`<img src="${fmImg}" alt="${name}" onerror="this.parentNode.innerHTML='<div style=\\'display:flex;align-items:center;justify-content:center;height:100%;font-size:64px;background:rgba(0,0,0,0.4);border-radius:12px;\\'>${tc.fb}</div>'">`;
   }else{
-    imgSlot.innerHTML=`<div class="fm-img-fallback">${tc.fb}</div>`;
+    imgSlot.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:64px;background:rgba(0,0,0,0.4);border-radius:12px;box-shadow:0 8px 16px rgba(0,0,0,0.5); border: 2px solid ${tc.color2}">${tc.fb}</div>`;
   }
 
   // Info Text
   document.getElementById("fm-name").textContent=name;
-  document.getElementById("fm-sub").textContent=(p["IPL Team"]||"—")+" · "+(p["Role"]||"—");
+  
+  // Badges inside ribbon sub
+  let bh=`<span class="fmbadge">${p["Role"]||"—"}</span>`;
+  if(cap===name)bh+=`<span class="fmbadge" style="color:#ffc400; border-color:#ffc400;">👑 CAP</span>`;
+  if(vc===name) bh+=`<span class="fmbadge" style="color:#c8d0dc; border-color:#c8d0dc;">⭐ VC</span>`;
+  if(ocName&&pnl===ocName)bh+=`<span class="fmbadge" style="color:#ff9060; border-color:#ff9060;">🧢 ORANGE CAP</span>`;
+  if(pcName&&pnl===pcName)bh+=`<span class="fmbadge" style="color:#cc99ff; border-color:#cc99ff;">🎩 PURPLE CAP</span>`;
+  document.getElementById("fm-sub").innerHTML=`${tc.abbr} &nbsp;·&nbsp; ${bh}`;
 
-  // Badges
-  let bh=`<span class="fmbadge role">${p["Role"]||"—"}</span>`;
-  if(cap===name)bh+=`<span class="fmbadge captain">👑 Captain</span>`;
-  if(vc===name) bh+=`<span class="fmbadge vc">⭐ VC</span>`;
-  if(ocName&&pnl===ocName)bh+=`<span class="fmbadge ocap">🧢 Orange Cap</span>`;
-  if(pcName&&pnl===pcName)bh+=`<span class="fmbadge pcap">🎩 Purple Cap</span>`;
-  document.getElementById("fm-badges").innerHTML=bh;
-
-  // Rank / Pts
-  document.getElementById("fm-rank").textContent="#"+rank;
-  document.getElementById("fm-rank-sub").textContent="of "+sorted.length+" players";
-  document.getElementById("fm-pts").textContent=pts;
+  // Rank / Pts inside ribbon
+  document.getElementById("fm-rank").innerHTML=`#${rank}<span>Univ Rank</span>`;
+  document.getElementById("fm-pts").innerHTML=`${pts}<span>Total Pts</span>`;
 
   // Scrollable Stats Grid
   const statDefs={
@@ -1127,7 +1093,7 @@ function openFmModal(enc){
   document.getElementById("fm-stats").innerHTML=sh;
 
   document.getElementById("fm-modal").classList.add("open");
-  document.body.style.overflow="hidden"; // Prevent background scroll
+  document.body.style.overflow="hidden";
 }
 
 function closeFmModal(){
