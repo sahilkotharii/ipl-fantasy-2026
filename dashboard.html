@@ -313,19 +313,28 @@ body{
 
 /* The player photo — absolute right side, full card height */
 .cap-bg-photo{
-  position:absolute;right:0;top:0;bottom:0;
-  width:68%;pointer-events:none;z-index:0;
+  position:absolute;right:-10px;top:-10px;bottom:-10px;
+  width:72%;pointer-events:none;z-index:0;
 }
 .cap-bg-photo img{
-  width:100%;height:100%;object-fit:cover;object-position:top center;display:block;
+  width:100%;height:100%;
+  object-fit:cover;
+  /* Show from head down — offset so face+chest is centred in card */
+  object-position:top center;
+  display:block;transform-origin:top center;
+}
+/* On desktop cards are wider but not taller — scale image to fit more body */
+@media(min-width:480px){
+  .cap-bg-photo{width:60%;}
+  .cap-bg-photo img{object-position:20% top;object-fit:contain;background:transparent;}
 }
 /* Gradient mask so left text area stays readable */
 .cap-bg-photo::before{
   content:'';position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to right,var(--surf2) 0%,rgba(0,0,0,0) 100%);
+  background:linear-gradient(to right,var(--surf2) 15%,rgba(0,0,0,0) 80%);
 }
 [data-theme="light"] .cap-bg-photo::before{
-  background:linear-gradient(to right,rgba(255,255,255,.95) 0%,rgba(255,255,255,.0) 100%);
+  background:linear-gradient(to right,rgba(255,255,255,.95) 15%,rgba(255,255,255,.0) 80%);
 }
 /* Team logo badge — top right corner, fully visible */
 .cap-team-badge{
@@ -360,18 +369,25 @@ body{
 
 .sc-bg-photo{
   position:absolute;right:0;top:0;bottom:0;
-  width:60%;pointer-events:none;z-index:0;
+  width:55%;pointer-events:none;z-index:0;
 }
 .sc-bg-photo img{
-  width:100%;height:100%;object-fit:cover;object-position:top center;display:block;
+  width:100%;height:100%;
+  object-fit:cover;object-position:top center;
+  display:block;
+}
+/* On desktop, stat cells are taller relative to width — use contain so full body shows */
+@media(min-width:480px){
+  .sc-bg-photo{width:45%;}
+  .sc-bg-photo img{object-fit:contain;object-position:bottom center;}
 }
 /* Gradient mask — stat text stays readable */
 .sc-bg-photo::before{
   content:'';position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to right,var(--bg) 10%,rgba(0,0,0,0) 100%);
+  background:linear-gradient(to right,var(--bg) 20%,rgba(0,0,0,0) 100%);
 }
 [data-theme="light"] .sc-bg-photo::before{
-  background:linear-gradient(to right,var(--bg) 10%,rgba(255,255,255,.0) 100%);
+  background:linear-gradient(to right,var(--bg) 20%,rgba(255,255,255,.0) 100%);
 }
 /* Team logo badge — bottom right of cell, small but clear */
 .sc-team-badge{
