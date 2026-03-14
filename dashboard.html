@@ -308,55 +308,81 @@ body{
 
 /* ══ PLAYER PHOTO ENHANCEMENTS ══ */
 
-/* Cap holder with player photo */
+/* ── Cap card: player image bleeds in from right, text stays left ── */
 .cap-card{position:relative;overflow:hidden;}
-.cap-team-watermark{
-  position:absolute;right:-10px;top:50%;transform:translateY(-50%);
-  width:90px;height:90px;opacity:.07;pointer-events:none;z-index:0;
-}
-.cap-team-watermark img{width:100%;height:100%;object-fit:contain;}
-.cap-photo-wrap{
-  width:52px;height:52px;border-radius:14px;overflow:hidden;
-  border:2px solid rgba(255,255,255,.15);flex-shrink:0;
-  box-shadow:0 4px 16px rgba(0,0,0,.4);
-  position:relative;z-index:1;margin-bottom:6px;
-}
-.cap-photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:top center;}
-.cap-photo-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:22px;}
 
-/* HBP card player photo */
-.hbp-photo-wrap{
-  width:60px;height:68px;border-radius:16px;overflow:hidden;flex-shrink:0;
-  border:2px solid rgba(255,215,0,.3);
-  box-shadow:0 4px 20px rgba(0,0,0,.45);
-  position:relative;z-index:1;
+/* The player photo — absolute right side, full card height */
+.cap-bg-photo{
+  position:absolute;right:0;top:0;bottom:0;
+  width:68%;pointer-events:none;z-index:0;
 }
-.hbp-photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:top center;}
-.hbp-photo-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:26px;}
-.hbp-team-watermark{
-  position:absolute;right:55px;bottom:-8px;
-  width:80px;height:80px;opacity:.06;pointer-events:none;z-index:0;
+.cap-bg-photo img{
+  width:100%;height:100%;object-fit:cover;object-position:top center;display:block;
 }
-.hbp-team-watermark img{width:100%;height:100%;object-fit:contain;}
+/* Gradient mask so left text area stays readable */
+.cap-bg-photo::before{
+  content:'';position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to right,var(--surf2) 0%,rgba(0,0,0,0) 100%);
+}
+[data-theme="light"] .cap-bg-photo::before{
+  background:linear-gradient(to right,rgba(255,255,255,.95) 0%,rgba(255,255,255,.0) 100%);
+}
+/* Team logo badge — top right corner, fully visible */
+.cap-team-badge{
+  position:absolute;top:10px;right:10px;z-index:2;
+  width:28px;height:28px;pointer-events:none;
+}
+.cap-team-badge img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4));}
 
-/* Tournament leader cells with player photo */
-.sc-player-row{display:flex;align-items:center;gap:8px;margin-top:4px;}
-.sc-player-photo{
-  width:32px;height:32px;border-radius:9px;overflow:hidden;flex-shrink:0;
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 2px 8px rgba(0,0,0,.4);
+/* ── HBP card: player fills left column naturally, no box ── */
+.hbp-photo-col{
+  width:68px;flex-shrink:0;align-self:stretch;
+  position:relative;overflow:hidden;border-radius:12px;
+  margin:-18px 0 -18px -20px; /* bleed to card edges */
 }
-.sc-player-photo img{width:100%;height:100%;object-fit:cover;object-position:top center;}
-.sc-player-photo-fb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:16px;}
-.sc-player-text{flex:1;min-width:0;}
+.hbp-photo-col img{
+  width:100%;height:100%;object-fit:cover;object-position:top center;display:block;
+}
+.hbp-photo-col::after{
+  content:'';position:absolute;top:0;right:0;bottom:0;width:50%;
+  background:linear-gradient(to right,transparent,var(--surf));
+  pointer-events:none;
+}
+/* HBP team logo badge */
+.hbp-team-badge{
+  position:absolute;top:8px;right:12px;z-index:2;
+  width:24px;height:24px;pointer-events:none;
+}
+.hbp-team-badge img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 1px 4px rgba(0,0,0,.5));}
 
-/* Stat cell team watermark */
-.stat-cell{position:relative;}
-.sc-team-watermark{
-  position:absolute;right:4px;bottom:4px;
-  width:36px;height:36px;opacity:.06;pointer-events:none;z-index:0;
+/* ── Stat cells: player image bleeds in from right, stats left ── */
+.stat-cell{position:relative;overflow:hidden;}
+
+.sc-bg-photo{
+  position:absolute;right:0;top:0;bottom:0;
+  width:60%;pointer-events:none;z-index:0;
 }
-.sc-team-watermark img{width:100%;height:100%;object-fit:contain;}
+.sc-bg-photo img{
+  width:100%;height:100%;object-fit:cover;object-position:top center;display:block;
+}
+/* Gradient mask — stat text stays readable */
+.sc-bg-photo::before{
+  content:'';position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to right,var(--bg) 10%,rgba(0,0,0,0) 100%);
+}
+[data-theme="light"] .sc-bg-photo::before{
+  background:linear-gradient(to right,var(--bg) 10%,rgba(255,255,255,.0) 100%);
+}
+/* Team logo badge — bottom right of cell, small but clear */
+.sc-team-badge{
+  position:absolute;bottom:7px;right:7px;z-index:2;
+  width:22px;height:22px;pointer-events:none;
+}
+.sc-team-badge img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5));}
+
+/* All text content stays above photos */
+.sc-icon,.sc-label,.sc-val,.sc-name,.sc-team{position:relative;z-index:1;}
+.cap-icon,.cap-title,.cap-player,.cap-ipl,.cap-num,.cap-unit{position:relative;z-index:1;}
 </style>
 </head>
 <body>
@@ -396,8 +422,8 @@ body{
 <!-- ═══ BIGGEST SIGNING — directly below points ═══ -->
 <p class="sec" style="animation-delay:.04s">🤑 Biggest Signing</p>
 <div class="hbp-card" id="hbp-section">
-  <div class="hbp-team-watermark" id="hbp-watermark"></div>
-  <div class="hbp-photo-wrap" id="hbp-photo"><div class="hbp-photo-fallback" id="hbp-icon">🏏</div></div>
+  <div class="hbp-photo-col" id="hbp-photo-col"></div>
+  <div class="hbp-team-badge" id="hbp-team-badge"></div>
   <div class="hbp-body">
     <div class="hbp-label">Highest Auction Buy</div>
     <div class="hbp-name" id="hbp-name">Loading…</div>
@@ -432,19 +458,19 @@ body{
 <div class="card" style="animation-delay:.2s">
   <div class="caps-grid">
     <div class="cap-card oc" id="cap-oc-card">
-      <div class="cap-team-watermark" id="oc-watermark"></div>
+      <div class="cap-bg-photo" id="oc-bg-photo"></div>
+      <div class="cap-team-badge" id="oc-team-badge"></div>
       <span class="cap-icon">🧡</span>
       <div class="cap-title oc">Orange Cap</div>
-      <div class="cap-photo-wrap" id="oc-photo"><div class="cap-photo-fallback">🏏</div></div>
       <div class="cap-player" id="oc-name">—</div>
       <div class="cap-ipl" id="oc-team">—</div>
       <span class="cap-num oc" id="oc-val">0</span><span class="cap-unit">runs</span>
     </div>
     <div class="cap-card pc" id="cap-pc-card">
-      <div class="cap-team-watermark" id="pc-watermark"></div>
+      <div class="cap-bg-photo" id="pc-bg-photo"></div>
+      <div class="cap-team-badge" id="pc-team-badge"></div>
       <span class="cap-icon">💜</span>
       <div class="cap-title pc">Purple Cap</div>
-      <div class="cap-photo-wrap" id="pc-photo"><div class="cap-photo-fallback">🎳</div></div>
       <div class="cap-player" id="pc-name">—</div>
       <div class="cap-ipl" id="pc-team">—</div>
       <span class="cap-num pc" id="pc-val">0</span><span class="cap-unit">wkts</span>
@@ -635,40 +661,56 @@ function getTeamLogoData(iplTeam){
 /* Build player image + team map from sheet data */
 let playerImgMap={};   // { "player name lowercase": { img, iplTeam } }
 
-function setPlayerPhoto(wrapId, name, fallbackEmoji){
-  const el=document.getElementById(wrapId);
-  if(!el)return;
-  const key=(name||"").trim().toLowerCase();
-  const d=playerImgMap[key];
-  if(d?.img){
-    el.innerHTML=`<img src="${d.img}" style="width:100%;height:100%;object-fit:cover;object-position:top center;" alt="${name}" onerror="this.parentNode.innerHTML='<div style=width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:22px>${fallbackEmoji||"🏏"}</div>'">`;
-  }else{
-    el.innerHTML=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:22px">${fallbackEmoji||"🏏"}</div>`;
-  }
-}
-function setTeamWatermark(wrapId, iplTeam){
-  const el=document.getElementById(wrapId);
-  if(!el)return;
-  const td=getTeamLogoData(iplTeam);
-  if(td?.logo){
-    el.innerHTML=`<img src="${td.logo}" alt="" onerror="this.parentNode.innerHTML=''">`;
-  }
-}
-function makeScPlayerRow(name, iplTeam, fallbackEmoji){
+/* Set bleed photo in cap card bg slot */
+function setCapBgPhoto(bgId, badgeId, name, iplTeam){
+  const bgEl=document.getElementById(bgId);
+  const badgeEl=document.getElementById(badgeId);
+  if(!bgEl)return;
   const key=(name||"").trim().toLowerCase();
   const d=playerImgMap[key];
   const td=getTeamLogoData(iplTeam||d?.iplTeam||"");
-  let photoHTML;
   if(d?.img){
-    photoHTML=`<img src="${d.img}" style="width:100%;height:100%;object-fit:cover;object-position:top center;" alt="${name}" onerror="this.style.display='none'">`;
+    bgEl.innerHTML=`<img src="${d.img}" alt="${name}" onerror="this.style.display='none'">`;
   }else if(td?.logo){
-    photoHTML=`<img src="${td.logo}" style="width:80%;height:80%;object-fit:contain;margin:auto;" alt="">`;
-  }else{
-    photoHTML=`<div class="sc-player-photo-fb">${fallbackEmoji||"🏏"}</div>`;
+    bgEl.innerHTML=`<img src="${td.logo}" style="object-fit:contain;object-position:center" alt="">`;
   }
-  // Watermark HTML for stat cell
-  const wm=td?.logo?`<div class="sc-team-watermark"><img src="${td.logo}" alt=""></div>`:"";
-  return {photoHTML, wm};
+  if(badgeEl&&td?.logo){
+    badgeEl.innerHTML=`<img src="${td.logo}" alt="${iplTeam}" onerror="this.parentNode.innerHTML=''">`;
+  }
+}
+
+/* Set bleed photo in HBP photo column */
+function setHbpPhoto(colId, badgeId, name, iplTeam){
+  const colEl=document.getElementById(colId);
+  const badgeEl=document.getElementById(badgeId);
+  if(!colEl)return;
+  const key=(name||"").trim().toLowerCase();
+  const d=playerImgMap[key];
+  const td=getTeamLogoData(iplTeam||d?.iplTeam||"");
+  if(d?.img){
+    colEl.innerHTML=`<img src="${d.img}" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;" alt="${name}" onerror="this.style.display='none'">`;
+  }else if(td?.logo){
+    colEl.style.display="flex";colEl.style.alignItems="center";colEl.style.justifyContent="center";
+    colEl.innerHTML=`<img src="${td.logo}" style="width:60%;object-fit:contain;" alt="">`;
+  }
+  if(badgeEl&&td?.logo){
+    badgeEl.innerHTML=`<img src="${td.logo}" alt="${iplTeam}" onerror="this.parentNode.innerHTML=''">`;
+  }
+}
+
+/* Build bleed photo + team badge for a stat cell */
+function makeScCellMedia(name, iplTeam){
+  const key=(name||"").trim().toLowerCase();
+  const d=playerImgMap[key];
+  const td=getTeamLogoData(iplTeam||d?.iplTeam||"");
+  let bgHtml="";
+  if(d?.img){
+    bgHtml=`<div class="sc-bg-photo"><img src="${d.img}" alt="${name}" onerror="this.style.display='none'"></div>`;
+  }else if(td?.logo){
+    // no player image — just the team badge, no bg photo div
+  }
+  const badgeHtml=td?.logo?`<div class="sc-team-badge"><img src="${td.logo}" alt="${iplTeam}" onerror="this.parentNode.innerHTML=''"></div>`:"";
+  return bgHtml+badgeHtml;
 }
 
 /* ─── THEME ─── */
@@ -821,11 +863,9 @@ function buildLeaders(L){
   /* Cap holders — with photos + watermarks */
   s("oc-name",L.orangeCap?.name);s("oc-team",L.orangeCap?.iplTeam);s("oc-val",L.orangeCap?.value||0);
   s("pc-name",L.purpleCap?.name);s("pc-team",L.purpleCap?.iplTeam);s("pc-val",L.purpleCap?.value||0);
-  // Inject player photos for cap holders
-  setPlayerPhoto("oc-photo", L.orangeCap?.name, "🏏");
-  setPlayerPhoto("pc-photo", L.purpleCap?.name, "🎳");
-  setTeamWatermark("oc-watermark", L.orangeCap?.iplTeam);
-  setTeamWatermark("pc-watermark", L.purpleCap?.iplTeam);
+  // Inject player photos for cap holders (bleed style)
+  setCapBgPhoto("oc-bg-photo", "oc-team-badge", L.orangeCap?.name, L.orangeCap?.iplTeam);
+  setCapBgPhoto("pc-bg-photo", "pc-team-badge", L.purpleCap?.name, L.purpleCap?.iplTeam);
 
   /* Batting */
   s("l-runs",  L.orangeCap?.value);  s("l-runs-n",  L.orangeCap?.name);
@@ -879,10 +919,8 @@ function buildLeaders(L){
       else{const n=parseFloat(raw);if(!isNaN(n))setTimeout(()=>animateCount(priceEl,n),500);priceUnit.textContent=hbp.priceUnit||"Cr";}
     }else{priceEl.textContent="—";priceUnit.textContent="";document.getElementById("hbp-badge").style.display="none";}
 
-    /* Player photo for HBP */
-    const fallbackEmoji=hbp.role==="Bowler"?"🎳":hbp.role==="Wicket-Keeper"||hbp.role==="WK"?"🧤":hbp.role==="All-Rounder"||hbp.role==="AR"?"⭐":"🏏";
-    setPlayerPhoto("hbp-photo", hbp.name, fallbackEmoji);
-    setTeamWatermark("hbp-watermark", hbp.iplTeam);
+    /* Player photo for HBP — bleed column */
+    setHbpPhoto("hbp-photo-col", "hbp-team-badge", hbp.name, hbp.iplTeam);
 
     /* Tags */
     const tags=[];
@@ -921,16 +959,13 @@ function injectLeaderPhotos(L){
     if(!playerName)return;
     const nameEl=document.getElementById(nameId);
     if(!nameEl)return;
-    const {photoHTML, wm}=makeScPlayerRow(playerName, iplTeam, fb);
-    // Replace plain text name with photo + name row
-    nameEl.parentElement.insertAdjacentHTML("beforeend", wm);
-    nameEl.outerHTML=`<div class="sc-player-row">
-      <div class="sc-player-photo">${photoHTML}</div>
-      <div class="sc-player-text">
-        <div id="${nameId}" style="font-size:10px;font-weight:600;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${playerName}</div>
-        ${iplTeam?`<div style="font-size:9px;color:var(--text-3)">${iplTeam}</div>`:""}
-      </div>
-    </div>`;
+    const cell=nameEl.closest(".stat-cell");
+    if(!cell)return;
+    // Inject bleed photo + team badge into the cell (no box, no row)
+    cell.insertAdjacentHTML("afterbegin", makeScCellMedia(playerName, iplTeam));
+    // Update name element to just show player name (plain, no row wrapper)
+    nameEl.textContent=playerName;
+    nameEl.style.cssText="font-size:10px;font-weight:600;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:1;";
   });
 }
 
