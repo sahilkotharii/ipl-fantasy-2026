@@ -146,48 +146,208 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .empty-state{padding:40px 20px;text-align:center;color:var(--t3);font-size:14px;}
 @keyframes rowIn{from{opacity:0;transform:translateX(-18px);}to{opacity:1;transform:none;}}
 
-/* CARD MODAL */
-.modal{display:none;position:fixed;inset:0;background:var(--ov);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);z-index:200;align-items:center;justify-content:center;padding:20px;}
+/* ════════════════════════════════════
+   CARD MODAL
+════════════════════════════════════ */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);z-index:200;align-items:center;justify-content:center;padding:20px;}
 .modal.open{display:flex;animation:modalIn .3s var(--ease) both;}
 @keyframes modalIn{from{opacity:0;}to{opacity:1;}}
 .modal-close{position:fixed;top:20px;right:20px;width:40px;height:40px;border-radius:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;transition:transform .2s var(--bounce),background .2s;backdrop-filter:blur(8px);}
-.modal-close:hover{transform:scale(1.1) rotate(90deg);background:rgba(255,80,50,.3);}
-.card-scene{perspective:1200px;width:min(80vw,300px);aspect-ratio:.68;filter:drop-shadow(0 28px 60px rgba(0,0,0,.85));cursor:pointer;animation:cardPop .45s var(--bounce) .05s both;}
-@keyframes cardPop{from{opacity:0;transform:scale(.7) translateY(30px);}to{opacity:1;transform:none;}}
-.card-flip{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.4,0,.2,1);}
+.modal-close:hover{transform:scale(1.1) rotate(90deg);background:rgba(231,76,60,.4);}
+.modal-hint{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:600;letter-spacing:.06em;color:rgba(255,255,255,.4);pointer-events:none;animation:fadeUp .6s .5s both;}
+
+/* Card scene & flip */
+.card-scene-wrap{position:relative;display:flex;align-items:center;justify-content:center;}
+.card-glow{position:absolute;inset:-20px;border-radius:50%;pointer-events:none;filter:blur(28px);opacity:.6;z-index:0;transition:background .3s;}
+.card-scene{perspective:1400px;width:min(78vw,290px);aspect-ratio:.67;cursor:pointer;animation:cardPop .5s var(--bounce) .05s both;position:relative;z-index:1;}
+@keyframes cardPop{from{opacity:0;transform:scale(.65) translateY(40px);}to{opacity:1;transform:none;}}
+.card-flip{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.22,.61,.36,1);}
 .card-flip.flipped{transform:rotateY(180deg);}
-.card-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;clip-path:polygon(12% 0%,88% 0%,100% 12%,100% 80%,50% 100%,0% 80%,0% 12%);display:flex;flex-direction:column;overflow:hidden;}
+
+/* FIFA card shape — both faces share this */
+.card-face{
+  position:absolute;inset:0;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  /* FIFA badge shape */
+  clip-path:polygon(8% 0%,92% 0%,100% 8%,100% 78%,50% 100%,0% 78%,0% 8%);
+  overflow:hidden;
+  display:flex;flex-direction:column;
+}
 .card-back-face{transform:rotateY(180deg);}
-.card-face::before{content:'';position:absolute;inset:4px;z-index:1;pointer-events:none;clip-path:polygon(12% 0%,88% 0%,100% 12%,100% 80%,50% 100%,0% 80%,0% 12%);background:rgba(255,255,255,.09);}
-.card-face::after{content:'';position:absolute;inset:4px;z-index:2;pointer-events:none;clip-path:polygon(12% 0%,88% 0%,100% 12%,100% 80%,50% 100%,0% 80%,0% 12%);background:repeating-linear-gradient(45deg,transparent,transparent 12px,rgba(255,255,255,.04) 12px,rgba(255,255,255,.04) 13px);}
-.card-face.gold{background:linear-gradient(150deg,#3B2400 0%,#8B6000 18%,#E8B800 38%,#FFE066 50%,#C49A00 65%,#7A5000 82%,#3B2400 100%);color:#2C1A00;}
-.card-face.silver{background:linear-gradient(150deg,#1C1C1C 0%,#606060 18%,#C4C4C4 38%,#EFEFEF 50%,#8C8C8C 65%,#444444 82%,#1C1C1C 100%);color:#111111;}
-.card-face.bronze{background:linear-gradient(150deg,#2E1200 0%,#7A3800 18%,#C07028 38%,#E8A050 50%,#9A5018 65%,#4A2000 82%,#2E1200 100%);color:#2E1200;}
-.cf-inner{position:relative;z-index:3;display:flex;flex-direction:column;height:100%;padding:8% 9% 24% 9%;}
-.cf-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4%;}
-.cf-rating{font-family:var(--font-display);font-size:clamp(36px,10vw,52px);line-height:.88;}
-.cf-role{font-family:var(--font-display);font-size:clamp(14px,4vw,18px);letter-spacing:.04em;margin-top:2px;opacity:.85;}
-.cf-logo{width:clamp(60px,18vw,80px);height:clamp(60px,18vw,80px);object-fit:contain;filter:drop-shadow(0 4px 12px rgba(0,0,0,.4));}
-.cf-logo-fallback{font-size:clamp(40px,13vw,58px);line-height:1;}
-.cf-name{font-family:var(--font-display);font-size:clamp(17px,5.5vw,28px);letter-spacing:.045em;line-height:1;text-align:center;white-space:normal;word-break:break-word;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-shadow:0 1px 3px rgba(0,0,0,.15);margin-bottom:3%;}
-.cf-owner{font-family:var(--font-main);font-size:clamp(8px,2.2vw,11px);font-weight:700;text-align:center;opacity:.75;letter-spacing:.02em;margin-bottom:3%;background:rgba(0,0,0,.15);border-radius:4px;padding:2px 6px;display:inline-block;align-self:center;}
-.cf-divider{height:1.5px;background:currentColor;opacity:.2;margin:0 2% 4%;border-radius:1px;}
-.cf-stats{display:flex;align-items:stretch;width:100%;}
-.cf-stat-col{flex:1;display:flex;flex-direction:column;gap:clamp(3px,1vw,5px);}
-.cf-stat-col:first-child{padding-right:5%;}.cf-stat-col:last-child{padding-left:5%;}
-.cf-stat-vdiv{width:1.5px;background:currentColor;opacity:.2;flex-shrink:0;border-radius:1px;}
-.cf-stat-row{display:flex;align-items:baseline;justify-content:space-between;gap:4px;}
-.cf-stat-val{font-family:var(--font-display);font-size:clamp(14px,4.5vw,20px);line-height:1;flex-shrink:0;}
-.cf-stat-lbl{font-family:var(--font-display);font-size:clamp(10px,3vw,14px);opacity:.6;white-space:nowrap;}
-.cb-inner{position:relative;z-index:3;display:flex;flex-direction:column;height:100%;padding:8% 8% 24% 8%;}
-.cb-header{text-align:center;margin-bottom:4%;padding-bottom:3%;border-bottom:1.5px solid rgba(0,0,0,.2);}
-.cb-name{font-family:var(--font-display);font-size:clamp(15px,5vw,22px);letter-spacing:.045em;line-height:1;white-space:normal;word-break:break-word;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.cb-sub{font-family:var(--font-main);font-size:clamp(8px,2.2vw,10px);opacity:.75;margin-top:3px;font-weight:700;letter-spacing:.03em;}
+
+/* ── STANDARD TIER CARDS (Bronze/Silver/Gold) ── */
+/* Metallic background using layered gradients */
+.card-face.bronze{
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.12) 0%,transparent 40%,rgba(255,255,255,.06) 100%),
+    linear-gradient(160deg,#3a1800 0%,#7a3c10 20%,#c8782a 38%,#f0a85a 50%,#c06020 65%,#7a3c10 80%,#3a1800 100%);
+  color:#2a1200;
+}
+.card-face.silver{
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.16) 0%,transparent 40%,rgba(255,255,255,.08) 100%),
+    linear-gradient(160deg,#181818 0%,#525252 20%,#b8b8b8 38%,#e8e8e8 50%,#909090 65%,#484848 80%,#181818 100%);
+  color:#101010;
+}
+.card-face.gold{
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.18) 0%,transparent 40%,rgba(255,255,255,.09) 100%),
+    linear-gradient(160deg,#3a2200 0%,#8a6000 20%,#e8b800 38%,#ffe060 50%,#c89a00 65%,#7a5000 80%,#3a2200 100%);
+  color:#2a1800;
+}
+
+/* ── SPECIAL CARDS ── */
+.card-face.elite{
+  background:
+    linear-gradient(135deg,rgba(100,220,255,.15) 0%,transparent 35%,rgba(20,140,220,.1) 70%,transparent 100%),
+    linear-gradient(160deg,#020a18 0%,#061830 20%,#0a3060 38%,#0e4880 50%,#083060 65%,#041828 80%,#020a18 100%);
+  color:#80d8ff;
+}
+.card-face.orange-special{
+  background:
+    linear-gradient(135deg,rgba(255,180,80,.18) 0%,transparent 35%,rgba(255,100,30,.12) 70%,transparent 100%),
+    linear-gradient(160deg,#200800 0%,#602010 20%,#c04010 38%,#ff7020 50%,#c04010 65%,#601808 80%,#200800 100%);
+  color:#ffe0a0;
+}
+.card-face.purple-special{
+  background:
+    linear-gradient(135deg,rgba(200,120,255,.18) 0%,transparent 35%,rgba(140,60,220,.12) 70%,transparent 100%),
+    linear-gradient(160deg,#0e0018 0%,#300850 20%,#6010a0 38%,#9030d0 50%,#6010a0 65%,#300850 80%,#0e0018 100%);
+  color:#e0b8ff;
+}
+.card-face.pot{
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.22) 0%,rgba(180,240,255,.1) 25%,transparent 50%,rgba(255,215,100,.12) 75%,rgba(255,255,255,.18) 100%),
+    linear-gradient(160deg,#0a0818 0%,#1a1440 15%,#2a2a80 28%,#4060d0 38%,#60c0ff 48%,#a0ffe0 54%,#60d0a0 62%,#c0a000 72%,#ffe040 80%,#ff8000 88%,#200800 100%);
+  color:#fff;
+}
+
+/* ── SPECIAL CARD GLOW BORDER (inner) ── */
+.card-face.elite::before{content:'';position:absolute;inset:3px;z-index:0;pointer-events:none;clip-path:polygon(8% 0%,92% 0%,100% 8%,100% 78%,50% 100%,0% 78%,0% 8%);border:1.5px solid rgba(100,220,255,.5);animation:eliteGlow 2s ease-in-out infinite alternate;}
+.card-face.orange-special::before{content:'';position:absolute;inset:3px;z-index:0;pointer-events:none;clip-path:polygon(8% 0%,92% 0%,100% 8%,100% 78%,50% 100%,0% 78%,0% 8%);border:1.5px solid rgba(255,140,40,.6);animation:orangeGlow 2s ease-in-out infinite alternate;}
+.card-face.purple-special::before{content:'';position:absolute;inset:3px;z-index:0;pointer-events:none;clip-path:polygon(8% 0%,92% 0%,100% 8%,100% 78%,50% 100%,0% 78%,0% 8%);border:1.5px solid rgba(180,80,255,.6);animation:purpleGlow 2s ease-in-out infinite alternate;}
+.card-face.pot::before{content:'';position:absolute;inset:3px;z-index:0;pointer-events:none;clip-path:polygon(8% 0%,92% 0%,100% 8%,100% 78%,50% 100%,0% 78%,0% 8%);border:2px solid rgba(255,255,255,.7);animation:potGlow 1.5s ease-in-out infinite alternate;}
+@keyframes eliteGlow{from{opacity:.5;}to{opacity:1;filter:drop-shadow(0 0 8px rgba(100,220,255,.8));}}
+@keyframes orangeGlow{from{opacity:.5;}to{opacity:1;filter:drop-shadow(0 0 8px rgba(255,140,40,.8));}}
+@keyframes purpleGlow{from{opacity:.5;}to{opacity:1;filter:drop-shadow(0 0 8px rgba(180,80,255,.8));}}
+@keyframes potGlow{from{opacity:.7;}to{opacity:1;filter:drop-shadow(0 0 12px rgba(255,255,255,.9));}}
+
+/* Diagonal shimmer stripe on all cards */
+.card-face::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.07) 50%,transparent 70%);}
+
+/* ════════════════════════════════════
+   FIFA CARD FRONT FACE LAYOUT
+════════════════════════════════════ */
+.cf-wrap{position:relative;width:100%;height:100%;display:flex;flex-direction:column;z-index:2;}
+
+/* Photo zone — top ~55% of card */
+.cf-photo-zone{
+  position:relative;flex:0 0 57%;overflow:hidden;
+}
+.cf-player-photo{
+  width:100%;height:100%;
+  object-fit:cover;object-position:top center;
+  display:block;
+}
+.cf-photo-fallback{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:clamp(50px,16vw,80px);
+  background:rgba(0,0,0,.15);
+}
+/* Fade at bottom of photo */
+.cf-photo-fade{
+  position:absolute;bottom:0;left:0;right:0;height:40%;
+  background:linear-gradient(to bottom,transparent,rgba(0,0,0,.35));
+  pointer-events:none;
+}
+/* Rating block — top-left overlay */
+.cf-rating-block{
+  position:absolute;top:6%;left:7%;z-index:3;
+  line-height:1;
+}
+.cf-rating{
+  font-family:var(--font-display);
+  font-size:clamp(30px,9vw,48px);
+  line-height:.9;
+  display:block;
+  text-shadow:0 2px 8px rgba(0,0,0,.4);
+}
+.cf-role-lbl{
+  font-family:var(--font-display);
+  font-size:clamp(11px,3.2vw,16px);
+  letter-spacing:.04em;
+  display:block;
+  opacity:.9;
+  text-shadow:0 1px 4px rgba(0,0,0,.35);
+}
+/* Team logo — bottom-left of photo zone */
+.cf-team-logo-zone{
+  position:absolute;bottom:8%;left:7%;z-index:3;
+  width:clamp(28px,9vw,38px);height:clamp(28px,9vw,38px);
+}
+.cf-team-logo-zone img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5));}
+.cf-team-logo-fallback{font-size:clamp(22px,7vw,30px);line-height:1;}
+
+/* Special card label badge (top-right of photo) */
+.cf-special-badge{
+  position:absolute;top:6%;right:6%;z-index:3;
+  font-size:clamp(7px,2vw,9px);font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 7px;border-radius:4px;
+  background:rgba(0,0,0,.4);backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.25);
+  color:rgba(255,255,255,.9);
+}
+
+/* ── Info zone — bottom ~43% ── */
+.cf-info-zone{
+  flex:1;display:flex;flex-direction:column;
+  padding:4% 8% 22% 8%;
+  position:relative;
+}
+.cf-name{
+  font-family:var(--font-display);
+  font-size:clamp(14px,4.5vw,22px);
+  letter-spacing:.06em;line-height:1;
+  text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-shadow:0 1px 4px rgba(0,0,0,.2);
+  margin-bottom:3%;
+}
+.cf-owner-badge{
+  font-size:clamp(7px,2vw,9px);font-weight:700;letter-spacing:.04em;
+  text-align:center;opacity:.7;margin-bottom:4%;
+  background:rgba(0,0,0,.15);border-radius:3px;padding:1px 6px;
+  display:inline-block;align-self:center;
+}
+.cf-divider-line{height:1px;background:currentColor;opacity:.25;margin:0 0 4%;border-radius:1px;}
+/* 2-col stats */
+.cf-stats-row{display:flex;align-items:stretch;flex:1;}
+.cf-stat-col{flex:1;display:flex;flex-direction:column;gap:clamp(2px,.8vw,5px);}
+.cf-stat-col:first-child{padding-right:6%;}
+.cf-stat-col:last-child{padding-left:6%;}
+.cf-stat-vdiv{width:1px;background:currentColor;opacity:.2;flex-shrink:0;}
+.cf-stat-item{display:flex;align-items:baseline;justify-content:space-between;gap:3px;}
+.cf-sv{font-family:var(--font-display);font-size:clamp(12px,3.8vw,19px);line-height:1;flex-shrink:0;}
+.cf-sl{font-family:var(--font-display);font-size:clamp(9px,2.5vw,13px);opacity:.55;white-space:nowrap;}
+
+/* Special decoration for elite/oc/pc/pot cards */
+.cf-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;}
+.cf-particle{position:absolute;width:3px;height:3px;border-radius:50%;animation:particleFloat linear infinite;}
+@keyframes particleFloat{0%{transform:translateY(0) scale(1);opacity:.8;}100%{transform:translateY(-100px) scale(0);opacity:0;}}
+
+/* ════════════════════════════════════
+   CARD BACK FACE
+════════════════════════════════════ */
+.cb-wrap{position:relative;z-index:2;display:flex;flex-direction:column;height:100%;padding:8% 8% 22% 8%;}
+.cb-header{text-align:center;margin-bottom:4%;padding-bottom:4%;border-bottom:1px solid rgba(0,0,0,.2);}
+.cb-name{font-family:var(--font-display);font-size:clamp(14px,4.5vw,22px);letter-spacing:.05em;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cb-sub{font-size:clamp(7px,2vw,9px);opacity:.7;margin-top:3px;font-weight:700;letter-spacing:.03em;}
 .cb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(3px,1vw,5px);flex:1;}
-.cb-stat{display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.1);border-radius:6px;padding:clamp(3px,1vw,5px) 2px;border:1px solid rgba(0,0,0,.07);}
-.cb-stat-val{font-family:var(--font-display);font-size:clamp(13px,4vw,18px);line-height:1;}
-.cb-stat-lbl{font-size:clamp(7px,1.8vw,9px);font-weight:700;text-transform:uppercase;letter-spacing:.04em;opacity:.6;margin-top:1px;text-align:center;}
-.cb-footer{margin-top:4%;text-align:center;font-family:var(--font-main);font-size:clamp(9px,2.5vw,11px);font-weight:700;opacity:.85;padding:5px 8px;background:rgba(0,0,0,.12);border-radius:7px;border:1px solid rgba(0,0,0,.07);}
+.cb-stat{display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.12);border-radius:5px;padding:clamp(4px,1.2vw,7px) 2px;border:1px solid rgba(0,0,0,.1);}
+.cb-sv{font-family:var(--font-display);font-size:clamp(12px,3.8vw,18px);line-height:1;}
+.cb-sl{font-size:clamp(6px,1.6vw,8px);font-weight:700;text-transform:uppercase;letter-spacing:.04em;opacity:.55;margin-top:1px;text-align:center;}
+.cb-footer{margin-top:4%;text-align:center;font-size:clamp(8px,2.2vw,10px);font-weight:700;opacity:.8;padding:4px 8px;background:rgba(0,0,0,.14);border-radius:5px;border:1px solid rgba(0,0,0,.08);}
 @keyframes capPulse2{0%,100%{box-shadow:0 0 0 0 rgba(255,215,0,.5);}50%{box-shadow:0 0 0 5px rgba(255,215,0,0);}}
 .rb-cap{animation:capPulse2 2s ease infinite;}
 
@@ -228,65 +388,152 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .field-loading-emoji{font-size:42px;animation:floatBounce 2.5s ease-in-out infinite;}
 @keyframes floatBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
 
-/* FIELD PLAYER DETAIL SHEET — centered floating card */
+/* ════════════════════════════════════
+   FIELD PLAYER DETAIL SHEET
+   — Bottom sheet, sticky hero header,
+     overflowing player image, scrollable stats
+════════════════════════════════════ */
 .fm-modal{
   display:none;position:fixed;inset:0;z-index:250;
-  background:rgba(0,0,0,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  align-items:center;justify-content:center;
-  padding:24px 16px;
+  background:rgba(0,0,0,.86);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  align-items:flex-end;justify-content:center;
 }
 .fm-modal.open{display:flex;animation:fmIn .22s var(--ease);}
 @keyframes fmIn{from{opacity:0;}to{opacity:1;}}
-.fm-sheet{
-  width:100%;max-width:420px;
-  max-height:82vh;
-  border-radius:24px;
-  background:var(--surf2);
-  border:1px solid var(--brd2);
-  box-shadow:0 24px 80px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.04) inset;
-  animation:fmPop .38s var(--bounce) both;
+/* The whole sheet incl. overflowing image */
+.fm-shell{
+  width:100%;max-width:480px;
+  /* extra top space for the overflowing player image */
+  padding-top:90px;
   position:relative;
+  animation:fmSlide .42s var(--bounce) both;
+}
+@keyframes fmSlide{from{opacity:0;transform:translateY(60px);}to{opacity:1;transform:none;}}
+
+/* Overflowing player image — sits above the sheet */
+.fm-hero-img-wrap{
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:140px;height:168px;
+  z-index:10;
+}
+.fm-hero-img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:top center;
+  border-radius:20px;
+  box-shadow:0 12px 40px rgba(0,0,0,.7);
+  display:block;
+}
+.fm-hero-img-fallback{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:56px;border-radius:20px;
+}
+/* Gradient fade at bottom of hero image */
+.fm-hero-fade{
+  position:absolute;bottom:0;left:0;right:0;height:50%;
+  border-radius:0 0 20px 20px;
+  pointer-events:none;
+}
+
+/* The actual sheet card */
+.fm-sheet{
+  width:100%;
+  max-height:82vh;
+  border-radius:28px 28px 0 0;
+  background:var(--surf2);
+  border:1px solid var(--brd2);border-bottom:none;
+  box-shadow:0 -12px 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.06);
   display:flex;flex-direction:column;
   overflow:hidden;
+  position:relative;
 }
-@keyframes fmPop{from{opacity:0;transform:scale(.9) translateY(16px);}to{opacity:1;transform:none;}}
-.fm-sticky{flex-shrink:0;}
-.fm-header{padding:18px 20px 14px;position:relative;overflow:hidden;}
-.fm-top{display:flex;align-items:center;gap:14px;position:relative;z-index:1;}
-.fm-team-logo{width:58px;height:58px;border-radius:16px;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.3);box-shadow:0 4px 20px rgba(0,0,0,.4);flex-shrink:0;}
-.fm-player-info{flex:1;min-width:0;}
-.fm-player-name{font-family:var(--font-display);font-size:26px;letter-spacing:.04em;line-height:1;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.4);}
-.fm-player-sub{font-size:11px;color:rgba(255,255,255,.7);margin-top:3px;font-weight:500;}
-.fm-badges{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap;}
-.fmbadge{font-size:10px;font-weight:800;padding:3px 8px;border-radius:7px;display:flex;align-items:center;gap:4px;}
-.fmbadge.role{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);}
-.fmbadge.captain{background:rgba(255,196,0,.25);color:#ffc400;border:1px solid rgba(255,196,0,.4);}
-.fmbadge.vc{background:rgba(180,180,200,.2);color:#c8d0dc;border:1px solid rgba(180,180,200,.3);}
-.fmbadge.ocap{background:rgba(255,107,53,.2);color:#ff8c5a;border:1px solid rgba(255,107,53,.4);}
-.fmbadge.pcap{background:rgba(155,89,182,.2);color:#bb8fce;border:1px solid rgba(155,89,182,.4);}
-.fmbadge.price{background:rgba(255,215,0,.15);color:var(--gold);border:1px solid rgba(255,215,0,.25);font-family:var(--font-mono);}
-.fm-close{position:absolute;top:14px;right:16px;z-index:10;width:30px;height:30px;border-radius:10px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s var(--bounce),background .2s;}
-.fm-close:hover{transform:scale(1.1) rotate(90deg);background:rgba(231,76,60,.4);}
-/* Rank strip — sticky below header */
-.fm-rank-strip{margin:0 16px 14px;padding:11px 16px;border-radius:14px;display:flex;align-items:center;gap:12px;background:rgba(79,172,254,.08);border:1px solid rgba(79,172,254,.2);}
-.fm-rank-num{font-family:var(--font-display);font-size:34px;line-height:1;color:var(--blue);}
-.fm-rank-label{font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);}
-.fm-rank-sub{font-size:11px;color:var(--t2);margin-top:2px;font-weight:500;}
-.fm-pts-big{font-family:var(--font-display);font-size:34px;line-height:1;color:var(--t1);text-align:right;}
-.fm-pts-big-label{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);text-align:right;}
-/* Scrollable stats body */
-.fm-scroll-body{flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
+
+/* Sticky header inside sheet */
+.fm-sticky{
+  flex-shrink:0;
+  /* Enough padding-top so content starts below the overflowing image */
+  padding-top:90px;
+  position:relative;z-index:1;
+}
+/* Team colour gradient fills the header + blends into sheet */
+.fm-header-gradient{
+  position:absolute;top:0;left:0;right:0;height:200px;
+  z-index:0;pointer-events:none;
+}
+/* Bottom blend of header gradient into sheet bg */
+.fm-header-gradient::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:70px;
+  background:linear-gradient(to bottom,transparent,var(--surf2));
+  z-index:1;
+}
+
+.fm-header-content{
+  position:relative;z-index:2;
+  padding:0 20px 14px;
+  text-align:center;
+}
+.fm-player-name{
+  font-family:var(--font-display);font-size:28px;letter-spacing:.05em;line-height:1;
+  color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.5);
+  margin-bottom:4px;
+}
+.fm-player-sub{font-size:12px;color:rgba(255,255,255,.7);margin-bottom:10px;font-weight:500;}
+.fm-badges{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;}
+.fmbadge{font-size:10px;font-weight:800;padding:3px 9px;border-radius:7px;display:flex;align-items:center;gap:4px;}
+.fmbadge.role{background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3);}
+.fmbadge.captain{background:rgba(255,196,0,.3);color:#ffc400;border:1px solid rgba(255,196,0,.5);}
+.fmbadge.vc{background:rgba(180,180,200,.25);color:#c8d0dc;border:1px solid rgba(180,180,200,.35);}
+.fmbadge.ocap{background:rgba(255,107,53,.25);color:#ff9060;border:1px solid rgba(255,107,53,.45);}
+.fmbadge.pcap{background:rgba(155,89,182,.25);color:#cc99ff;border:1px solid rgba(155,89,182,.45);}
+.fmbadge.price{background:rgba(255,215,0,.18);color:#ffd700;border:1px solid rgba(255,215,0,.3);font-family:var(--font-mono);}
+.fm-close{
+  position:absolute;top:14px;right:16px;z-index:20;
+  width:32px;height:32px;border-radius:10px;
+  background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.2);
+  color:#fff;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:transform .2s var(--bounce),background .2s;
+}
+.fm-close:hover{transform:scale(1.1) rotate(90deg);background:rgba(231,76,60,.5);}
+
+/* Rank + pts strip */
+.fm-rank-strip{
+  margin:0 16px 0;padding:12px 18px;border-radius:16px;
+  display:flex;align-items:center;gap:12px;
+  background:rgba(79,172,254,.08);border:1px solid rgba(79,172,254,.18);
+  position:relative;z-index:2;
+}
+.fm-rank-left{flex:1;}
+.fm-rank-label{font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);}
+.fm-rank-num{font-family:var(--font-display);font-size:38px;line-height:1;color:var(--blue);}
+.fm-rank-sub{font-size:11px;color:var(--t2);margin-top:1px;font-weight:500;}
+.fm-pts-right{text-align:right;}
+.fm-pts-big-label{font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);}
+.fm-pts-big{font-family:var(--font-display);font-size:38px;line-height:1;color:var(--t1);}
+
+/* Scrollable stats */
+.fm-scroll-body{
+  flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  padding-top:14px;
+}
 .fm-scroll-body::-webkit-scrollbar{display:none;}
-.fm-stats-section{padding:4px 16px 32px;}
-.fm-stats-title{font-size:9px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--t3);margin:12px 0 8px;display:flex;align-items:center;gap:7px;}
+.fm-stats-section{padding:0 16px 48px;}
+.fm-stats-title{
+  font-size:9px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--t3);margin:14px 0 8px;
+  display:flex;align-items:center;gap:7px;
+}
 .fm-stats-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--div),transparent);}
 .fm-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.fm-stat-box{background:var(--surf);border:1px solid var(--brd);border-radius:14px;padding:11px 12px;transition:transform .2s var(--bounce);}
-.fm-stat-box:hover{transform:scale(1.03);}
-.fm-stat-icon{font-size:14px;margin-bottom:2px;display:block;}
-.fm-stat-val{font-family:var(--font-mono);font-size:20px;font-weight:500;color:var(--t1);line-height:1;margin-bottom:2px;}
+.fm-stat-box{
+  background:var(--surf);border:1px solid var(--brd);border-radius:14px;
+  padding:12px 10px;transition:transform .2s var(--bounce),border-color .2s;
+  text-align:center;
+}
+.fm-stat-box:hover{transform:scale(1.04);border-color:var(--brd2);}
+.fm-stat-icon{font-size:15px;margin-bottom:4px;display:block;}
+.fm-stat-val{font-family:var(--font-display);font-size:22px;font-weight:500;color:var(--t1);line-height:1;margin-bottom:3px;}
 .fm-stat-val.zero{color:var(--t3);}
-.fm-stat-label{font-size:8.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);}
+.fm-stat-label{font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);}
 
 /* BOTTOM NAV */
 .bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:calc(100% - 28px);max-width:480px;height:68px;background:var(--nav);backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);border:1px solid var(--brd);border-radius:28px;display:flex;justify-content:space-around;align-items:center;padding:6px 2px;box-shadow:0 8px 40px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04);z-index:100;}
@@ -362,46 +609,55 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 <!-- CARD MODAL -->
 <div id="card-modal" class="modal" onclick="handleCardOverlay(event)">
   <button class="modal-close" onclick="closeCardModal()">✕</button>
-  <div class="card-scene" onclick="flipCard()">
-    <div class="card-flip" id="card-flip">
-      <div class="card-face" id="card-front"></div>
-      <div class="card-face card-back-face" id="card-back"></div>
+  <div class="card-scene-wrap">
+    <div class="card-glow" id="card-glow"></div>
+    <div class="card-scene" onclick="flipCard()">
+      <div class="card-flip" id="card-flip">
+        <div class="card-face" id="card-front"></div>
+        <div class="card-face card-back-face" id="card-back"></div>
+      </div>
     </div>
   </div>
+  <div class="modal-hint">Tap card to flip</div>
 </div>
 
 <!-- FIELD PLAYER DETAIL SHEET -->
 <div class="fm-modal" id="fm-modal" onclick="handleFmOverlay(event)">
-  <div class="fm-sheet">
-    <!-- Sticky top: header + rank strip -->
-    <div class="fm-sticky">
+  <div class="fm-shell">
+    <!-- Overflowing hero image above the sheet -->
+    <div class="fm-hero-img-wrap" id="fm-hero-wrap">
+      <div id="fm-hero-img-slot"></div>
+      <div class="fm-hero-fade" id="fm-hero-fade"></div>
+    </div>
+
+    <div class="fm-sheet">
       <button class="fm-close" onclick="closeFmModal()">✕</button>
-      <div class="fm-header" id="fm-header">
-        <div class="fm-top">
-          <div class="fm-team-logo" id="fm-logo"></div>
-          <div class="fm-player-info">
-            <div class="fm-player-name" id="fm-name">—</div>
-            <div class="fm-player-sub" id="fm-sub">—</div>
-            <div class="fm-badges" id="fm-badges"></div>
+
+      <!-- Sticky header -->
+      <div class="fm-sticky">
+        <div class="fm-header-gradient" id="fm-header-gradient"></div>
+        <div class="fm-header-content">
+          <div class="fm-player-name" id="fm-name">—</div>
+          <div class="fm-player-sub" id="fm-sub">—</div>
+          <div class="fm-badges" id="fm-badges"></div>
+        </div>
+        <div class="fm-rank-strip">
+          <div class="fm-rank-left">
+            <div class="fm-rank-label">Universal Rank</div>
+            <div class="fm-rank-num" id="fm-rank">#—</div>
+            <div class="fm-rank-sub" id="fm-rank-sub">among all players</div>
+          </div>
+          <div class="fm-pts-right">
+            <div class="fm-pts-big-label">Fantasy Pts</div>
+            <div class="fm-pts-big" id="fm-pts">—</div>
           </div>
         </div>
       </div>
-      <div class="fm-rank-strip">
-        <div>
-          <div class="fm-rank-label">Universal Rank</div>
-          <div class="fm-rank-num" id="fm-rank">#—</div>
-          <div class="fm-rank-sub" id="fm-rank-sub">among all players</div>
-        </div>
-        <div style="flex:1"></div>
-        <div style="text-align:right">
-          <div class="fm-pts-big-label">Fantasy Pts</div>
-          <div class="fm-pts-big" id="fm-pts">—</div>
-        </div>
+
+      <!-- Scrollable stats -->
+      <div class="fm-scroll-body">
+        <div class="fm-stats-section" id="fm-stats"></div>
       </div>
-    </div>
-    <!-- Scrollable stats -->
-    <div class="fm-scroll-body">
-      <div class="fm-stats-section" id="fm-stats"></div>
     </div>
   </div>
 </div>
@@ -597,26 +853,139 @@ function renderList(players){
 /* OPEN CARD */
 function openCard(idx){
   const p=window._fp[idx];
-  const tier=tierMap[p["Player Name"]]||"bronze",team=getTeam(p["IPL Team"]||""),pts=getPts(p);
-  const rating=ratingMap[p["Player Name"]]||35,role=(p["Role"]||"BAT").toUpperCase();
-  const name=p["Player Name"]||"",owned=p["Sold To"]&&p["Sold To"].trim();
-  const myCap=localStorage.getItem("captain")||"",myVC=localStorage.getItem("viceCaptain")||"";
-  const isCap=myCap===name&&p["Sold To"]===myTeam,isVC=myVC===name&&p["Sold To"]===myTeam;
-  const price=p["Price Bought"]?`\u20b9${p["Price Bought"]}Cr`:"Unsold",fantasyTeam=owned||"Unsold";
+  if(!p)return;
+  const name=p["Player Name"]||"";
+  const tier=tierMap[name]||"bronze";
+  const team=getTeam(p["IPL Team"]||"");
+  const pts=getPts(p);
+  const rating=ratingMap[name]||35;
+  const role=(p["Role"]||"BAT").toUpperCase();
+  const owned=p["Sold To"]&&p["Sold To"].trim();
+  const myCap_=localStorage.getItem("captain")||"";
+  const myVC_=localStorage.getItem("viceCaptain")||"";
+  const isCap=myCap_===name&&p["Sold To"]===myTeam;
+  const isVC=myVC_===name&&p["Sold To"]===myTeam;
+  const price=p["Price Bought"]?`₹${p["Price Bought"]}Cr`:"Unsold";
+  const fantasyTeam=owned||"Unsold";
   const runs=gi(p,"Runs","runs"),wkts=gi(p,"Wickets","wickets"),cats=gi(p,"Catches","catches");
   const fours=gi(p,"4s","fours"),sixes=gi(p,"6s","sixes"),fifties=gi(p,"50s","fifties");
   const hunds=gi(p,"100s","hundreds"),threeW=gi(p,"3W","threew"),fiveW=gi(p,"5W","fivew");
   const fourW=gi(p,"fourv"),maidens=gi(p,"Maidens","maidens"),dots=gi(p,"Dots","dots");
-  const front=document.getElementById("card-front"),back=document.getElementById("card-back");
-  front.className=`card-face ${tier}`;back.className=`card-face card-back-face ${tier}`;
+
+  // Determine card type
+  const ocName=(leadersGlobal?.orangeCap?.name||"").trim().toLowerCase();
+  const pcName=(leadersGlobal?.purpleCap?.name||"").trim().toLowerCase();
+  const potName=(leadersGlobal?.highestPts?.name||"").trim().toLowerCase();
+  const pnl=name.trim().toLowerCase();
+  const isPOT=potName&&pnl===potName;
+  const isOC=ocName&&pnl===ocName;
+  const isPC=pcName&&pnl===pcName;
+  const isElite=pts>=95;
+  let cardType=tier; // bronze/silver/gold default
+  if(isElite)cardType="elite";
+  if(isOC)cardType="orange-special";
+  if(isPC)cardType="purple-special";
+  if(isPOT)cardType="pot";
+
+  // Glow colors per card type
+  const glowMap={
+    gold:"rgba(255,215,0,.5)",silver:"rgba(200,200,200,.4)",bronze:"rgba(200,120,50,.45)",
+    elite:"rgba(80,200,255,.55)",
+    "orange-special":"rgba(255,140,40,.6)",
+    "purple-special":"rgba(180,80,255,.6)",
+    pot:"rgba(255,220,100,.7)"
+  };
+  document.getElementById("card-glow").style.background=glowMap[cardType]||"transparent";
+
+  const front=document.getElementById("card-front");
+  const back=document.getElementById("card-back");
+  front.className=`card-face ${cardType}`;
+  back.className=`card-face card-back-face ${cardType}`;
   document.getElementById("card-flip").classList.remove("flipped");
-  const pImgCard=p["Image"]&&p["Image"].toString().trim();
-  const logoHTML=pImgCard
-    ?`<img src="${pImgCard}" style="width:clamp(60px,18vw,80px);height:clamp(60px,18vw,80px);object-fit:cover;object-position:top center;border-radius:50%;border:2px solid rgba(255,255,255,.25);filter:drop-shadow(0 4px 12px rgba(0,0,0,.4));" alt="${name}" onerror="this.style.display='none';this.nextSibling.style.display='block'">`+
-     (team.logo?`<img src="${team.logo}" class="cf-logo" style="display:none" alt="${team.abbr}" onerror="this.style.display='none';this.nextSibling.style.display='block'"><span class="cf-logo-fallback" style="display:none">${team.fb}</span>`:`<span class="cf-logo-fallback" style="display:none">${team.fb}</span>`)
-    :(team.logo?`<img src="${team.logo}" class="cf-logo" alt="${team.abbr}" onerror="this.style.display='none';this.nextSibling.style.display='block'"><span class="cf-logo-fallback" style="display:none">${team.fb}</span>`:`<span class="cf-logo-fallback">${team.fb}</span>`);
-  front.innerHTML=`<div class="cf-inner"><div class="cf-top"><div><div class="cf-rating">${rating}</div><div class="cf-role">${role}</div></div><div>${logoHTML}</div></div><div class="cf-name">${name.toUpperCase()}</div><div class="cf-owner">${fantasyTeam}</div><div class="cf-divider"></div><div class="cf-stats"><div class="cf-stat-col"><div class="cf-stat-row"><span class="cf-stat-val">${runs}</span><span class="cf-stat-lbl">RUN</span></div><div class="cf-stat-row"><span class="cf-stat-val">${wkts}</span><span class="cf-stat-lbl">WKT</span></div><div class="cf-stat-row"><span class="cf-stat-val">${cats}</span><span class="cf-stat-lbl">CAT</span></div></div><div class="cf-stat-vdiv"></div><div class="cf-stat-col"><div class="cf-stat-row"><span class="cf-stat-val">${fours}</span><span class="cf-stat-lbl">4s</span></div><div class="cf-stat-row"><span class="cf-stat-val">${sixes}</span><span class="cf-stat-lbl">6s</span></div><div class="cf-stat-row"><span class="cf-stat-val">${pts}</span><span class="cf-stat-lbl">PTS</span></div></div></div></div>`;
-  back.innerHTML=`<div class="cb-inner"><div class="cb-header"><div class="cb-name">${name.toUpperCase()}</div><div class="cb-sub">${team.abbr} \u00b7 ${pts} pts \u00b7 ${price} \u00b7 ${fantasyTeam}</div></div><div class="cb-grid"><div class="cb-stat"><div class="cb-stat-val">${runs}</div><div class="cb-stat-lbl">Runs</div></div><div class="cb-stat"><div class="cb-stat-val">${fours}</div><div class="cb-stat-lbl">4s</div></div><div class="cb-stat"><div class="cb-stat-val">${sixes}</div><div class="cb-stat-lbl">6s</div></div><div class="cb-stat"><div class="cb-stat-val">${cats}</div><div class="cb-stat-lbl">Catches</div></div><div class="cb-stat"><div class="cb-stat-val">${wkts}</div><div class="cb-stat-lbl">Wickets</div></div><div class="cb-stat"><div class="cb-stat-val">${maidens}</div><div class="cb-stat-lbl">Maidens</div></div><div class="cb-stat"><div class="cb-stat-val">${dots}</div><div class="cb-stat-lbl">Dots</div></div><div class="cb-stat"><div class="cb-stat-val">${fifties}</div><div class="cb-stat-lbl">50s</div></div><div class="cb-stat"><div class="cb-stat-val">${hunds}</div><div class="cb-stat-lbl">100s</div></div><div class="cb-stat"><div class="cb-stat-val">${threeW}</div><div class="cb-stat-lbl">3W</div></div><div class="cb-stat"><div class="cb-stat-val">${fiveW}</div><div class="cb-stat-lbl">5W</div></div><div class="cb-stat"><div class="cb-stat-val">${fourW}</div><div class="cb-stat-lbl">4W</div></div></div><div class="cb-footer">${pts} pts \u00b7 Rating ${rating}${isCap?" \u00b7 Captain \ud83c\udf1f":isVC?" \u00b7 Vice-Captain \u2b50":""}</div></div>`;
+
+  // Player photo
+  const pImg=p["Image"]&&p["Image"].toString().trim();
+  const photoHTML=pImg
+    ?`<img class="cf-player-photo" src="${pImg}" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`+
+     `<div class="cf-photo-fallback" style="display:none">${team.fb}</div>`
+    :`<div class="cf-photo-fallback">${team.logo?`<img src="${team.logo}" style="width:55%;height:55%;object-fit:contain" alt="${team.abbr}" onerror="this.style.display='none'">`:`<span>${team.fb}</span>`}</div>`;
+
+  // Team logo
+  const tLogoHTML=team.logo
+    ?`<img src="${team.logo}" style="width:100%;height:100%;object-fit:contain;" alt="${team.abbr}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="cf-team-logo-fallback" style="display:none;font-size:clamp(22px,7vw,30px)">${team.fb}</span>`
+    :`<span style="font-size:clamp(22px,7vw,30px)">${team.fb}</span>`;
+
+  // Special badge text
+  const specialLabels={
+    elite:"🔵 Elite",
+    "orange-special":"🧢 Orange Cap",
+    "purple-special":"🎩 Purple Cap",
+    pot:"🏆 Player of Tournament"
+  };
+  const specialBadge=specialLabels[cardType]?`<div class="cf-special-badge">${specialLabels[cardType]}</div>`:"";
+
+  // Photo zone bg tint per card type
+  const photoBg={
+    bronze:"rgba(58,24,0,.3)",silver:"rgba(24,24,24,.25)",gold:"rgba(58,34,0,.25)",
+    elite:"rgba(2,10,24,.5)","orange-special":"rgba(32,8,0,.4)",
+    "purple-special":"rgba(14,0,24,.4)",pot:"rgba(10,8,24,.35)"
+  };
+
+  front.innerHTML=`
+  <div class="cf-wrap">
+    <div class="cf-photo-zone" style="background:${photoBg[cardType]||"transparent"}">
+      ${photoHTML}
+      <div class="cf-photo-fade"></div>
+      <div class="cf-rating-block">
+        <span class="cf-rating">${rating}</span>
+        <span class="cf-role-lbl">${role}</span>
+      </div>
+      <div class="cf-team-logo-zone">${tLogoHTML}</div>
+      ${specialBadge}
+    </div>
+    <div class="cf-info-zone">
+      <div class="cf-name">${name.toUpperCase()}</div>
+      <div class="cf-owner-badge">${fantasyTeam}</div>
+      <div class="cf-divider-line"></div>
+      <div class="cf-stats-row">
+        <div class="cf-stat-col">
+          <div class="cf-stat-item"><span class="cf-sv">${runs}</span><span class="cf-sl">RUN</span></div>
+          <div class="cf-stat-item"><span class="cf-sv">${wkts}</span><span class="cf-sl">WKT</span></div>
+          <div class="cf-stat-item"><span class="cf-sv">${cats}</span><span class="cf-sl">CAT</span></div>
+        </div>
+        <div class="cf-stat-vdiv"></div>
+        <div class="cf-stat-col">
+          <div class="cf-stat-item"><span class="cf-sv">${fours}</span><span class="cf-sl">4s</span></div>
+          <div class="cf-stat-item"><span class="cf-sv">${sixes}</span><span class="cf-sl">6s</span></div>
+          <div class="cf-stat-item"><span class="cf-sv">${pts}</span><span class="cf-sl">PTS</span></div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+  back.innerHTML=`
+  <div class="cb-wrap">
+    <div class="cb-header">
+      <div class="cb-name">${name.toUpperCase()}</div>
+      <div class="cb-sub">${team.abbr} · ${pts} pts · ${price} · ${fantasyTeam}</div>
+    </div>
+    <div class="cb-grid">
+      <div class="cb-stat"><div class="cb-sv">${runs}</div><div class="cb-sl">Runs</div></div>
+      <div class="cb-stat"><div class="cb-sv">${fours}</div><div class="cb-sl">4s</div></div>
+      <div class="cb-stat"><div class="cb-sv">${sixes}</div><div class="cb-sl">6s</div></div>
+      <div class="cb-stat"><div class="cb-sv">${cats}</div><div class="cb-sl">Catches</div></div>
+      <div class="cb-stat"><div class="cb-sv">${wkts}</div><div class="cb-sl">Wickets</div></div>
+      <div class="cb-stat"><div class="cb-sv">${maidens}</div><div class="cb-sl">Maidens</div></div>
+      <div class="cb-stat"><div class="cb-sv">${dots}</div><div class="cb-sl">Dots</div></div>
+      <div class="cb-stat"><div class="cb-sv">${fifties}</div><div class="cb-sl">50s</div></div>
+      <div class="cb-stat"><div class="cb-sv">${hunds}</div><div class="cb-sl">100s</div></div>
+      <div class="cb-stat"><div class="cb-sv">${threeW}</div><div class="cb-sl">3W</div></div>
+      <div class="cb-stat"><div class="cb-sv">${fiveW}</div><div class="cb-sl">5W</div></div>
+      <div class="cb-stat"><div class="cb-sv">${fourW}</div><div class="cb-sl">4W</div></div>
+    </div>
+    <div class="cb-footer">${pts} pts · Rating ${rating}${isCap?" · Captain 👑":isVC?" · Vice-Captain ⭐":""}</div>
+  </div>`;
+
   document.getElementById("card-modal").classList.add("open");
 }
 function flipCard(){document.getElementById("card-flip").classList.toggle("flipped");}
@@ -686,45 +1055,73 @@ function renderField(){
 
 /* FIELD PLAYER DETAIL MODAL */
 function openFmModal(enc){
-  const name=decodeURIComponent(enc),p=myPlayersGlobal.find(x=>(x["Player Name"]||"")===name);
+  const name=decodeURIComponent(enc);
+  const p=myPlayersGlobal.find(x=>(x["Player Name"]||"")===name);
   if(!p)return;
-  const tc=getTeam(p["IPL Team"]||""),cap=localStorage.getItem("captain")||"",vc=localStorage.getItem("viceCaptain")||"";
-  const ocName=(leadersGlobal.orangeCap?.name||"").trim().toLowerCase(),pcName=(leadersGlobal.purpleCap?.name||"").trim().toLowerCase();
-  const pnl=name.trim().toLowerCase(),pts=getPts(p);
+  const tc=getTeam(p["IPL Team"]||"");
+  const cap=localStorage.getItem("captain")||"";
+  const vc=localStorage.getItem("viceCaptain")||"";
+  const ocName=(leadersGlobal.orangeCap?.name||"").trim().toLowerCase();
+  const pcName=(leadersGlobal.purpleCap?.name||"").trim().toLowerCase();
+  const pnl=name.trim().toLowerCase();
+  const pts=getPts(p);
   const sorted=[...allPlayers].sort((a,b)=>getPts(b)-getPts(a));
-  const rank=sorted.findIndex(x=>(x["Player Name"]||"").trim()===name.trim())+1,total=sorted.length;
-  document.getElementById("fm-header").style.background=`linear-gradient(135deg,${tc.c1} 0%,${tc.c2} 100%)`;
-  const logoEl=document.getElementById("fm-logo");
-  logoEl.style.background=`linear-gradient(135deg,${tc.c1},${tc.c2})`;
-  logoEl.style.borderColor="rgba(255,255,255,.3)";
+  const rank=sorted.findIndex(x=>(x["Player Name"]||"").trim()===name.trim())+1;
+  const total=sorted.length;
+
+  // ── Hero image setup ──
   const fmImg=p["Image"]&&p["Image"].toString().trim();
-  logoEl.style.overflow="hidden";
-  logoEl.style.padding="0";
-  logoEl.innerHTML=fmImg
-    ?`<img src="${fmImg}" style="width:100%;height:100%;object-fit:cover;object-position:top center;border-radius:14px;" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`+
-     (tc.logo?`<img src="${tc.logo}" style="width:42px;height:42px;object-fit:contain;display:none" alt="${tc.abbr}" onerror="this.style.display='none'"><span style="font-size:28px;display:none">${tc.fb}</span>`:`<span style="font-size:28px;display:none">${tc.fb}</span>`)
-    :(tc.logo?`<img src="${tc.logo}" style="width:42px;height:42px;object-fit:contain;" alt="${tc.abbr}" onerror="this.parentNode.innerHTML='<span style=font-size:28px>${tc.fb}</span>'">`:`<span style="font-size:28px">${tc.fb}</span>`);
+  const heroSlot=document.getElementById("fm-hero-img-slot");
+  heroSlot.className="";
+  if(fmImg){
+    heroSlot.innerHTML=`<img class="fm-hero-img" src="${fmImg}" alt="${name}" onerror="this.parentNode.innerHTML='<div class=fm-hero-img-fallback style=background:linear-gradient(135deg,${tc.c1},${tc.c2})>${tc.fb}</div>'">`;
+  }else{
+    const tl=tc.logo?`<img src="${tc.logo}" style="width:60px;height:60px;object-fit:contain" alt="${tc.abbr}">`:`<span style="font-size:52px">${tc.fb}</span>`;
+    heroSlot.innerHTML=`<div class="fm-hero-img-fallback" style="background:linear-gradient(135deg,${tc.c1},${tc.c2})">${tl}</div>`;
+  }
+
+  // Gradient fade on hero image matches team colour
+  document.getElementById("fm-hero-fade").style.background=`linear-gradient(to bottom,transparent,${tc.c1}ee)`;
+
+  // Header gradient
+  const hg=document.getElementById("fm-header-gradient");
+  hg.style.background=`linear-gradient(180deg,${tc.c1} 0%,${tc.c2} 50%,transparent 100%)`;
+  hg.style.opacity="0.95";
+  // Blend into sheet
+  const afterStyle=`linear-gradient(to bottom,${tc.c1}00,var(--surf2))`;
+  hg.style.setProperty("--after-bg",afterStyle);
+
+  // Player info
   document.getElementById("fm-name").textContent=name;
-  document.getElementById("fm-sub").textContent=(p["IPL Team"]||"\u2014")+" \u00b7 "+(p["Role"]||"\u2014")+" \u00b7 \u20b9"+(p["Price Bought"]||"\u2014")+" Cr";
-  let bh=`<span class="fmbadge role">${p["Role"]||"\u2014"}</span>`;
-  if(cap===name) bh+='<span class="fmbadge captain">\ud83d\udc51 Captain</span>';
-  if(vc===name)  bh+='<span class="fmbadge vc">\u2b50 Vice-Captain</span>';
-  if(ocName&&pnl===ocName) bh+='<span class="fmbadge ocap">\ud83e\udde2 Orange Cap</span>';
-  if(pcName&&pnl===pcName) bh+='<span class="fmbadge pcap">\ud83c\udfa9 Purple Cap</span>';
-  bh+=`<span class="fmbadge price">\u20b9${p["Price Bought"]||"\u2014"} Cr</span>`;
+  document.getElementById("fm-sub").textContent=(p["IPL Team"]||"—")+" · "+(p["Role"]||"—")+" · ₹"+(p["Price Bought"]||"—")+" Cr";
+
+  // Badges
+  let bh=`<span class="fmbadge role">${p["Role"]||"—"}</span>`;
+  if(cap===name)bh+=`<span class="fmbadge captain">👑 Captain</span>`;
+  if(vc===name) bh+=`<span class="fmbadge vc">⭐ Vice-Captain</span>`;
+  if(ocName&&pnl===ocName)bh+=`<span class="fmbadge ocap">🧢 Orange Cap</span>`;
+  if(pcName&&pnl===pcName)bh+=`<span class="fmbadge pcap">🎩 Purple Cap</span>`;
+  bh+=`<span class="fmbadge price">₹${p["Price Bought"]||"—"} Cr</span>`;
   document.getElementById("fm-badges").innerHTML=bh;
+
+  // Rank & pts
   document.getElementById("fm-rank").textContent="#"+rank;
   document.getElementById("fm-rank-sub").textContent="out of "+total+" players";
   document.getElementById("fm-pts").textContent=pts;
+
+  // Stats
   const statDefs={
-    Batting:[{k:"Runs",i:"\ud83c\udfc3",l:"Runs"},{k:"6s",i:"\ud83d\udca5",l:"Sixes"},{k:"4s",i:"4\ufe0f\u20e3",l:"Fours"},{k:"50s",i:"\u2b50",l:"50s"},{k:"100s",i:"\ud83d\udcaf",l:"100s"}],
-    Bowling:[{k:"Wickets",i:"\ud83c\udfaf",l:"Wickets"},{k:"Maidens",i:"\ud83d\udd35",l:"Maidens"},{k:"Dots",i:"\u26ab",l:"Dot Balls"},{k:"3W",i:"\ud83c\udfb3",l:"3-Wkt Haul"},{k:"5W",i:"\ud83d\udd25",l:"5-Wkt Haul"},{k:"fourv",i:"\u26a1",l:"4-Wkt Haul"}],
-    Fielding:[{k:"Catches",i:"\ud83e\udddf",l:"Catches"},{k:"Run Outs",i:"\ud83c\udfc3",l:"Run Outs"},{k:"Stumpings",i:"\ud83e\udd45",l:"Stumpings"}]
+    Batting:[{k:"Runs",i:"🏃",l:"Runs"},{k:"6s",i:"💥",l:"Sixes"},{k:"4s",i:"4️⃣",l:"Fours"},{k:"50s",i:"⭐",l:"50s"},{k:"100s",i:"💯",l:"100s"}],
+    Bowling:[{k:"Wickets",i:"🎯",l:"Wickets"},{k:"Maidens",i:"🔵",l:"Maidens"},{k:"Dots",i:"⚫",l:"Dot Balls"},{k:"3W",i:"🎳",l:"3-Wkt Haul"},{k:"5W",i:"🔥",l:"5-Wkt Haul"},{k:"fourv",i:"⚡",l:"4-Wkt Haul"}],
+    Fielding:[{k:"Catches",i:"🧤",l:"Catches"},{k:"Run Outs",i:"🏃",l:"Run Outs"},{k:"Stumpings",i:"🥅",l:"Stumpings"}]
   };
   let sh="";
   Object.entries(statDefs).forEach(([title,defs])=>{
     sh+=`<div class="fm-stats-title">${title}</div><div class="fm-stats-grid">`;
-    defs.forEach(d=>{const v=parseFloat(p[d.k])||0;sh+=`<div class="fm-stat-box"><span class="fm-stat-icon">${d.i}</span><div class="fm-stat-val${v===0?" zero":""}">${v}</div><div class="fm-stat-label">${d.l}</div></div>`;});
+    defs.forEach(d=>{
+      const v=parseFloat(p[d.k])||0;
+      sh+=`<div class="fm-stat-box"><span class="fm-stat-icon">${d.i}</span><div class="fm-stat-val${v===0?" zero":""}">${v}</div><div class="fm-stat-label">${d.l}</div></div>`;
+    });
     sh+="</div>";
   });
   document.getElementById("fm-stats").innerHTML=sh;
@@ -732,7 +1129,10 @@ function openFmModal(enc){
   document.body.style.overflow="hidden";
 }
 function closeFmModal(){document.getElementById("fm-modal").classList.remove("open");document.body.style.overflow="";}
-function handleFmOverlay(e){if(e.target===document.getElementById("fm-modal"))closeFmModal();}
+function handleFmOverlay(e){
+  // Close if clicking on the dark overlay (not the shell/sheet)
+  if(e.target===document.getElementById("fm-modal"))closeFmModal();
+}
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCardModal();closeFmModal();}});
 </script>
 </body>
