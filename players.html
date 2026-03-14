@@ -147,7 +147,7 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .card-scene-wrap{position:relative;display:flex;align-items:center;justify-content:center;}
 .card-scene{
   perspective:1400px;
-  width:min(80vw,330px); /* Slightly wider to match proportions */
+  width:min(80vw,330px);
   aspect-ratio:0.62; /* Taller aspect ratio for more spacing at bottom */
   cursor:pointer;
   animation:cardPop .5s var(--bounce) .05s both;
@@ -206,13 +206,11 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   background-size: 400% 400%; animation: smoothGrad 6s ease-in-out infinite alternate; color:#fff;
 }
 
-/* Smooth Gradient Animation Keyframes */
 @keyframes smoothGrad {
   0%   { background-position: 0% 0%; }
   100% { background-position: 100% 100%; }
 }
 
-/* Inner border shine on special cards */
 .card-face.elite::after, .card-face.orange-special::after, .card-face.purple-special::after, .card-face.pot::after {
   content:''; position:absolute; inset:0; z-index:10; pointer-events:none;
   box-shadow: inset 0 0 0 3px rgba(255,215,0,0.8);
@@ -223,14 +221,12 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   to   { box-shadow: inset 0 0 0 4px rgba(255,215,0,1), inset 0 0 30px rgba(255,215,0,0.6); }
 }
 
-/* Outer Glow Ring matches shape */
 .card-glow-ring{
   position:absolute; inset:-4px; pointer-events:none; z-index:0;
   clip-path: polygon(10% 0, 90% 0, 100% 12%, 100% 75%, 50% 100%, 0 75%, 0 12%);
   filter: blur(14px); opacity: 0.8;
 }
 
-/* Diagonal shine across card */
 .cf-shine {
   position:absolute; inset:0; z-index:5; pointer-events:none;
   background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,.15) 45%,transparent 70%);
@@ -255,7 +251,7 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .cf-rating{font-family:var(--font-display);font-size:clamp(32px,9vw,44px);display:block;text-shadow:0 2px 6px rgba(0,0,0,.4);}
 .cf-role-lbl{font-family:var(--font-display);font-size:clamp(11px,3vw,14px);letter-spacing:.04em;display:block;opacity:.9;text-shadow:0 1px 4px rgba(0,0,0,.4);}
 
-/* Team Logo Middle-Left (Circle Badge) */
+/* Team Logo Middle-Left */
 .cf-team-logo-zone{
   position:absolute;top:42%;left:12%;z-index:4;
   width:clamp(30px,9vw,40px);height:clamp(30px,9vw,40px);
@@ -266,36 +262,7 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 }
 .cf-team-logo-zone img{width:90%;height:90%;object-fit:contain;}
 
-/* Special Badges & Dual Titles - Safely Tucked BELOW Name */
-.cf-special-badge{
-  display: inline-block;
-  align-self: center;
-  margin-top: 1%;
-  margin-bottom: 2%;
-  z-index: 4;
-  font-size:clamp(6.5px,1.8vw,8px);font-weight:900;letter-spacing:.1em;text-transform:uppercase;
-  padding:4px 10px;border-radius:6px;
-  background:rgba(0,0,0,.6);backdrop-filter:blur(6px);
-  border:1px solid rgba(255,215,0,.6);color:rgba(255,215,0,1);
-  line-height:1.3;text-align:center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-}
-.cf-special-badge.dual-title {
-  background: linear-gradient(135deg, #3a2500, #111);
-  border: 1px solid #ffd700;
-  color: #ffd700;
-  font-family: var(--font-display);
-  font-size: clamp(9px, 2.5vw, 11px);
-  letter-spacing: 0.08em;
-  text-shadow: 0 0 5px rgba(255,215,0,0.8);
-  animation: dualShine 2s infinite alternate;
-}
-@keyframes dualShine {
-  from { box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 0 0 5px rgba(255,215,0,0.2); }
-  to { box-shadow: 0 4px 15px rgba(255,215,0,0.5), inset 0 0 15px rgba(255,215,0,0.7); text-shadow: 0 0 10px rgba(255,215,0,1); }
-}
-
-/* Info zone - Increased bottom padding, compact gap */
+/* Info zone - Increased bottom padding for the clip-path */
 .cf-info-zone{
   flex:1;display:flex;flex-direction:column; justify-content:flex-end;
   padding:0 6% 28% 6%; /* Extra padding protects from bottom clip point */
@@ -317,9 +284,34 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   display:inline-block;align-self:center;
   text-shadow:0 1px 2px rgba(0,0,0,.5);
 }
+
+/* Special Badges - Now positioned safely below the name/owner badge */
+.cf-special-badge{
+  display: inline-block;
+  align-self: center;
+  margin-bottom: 3%;
+  z-index: 4;
+  font-size:clamp(6.5px,1.8vw,8px);font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 10px;border-radius:6px;
+  background:rgba(0,0,0,.6);backdrop-filter:blur(6px);
+  border:1px solid rgba(255,215,0,.6);color:rgba(255,215,0,1);
+  line-height:1.3;text-align:center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+.cf-special-badge.dual-title {
+  background: linear-gradient(135deg, #3a2500, #111);
+  border: 1px solid #ffd700;
+  color: #ffd700;
+  font-family: var(--font-display);
+  font-size: clamp(9px, 2.5vw, 11px);
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 5px rgba(255,215,0,0.8);
+  animation: dualShine 2s infinite alternate;
+}
+
 .cf-divider-line{height:1px;background:currentColor;opacity:.3;margin:0 0 3%;border-radius:1px;}
 
-/* 2-col stats - compacted for breathing room */
+/* 2-col stats */
 .cf-stats-row{display:flex;align-items:stretch;flex:1;}
 .cf-stat-col{flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(1px,0.5vw,3px);}
 .cf-stat-col.left{padding-right:8%; border-right: 1px solid rgba(0,0,0,0.2);}
@@ -344,40 +336,58 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 /* FIELD VIEW */
 .field-centering{display:flex;justify-content:center;padding:0 12px;}
 .field-outer{
-  width:100%;max-width:520px;
+  width:100%;max-width:860px; /* Wider outer container for desktop */
   border-radius:32px;overflow:hidden;
   box-shadow:0 16px 60px rgba(0,0,0,.6),0 0 0 2px rgba(255,255,255,.08);
   animation:fadeUp .6s var(--bounce) .15s both;position:relative;
 }
-.field{position:relative;padding:14px 10px 18px;background-color:#174d1a;background-image:repeating-linear-gradient(180deg,rgba(0,0,0,.05) 0px,rgba(0,0,0,.05) 28px,transparent 28px,transparent 56px),radial-gradient(ellipse at 50% 50%,#2a7a2e 0%,#1e5c22 45%,#0f3811 100%);}
+
+/* Scrollable wrap for the pitch field */
+.field-scroll-wrap {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.field-scroll-wrap::-webkit-scrollbar { display: none; }
+
+.field{
+  position:relative;padding:24px 10px 32px;
+  min-width: 680px; /* Forces wide field causing scrolling on mobile */
+  background-color:#174d1a;background-image:repeating-linear-gradient(180deg,rgba(0,0,0,.05) 0px,rgba(0,0,0,.05) 28px,transparent 28px,transparent 56px),radial-gradient(ellipse at 50% 50%,#2a7a2e 0%,#1e5c22 45%,#0f3811 100%);
+}
 [data-theme="light"] .field{background-color:#256326;background-image:repeating-linear-gradient(180deg,rgba(0,0,0,.04) 0px,rgba(0,0,0,.04) 28px,transparent 28px,transparent 56px),radial-gradient(ellipse at 50% 50%,#3a9e3f 0%,#2e7d32 45%,#1b4d1e 100%);}
 .field::before{content:'';position:absolute;inset:10px;border-radius:50%;border:1.5px dashed var(--boundary);pointer-events:none;}
-.pitch-strip{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:38px;height:210px;background:linear-gradient(180deg,#d4b882 0%,#c8a55c 40%,#b89040 60%,#c8a55c 100%);border-radius:5px;border:1px solid rgba(255,255,255,.25);box-shadow:0 0 20px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.2);pointer-events:none;z-index:0;}
+
+.pitch-strip{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:46px;height:240px;background:linear-gradient(180deg,#d4b882 0%,#c8a55c 40%,#b89040 60%,#c8a55c 100%);border-radius:5px;border:1px solid rgba(255,255,255,.25);box-shadow:0 0 20px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.2);pointer-events:none;z-index:0;}
 .pitch-strip::before,.pitch-strip::after{content:'';position:absolute;left:-8px;right:-8px;height:2px;background:rgba(255,255,255,.6);border-radius:1px;}
 .pitch-strip::before{top:22px;}.pitch-strip::after{bottom:22px;}
 
-/* Elevated role rows so they sit securely over the pitch strip */
-.role-row{position:relative;z-index:10;display:flex;justify-content:center;align-items:flex-end;gap:12px;padding:6px 8px 4px;flex-wrap:wrap;}
-.role-label{position:relative;z-index:10;text-align:center;font-size:8px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--row-label);text-shadow:0 1px 4px rgba(0,0,0,.6);margin-bottom:2px;margin-top:6px;}
+/* Elevated role rows securely over pitch strip */
+.role-row{position:relative;z-index:10;display:flex;justify-content:center;align-items:flex-end;gap:16px;padding:8px 12px 6px;flex-wrap:wrap;}
+.role-label{position:relative;z-index:10;text-align:center;font-size:10px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--row-label);text-shadow:0 1px 4px rgba(0,0,0,.6);margin-bottom:4px;margin-top:12px;}
 .fp{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;-webkit-tap-highlight-color:transparent;animation:tokenIn .45s var(--bounce) both;position:relative;z-index:10;}
 @keyframes tokenIn{from{opacity:0;transform:translateY(12px) scale(.8);}to{opacity:1;transform:none;}}
 .fp:active .fp-avatar{transform:scale(.9);}
 .fp-avatar-wrap{position:relative;}
-.fp-avatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;border:2.5px solid;box-shadow:0 4px 16px rgba(0,0,0,.5);transition:transform .2s var(--bounce),box-shadow .2s;position:relative;overflow:hidden;}
+
+/* Larger mobile field avatars */
+.fp-avatar{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;border:2.5px solid;box-shadow:0 4px 16px rgba(0,0,0,.5);transition:transform .2s var(--bounce),box-shadow .2s;position:relative;overflow:hidden;}
 .fp:hover .fp-avatar{transform:scale(1.1);box-shadow:0 8px 24px rgba(0,0,0,.6);}
 .fp-avatar::after{content:'';position:absolute;inset:0;border-radius:50%;background:linear-gradient(145deg,rgba(255,255,255,.18),transparent 60%);pointer-events:none;}
 
-/* Badges for field players - Left and Right constraints */
-.fp-badge{position:absolute;line-height:1;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;z-index:15;font-family:var(--font-mono);box-shadow:0 2px 6px rgba(0,0,0,.6);}
-.fp-badge.left{top:-4px;left:-4px;}
-.fp-badge.right{top:-4px;right:-4px;}
+/* Larger split badges */
+.fp-badge{position:absolute;line-height:1;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;z-index:15;font-family:var(--font-mono);box-shadow:0 2px 6px rgba(0,0,0,.6);}
+.fp-badge.left{top:-5px;left:-5px;}
+.fp-badge.right{top:-5px;right:-5px;}
 .fp-badge.cap-c{background:#ffc400;color:#1a0f00;}
 .fp-badge.cap-vc{background:#9ca8b4;color:#111;}
-.fp-badge.cap-oc{background:#FF6B35;color:#fff;font-size:10px;}
-.fp-badge.cap-pc{background:#9b59b6;color:#fff;font-size:10px;}
+.fp-badge.cap-oc{background:#FF6B35;color:#fff;}
+.fp-badge.cap-pc{background:#9b59b6;color:#fff;}
 
-.fp-name{background:var(--name-chip);backdrop-filter:blur(8px);border-radius:8px;padding:3px 7px;font-size:9.5px;font-weight:800;color:#fff;white-space:nowrap;max-width:74px;overflow:hidden;text-overflow:ellipsis;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.5);text-shadow:0 1px 3px rgba(0,0,0,.6);}
-.fp-pts{font-family:var(--font-mono);font-size:9px;font-weight:600;color:rgba(255,255,255,.85);text-shadow:0 1px 3px rgba(0,0,0,.7);}
+.fp-name{background:var(--name-chip);backdrop-filter:blur(8px);border-radius:8px;padding:4px 10px;font-size:10.5px;font-weight:800;color:#fff;white-space:nowrap;max-width:85px;overflow:hidden;text-overflow:ellipsis;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.5);text-shadow:0 1px 3px rgba(0,0,0,.6);}
+.fp-pts{font-family:var(--font-mono);font-size:10px;font-weight:600;color:rgba(255,255,255,.85);text-shadow:0 1px 3px rgba(0,0,0,.7);}
 .legend{display:flex;gap:10px;padding:0 16px 12px;flex-wrap:wrap;position:relative;z-index:1;}
 .legend-item{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:700;color:var(--t3);}
 .legend-dot{width:16px;height:16px;border-radius:5px;font-size:10px;display:flex;align-items:center;justify-content:center;line-height:1;}
@@ -385,8 +395,26 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .field-loading-emoji{font-size:42px;animation:floatBounce 2.5s ease-in-out infinite;}
 @keyframes floatBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
 
+/* BIG DESKTOP OVERRIDES */
+@media (min-width: 768px) {
+  .field-outer { max-width: 1000px; }
+  .field { min-width: 100%; padding: 36px 20px 48px; }
+  .fp-avatar { width: 86px; height: 86px; border-width: 3px; font-size: 34px; }
+  .fp-badge { width: 28px; height: 28px; font-size: 13px; }
+  .fp-badge.left { top: -6px; left: -6px; }
+  .fp-badge.right { top: -6px; right: -6px; }
+  .fp-name { font-size: 13px; max-width: 110px; padding: 5px 12px; border-radius: 10px; }
+  .fp-pts { font-size: 12px; margin-top: 2px; }
+  .role-label { font-size: 12px; margin-top: 16px; margin-bottom: 6px; }
+  .role-row { gap: 24px; padding: 12px 20px 10px; }
+  .pitch-strip { width: 64px; height: 320px; }
+  .pitch-strip::before, .pitch-strip::after { height: 3px; }
+  .pitch-strip::before { top: 32px; }
+  .pitch-strip::after { bottom: 32px; }
+}
+
 /* ════════════════════════════════════
-   FIELD PLAYER DETAIL SHEET (Frameless Ribbon Layout)
+   FIELD PLAYER DETAIL SHEET
 ════════════════════════════════════ */
 .fm-modal{
   display:none;position:fixed;inset:0;z-index:350;
@@ -396,12 +424,10 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .fm-modal.open{display:flex;animation:fmIn .25s var(--ease) both;}
 @keyframes fmIn{from{opacity:0;transform:scale(0.95) translateY(10px);}to{opacity:1;transform:none;}}
 
-/* MIN-HEIGHT 0 fixes internal flex-scroll issues causing chopped stats */
 .fm-wrapper {
   width:100%; max-width:440px; display:flex; flex-direction:column; max-height:92vh; position:relative; min-height:0;
 }
 
-/* Close Button */
 .fm-close{
   position:absolute;top:0;right:0;z-index:30;
   width:36px;height:36px;border-radius:12px;
@@ -411,7 +437,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 }
 .fm-close:hover{transform:scale(1.1) rotate(90deg);background:rgba(231,76,60,.7);}
 
-/* Frameless Header: Float Image Left, Ribbons Right */
 .fm-frameless-header {
   display:flex; align-items:flex-end; gap:12px; margin-bottom:12px; padding:0 8px; margin-top:-20px;
   position:relative; z-index:10; flex-shrink: 0;
@@ -441,14 +466,12 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .fm-ribbon-stat span { font-family:var(--font-main); font-size:9px; opacity:0.85; letter-spacing:1px; text-transform:uppercase; display:block; margin-top:2px; font-weight:700;}
 .fmbadge {font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.3);}
 
-/* Bounding Box for Stats. MIN-HEIGHT 0 is required for perfect flex scrolling here */
 .fm-card-body {
   flex:1; background:var(--surf2); border-radius:20px; border:1px solid var(--brd2);
   box-shadow:0 20px 60px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.1);
   display:flex; flex-direction:column; overflow:hidden; position:relative; z-index:1; min-height:0;
 }
 
-/* Scrollable stats */
 .fm-scroll-body{
   flex:1; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch;
   padding:10px 20px 30px;
@@ -531,10 +554,12 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   </div>
   <div class="field-centering">
     <div class="field-outer">
-      <div class="field" id="field-container">
-        <div class="pitch-strip"></div>
-        <div class="field-loading" id="field-loading">
-          <span class="field-loading-emoji">🏏</span>Loading your squad…
+      <div class="field-scroll-wrap">
+        <div class="field" id="field-container">
+          <div class="pitch-strip"></div>
+          <div class="field-loading" id="field-loading">
+            <span class="field-loading-emoji">🏏</span>Loading your squad…
+          </div>
         </div>
       </div>
     </div>
@@ -709,10 +734,10 @@ function calcTiersAndRatings(players){
     const pct = 1 - (rank / Math.max(total - 1, 1)); 
     let rating;
     if (rank === 0) rating = 100;
-    else if (pct >= 0.90) rating = Math.floor(95 + ((pct - 0.90) / 0.10) * 4); // 95-99 Elite
-    else if (pct >= 0.60) rating = Math.floor(80 + ((pct - 0.60) / 0.30) * 14); // 80-94 Gold
-    else if (pct >= 0.25) rating = Math.floor(56 + ((pct - 0.25) / 0.35) * 23); // 56-79 Silver
-    else rating = Math.floor(36 + (pct / 0.25) * 19); // 36-55 Bronze
+    else if (pct >= 0.90) rating = Math.floor(95 + ((pct - 0.90) / 0.10) * 4); 
+    else if (pct >= 0.60) rating = Math.floor(80 + ((pct - 0.60) / 0.30) * 14); 
+    else if (pct >= 0.25) rating = Math.floor(56 + ((pct - 0.25) / 0.35) * 23); 
+    else rating = Math.floor(36 + (pct / 0.25) * 19); 
 
     if(rating>100) rating=100;
     
@@ -930,7 +955,6 @@ function openCard(idx){
   const owned=p["Sold To"]&&p["Sold To"].trim();
   const fantasyTeam=owned||"Unsold";
   
-  // Utilising new ultra-safe extractor
   const runs=gi(p,"runs"),wkts=gi(p,"wickets"),cats=gi(p,"catches");
   const fours=gi(p,"4s"),sixes=gi(p,"6s"),fifties=gi(p,"50s");
   const hunds=gi(p,"100s"),threeW=gi(p,"3w"),fiveW=gi(p,"5w");
@@ -1176,17 +1200,17 @@ function openFmModal(enc){
   document.getElementById("fm-rank").innerHTML=`#${rank}<span>Univ Rank</span>`;
   document.getElementById("fm-pts").innerHTML=`${pts}<span>Total Pts</span>`;
 
-  // Scrollable Stats Grid
+  // RESTORED EXACT EXTRACTION FOR MODAL
   const statDefs={
-    Batting:[{k:"runs",i:"🏃",l:"Runs"},{k:"6s",i:"💥",l:"Sixes"},{k:"4s",i:"4️⃣",l:"Fours"},{k:"50s",i:"⭐",l:"50s"},{k:"100s",i:"💯",l:"100s"}],
-    Bowling:[{k:"wickets",i:"🎯",l:"Wickets"},{k:"maidens",i:"🔵",l:"Maidens"},{k:"dots",i:"⚫",l:"Dots"},{k:"3w",i:"🎳",l:"3W Haul"},{k:"5w",i:"🔥",l:"5W Haul"},{k:"4w",i:"⚡",l:"4W Haul"}],
-    Fielding:[{k:"catches",i:"🧤",l:"Catches"},{k:"runouts",i:"🏃",l:"Run Outs"},{k:"stumpings",i:"🥅",l:"Stumpings"}]
+    Batting:[{k:"Runs",i:"🏃",l:"Runs"},{k:"6s",i:"💥",l:"Sixes"},{k:"4s",i:"4️⃣",l:"Fours"},{k:"50s",i:"⭐",l:"50s"},{k:"100s",i:"💯",l:"100s"}],
+    Bowling:[{k:"Wickets",i:"🎯",l:"Wickets"},{k:"Maidens",i:"🔵",l:"Maidens"},{k:"Dots",i:"⚫",l:"Dots"},{k:"3W",i:"🎳",l:"3W Haul"},{k:"5W",i:"🔥",l:"5W Haul"},{k:"fourv",i:"⚡",l:"4W Haul"}],
+    Fielding:[{k:"Catches",i:"🧤",l:"Catches"},{k:"Run Outs",i:"🏃",l:"Run Outs"},{k:"Stumpings",i:"🥅",l:"Stumpings"}]
   };
   let sh="";
   Object.entries(statDefs).forEach(([title,defs])=>{
     sh+=`<div class="fm-stats-title">${title}</div><div class="fm-stats-grid">`;
     defs.forEach(d=>{
-      const v = gi(p, d.k); 
+      const v = gi(p, d.k, d.k.toLowerCase(), d.k.toUpperCase()); 
       sh+=`<div class="fm-stat-box"><span class="fm-stat-icon">${d.i}</span><div class="fm-stat-val${v===0?" zero":""}">${v}</div><div class="fm-stat-label">${d.l}</div></div>`;
     });
     sh+="</div>";
