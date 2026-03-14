@@ -325,14 +325,8 @@ body{
   .cap-bg-photo{width:60%;}
   .cap-bg-photo img{object-fit:contain;object-position:bottom center;}
 }
-/* Gradient mask so left text area stays readable */
-.cap-bg-photo::before{
-  content:'';position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to right,var(--surf2) 15%,rgba(0,0,0,0) 80%);
-}
-[data-theme="light"] .cap-bg-photo::before{
-  background:linear-gradient(to right,rgba(255,255,255,.95) 15%,rgba(255,255,255,.0) 80%);
-}
+/* No side gradient — let player image show naturally */
+.cap-bg-photo::before{content:none;}
 /* Team logo badge — top right corner, fully visible */
 .cap-team-badge{
   position:absolute;top:10px;right:10px;z-index:2;
@@ -414,6 +408,61 @@ body{
 /* All text content floats above photo + gradient */
 .sc-icon,.sc-label,.sc-val,.sc-name,.sc-team{position:relative;z-index:3;}
 .cap-icon,.cap-title,.cap-player,.cap-ipl,.cap-num,.cap-unit{position:relative;z-index:1;}
+
+/* ══ PLAYER OF THE TOURNAMENT CARD ══ */
+.pot-card{
+  position:relative;overflow:hidden;
+  min-height:160px;
+  display:flex;align-items:flex-end;
+  border-radius:var(--r);
+  background:linear-gradient(135deg,rgba(255,215,0,.08),rgba(255,107,53,.05));
+}
+/* Player photo — fills card from right, transparent PNG blends naturally */
+.pot-bg-photo{
+  position:absolute;right:0;top:0;bottom:0;
+  width:65%;pointer-events:none;z-index:0;
+  display:flex;align-items:flex-end;justify-content:flex-end;
+}
+.pot-bg-photo img{
+  height:100%;width:auto;max-width:100%;
+  object-fit:contain;object-position:bottom right;display:block;
+}
+/* Team logo watermark — centred behind */
+.pot-team-badge{
+  position:absolute;top:14px;right:14px;z-index:2;
+  width:36px;height:36px;pointer-events:none;
+}
+.pot-team-badge img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5));}
+/* Left gradient so text is readable */
+.pot-card::before{
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(to right,rgba(6,13,26,.95) 30%,rgba(6,13,26,.4) 65%,transparent 100%);
+}
+[data-theme="light"] .pot-card::before{
+  background:linear-gradient(to right,rgba(240,236,230,.97) 30%,rgba(240,236,230,.5) 65%,transparent 100%);
+}
+/* Content sits on left */
+.pot-content{
+  position:relative;z-index:2;
+  padding:22px 20px;
+  flex:1;
+}
+.pot-label{
+  font-size:9px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:6px;
+}
+.pot-name{
+  font-family:var(--font-display);font-size:30px;letter-spacing:.05em;line-height:1;
+  color:var(--text-1);margin-bottom:4px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:55%;
+}
+.pot-team{font-size:11px;color:var(--text-2);font-weight:500;margin-bottom:10px;}
+.pot-pts-row{display:flex;align-items:baseline;gap:5px;}
+.pot-pts{
+  font-family:var(--font-display);font-size:52px;line-height:1;
+  color:var(--gold);text-shadow:0 0 24px rgba(255,215,0,.4);
+}
+.pot-pts-unit{font-size:13px;font-weight:600;color:var(--text-3);}
 </style>
 </head>
 <body>
@@ -450,23 +499,6 @@ body{
   </div>
 </div>
 
-<!-- ═══ BIGGEST SIGNING — directly below points ═══ -->
-<p class="sec" style="animation-delay:.04s">🤑 Biggest Signing</p>
-<div class="hbp-card" id="hbp-section">
-  <div class="hbp-photo-col" id="hbp-photo-col"></div>
-  <div class="hbp-team-badge" id="hbp-team-badge"></div>
-  <div class="hbp-body">
-    <div class="hbp-label">Highest Auction Buy</div>
-    <div class="hbp-name" id="hbp-name">Loading…</div>
-    <div class="hbp-sub" id="hbp-team">—</div>
-    <div class="hbp-price-row">
-      <span class="hbp-price" id="hbp-price">—</span>
-      <span class="hbp-price-unit" id="hbp-price-unit">Cr</span>
-      <span class="hbp-badge" id="hbp-badge">🔥 Most Expensive</span>
-    </div>
-    <div class="hbp-tags" id="hbp-tags"></div>
-  </div>
-</div>
 
 <!-- ═══ PRIZE PODIUM ═══ -->
 <p class="sec" style="animation-delay:.09s">🏆 Prize Standings</p>
@@ -482,6 +514,24 @@ body{
     <div class="live-pill"><div class="live-dot"></div>Live</div>
   </div>
   <div id="lb-body"><div class="loading-row">Loading</div></div>
+</div>
+
+<!-- ═══ PLAYER OF THE TOURNAMENT ═══ -->
+<p class="sec" style="animation-delay:.17s">🏆 Player of the Tournament</p>
+<div class="card" style="animation-delay:.18s">
+  <div class="pot-card" id="pot-card">
+    <div class="pot-bg-photo" id="pot-bg-photo"></div>
+    <div class="pot-team-badge" id="pot-team-badge"></div>
+    <div class="pot-content">
+      <div class="pot-label">🏆 Player of the Tournament</div>
+      <div class="pot-name" id="l-top-n">—</div>
+      <div class="pot-team" id="l-top-t">—</div>
+      <div class="pot-pts-row">
+        <span class="pot-pts" id="l-top">—</span>
+        <span class="pot-pts-unit">pts</span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ═══ CAP HOLDERS ═══ -->
@@ -628,29 +678,27 @@ body{
     </div>
   </div>
 
-  <!-- TOP PERFORMER -->
-  <div class="acc-item top" id="acc-top">
-    <div class="acc-trigger" onclick="toggleAcc('acc-top')">
-      <div class="acc-icon">🏆</div>
-      <div class="acc-meta">
-        <div class="acc-title">Top Performer</div>
-        <div class="acc-sub">Highest fantasy points in the tournament</div>
-      </div>
-      <span class="acc-chevron">❯</span>
-    </div>
-    <div class="acc-body">
-      <div class="stat-grid">
-        <div class="stat-cell hero-cell no-bot" style="grid-column:span 3;border-right:none">
-          <span class="sc-icon">🏆</span><div class="sc-label">Top Fantasy Scorer</div>
-          <div class="sc-val" id="l-top" style="font-size:48px">—</div>
-          <div class="sc-name" id="l-top-n" style="font-size:13px;font-weight:700">—</div>
-          <div class="sc-team" id="l-top-t" style="margin-top:3px;font-size:11px"></div>
-        </div>
-      </div>
-    </div>
-  </div>
 
 </div><!-- /card -->
+
+
+<!-- ═══ BIGGEST SIGNING — directly below points ═══ -->
+<p class="sec" style="animation-delay:.04s">🤑 Biggest Signing</p>
+<div class="hbp-card" id="hbp-section">
+  <div class="hbp-photo-col" id="hbp-photo-col"></div>
+  <div class="hbp-team-badge" id="hbp-team-badge"></div>
+  <div class="hbp-body">
+    <div class="hbp-label">Highest Auction Buy</div>
+    <div class="hbp-name" id="hbp-name">Loading…</div>
+    <div class="hbp-sub" id="hbp-team">—</div>
+    <div class="hbp-price-row">
+      <span class="hbp-price" id="hbp-price">—</span>
+      <span class="hbp-price-unit" id="hbp-price-unit">Cr</span>
+      <span class="hbp-badge" id="hbp-badge">🔥 Most Expensive</span>
+    </div>
+    <div class="hbp-tags" id="hbp-tags"></div>
+  </div>
+</div>
 
 <div style="height:10px"></div>
 </div><!-- /page-wrap -->
@@ -723,6 +771,24 @@ function setHbpPhoto(colId, badgeId, name, iplTeam){
   }else if(td?.logo){
     colEl.style.display="flex";colEl.style.alignItems="center";colEl.style.justifyContent="center";
     colEl.innerHTML=`<img src="${td.logo}" style="width:60%;object-fit:contain;" alt="">`;
+  }
+  if(badgeEl&&td?.logo){
+    badgeEl.innerHTML=`<img src="${td.logo}" alt="${iplTeam}" onerror="this.parentNode.innerHTML=''">`;
+  }
+}
+
+/* Set Player of the Tournament card photo + badge */
+function setPotPhoto(name, iplTeam){
+  const bgEl=document.getElementById("pot-bg-photo");
+  const badgeEl=document.getElementById("pot-team-badge");
+  if(!bgEl)return;
+  const key=(name||"").trim().toLowerCase();
+  const d=playerImgMap[key];
+  const td=getTeamLogoData(iplTeam||d?.iplTeam||"");
+  if(d?.img){
+    bgEl.innerHTML=`<img src="${d.img}" alt="${name}" onerror="this.style.display='none'">`;
+  }else if(td?.logo){
+    bgEl.innerHTML=`<img src="${td.logo}" style="width:60%;object-fit:contain;margin:auto;" alt="">`;
   }
   if(badgeEl&&td?.logo){
     badgeEl.innerHTML=`<img src="${td.logo}" alt="${iplTeam}" onerror="this.parentNode.innerHTML=''">`;
@@ -921,10 +987,11 @@ function buildLeaders(L){
   s("l-ro",ro?.value);s("l-ro-n",ro?.name);
   s("l-stmp",  L.mostStumpings?.value);s("l-stmp-n",  L.mostStumpings?.name);
 
-  /* Top performer */
+  /* Player of the Tournament */
   s("l-top",   L.highestPts?.value);
   s("l-top-n", L.highestPts?.name);
   s("l-top-t", L.highestPts?.iplTeam||"");
+  setPotPhoto(L.highestPts?.name, L.highestPts?.iplTeam);
   // Inject player photos for all leader cells
   injectLeaderPhotos(L);
 
@@ -932,6 +999,7 @@ function buildLeaders(L){
   const numIds=["l-runs","l-sixes","l-fours","l-50","l-100",
                 "l-wkt","l-maid","l-dots","l-3w","l-5w",
                 "l-cats","l-ro","l-stmp","l-top","oc-val","pc-val"];
+  // Also animate POT pts (same id, standalone card)
   numIds.forEach(id=>{
     const el=document.getElementById(id);
     const n=Number(el?.textContent);
@@ -984,7 +1052,7 @@ function injectLeaderPhotos(L){
     ["l-cats",  "l-cats-n",  L.mostCatches?.name,      L.mostCatches?.iplTeam,   "🧤"],
     ["l-ro",    "l-ro-n",    (L.mostRunOuts||L.mostRunouts)?.name,  (L.mostRunOuts||L.mostRunouts)?.iplTeam, "🏃"],
     ["l-stmp",  "l-stmp-n",  L.mostStumpings?.name,    L.mostStumpings?.iplTeam, "🥅"],
-    ["l-top",   "l-top-n",   L.highestPts?.name,       L.highestPts?.iplTeam,    "🏆"],
+    // l-top is now the standalone POT card, not a stat cell
   ];
 
   cells.forEach(([valId, nameId, playerName, iplTeam, fb])=>{
