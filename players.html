@@ -94,7 +94,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .player-row{display:flex;align-items:center;padding:0;border-bottom:1px solid var(--div);cursor:pointer;position:relative;overflow:hidden;animation:rowIn .35s var(--ease) both;transition:transform .2s var(--bounce);}
 .player-row:last-child{border-bottom:none;}
 .player-row:active{transform:scale(.99);}
-/* Stronger team bg */
 .row-bg{position:absolute;inset:0;pointer-events:none;transition:opacity .25s;}
 .row-shimmer{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.07) 50%,transparent 100%);transform:translateX(-100%);opacity:0;}
 .player-row:hover .row-shimmer{animation:shimmerSlide .55s var(--ease) both;}
@@ -102,20 +101,17 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .row-accent-line{position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:0 3px 3px 0;opacity:.9;transition:width .2s var(--bounce);}
 .player-row:hover .row-accent-line{width:6px;}
 .row-content{position:relative;z-index:1;display:flex;align-items:center;gap:12px;padding:10px 14px 10px 18px;width:100%;}
-/* Circle avatar — matches field token */
 .row-avatar-wrap{position:relative;flex-shrink:0;}
 .row-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2.5px solid;box-shadow:0 4px 16px rgba(0,0,0,.45);transition:transform .2s var(--bounce),box-shadow .2s;position:relative;overflow:hidden;}
 .player-row:hover .row-avatar{transform:scale(1.1);box-shadow:0 8px 22px rgba(0,0,0,.6);}
 .row-avatar::after{content:'';position:absolute;inset:0;border-radius:50%;background:linear-gradient(145deg,rgba(255,255,255,.22),transparent 60%);pointer-events:none;}
 .row-avatar img{width:30px;height:30px;object-fit:contain;position:relative;z-index:1;}
 .row-avatar-fb{font-size:20px;position:relative;z-index:1;}
-/* Mini badges on avatar */
 .row-av-badge{position:absolute;line-height:1;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;z-index:2;}
 .row-av-badge.c-badge{top:-3px;right:-3px;background:#ffc400;color:#1a0f00;box-shadow:0 0 8px rgba(255,196,0,.7);}
 .row-av-badge.vc-badge{top:-3px;right:-3px;background:#9ca8b4;color:#111;box-shadow:0 0 6px rgba(180,180,200,.5);}
 .row-av-badge.oc-badge{top:-3px;left:-3px;background:#FF6B35;color:#fff;box-shadow:0 0 8px rgba(255,107,53,.6);}
 .row-av-badge.pc-badge{bottom:-3px;left:-3px;background:#9b59b6;color:#fff;box-shadow:0 0 8px rgba(155,89,182,.6);}
-/* Tier dot bottom-right */
 .row-av-tier{position:absolute;bottom:-2px;right:-2px;width:14px;height:14px;border-radius:50%;z-index:2;border:2px solid var(--bg);}
 .row-av-tier.gold{background:#FFD700;box-shadow:0 0 8px rgba(255,215,0,.6);}
 .row-av-tier.silver{background:#C0C8D8;box-shadow:0 0 6px rgba(192,200,216,.5);}
@@ -158,200 +154,186 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 
 /* Card scene & flip */
 .card-scene-wrap{position:relative;display:flex;align-items:center;justify-content:center;}
-.card-glow{position:absolute;inset:-20px;border-radius:50%;pointer-events:none;filter:blur(28px);opacity:.6;z-index:0;transition:background .3s;}
+.card-glow{position:absolute;inset:-20px;border-radius:50%;pointer-events:none;filter:blur(28px);opacity:0.8;z-index:0;transition:background .3s; animation: pulseGlow 3s ease-in-out infinite alternate;}
+@keyframes pulseGlow { 0% { transform: scale(0.9); opacity: 0.6; } 100% { transform: scale(1.1); opacity: 1; } }
+
 .card-scene{perspective:1400px;width:min(78vw,290px);aspect-ratio:.67;cursor:pointer;animation:cardPop .5s var(--bounce) .05s both;position:relative;z-index:1;}
 @keyframes cardPop{from{opacity:0;transform:scale(.65) translateY(40px);}to{opacity:1;transform:none;}}
 .card-flip{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.22,.61,.36,1);}
 .card-flip.flipped{transform:rotateY(180deg);}
 
-/* FIFA card shape — both faces share this */
+/* FIFA card shape */
 .card-face{
   position:absolute;inset:0;
   backface-visibility:hidden;-webkit-backface-visibility:hidden;
-  /* FIFA badge shape */
-  clip-path:polygon(8% 0%,92% 0%,100% 8%,100% 78%,50% 100%,0% 78%,0% 8%);
+  /* Updated exact FIFA badge shape */
+  clip-path:polygon(10% 0, 90% 0, 100% 12%, 100% 75%, 50% 100%, 0 75%, 0 12%);
   overflow:hidden;
   display:flex;flex-direction:column;
+  background-size: 200% 200% !important;
 }
 .card-back-face{transform:rotateY(180deg);}
 
 /* ── STANDARD TIER CARDS (Bronze/Silver/Gold) ── */
-/* Metallic background using layered gradients */
 .card-face.bronze{
   background:
     linear-gradient(135deg,rgba(255,255,255,.12) 0%,transparent 40%,rgba(255,255,255,.06) 100%),
-    linear-gradient(160deg,#3a1800 0%,#7a3c10 20%,#c8782a 38%,#f0a85a 50%,#c06020 65%,#7a3c10 80%,#3a1800 100%);
+    linear-gradient(160deg,#5a3010 0%,#8a4c20 20%,#c8782a 38%,#f0a85a 50%,#c06020 65%,#8a4c20 80%,#5a3010 100%);
   color:#2a1200;
 }
 .card-face.silver{
   background:
     linear-gradient(135deg,rgba(255,255,255,.16) 0%,transparent 40%,rgba(255,255,255,.08) 100%),
-    linear-gradient(160deg,#181818 0%,#525252 20%,#b8b8b8 38%,#e8e8e8 50%,#909090 65%,#484848 80%,#181818 100%);
+    linear-gradient(160deg,#383838 0%,#626262 20%,#b8b8b8 38%,#e8e8e8 50%,#909090 65%,#626262 80%,#383838 100%);
   color:#101010;
 }
 .card-face.gold{
   background:
     linear-gradient(135deg,rgba(255,255,255,.18) 0%,transparent 40%,rgba(255,255,255,.09) 100%),
-    linear-gradient(160deg,#3a2200 0%,#8a6000 20%,#e8b800 38%,#ffe060 50%,#c89a00 65%,#7a5000 80%,#3a2200 100%);
+    linear-gradient(160deg,#5a3a00 0%,#a57c00 20%,#e8b800 38%,#ffe060 50%,#c89a00 65%,#a57c00 80%,#5a3a00 100%);
   color:#2a1800;
 }
 
-/* ── SPECIAL CARDS ── */
+/* ── ANIMATED SPECIAL CARDS ── */
+@keyframes shiftGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
 .card-face.elite{
   background:
-    linear-gradient(135deg,rgba(100,220,255,.15) 0%,transparent 35%,rgba(20,140,220,.1) 70%,transparent 100%),
-    linear-gradient(160deg,#020a18 0%,#061830 20%,#0a3060 38%,#0e4880 50%,#083060 65%,#041828 80%,#020a18 100%);
-  color:#80d8ff;
+    linear-gradient(135deg,rgba(100,220,255,.2) 0%,transparent 40%,rgba(20,140,220,.15) 100%),
+    linear-gradient(60deg, #041830, #0a3060, #0088ff, #0a3060, #041830);
+  animation: shiftGradient 4s ease infinite;
+  color:#b0e0ff;
 }
 .card-face.orange-special{
   background:
-    linear-gradient(135deg,rgba(255,180,80,.18) 0%,transparent 35%,rgba(255,100,30,.12) 70%,transparent 100%),
-    linear-gradient(160deg,#200800 0%,#602010 20%,#c04010 38%,#ff7020 50%,#c04010 65%,#601808 80%,#200800 100%);
+    linear-gradient(135deg,rgba(255,180,80,.2) 0%,transparent 40%,rgba(255,100,30,.15) 100%),
+    linear-gradient(60deg, #301000, #802800, #ff6b35, #802800, #301000);
+  animation: shiftGradient 4s ease infinite;
   color:#ffe0a0;
 }
 .card-face.purple-special{
   background:
-    linear-gradient(135deg,rgba(200,120,255,.18) 0%,transparent 35%,rgba(140,60,220,.12) 70%,transparent 100%),
-    linear-gradient(160deg,#0e0018 0%,#300850 20%,#6010a0 38%,#9030d0 50%,#6010a0 65%,#300850 80%,#0e0018 100%);
+    linear-gradient(135deg,rgba(200,120,255,.2) 0%,transparent 40%,rgba(140,60,220,.15) 100%),
+    linear-gradient(60deg, #180030, #4a0080, #9b59b6, #4a0080, #180030);
+  animation: shiftGradient 4s ease infinite;
   color:#e0b8ff;
 }
 .card-face.pot{
   background:
-    linear-gradient(135deg,rgba(255,255,255,.22) 0%,rgba(180,240,255,.1) 25%,transparent 50%,rgba(255,215,100,.12) 75%,rgba(255,255,255,.18) 100%),
-    linear-gradient(160deg,#0a0818 0%,#1a1440 15%,#2a2a80 28%,#4060d0 38%,#60c0ff 48%,#a0ffe0 54%,#60d0a0 62%,#c0a000 72%,#ffe040 80%,#ff8000 88%,#200800 100%);
-  color:#fff;
+    linear-gradient(135deg,rgba(255,255,255,.3) 0%,rgba(180,240,255,.15) 25%,transparent 50%,rgba(255,215,100,.2) 75%,rgba(255,255,255,.25) 100%),
+    linear-gradient(60deg, #302000, #b8860b, #ffd700, #fffacd, #b8860b, #302000);
+  animation: shiftGradient 4s ease infinite;
+  color:#3a2200;
 }
-
-/* ── SPECIAL CARD GLOW BORDER (inner) ── */
-.card-face.elite::before{content:'';position:absolute;inset:3px;z-index:0;pointer-events:none;clip-path:polygon(8% 0%,92% 0%,100% 8%,100% 78%,50% 100%,0% 78%,0% 8%);border:1.5px solid rgba(100,220,255,.5);animation:eliteGlow 2s ease-in-out infinite alternate;}
-.card-face.orange-special::before{content:'';position:absolute;inset:3px;z-index:0;pointer-events:none;clip-path:polygon(8% 0%,92% 0%,100% 8%,100% 78%,50% 100%,0% 78%,0% 8%);border:1.5px solid rgba(255,140,40,.6);animation:orangeGlow 2s ease-in-out infinite alternate;}
-.card-face.purple-special::before{content:'';position:absolute;inset:3px;z-index:0;pointer-events:none;clip-path:polygon(8% 0%,92% 0%,100% 8%,100% 78%,50% 100%,0% 78%,0% 8%);border:1.5px solid rgba(180,80,255,.6);animation:purpleGlow 2s ease-in-out infinite alternate;}
-.card-face.pot::before{content:'';position:absolute;inset:3px;z-index:0;pointer-events:none;clip-path:polygon(8% 0%,92% 0%,100% 8%,100% 78%,50% 100%,0% 78%,0% 8%);border:2px solid rgba(255,255,255,.7);animation:potGlow 1.5s ease-in-out infinite alternate;}
-@keyframes eliteGlow{from{opacity:.5;}to{opacity:1;filter:drop-shadow(0 0 8px rgba(100,220,255,.8));}}
-@keyframes orangeGlow{from{opacity:.5;}to{opacity:1;filter:drop-shadow(0 0 8px rgba(255,140,40,.8));}}
-@keyframes purpleGlow{from{opacity:.5;}to{opacity:1;filter:drop-shadow(0 0 8px rgba(180,80,255,.8));}}
-@keyframes potGlow{from{opacity:.7;}to{opacity:1;filter:drop-shadow(0 0 12px rgba(255,255,255,.9));}}
 
 /* Diagonal shimmer stripe on all cards */
-.card-face::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.07) 50%,transparent 70%);}
+.card-face::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.1) 50%,transparent 70%);}
+
+/* ── ANIMATED PARTICLES ── */
+.cf-particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
+.cf-particle { position: absolute; background: rgba(255,255,255,0.8); border-radius: 50%; opacity: 0; box-shadow: 0 0 8px rgba(255,255,255,0.8); animation: floatUp var(--dur) infinite ease-in var(--del); }
+@keyframes floatUp {
+  0% { transform: translateY(120px) scale(0.5); opacity: 0; }
+  30% { opacity: 0.8; }
+  100% { transform: translateY(-150px) scale(1.5); opacity: 0; }
+}
 
 /* ════════════════════════════════════
-   FIFA CARD FRONT FACE LAYOUT
+   FIFA CARD FRONT FACE LAYOUT (MATCHING REFERENCE)
 ════════════════════════════════════ */
-.cf-wrap{position:relative;width:100%;height:100%;display:flex;flex-direction:column;z-index:2;}
+.cf-wrap{position:relative;width:100%;height:100%;display:flex;flex-direction:column;z-index:3;}
 
-/* Photo zone — top ~55% of card */
 .cf-photo-zone{
-  position:relative;flex:0 0 57%;overflow:hidden;
+  position:relative;flex:0 0 52%;
 }
 .cf-player-photo{
-  width:100%;height:100%;
-  object-fit:cover;object-position:top center;
-  display:block;
+  position:absolute; bottom:0; left:15%; right:5%; width:80%; height:95%;
+  object-fit:cover;object-position:bottom center;
+  display:block; z-index:2;
+  filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.5));
 }
 .cf-photo-fallback{
-  width:100%;height:100%;
+  position:absolute; bottom:0; left:15%; right:5%; width:80%; height:95%;
   display:flex;align-items:center;justify-content:center;
   font-size:clamp(50px,16vw,80px);
-  background:rgba(0,0,0,.15);
 }
-/* Fade at bottom of photo */
-.cf-photo-fade{
-  position:absolute;bottom:0;left:0;right:0;height:40%;
-  background:linear-gradient(to bottom,transparent,rgba(0,0,0,.35));
-  pointer-events:none;
-}
-/* Rating block — top-left overlay */
+
+/* Rating block — top-left */
 .cf-rating-block{
-  position:absolute;top:6%;left:7%;z-index:3;
-  line-height:1;
+  position:absolute;top:10%;left:12%;z-index:4;
+  line-height:1; display:flex; flex-direction:column; align-items:center;
 }
 .cf-rating{
   font-family:var(--font-display);
-  font-size:clamp(30px,9vw,48px);
-  line-height:.9;
-  display:block;
+  font-size:clamp(36px,11vw,52px);
+  line-height:0.9;
   text-shadow:0 2px 8px rgba(0,0,0,.4);
 }
 .cf-role-lbl{
   font-family:var(--font-display);
-  font-size:clamp(11px,3.2vw,16px);
-  letter-spacing:.04em;
-  display:block;
-  opacity:.9;
+  font-size:clamp(12px,3.5vw,18px);
+  letter-spacing:.02em;
+  opacity:.9; margin-top:2px; margin-bottom: 6px;
   text-shadow:0 1px 4px rgba(0,0,0,.35);
 }
-/* Team logo — bottom-left of photo zone */
 .cf-team-logo-zone{
-  position:absolute;bottom:8%;left:7%;z-index:3;
-  width:clamp(28px,9vw,38px);height:clamp(28px,9vw,38px);
+  width:clamp(22px,7vw,32px);height:clamp(22px,7vw,32px);
 }
 .cf-team-logo-zone img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5));}
-.cf-team-logo-fallback{font-size:clamp(22px,7vw,30px);line-height:1;}
 
-/* Special card label badge (top-right of photo) */
+/* Top Right Badge */
 .cf-special-badge{
-  position:absolute;top:6%;right:6%;z-index:3;
-  font-size:clamp(7px,2vw,9px);font-weight:900;letter-spacing:.1em;text-transform:uppercase;
-  padding:3px 7px;border-radius:4px;
-  background:rgba(0,0,0,.4);backdrop-filter:blur(6px);
-  border:1px solid rgba(255,255,255,.25);
-  color:rgba(255,255,255,.9);
+  position:absolute;top:8%;right:10%;z-index:4;
+  font-size:clamp(7px,2vw,9px);font-weight:900;letter-spacing:.05em;text-transform:uppercase;
+  padding:4px 8px;border-radius:6px;
+  background:rgba(0,0,0,.5);backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.3);
+  color:#fff;
+  text-align: center;
 }
 
-/* ── Info zone — bottom ~43% ── */
+/* ── Info zone — bottom ~48% ── */
 .cf-info-zone{
   flex:1;display:flex;flex-direction:column;
-  padding:4% 8% 22% 8%;
-  position:relative;
+  padding:0 10% 15% 10%;
+  position:relative; z-index:3;
 }
 .cf-name{
   font-family:var(--font-display);
-  font-size:clamp(14px,4.5vw,22px);
-  letter-spacing:.06em;line-height:1;
+  font-size:clamp(18px,5.5vw,26px);
+  letter-spacing:.04em;line-height:1;
   text-align:center;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  text-shadow:0 1px 4px rgba(0,0,0,.2);
-  margin-bottom:3%;
+  text-shadow:0 2px 6px rgba(0,0,0,.4);
+  margin-bottom:2%;
 }
-.cf-owner-badge{
-  font-size:clamp(7px,2vw,9px);font-weight:700;letter-spacing:.04em;
-  text-align:center;opacity:.7;margin-bottom:4%;
-  background:rgba(0,0,0,.15);border-radius:3px;padding:1px 6px;
-  display:inline-block;align-self:center;
-}
-.cf-divider-line{height:1px;background:currentColor;opacity:.25;margin:0 0 4%;border-radius:1px;}
-/* 2-col stats */
-.cf-stats-row{display:flex;align-items:stretch;flex:1;}
-.cf-stat-col{flex:1;display:flex;flex-direction:column;gap:clamp(2px,.8vw,5px);}
-.cf-stat-col:first-child{padding-right:6%;}
-.cf-stat-col:last-child{padding-left:6%;}
-.cf-stat-vdiv{width:1px;background:currentColor;opacity:.2;flex-shrink:0;}
-.cf-stat-item{display:flex;align-items:baseline;justify-content:space-between;gap:3px;}
-.cf-sv{font-family:var(--font-display);font-size:clamp(12px,3.8vw,19px);line-height:1;flex-shrink:0;}
-.cf-sl{font-family:var(--font-display);font-size:clamp(9px,2.5vw,13px);opacity:.55;white-space:nowrap;}
+.cf-divider-line{height:1.5px;background:currentColor;opacity:.3;margin:4% 0 6%;border-radius:1px;}
 
-/* Special decoration for elite/oc/pc/pot cards */
-.cf-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;}
-.cf-particle{position:absolute;width:3px;height:3px;border-radius:50%;animation:particleFloat linear infinite;}
-@keyframes particleFloat{0%{transform:translateY(0) scale(1);opacity:.8;}100%{transform:translateY(-100px) scale(0);opacity:0;}}
+/* Stats perfectly aligned in two columns like De Bruyne */
+.cf-stats-row{display:flex;align-items:stretch;justify-content:center;flex:1;}
+.cf-stat-col{flex:1;display:flex;flex-direction:column;gap:clamp(4px,1.2vw,8px);}
+.cf-stat-col:first-child{padding-right:8%; border-right:1.5px solid rgba(255,255,255,0.2);}
+.cf-stat-col:last-child{padding-left:8%;}
+
+.cf-stat-item{display:flex;align-items:center;justify-content: flex-start; gap:6px;}
+.cf-sv{font-family:var(--font-display);font-size:clamp(15px,4.5vw,21px);line-height:1; font-weight:normal;}
+.cf-sl{font-family:var(--font-display);font-size:clamp(12px,3.5vw,17px);opacity:.8;white-space:nowrap; font-weight:normal;}
+
 
 /* ════════════════════════════════════
    CARD BACK FACE
 ════════════════════════════════════ */
-.cb-wrap{position:relative;z-index:2;display:flex;flex-direction:column;height:100%;padding:8% 8% 22% 8%;}
-.cb-header{text-align:center;margin-bottom:4%;padding-bottom:4%;border-bottom:1px solid rgba(0,0,0,.2);}
-.cb-name{font-family:var(--font-display);font-size:clamp(14px,4.5vw,22px);letter-spacing:.05em;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.cb-sub{font-size:clamp(7px,2vw,9px);opacity:.7;margin-top:3px;font-weight:700;letter-spacing:.03em;}
-.cb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(3px,1vw,5px);flex:1;}
-.cb-stat{display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.12);border-radius:5px;padding:clamp(4px,1.2vw,7px) 2px;border:1px solid rgba(0,0,0,.1);}
-.cb-sv{font-family:var(--font-display);font-size:clamp(12px,3.8vw,18px);line-height:1;}
-.cb-sl{font-size:clamp(6px,1.6vw,8px);font-weight:700;text-transform:uppercase;letter-spacing:.04em;opacity:.55;margin-top:1px;text-align:center;}
-.cb-footer{margin-top:4%;text-align:center;font-size:clamp(8px,2.2vw,10px);font-weight:700;opacity:.8;padding:4px 8px;background:rgba(0,0,0,.14);border-radius:5px;border:1px solid rgba(0,0,0,.08);}
-@keyframes capPulse2{0%,100%{box-shadow:0 0 0 0 rgba(255,215,0,.5);}50%{box-shadow:0 0 0 5px rgba(255,215,0,0);}}
-.rb-cap{animation:capPulse2 2s ease infinite;}
+.cb-wrap{position:relative;z-index:3;display:flex;flex-direction:column;height:100%;padding:12% 10% 15% 10%;}
+.cb-header{text-align:center;margin-bottom:6%;padding-bottom:6%;border-bottom:1.5px solid rgba(255,255,255,.2);}
+.cb-name{font-family:var(--font-display);font-size:clamp(18px,5.5vw,26px);letter-spacing:.04em;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cb-sub{font-size:clamp(8px,2.5vw,10px);opacity:.8;margin-top:6px;font-weight:700;letter-spacing:.03em;}
+.cb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(5px,1.5vw,8px);flex:1;}
+.cb-stat{display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.cb-sv{font-family:var(--font-display);font-size:clamp(16px,4.5vw,22px);line-height:1; text-shadow:0 1px 3px rgba(0,0,0,.3);}
+.cb-sl{font-size:clamp(8px,2.2vw,10px);font-weight:700;text-transform:uppercase;letter-spacing:.04em;opacity:.7;margin-top:2px;text-align:center;}
+.cb-footer{margin-top:6%;text-align:center;font-size:clamp(9px,2.5vw,11px);font-weight:700;opacity:.9;padding:6px 8px;background:rgba(0,0,0,.2);border-radius:6px;}
 
-/* FIELD VIEW */
+/* FIELD VIEW & BOTTOM SHEET (Unchanged, retained perfectly) */
 .field-centering{display:flex;justify-content:center;padding:0 12px;}
 .field-outer{
   width:100%;max-width:520px;
@@ -388,11 +370,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .field-loading-emoji{font-size:42px;animation:floatBounce 2.5s ease-in-out infinite;}
 @keyframes floatBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
 
-/* ════════════════════════════════════
-   FIELD PLAYER DETAIL SHEET
-   — Bottom sheet, sticky hero header,
-     overflowing player image, scrollable stats
-════════════════════════════════════ */
 .fm-modal{
   display:none;position:fixed;inset:0;z-index:250;
   background:rgba(0,0,0,.86);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
@@ -400,17 +377,13 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 }
 .fm-modal.open{display:flex;animation:fmIn .22s var(--ease);}
 @keyframes fmIn{from{opacity:0;}to{opacity:1;}}
-/* The whole sheet incl. overflowing image */
 .fm-shell{
   width:100%;max-width:480px;
-  /* extra top space for the overflowing player image */
   padding-top:90px;
   position:relative;
   animation:fmSlide .42s var(--bounce) both;
 }
 @keyframes fmSlide{from{opacity:0;transform:translateY(60px);}to{opacity:1;transform:none;}}
-
-/* Overflowing player image — sits above the sheet */
 .fm-hero-img-wrap{
   position:absolute;top:0;left:50%;transform:translateX(-50%);
   width:140px;height:168px;
@@ -428,14 +401,11 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   display:flex;align-items:center;justify-content:center;
   font-size:56px;border-radius:20px;
 }
-/* Gradient fade at bottom of hero image */
 .fm-hero-fade{
   position:absolute;bottom:0;left:0;right:0;height:50%;
   border-radius:0 0 20px 20px;
   pointer-events:none;
 }
-
-/* The actual sheet card */
 .fm-sheet{
   width:100%;
   max-height:82vh;
@@ -447,26 +417,20 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   overflow:hidden;
   position:relative;
 }
-
-/* Sticky header inside sheet */
 .fm-sticky{
   flex-shrink:0;
-  /* Enough padding-top so content starts below the overflowing image */
   padding-top:90px;
   position:relative;z-index:1;
 }
-/* Team colour gradient fills the header + blends into sheet */
 .fm-header-gradient{
   position:absolute;top:0;left:0;right:0;height:200px;
   z-index:0;pointer-events:none;
 }
-/* Bottom blend of header gradient into sheet bg */
 .fm-header-gradient::after{
   content:'';position:absolute;bottom:0;left:0;right:0;height:70px;
   background:linear-gradient(to bottom,transparent,var(--surf2));
   z-index:1;
 }
-
 .fm-header-content{
   position:relative;z-index:2;
   padding:0 20px 14px;
@@ -494,8 +458,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   transition:transform .2s var(--bounce),background .2s;
 }
 .fm-close:hover{transform:scale(1.1) rotate(90deg);background:rgba(231,76,60,.5);}
-
-/* Rank + pts strip */
 .fm-rank-strip{
   margin:0 16px 0;padding:12px 18px;border-radius:16px;
   display:flex;align-items:center;gap:12px;
@@ -509,8 +471,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .fm-pts-right{text-align:right;}
 .fm-pts-big-label{font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);}
 .fm-pts-big{font-family:var(--font-display);font-size:38px;line-height:1;color:var(--t1);}
-
-/* Scrollable stats */
 .fm-scroll-body{
   flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
   padding-top:14px;
@@ -534,8 +494,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .fm-stat-val{font-family:var(--font-display);font-size:22px;font-weight:500;color:var(--t1);line-height:1;margin-bottom:3px;}
 .fm-stat-val.zero{color:var(--t3);}
 .fm-stat-label{font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);}
-
-/* BOTTOM NAV */
 .bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:calc(100% - 28px);max-width:480px;height:68px;background:var(--nav);backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);border:1px solid var(--brd);border-radius:28px;display:flex;justify-content:space-around;align-items:center;padding:6px 2px;box-shadow:0 8px 40px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04);z-index:100;}
 .nav-item{text-align:center;color:var(--t3);text-decoration:none;font-size:8px;font-weight:700;letter-spacing:.05em;flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;transition:color .25s;}
 .nav-item.active{color:var(--accent);}
@@ -557,13 +515,11 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
 </div>
 
-<!-- VIEW TOGGLE -->
 <div class="view-toggle">
   <button class="vt-btn active" id="vt-cards" onclick="switchView('cards')">🃏 Player Cards</button>
   <button class="vt-btn" id="vt-field" onclick="switchView('field')">🏟️ Team Field</button>
 </div>
 
-<!-- CARDS VIEW -->
 <div id="view-cards">
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
@@ -586,7 +542,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   </div>
 </div>
 
-<!-- FIELD VIEW -->
 <div id="view-field" style="display:none">
   <div class="legend">
     <div class="legend-item"><div class="legend-dot" style="background:#ffc400;color:#000">👑</div>Captain</div>
@@ -606,7 +561,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   </div>
 </div>
 
-<!-- CARD MODAL -->
 <div id="card-modal" class="modal" onclick="handleCardOverlay(event)">
   <button class="modal-close" onclick="closeCardModal()">✕</button>
   <div class="card-scene-wrap">
@@ -621,10 +575,8 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   <div class="modal-hint">Tap card to flip</div>
 </div>
 
-<!-- FIELD PLAYER DETAIL SHEET -->
 <div class="fm-modal" id="fm-modal" onclick="handleFmOverlay(event)">
   <div class="fm-shell">
-    <!-- Overflowing hero image above the sheet -->
     <div class="fm-hero-img-wrap" id="fm-hero-wrap">
       <div id="fm-hero-img-slot"></div>
       <div class="fm-hero-fade" id="fm-hero-fade"></div>
@@ -632,8 +584,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 
     <div class="fm-sheet">
       <button class="fm-close" onclick="closeFmModal()">✕</button>
-
-      <!-- Sticky header -->
       <div class="fm-sticky">
         <div class="fm-header-gradient" id="fm-header-gradient"></div>
         <div class="fm-header-content">
@@ -653,8 +603,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
           </div>
         </div>
       </div>
-
-      <!-- Scrollable stats -->
       <div class="fm-scroll-body">
         <div class="fm-stats-section" id="fm-stats"></div>
       </div>
@@ -675,7 +623,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 const WEB_APP_URL="https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
 const myTeam=localStorage.getItem("teamName")||"";
 
-/* THEME */
 const savedTheme=localStorage.getItem("theme")||"dark";
 document.documentElement.setAttribute("data-theme",savedTheme);
 document.getElementById("theme-icon").textContent=savedTheme==="dark"?"\u2600\ufe0f":"\ud83c\udf19";
@@ -685,7 +632,6 @@ function toggleTheme(){
   document.getElementById("theme-icon").textContent=next==="dark"?"\u2600\ufe0f":"\ud83c\udf19";
 }
 
-/* PARTICLES */
 (function(){
   const canvas=document.getElementById("pitch-canvas"),ctx=canvas.getContext("2d");
   let W,H,P=[];
@@ -703,7 +649,6 @@ function toggleTheme(){
   window.addEventListener("resize",()=>{resize();init();});resize();init();tick();
 })();
 
-/* TEAM DATA - unified for both views */
 const TEAMS={
   MI:{color:"#004BA0",color2:"#1a6fd4",c1:"#004BA0",c2:"#1a6fd4",grad:"linear-gradient(110deg,#004BA0,#1a6fd4,#0090ff)",logo:"ipl team logo/mi.webp",fb:"\ud83d\udd35",full:"Mumbai Indians"},
   CSK:{color:"#c07c08",color2:"#f5a623",c1:"#c07c08",c2:"#FFD700",grad:"linear-gradient(110deg,#7a4f00,#c07c08,#FFD700)",logo:"ipl team logo/csk.jpg",fb:"\ud83d\udfe1",full:"Chennai Super Kings"},
@@ -722,31 +667,35 @@ function getTeam(n){
   return{abbr:(u.slice(0,3)||"IPL"),color:"#2a3a5a",color2:"#4facfe",c1:"#2a3a5a",c2:"#4facfe",grad:"linear-gradient(110deg,#0d1a2e,#2a3a5a,#4facfe)",logo:"",fb:"\ud83c\udfcf",full:"IPL Team"};
 }
 
-/* HELPERS */
 function getPts(p){return parseFloat(p["Total Points"]||p["Current Points"]||0)||0;}
 function gi(p,...keys){for(const k of keys){const v=p[k];if(v!==undefined&&v!==null&&v!=="")return parseInt(v)||0;}return 0;}
 function roleClass(r){return r==="BOWL"?"rb-bowl":r==="AR"?"rb-ar":r==="WK"?"rb-wk":"rb-bat";}
-const TIER_PTS_COLOR={gold:"#FFD700",silver:"#C0C8D8",bronze:"#CD7F32"};
+const TIER_PTS_COLOR={gold:"#FFD700",silver:"#C0C8D8",bronze:"#CD7F32",elite:"#4facfe"};
 
-/* STATE */
 let allPlayers=[],activeFilter="ALL",tierMap={},ratingMap={};
 let leadersGlobal={},myPlayersGlobal=[];
 let fieldLoaded=false;
 
+/* ════════════════════════════════════
+   TIERS BASED ON ABSOLUTE POINTS
+════════════════════════════════════ */
 function calcTiersAndRatings(players){
-  const withPts=players.filter(p=>getPts(p)>0).sort((a,b)=>getPts(b)-getPts(a));
-  const total=withPts.length,goldCount=Math.ceil(total*.33),silverCount=Math.ceil(total*.33);
   players.forEach(p=>{
     const pts=getPts(p),name=p["Player Name"];
-    if(pts<=0){tierMap[name]="bronze";ratingMap[name]=35;return;}
-    const rank=withPts.findIndex(x=>x["Player Name"]===name);
-    if(rank<goldCount){tierMap[name]="gold";ratingMap[name]=Math.max(80,99-Math.round((rank/Math.max(goldCount-1,1))*19));}
-    else if(rank<goldCount+silverCount){const r=rank-goldCount;tierMap[name]="silver";ratingMap[name]=Math.max(60,79-Math.round((r/Math.max(silverCount-1,1))*19));}
-    else{const r=rank-goldCount-silverCount,bc=Math.max(total-goldCount-silverCount,1);tierMap[name]="bronze";ratingMap[name]=Math.max(40,59-Math.round((r/Math.max(bc-1,1))*19));}
+    // 0-35 points = Bronze
+    if(pts <= 35) tierMap[name]="bronze";
+    // 36-80 points = Silver
+    else if(pts <= 80) tierMap[name]="silver";
+    // 81-95 points = Gold
+    else if(pts <= 95) tierMap[name]="gold";
+    // > 95 points = Blue Gradient (Elite)
+    else tierMap[name]="elite";
+
+    // Rating approximation based on points for visual consistency
+    ratingMap[name]=Math.min(99, Math.max(35, pts)); 
   });
 }
 
-/* VIEW SWITCH */
 let currentView="cards";
 function switchView(view){
   currentView=view;
@@ -760,7 +709,6 @@ function switchView(view){
   if(view==="field"&&!fieldLoaded) loadField();
 }
 
-/* LOAD */
 document.addEventListener("DOMContentLoaded",async()=>{
   try{
     const res=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"getPlayers"})});
@@ -772,7 +720,6 @@ document.addEventListener("DOMContentLoaded",async()=>{
   }
 });
 
-/* FILTERS */
 function setFilter(val,btn){
   activeFilter=val;
   document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
@@ -787,7 +734,7 @@ function applyFilters(){
     if(activeFilter==="BOWL")   return mq&&role==="BOWL";
     if(activeFilter==="AR")     return mq&&role==="AR";
     if(activeFilter==="WK")     return mq&&role==="WK";
-    if(activeFilter==="GOLD")   return mq&&tier==="gold";
+    if(activeFilter==="GOLD")   return mq&&(tier==="gold" || tier==="elite");
     if(activeFilter==="SILVER") return mq&&tier==="silver";
     if(activeFilter==="BRONZE") return mq&&tier==="bronze";
     if(activeFilter==="SOLD")   return mq&&!!sold;
@@ -809,14 +756,14 @@ function renderList(players){
     const role=(p["Role"]||"BAT").toUpperCase(),name=p["Player Name"]||"",owned=p["Sold To"]&&p["Sold To"].trim();
     const isCap=myCap===name&&p["Sold To"]===myTeam,isVC=myVC===name&&p["Sold To"]===myTeam;
     const pnl=name.trim().toLowerCase(),isOC=ocName&&pnl===ocName,isPC=pcName&&pnl===pcName;
-    const tierColor=TIER_PTS_COLOR[tier];
-    // Circle avatar — player headshot > team logo > emoji fallback
+    const tierColor=TIER_PTS_COLOR[tier] || "#fff";
+    
     const playerImg=p["Image"]&&p["Image"].toString().trim();
     const logoImg=playerImg
       ?`<img src="${playerImg}" style="width:46px;height:46px;object-fit:cover;object-position:top center;position:relative;z-index:1;border-radius:50%;" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`+
        (team.logo?`<img src="${team.logo}" style="width:30px;height:30px;object-fit:contain;position:relative;z-index:1;display:none" alt="${team.abbr}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="font-size:20px;display:none">${team.fb}</span>`:`<span style="font-size:20px;display:none">${team.fb}</span>`)
       :(team.logo?`<img src="${team.logo}" style="width:30px;height:30px;object-fit:contain;position:relative;z-index:1" alt="${team.abbr}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="font-size:20px;display:none">${team.fb}</span>`:`<span style="font-size:20px">${team.fb}</span>`);
-    // Small badges around the circle
+    
     let avBadges=`<div class="row-av-tier ${tier}"></div>`;
     if(isCap)     avBadges+=`<div class="row-av-badge c-badge">C</div>`;
     else if(isVC) avBadges+=`<div class="row-av-badge vc-badge">VC</div>`;
@@ -850,7 +797,22 @@ function renderList(players){
   window._fp=players;
 }
 
-/* OPEN CARD */
+/* ════════════════════════════════════
+   OPEN CARD (Updated Layout & Particles)
+════════════════════════════════════ */
+function generateParticles() {
+  let p = '<div class="cf-particles">';
+  for(let i=0; i<8; i++) {
+    const size = Math.random() * 4 + 2;
+    const left = Math.random() * 100;
+    const dur = Math.random() * 2 + 2;
+    const del = Math.random() * 2;
+    p += `<div class="cf-particle" style="width:${size}px;height:${size}px;left:${left}%;--dur:${dur}s;--del:${del}s;"></div>`;
+  }
+  p += '</div>';
+  return p;
+}
+
 function openCard(idx){
   const p=window._fp[idx];
   if(!p)return;
@@ -860,19 +822,13 @@ function openCard(idx){
   const pts=getPts(p);
   const rating=ratingMap[name]||35;
   const role=(p["Role"]||"BAT").toUpperCase();
-  const owned=p["Sold To"]&&p["Sold To"].trim();
-  const myCap_=localStorage.getItem("captain")||"";
-  const myVC_=localStorage.getItem("viceCaptain")||"";
-  const isCap=myCap_===name&&p["Sold To"]===myTeam;
-  const isVC=myVC_===name&&p["Sold To"]===myTeam;
   const price=p["Price Bought"]?`₹${p["Price Bought"]}Cr`:"Unsold";
-  const fantasyTeam=owned||"Unsold";
+  const fantasyTeam=(p["Sold To"]&&p["Sold To"].trim())||"Unsold";
   const runs=gi(p,"Runs","runs"),wkts=gi(p,"Wickets","wickets"),cats=gi(p,"Catches","catches");
   const fours=gi(p,"4s","fours"),sixes=gi(p,"6s","sixes"),fifties=gi(p,"50s","fifties");
   const hunds=gi(p,"100s","hundreds"),threeW=gi(p,"3W","threew"),fiveW=gi(p,"5W","fivew");
   const fourW=gi(p,"fourv"),maidens=gi(p,"Maidens","maidens"),dots=gi(p,"Dots","dots");
 
-  // Determine card type
   const ocName=(leadersGlobal?.orangeCap?.name||"").trim().toLowerCase();
   const pcName=(leadersGlobal?.purpleCap?.name||"").trim().toLowerCase();
   const potName=(leadersGlobal?.highestPts?.name||"").trim().toLowerCase();
@@ -880,22 +836,31 @@ function openCard(idx){
   const isPOT=potName&&pnl===potName;
   const isOC=ocName&&pnl===ocName;
   const isPC=pcName&&pnl===pcName;
-  const isElite=pts>=95;
-  let cardType=tier; // bronze/silver/gold default
-  if(isElite)cardType="elite";
+  
+  let cardType=tier; // bronze, silver, gold, elite(blue)
   if(isOC)cardType="orange-special";
   if(isPC)cardType="purple-special";
-  if(isPOT)cardType="pot";
+  if(isPOT)cardType="pot"; // Overrides all if they are highest pts
 
-  // Glow colors per card type
   const glowMap={
-    gold:"rgba(255,215,0,.5)",silver:"rgba(200,200,200,.4)",bronze:"rgba(200,120,50,.45)",
-    elite:"rgba(80,200,255,.55)",
-    "orange-special":"rgba(255,140,40,.6)",
-    "purple-special":"rgba(180,80,255,.6)",
-    pot:"rgba(255,220,100,.7)"
+    gold:"rgba(255,215,0,.4)",silver:"rgba(200,200,200,.3)",bronze:"rgba(200,120,50,.3)",
+    elite:"rgba(0,136,255,.6)",
+    "orange-special":"rgba(255,107,53,.7)",
+    "purple-special":"rgba(155,89,182,.7)",
+    pot:"rgba(255,215,0,.8)"
   };
   document.getElementById("card-glow").style.background=glowMap[cardType]||"transparent";
+
+  const isAnimatedSpecial = ["elite", "orange-special", "purple-special", "pot"].includes(cardType);
+  const particleHTML = isAnimatedSpecial ? generateParticles() : "";
+
+  const specialLabels={
+    elite:"🔵 Elite",
+    "orange-special":"🧢 Orange Cap",
+    "purple-special":"🎩 Purple Cap",
+    pot:"🏆 PLAYER OF THE TOURNAMENT"
+  };
+  const specialBadge=specialLabels[cardType]?`<div class="cf-special-badge">${specialLabels[cardType]}</div>`:"";
 
   const front=document.getElementById("card-front");
   const back=document.getElementById("card-back");
@@ -903,61 +868,41 @@ function openCard(idx){
   back.className=`card-face card-back-face ${cardType}`;
   document.getElementById("card-flip").classList.remove("flipped");
 
-  // Player photo
   const pImg=p["Image"]&&p["Image"].toString().trim();
   const photoHTML=pImg
     ?`<img class="cf-player-photo" src="${pImg}" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`+
      `<div class="cf-photo-fallback" style="display:none">${team.fb}</div>`
     :`<div class="cf-photo-fallback">${team.logo?`<img src="${team.logo}" style="width:55%;height:55%;object-fit:contain" alt="${team.abbr}" onerror="this.style.display='none'">`:`<span>${team.fb}</span>`}</div>`;
 
-  // Team logo
   const tLogoHTML=team.logo
     ?`<img src="${team.logo}" style="width:100%;height:100%;object-fit:contain;" alt="${team.abbr}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="cf-team-logo-fallback" style="display:none;font-size:clamp(22px,7vw,30px)">${team.fb}</span>`
     :`<span style="font-size:clamp(22px,7vw,30px)">${team.fb}</span>`;
 
-  // Special badge text
-  const specialLabels={
-    elite:"🔵 Elite",
-    "orange-special":"🧢 Orange Cap",
-    "purple-special":"🎩 Purple Cap",
-    pot:"🏆 Player of Tournament"
-  };
-  const specialBadge=specialLabels[cardType]?`<div class="cf-special-badge">${specialLabels[cardType]}</div>`:"";
-
-  // Photo zone bg tint per card type
-  const photoBg={
-    bronze:"rgba(58,24,0,.3)",silver:"rgba(24,24,24,.25)",gold:"rgba(58,34,0,.25)",
-    elite:"rgba(2,10,24,.5)","orange-special":"rgba(32,8,0,.4)",
-    "purple-special":"rgba(14,0,24,.4)",pot:"rgba(10,8,24,.35)"
-  };
-
   front.innerHTML=`
   <div class="cf-wrap">
-    <div class="cf-photo-zone" style="background:${photoBg[cardType]||"transparent"}">
+    ${particleHTML}
+    <div class="cf-photo-zone">
       ${photoHTML}
-      <div class="cf-photo-fade"></div>
       <div class="cf-rating-block">
         <span class="cf-rating">${rating}</span>
         <span class="cf-role-lbl">${role}</span>
+        <div class="cf-team-logo-zone">${tLogoHTML}</div>
       </div>
-      <div class="cf-team-logo-zone">${tLogoHTML}</div>
       ${specialBadge}
     </div>
     <div class="cf-info-zone">
       <div class="cf-name">${name.toUpperCase()}</div>
-      <div class="cf-owner-badge">${fantasyTeam}</div>
       <div class="cf-divider-line"></div>
       <div class="cf-stats-row">
         <div class="cf-stat-col">
-          <div class="cf-stat-item"><span class="cf-sv">${runs}</span><span class="cf-sl">RUN</span></div>
-          <div class="cf-stat-item"><span class="cf-sv">${wkts}</span><span class="cf-sl">WKT</span></div>
-          <div class="cf-stat-item"><span class="cf-sv">${cats}</span><span class="cf-sl">CAT</span></div>
+          <div class="cf-stat-item"><span class="cf-sv">${runs}</span> <span class="cf-sl">RUN</span></div>
+          <div class="cf-stat-item"><span class="cf-sv">${wkts}</span> <span class="cf-sl">WKT</span></div>
+          <div class="cf-stat-item"><span class="cf-sv">${cats}</span> <span class="cf-sl">CAT</span></div>
         </div>
-        <div class="cf-stat-vdiv"></div>
         <div class="cf-stat-col">
-          <div class="cf-stat-item"><span class="cf-sv">${fours}</span><span class="cf-sl">4s</span></div>
-          <div class="cf-stat-item"><span class="cf-sv">${sixes}</span><span class="cf-sl">6s</span></div>
-          <div class="cf-stat-item"><span class="cf-sv">${pts}</span><span class="cf-sl">PTS</span></div>
+          <div class="cf-stat-item"><span class="cf-sv">${fours}</span> <span class="cf-sl">4s</span></div>
+          <div class="cf-stat-item"><span class="cf-sv">${sixes}</span> <span class="cf-sl">6s</span></div>
+          <div class="cf-stat-item"><span class="cf-sv">${pts}</span> <span class="cf-sl">PTS</span></div>
         </div>
       </div>
     </div>
@@ -965,6 +910,7 @@ function openCard(idx){
 
   back.innerHTML=`
   <div class="cb-wrap">
+    ${particleHTML}
     <div class="cb-header">
       <div class="cb-name">${name.toUpperCase()}</div>
       <div class="cb-sub">${team.abbr} · ${pts} pts · ${price} · ${fantasyTeam}</div>
@@ -979,11 +925,8 @@ function openCard(idx){
       <div class="cb-stat"><div class="cb-sv">${dots}</div><div class="cb-sl">Dots</div></div>
       <div class="cb-stat"><div class="cb-sv">${fifties}</div><div class="cb-sl">50s</div></div>
       <div class="cb-stat"><div class="cb-sv">${hunds}</div><div class="cb-sl">100s</div></div>
-      <div class="cb-stat"><div class="cb-sv">${threeW}</div><div class="cb-sl">3W</div></div>
-      <div class="cb-stat"><div class="cb-sv">${fiveW}</div><div class="cb-sl">5W</div></div>
-      <div class="cb-stat"><div class="cb-sv">${fourW}</div><div class="cb-sl">4W</div></div>
     </div>
-    <div class="cb-footer">${pts} pts · Rating ${rating}${isCap?" · Captain 👑":isVC?" · Vice-Captain ⭐":""}</div>
+    <div class="cb-footer">${pts} pts · Rating ${rating}</div>
   </div>`;
 
   document.getElementById("card-modal").classList.add("open");
@@ -993,7 +936,7 @@ function closeCardModal(){document.getElementById("card-modal").classList.remove
 function handleCardOverlay(e){if(e.target===document.getElementById("card-modal"))closeCardModal();}
 
 /* ========================
-   FIELD VIEW
+   FIELD VIEW & BOTTOM SHEET logic
 ======================== */
 async function loadField(){
   fieldLoaded=true;
@@ -1053,7 +996,6 @@ function renderField(){
   const d=document.createElement("div");d.innerHTML=html;container.appendChild(d);
 }
 
-/* FIELD PLAYER DETAIL MODAL */
 function openFmModal(enc){
   const name=decodeURIComponent(enc);
   const p=myPlayersGlobal.find(x=>(x["Player Name"]||"")===name);
@@ -1069,7 +1011,6 @@ function openFmModal(enc){
   const rank=sorted.findIndex(x=>(x["Player Name"]||"").trim()===name.trim())+1;
   const total=sorted.length;
 
-  // ── Hero image setup ──
   const fmImg=p["Image"]&&p["Image"].toString().trim();
   const heroSlot=document.getElementById("fm-hero-img-slot");
   heroSlot.className="";
@@ -1080,22 +1021,16 @@ function openFmModal(enc){
     heroSlot.innerHTML=`<div class="fm-hero-img-fallback" style="background:linear-gradient(135deg,${tc.c1},${tc.c2})">${tl}</div>`;
   }
 
-  // Gradient fade on hero image matches team colour
   document.getElementById("fm-hero-fade").style.background=`linear-gradient(to bottom,transparent,${tc.c1}ee)`;
-
-  // Header gradient
   const hg=document.getElementById("fm-header-gradient");
   hg.style.background=`linear-gradient(180deg,${tc.c1} 0%,${tc.c2} 50%,transparent 100%)`;
   hg.style.opacity="0.95";
-  // Blend into sheet
   const afterStyle=`linear-gradient(to bottom,${tc.c1}00,var(--surf2))`;
   hg.style.setProperty("--after-bg",afterStyle);
 
-  // Player info
   document.getElementById("fm-name").textContent=name;
   document.getElementById("fm-sub").textContent=(p["IPL Team"]||"—")+" · "+(p["Role"]||"—")+" · ₹"+(p["Price Bought"]||"—")+" Cr";
 
-  // Badges
   let bh=`<span class="fmbadge role">${p["Role"]||"—"}</span>`;
   if(cap===name)bh+=`<span class="fmbadge captain">👑 Captain</span>`;
   if(vc===name) bh+=`<span class="fmbadge vc">⭐ Vice-Captain</span>`;
@@ -1104,12 +1039,10 @@ function openFmModal(enc){
   bh+=`<span class="fmbadge price">₹${p["Price Bought"]||"—"} Cr</span>`;
   document.getElementById("fm-badges").innerHTML=bh;
 
-  // Rank & pts
   document.getElementById("fm-rank").textContent="#"+rank;
   document.getElementById("fm-rank-sub").textContent="out of "+total+" players";
   document.getElementById("fm-pts").textContent=pts;
 
-  // Stats
   const statDefs={
     Batting:[{k:"Runs",i:"🏃",l:"Runs"},{k:"6s",i:"💥",l:"Sixes"},{k:"4s",i:"4️⃣",l:"Fours"},{k:"50s",i:"⭐",l:"50s"},{k:"100s",i:"💯",l:"100s"}],
     Bowling:[{k:"Wickets",i:"🎯",l:"Wickets"},{k:"Maidens",i:"🔵",l:"Maidens"},{k:"Dots",i:"⚫",l:"Dot Balls"},{k:"3W",i:"🎳",l:"3-Wkt Haul"},{k:"5W",i:"🔥",l:"5-Wkt Haul"},{k:"fourv",i:"⚡",l:"4-Wkt Haul"}],
@@ -1129,10 +1062,7 @@ function openFmModal(enc){
   document.body.style.overflow="hidden";
 }
 function closeFmModal(){document.getElementById("fm-modal").classList.remove("open");document.body.style.overflow="";}
-function handleFmOverlay(e){
-  // Close if clicking on the dark overlay (not the shell/sheet)
-  if(e.target===document.getElementById("fm-modal"))closeFmModal();
-}
+function handleFmOverlay(e){if(e.target===document.getElementById("fm-modal"))closeFmModal();}
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCardModal();closeFmModal();}});
 </script>
 </body>
