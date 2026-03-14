@@ -305,6 +305,58 @@ body{
 
 /* ══ UTILS ══ */
 .loading-row{padding:32px;text-align:center;color:var(--text-3);font-size:13px;letter-spacing:.04em;}
+
+/* ══ PLAYER PHOTO ENHANCEMENTS ══ */
+
+/* Cap holder with player photo */
+.cap-card{position:relative;overflow:hidden;}
+.cap-team-watermark{
+  position:absolute;right:-10px;top:50%;transform:translateY(-50%);
+  width:90px;height:90px;opacity:.07;pointer-events:none;z-index:0;
+}
+.cap-team-watermark img{width:100%;height:100%;object-fit:contain;}
+.cap-photo-wrap{
+  width:52px;height:52px;border-radius:14px;overflow:hidden;
+  border:2px solid rgba(255,255,255,.15);flex-shrink:0;
+  box-shadow:0 4px 16px rgba(0,0,0,.4);
+  position:relative;z-index:1;margin-bottom:6px;
+}
+.cap-photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:top center;}
+.cap-photo-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:22px;}
+
+/* HBP card player photo */
+.hbp-photo-wrap{
+  width:60px;height:68px;border-radius:16px;overflow:hidden;flex-shrink:0;
+  border:2px solid rgba(255,215,0,.3);
+  box-shadow:0 4px 20px rgba(0,0,0,.45);
+  position:relative;z-index:1;
+}
+.hbp-photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:top center;}
+.hbp-photo-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:26px;}
+.hbp-team-watermark{
+  position:absolute;right:55px;bottom:-8px;
+  width:80px;height:80px;opacity:.06;pointer-events:none;z-index:0;
+}
+.hbp-team-watermark img{width:100%;height:100%;object-fit:contain;}
+
+/* Tournament leader cells with player photo */
+.sc-player-row{display:flex;align-items:center;gap:8px;margin-top:4px;}
+.sc-player-photo{
+  width:32px;height:32px;border-radius:9px;overflow:hidden;flex-shrink:0;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 2px 8px rgba(0,0,0,.4);
+}
+.sc-player-photo img{width:100%;height:100%;object-fit:cover;object-position:top center;}
+.sc-player-photo-fb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.sc-player-text{flex:1;min-width:0;}
+
+/* Stat cell team watermark */
+.stat-cell{position:relative;}
+.sc-team-watermark{
+  position:absolute;right:4px;bottom:4px;
+  width:36px;height:36px;opacity:.06;pointer-events:none;z-index:0;
+}
+.sc-team-watermark img{width:100%;height:100%;object-fit:contain;}
 </style>
 </head>
 <body>
@@ -344,7 +396,8 @@ body{
 <!-- ═══ BIGGEST SIGNING — directly below points ═══ -->
 <p class="sec" style="animation-delay:.04s">🤑 Biggest Signing</p>
 <div class="hbp-card" id="hbp-section">
-  <div class="hbp-icon-wrap" id="hbp-icon">🏏</div>
+  <div class="hbp-team-watermark" id="hbp-watermark"></div>
+  <div class="hbp-photo-wrap" id="hbp-photo"><div class="hbp-photo-fallback" id="hbp-icon">🏏</div></div>
   <div class="hbp-body">
     <div class="hbp-label">Highest Auction Buy</div>
     <div class="hbp-name" id="hbp-name">Loading…</div>
@@ -378,16 +431,20 @@ body{
 <p class="sec" style="animation-delay:.19s">Cap Holders</p>
 <div class="card" style="animation-delay:.2s">
   <div class="caps-grid">
-    <div class="cap-card oc">
+    <div class="cap-card oc" id="cap-oc-card">
+      <div class="cap-team-watermark" id="oc-watermark"></div>
       <span class="cap-icon">🧡</span>
       <div class="cap-title oc">Orange Cap</div>
+      <div class="cap-photo-wrap" id="oc-photo"><div class="cap-photo-fallback">🏏</div></div>
       <div class="cap-player" id="oc-name">—</div>
       <div class="cap-ipl" id="oc-team">—</div>
       <span class="cap-num oc" id="oc-val">0</span><span class="cap-unit">runs</span>
     </div>
-    <div class="cap-card pc">
+    <div class="cap-card pc" id="cap-pc-card">
+      <div class="cap-team-watermark" id="pc-watermark"></div>
       <span class="cap-icon">💜</span>
       <div class="cap-title pc">Purple Cap</div>
+      <div class="cap-photo-wrap" id="pc-photo"><div class="cap-photo-fallback">🎳</div></div>
       <div class="cap-player" id="pc-name">—</div>
       <div class="cap-ipl" id="pc-team">—</div>
       <span class="cap-num pc" id="pc-val">0</span><span class="cap-unit">wkts</span>
@@ -544,17 +601,75 @@ body{
 <!-- ═══ BOTTOM NAV ═══ -->
 <nav class="bottom-nav">
   <a href="dashboard.html" class="nav-item active"><div class="nav-icon-wrap"><span class="nav-icon">🏠</span></div>Home</a>
-  <a href="squad.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad</a>
-  <a href="players.html"   class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🃏</span></div>Cards</a>
-  <a href="teams.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">👥</span></div>Teams</a>
-  <a href="stats.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">📊</span></div>Stats</a>
-  <a href="settings.html"  class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">⚙️</span></div>Settings</a>
+  <a href="squad.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad</a>
+  <a href="players.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🃏</span></div>Cards</a>
+  <a href="teams.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">👥</span></div>Teams</a>
+  <a href="stats.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">📊</span></div>Stats</a>
+  <a href="settings.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">⚙️</span></div>Settings</a>
 </nav>
 
 <script>
 /* ─── CONFIG ─── */
 const WEB_APP_URL="https://script.google.com/macros/s/AKfycbxe8ueJLArFFRBqnVIhYn6LBEAnHsU6El_BlKeRgXIdR5Xo4UNgLV79NiLWtQyfQpDy/exec";
 const myTeam=localStorage.getItem("teamName")||"";
+
+/* ─── TEAM DATA ─── */
+const TEAMS_DB={
+  MI:{logo:"ipl team logo/mi.webp",   fb:"🔵"},
+  CSK:{logo:"ipl team logo/csk.jpg",  fb:"🟡"},
+  RCB:{logo:"ipl team logo/rcb.jpg",  fb:"🔴"},
+  KKR:{logo:"ipl team logo/kkr.webp", fb:"🟣"},
+  DC: {logo:"ipl team logo/dc.webp",  fb:"🔷"},
+  PBKS:{logo:"ipl team logo/pk.webp", fb:"🦁"},
+  RR: {logo:"ipl team logo/rr.webp",  fb:"💗"},
+  SRH:{logo:"ipl team logo/srh.webp", fb:"🟠"},
+  GT: {logo:"ipl team logo/gt.webp",  fb:"🛡️"},
+  LSG:{logo:"ipl team logo/lsg.jpg",  fb:"🟢"},
+};
+function getTeamLogoData(iplTeam){
+  const u=(iplTeam||"").toUpperCase();
+  for(const k of Object.keys(TEAMS_DB)) if(u.includes(k)) return TEAMS_DB[k];
+  return null;
+}
+
+/* Build player image + team map from sheet data */
+let playerImgMap={};   // { "player name lowercase": { img, iplTeam } }
+
+function setPlayerPhoto(wrapId, name, fallbackEmoji){
+  const el=document.getElementById(wrapId);
+  if(!el)return;
+  const key=(name||"").trim().toLowerCase();
+  const d=playerImgMap[key];
+  if(d?.img){
+    el.innerHTML=`<img src="${d.img}" style="width:100%;height:100%;object-fit:cover;object-position:top center;" alt="${name}" onerror="this.parentNode.innerHTML='<div style=width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:22px>${fallbackEmoji||"🏏"}</div>'">`;
+  }else{
+    el.innerHTML=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:22px">${fallbackEmoji||"🏏"}</div>`;
+  }
+}
+function setTeamWatermark(wrapId, iplTeam){
+  const el=document.getElementById(wrapId);
+  if(!el)return;
+  const td=getTeamLogoData(iplTeam);
+  if(td?.logo){
+    el.innerHTML=`<img src="${td.logo}" alt="" onerror="this.parentNode.innerHTML=''">`;
+  }
+}
+function makeScPlayerRow(name, iplTeam, fallbackEmoji){
+  const key=(name||"").trim().toLowerCase();
+  const d=playerImgMap[key];
+  const td=getTeamLogoData(iplTeam||d?.iplTeam||"");
+  let photoHTML;
+  if(d?.img){
+    photoHTML=`<img src="${d.img}" style="width:100%;height:100%;object-fit:cover;object-position:top center;" alt="${name}" onerror="this.style.display='none'">`;
+  }else if(td?.logo){
+    photoHTML=`<img src="${td.logo}" style="width:80%;height:80%;object-fit:contain;margin:auto;" alt="">`;
+  }else{
+    photoHTML=`<div class="sc-player-photo-fb">${fallbackEmoji||"🏏"}</div>`;
+  }
+  // Watermark HTML for stat cell
+  const wm=td?.logo?`<div class="sc-team-watermark"><img src="${td.logo}" alt=""></div>`:"";
+  return {photoHTML, wm};
+}
 
 /* ─── THEME ─── */
 const savedTheme=localStorage.getItem("theme")||"dark";
@@ -610,7 +725,21 @@ document.addEventListener("DOMContentLoaded",()=>{
 });
 
 async function loadAll(){
-  const[lbRes,leadRes]=await Promise.all([api({action:"getLeaderboard"}),api({action:"getLeaders"})]);
+  const[lbRes,leadRes,playersRes]=await Promise.all([
+    api({action:"getLeaderboard"}),
+    api({action:"getLeaders"}),
+    api({action:"getPlayers"})
+  ]);
+  /* Build image map from players */
+  if(playersRes?.status==="success"){
+    (playersRes.players||[]).forEach(p=>{
+      const key=(p["Player Name"]||"").trim().toLowerCase();
+      if(key) playerImgMap[key]={
+        img:(p["Image"]||"").toString().trim(),
+        iplTeam:p["IPL Team"]||""
+      };
+    });
+  }
   const lb=(lbRes?.leaderboard||[]).filter(t=>t.teamName!=="Admin");
 
   /* Hero */
@@ -689,9 +818,14 @@ function buildLeaderboard(lb){
 function buildLeaders(L){
   const s=(id,v)=>setEl(id,v||"—");
 
-  /* Cap holders */
+  /* Cap holders — with photos + watermarks */
   s("oc-name",L.orangeCap?.name);s("oc-team",L.orangeCap?.iplTeam);s("oc-val",L.orangeCap?.value||0);
   s("pc-name",L.purpleCap?.name);s("pc-team",L.purpleCap?.iplTeam);s("pc-val",L.purpleCap?.value||0);
+  // Inject player photos for cap holders
+  setPlayerPhoto("oc-photo", L.orangeCap?.name, "🏏");
+  setPlayerPhoto("pc-photo", L.purpleCap?.name, "🎳");
+  setTeamWatermark("oc-watermark", L.orangeCap?.iplTeam);
+  setTeamWatermark("pc-watermark", L.purpleCap?.iplTeam);
 
   /* Batting */
   s("l-runs",  L.orangeCap?.value);  s("l-runs-n",  L.orangeCap?.name);
@@ -719,6 +853,8 @@ function buildLeaders(L){
   s("l-top",   L.highestPts?.value);
   s("l-top-n", L.highestPts?.name);
   s("l-top-t", L.highestPts?.iplTeam||"");
+  // Inject player photos for all leader cells
+  injectLeaderPhotos(L);
 
   /* Animate all numeric cells */
   const numIds=["l-runs","l-sixes","l-fours","l-50","l-100",
@@ -743,12 +879,10 @@ function buildLeaders(L){
       else{const n=parseFloat(raw);if(!isNaN(n))setTimeout(()=>animateCount(priceEl,n),500);priceUnit.textContent=hbp.priceUnit||"Cr";}
     }else{priceEl.textContent="—";priceUnit.textContent="";document.getElementById("hbp-badge").style.display="none";}
 
-    /* Role icon */
-    const iconEl=document.getElementById("hbp-icon");
-    if(hbp.role==="Bowler")iconEl.textContent="🎳";
-    else if(hbp.role==="Wicket-Keeper"||hbp.role==="WK")iconEl.textContent="🧤";
-    else if(hbp.role==="All-Rounder"||hbp.role==="AR")iconEl.textContent="⭐";
-    else iconEl.textContent="🏏";
+    /* Player photo for HBP */
+    const fallbackEmoji=hbp.role==="Bowler"?"🎳":hbp.role==="Wicket-Keeper"||hbp.role==="WK"?"🧤":hbp.role==="All-Rounder"||hbp.role==="AR"?"⭐":"🏏";
+    setPlayerPhoto("hbp-photo", hbp.name, fallbackEmoji);
+    setTeamWatermark("hbp-watermark", hbp.iplTeam);
 
     /* Tags */
     const tags=[];
@@ -762,6 +896,44 @@ function buildLeaders(L){
     document.getElementById("hbp-badge").style.display="none";
   }
 }
+
+/* ─── INJECT LEADER PHOTOS ─── */
+function injectLeaderPhotos(L){
+  // Each entry: [statId, nameId, playerNameValue, iplTeamValue, fallbackEmoji]
+  const cells=[
+    ["l-runs",  "l-runs-n",  L.orangeCap?.name,       L.orangeCap?.iplTeam,     "🏏"],
+    ["l-sixes", "l-sixes-n", L.mostSixes?.name,        L.mostSixes?.iplTeam,     "💥"],
+    ["l-fours", "l-fours-n", L.mostFours?.name,        L.mostFours?.iplTeam,     "4️⃣"],
+    ["l-50",    "l-50-n",    L.mostFifties?.name,      L.mostFifties?.iplTeam,   "⭐"],
+    ["l-100",   "l-100-n",   L.mostHundreds?.name,     L.mostHundreds?.iplTeam,  "💯"],
+    ["l-wkt",   "l-wkt-n",   L.purpleCap?.name,        L.purpleCap?.iplTeam,     "🎯"],
+    ["l-maid",  "l-maid-n",  L.mostMaidens?.name,      L.mostMaidens?.iplTeam,   "🔵"],
+    ["l-dots",  "l-dots-n",  L.mostDots?.name,         L.mostDots?.iplTeam,      "⚫"],
+    ["l-3w",    "l-3w-n",    L.most3W?.name||L.mostThreeW?.name, L.most3W?.iplTeam||L.mostThreeW?.iplTeam, "🎳"],
+    ["l-5w",    "l-5w-n",    L.most5W?.name||L.mostFiveW?.name,  L.most5W?.iplTeam||L.mostFiveW?.iplTeam,  "🔥"],
+    ["l-cats",  "l-cats-n",  L.mostCatches?.name,      L.mostCatches?.iplTeam,   "🧤"],
+    ["l-ro",    "l-ro-n",    (L.mostRunOuts||L.mostRunouts)?.name,  (L.mostRunOuts||L.mostRunouts)?.iplTeam, "🏃"],
+    ["l-stmp",  "l-stmp-n",  L.mostStumpings?.name,    L.mostStumpings?.iplTeam, "🥅"],
+    ["l-top",   "l-top-n",   L.highestPts?.name,       L.highestPts?.iplTeam,    "🏆"],
+  ];
+
+  cells.forEach(([valId, nameId, playerName, iplTeam, fb])=>{
+    if(!playerName)return;
+    const nameEl=document.getElementById(nameId);
+    if(!nameEl)return;
+    const {photoHTML, wm}=makeScPlayerRow(playerName, iplTeam, fb);
+    // Replace plain text name with photo + name row
+    nameEl.parentElement.insertAdjacentHTML("beforeend", wm);
+    nameEl.outerHTML=`<div class="sc-player-row">
+      <div class="sc-player-photo">${photoHTML}</div>
+      <div class="sc-player-text">
+        <div id="${nameId}" style="font-size:10px;font-weight:600;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${playerName}</div>
+        ${iplTeam?`<div style="font-size:9px;color:var(--text-3)">${iplTeam}</div>`:""}
+      </div>
+    </div>`;
+  });
+}
+
 </script>
 </body>
 </html>
