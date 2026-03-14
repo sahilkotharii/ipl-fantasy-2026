@@ -89,6 +89,8 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .row-av-badge.pc-badge{bottom:-3px;left:-3px;background:#9b59b6;color:#fff;box-shadow:0 0 8px rgba(155,89,182,.6);}
 .row-av-tier{position:absolute;bottom:-2px;right:-2px;width:14px;height:14px;border-radius:50%;z-index:2;border:2px solid var(--bg);}
 .row-av-tier.pot{background:#FFD700;box-shadow:0 0 10px rgba(255,215,0,.8);}
+.row-av-tier.orange-special{background:#FF6B35;box-shadow:0 0 8px rgba(255,107,53,.8);}
+.row-av-tier.purple-special{background:#9b59b6;box-shadow:0 0 8px rgba(155,89,182,.8);}
 .row-av-tier.elite{background:#4facfe;box-shadow:0 0 8px rgba(79,172,254,.8);}
 .row-av-tier.gold{background:#FFD700;box-shadow:0 0 8px rgba(255,215,0,.6);}
 .row-av-tier.silver{background:#C0C8D8;box-shadow:0 0 6px rgba(192,200,216,.5);}
@@ -638,7 +640,26 @@ let allPlayers=[],activeFilter="ALL",tierMap={},ratingMap={};
 let leadersGlobal={},myPlayersGlobal=[];
 let fieldLoaded=false;
 
-/* Distributes rating 1-100 hitting exact tiers based on rank */
+/* LOCAL LEADER CALCULATION */
+function calculateLeaders(players) {
+  let maxRuns = -1, maxWkts = -1, maxPts = -1;
+  let oc = "", pc = "", pot = "";
+  players.forEach(p => {
+    const runs = gi(p, "Runs", "runs");
+    const wkts = gi(p, "Wickets", "wickets");
+    const pts = getPts(p);
+    if(runs > maxRuns && runs > 0) { maxRuns = runs; oc = p["Player Name"]; }
+    if(wkts > maxWkts && wkts > 0) { maxWkts = wkts; pc = p["Player Name"]; }
+    if(pts > maxPts && pts > 0) { maxPts = pts; pot = p["Player Name"]; }
+  });
+  return {
+    orangeCap: { name: oc },
+    purpleCap: { name: pc },
+    highestPts: { name: pot }
+  };
+}
+
+/* TIER CALCULATION */
 function calcTiersAndRatings(players){
   const withPts=players.filter(p=>getPts(p)>0).sort((a,b)=>getPts(b)-getPts(a));
   const total=withPts.length;
@@ -685,7 +706,12 @@ document.addEventListener("DOMContentLoaded",async()=>{
   try{
     const res=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"getPlayers"})});
     const r=await res.json();
-    if(r.status==="success"){allPlayers=r.players;calcTiersAndRatings(allPlayers);applyFilters();}
+    if(r.status==="success"){
+      allPlayers=r.players;
+      leadersGlobal=calculateLeaders(allPlayers); // Locally calculate caps immediately!
+      calcTiersAndRatings(allPlayers);
+      applyFilters();
+    }
     else throw new Error();
   }catch{
     document.getElementById("player-list").innerHTML='<div class="empty-state" style="color:#e74c3c">⚠️ Failed to load players.</div>';
@@ -730,13 +756,20 @@ function renderList(players){
   
   el.innerHTML=players.map((p,i)=>{
     const name=p["Player Name"]||"";
-    const tier=tierMap[name]||"grey";
+    const cardType=getCardType(p, leadersGlobal); // Use getCardType so Caps override list tier!
     const team=getTeam(p["IPL Team"]||""),pts=getPts(p);
     const role=(p["Role"]||"BAT").toUpperCase(),owned=p["Sold To"]&&p["Sold To"].trim();
     const isCap=myCap===name&&p["Sold To"]===myTeam,isVC=myVC===name&&p["Sold To"]===myTeam;
     const pnl=name.trim().toLowerCase(),isOC=ocName&&pnl===ocName,isPC=pcName&&pnl===pcName;
     
-    let tierColor = tier==="pot"?"#FFD700":tier==="elite"?"#4facfe":tier==="gold"?"#FFD700":tier==="silver"?"#C0C8D8":tier==="bronze"?"#CD7F32":"#888888";
+    let tierColor = "#888888";
+    if(cardType==="pot") tierColor="#FFD700";
+    else if(cardType==="elite") tierColor="#4facfe";
+    else if(cardType==="orange-special") tierColor="#FF6B35";
+    else if(cardType==="purple-special") tierColor="#9b59b6";
+    else if(cardType==="gold") tierColor="#FFD700";
+    else if(cardType==="silver") tierColor="#C0C8D8";
+    else if(cardType==="bronze") tierColor="#CD7F32";
     
     const playerImg=p["Image"]&&p["Image"].toString().trim();
     const logoImg=playerImg
@@ -744,7 +777,7 @@ function renderList(players){
        `<span style="font-size:20px;display:none">${team.fb}</span>`
       : `<span style="font-size:20px">${team.fb}</span>`;
       
-    let avBadges=`<div class="row-av-tier ${tier}"></div>`;
+    let avBadges=`<div class="row-av-tier ${cardType}"></div>`;
     if(isCap)     avBadges+=`<div class="row-av-badge c-badge">C</div>`;
     else if(isVC) avBadges+=`<div class="row-av-badge vc-badge">VC</div>`;
     if(isOC)      avBadges+=`<div class="row-av-badge oc-badge">🧢</div>`;
@@ -792,12 +825,12 @@ function getCardType(p, leaders){
   return tierMap[p["Player Name"]] || "grey";
 }
 
-/* Wobbly Particle Engine with requested color palettes */
+/* Wobbly Particle Engine */
 const PARTICLE_COLORS={
-  elite:         ["#ffd700","#ffb300","#ffffff","#60c8ff"], // golden, blue, white
-  "orange-special":["#ffd700","#ff8c00","#ffcc60","#ffffff"], // golden, orange, white
-  "purple-special":["#ffd700","#c060ff","#e0b0ff","#ffffff"], // golden, purple, white
-  pot:           ["#ffd700","#fff080","#ffb300","#ffffff"], // purely golden/white
+  elite:         ["#ffd700","#ffb300","#ffffff","#60c8ff"],
+  "orange-special":["#ffd700","#ff8c00","#ffcc60","#ffffff"],
+  "purple-special":["#ffd700","#c060ff","#e0b0ff","#ffffff"],
+  pot:           ["#ffd700","#fff080","#ffb300","#ffffff"],
 };
 
 function spawnParticles(canvas, cardType){
@@ -1004,8 +1037,9 @@ async function loadField(){
     const r=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"getRoles",teamName:myTeam})}).then(x=>x.json());
     if(r?.status==="success"){if(r.captain)localStorage.setItem("captain",r.captain);if(r.viceCaptain)localStorage.setItem("viceCaptain",r.viceCaptain);}
   }catch{}
-  const lr=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"getLeaders"})}).then(x=>x.json()).catch(()=>null);
-  leadersGlobal=lr?.leaders||{};
+  
+  // No longer fetching getLeaders from API here, relying on robust local calculateLeaders
+  
   myPlayersGlobal=allPlayers.filter(p=>p["Sold To"]===myTeam);
   const loadEl=document.getElementById("field-loading");
   if(!myPlayersGlobal.length){loadEl.innerHTML='<span style="font-size:42px">🏏</span><br>Your squad is empty.<br>Head to Squad to draft players!';return;}
