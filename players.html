@@ -211,7 +211,7 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 @keyframes tokenIn{from{opacity:0;transform:translateY(12px) scale(.8);}to{opacity:1;transform:none;}}
 .fp:active .fp-avatar{transform:scale(.9);}
 .fp-avatar-wrap{position:relative;}
-.fp-avatar{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;border:2.5px solid;box-shadow:0 4px 16px rgba(0,0,0,.5);transition:transform .2s var(--bounce),box-shadow .2s;position:relative;overflow:hidden;}
+.fp-avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;border:2.5px solid;box-shadow:0 4px 16px rgba(0,0,0,.5);transition:transform .2s var(--bounce),box-shadow .2s;position:relative;overflow:hidden;}
 .fp:hover .fp-avatar{transform:scale(1.1);box-shadow:0 8px 24px rgba(0,0,0,.6);}
 .fp-avatar::after{content:'';position:absolute;inset:0;border-radius:50%;background:linear-gradient(145deg,rgba(255,255,255,.18),transparent 60%);pointer-events:none;}
 .fp-badge{position:absolute;font-size:10px;line-height:1;background:rgba(0,0,0,.7);border-radius:4px;padding:1px 3px;font-weight:900;font-family:var(--font-mono);backdrop-filter:blur(4px);}
@@ -554,10 +554,12 @@ function renderList(players){
     const isCap=myCap===name&&p["Sold To"]===myTeam,isVC=myVC===name&&p["Sold To"]===myTeam;
     const pnl=name.trim().toLowerCase(),isOC=ocName&&pnl===ocName,isPC=pcName&&pnl===pcName;
     const tierColor=TIER_PTS_COLOR[tier];
-    // Circle avatar with team logo — identical to field token
-    const logoImg=team.logo
-      ?`<img src="${team.logo}" style="width:30px;height:30px;object-fit:contain;position:relative;z-index:1" alt="${team.abbr}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="font-size:20px;display:none">${team.fb}</span>`
-      :`<span style="font-size:20px">${team.fb}</span>`;
+    // Circle avatar — player headshot > team logo > emoji fallback
+    const playerImg=p["Image"]&&p["Image"].toString().trim();
+    const logoImg=playerImg
+      ?`<img src="${playerImg}" style="width:46px;height:46px;object-fit:cover;object-position:top center;position:relative;z-index:1;border-radius:50%;" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`+
+       (team.logo?`<img src="${team.logo}" style="width:30px;height:30px;object-fit:contain;position:relative;z-index:1;display:none" alt="${team.abbr}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="font-size:20px;display:none">${team.fb}</span>`:`<span style="font-size:20px;display:none">${team.fb}</span>`)
+      :(team.logo?`<img src="${team.logo}" style="width:30px;height:30px;object-fit:contain;position:relative;z-index:1" alt="${team.abbr}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="font-size:20px;display:none">${team.fb}</span>`:`<span style="font-size:20px">${team.fb}</span>`);
     // Small badges around the circle
     let avBadges=`<div class="row-av-tier ${tier}"></div>`;
     if(isCap)     avBadges+=`<div class="row-av-badge c-badge">C</div>`;
@@ -608,7 +610,11 @@ function openCard(idx){
   const front=document.getElementById("card-front"),back=document.getElementById("card-back");
   front.className=`card-face ${tier}`;back.className=`card-face card-back-face ${tier}`;
   document.getElementById("card-flip").classList.remove("flipped");
-  const logoHTML=team.logo?`<img src="${team.logo}" class="cf-logo" alt="${team.abbr}" onerror="this.style.display='none';this.nextSibling.style.display='block'"><span class="cf-logo-fallback" style="display:none">${team.fb}</span>`:`<span class="cf-logo-fallback">${team.fb}</span>`;
+  const pImgCard=p["Image"]&&p["Image"].toString().trim();
+  const logoHTML=pImgCard
+    ?`<img src="${pImgCard}" style="width:clamp(60px,18vw,80px);height:clamp(60px,18vw,80px);object-fit:cover;object-position:top center;border-radius:50%;border:2px solid rgba(255,255,255,.25);filter:drop-shadow(0 4px 12px rgba(0,0,0,.4));" alt="${name}" onerror="this.style.display='none';this.nextSibling.style.display='block'">`+
+     (team.logo?`<img src="${team.logo}" class="cf-logo" style="display:none" alt="${team.abbr}" onerror="this.style.display='none';this.nextSibling.style.display='block'"><span class="cf-logo-fallback" style="display:none">${team.fb}</span>`:`<span class="cf-logo-fallback" style="display:none">${team.fb}</span>`)
+    :(team.logo?`<img src="${team.logo}" class="cf-logo" alt="${team.abbr}" onerror="this.style.display='none';this.nextSibling.style.display='block'"><span class="cf-logo-fallback" style="display:none">${team.fb}</span>`:`<span class="cf-logo-fallback">${team.fb}</span>`);
   front.innerHTML=`<div class="cf-inner"><div class="cf-top"><div><div class="cf-rating">${rating}</div><div class="cf-role">${role}</div></div><div>${logoHTML}</div></div><div class="cf-name">${name.toUpperCase()}</div><div class="cf-owner">${fantasyTeam}</div><div class="cf-divider"></div><div class="cf-stats"><div class="cf-stat-col"><div class="cf-stat-row"><span class="cf-stat-val">${runs}</span><span class="cf-stat-lbl">RUN</span></div><div class="cf-stat-row"><span class="cf-stat-val">${wkts}</span><span class="cf-stat-lbl">WKT</span></div><div class="cf-stat-row"><span class="cf-stat-val">${cats}</span><span class="cf-stat-lbl">CAT</span></div></div><div class="cf-stat-vdiv"></div><div class="cf-stat-col"><div class="cf-stat-row"><span class="cf-stat-val">${fours}</span><span class="cf-stat-lbl">4s</span></div><div class="cf-stat-row"><span class="cf-stat-val">${sixes}</span><span class="cf-stat-lbl">6s</span></div><div class="cf-stat-row"><span class="cf-stat-val">${pts}</span><span class="cf-stat-lbl">PTS</span></div></div></div></div>`;
   back.innerHTML=`<div class="cb-inner"><div class="cb-header"><div class="cb-name">${name.toUpperCase()}</div><div class="cb-sub">${team.abbr} \u00b7 ${pts} pts \u00b7 ${price} \u00b7 ${fantasyTeam}</div></div><div class="cb-grid"><div class="cb-stat"><div class="cb-stat-val">${runs}</div><div class="cb-stat-lbl">Runs</div></div><div class="cb-stat"><div class="cb-stat-val">${fours}</div><div class="cb-stat-lbl">4s</div></div><div class="cb-stat"><div class="cb-stat-val">${sixes}</div><div class="cb-stat-lbl">6s</div></div><div class="cb-stat"><div class="cb-stat-val">${cats}</div><div class="cb-stat-lbl">Catches</div></div><div class="cb-stat"><div class="cb-stat-val">${wkts}</div><div class="cb-stat-lbl">Wickets</div></div><div class="cb-stat"><div class="cb-stat-val">${maidens}</div><div class="cb-stat-lbl">Maidens</div></div><div class="cb-stat"><div class="cb-stat-val">${dots}</div><div class="cb-stat-lbl">Dots</div></div><div class="cb-stat"><div class="cb-stat-val">${fifties}</div><div class="cb-stat-lbl">50s</div></div><div class="cb-stat"><div class="cb-stat-val">${hunds}</div><div class="cb-stat-lbl">100s</div></div><div class="cb-stat"><div class="cb-stat-val">${threeW}</div><div class="cb-stat-lbl">3W</div></div><div class="cb-stat"><div class="cb-stat-val">${fiveW}</div><div class="cb-stat-lbl">5W</div></div><div class="cb-stat"><div class="cb-stat-val">${fourW}</div><div class="cb-stat-lbl">4W</div></div></div><div class="cb-footer">${pts} pts \u00b7 Rating ${rating}${isCap?" \u00b7 Captain \ud83c\udf1f":isVC?" \u00b7 Vice-Captain \u2b50":""}</div></div>`;
   document.getElementById("card-modal").classList.add("open");
@@ -657,7 +663,11 @@ function renderField(){
       else if(isVC_) badges+='<div class="fp-badge cap-vc">VC</div>';
       if(isOC) badges+='<div class="fp-badge orange-cap">\ud83e\udde2</div>';
       if(isPC) badges+='<div class="fp-badge purple-cap">\ud83c\udfa9</div>';
-      const logoHTML=tc.logo?`<img src="${tc.logo}" style="width:34px;height:34px;object-fit:contain;" alt="${tc.abbr}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-size:22px">${tc.fb}</span>`:`<span style="font-size:22px">${tc.fb}</span>`;
+      const pImg=p["Image"]&&p["Image"].toString().trim();
+      const logoHTML=pImg
+        ?`<img src="${pImg}" style="width:46px;height:46px;object-fit:cover;object-position:top center;border-radius:50%;position:relative;z-index:1;" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">`+
+         (tc.logo?`<img src="${tc.logo}" style="width:34px;height:34px;object-fit:contain;display:none" alt="${tc.abbr}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-size:22px">${tc.fb}</span>`:`<span style="display:none;font-size:22px">${tc.fb}</span>`)
+        :(tc.logo?`<img src="${tc.logo}" style="width:34px;height:34px;object-fit:contain;" alt="${tc.abbr}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-size:22px">${tc.fb}</span>`:`<span style="font-size:22px">${tc.fb}</span>`);
       return`<div class="fp" style="animation-delay:${delay}s" onclick="openFmModal('${encodeURIComponent(name)}')">
         <div class="fp-avatar-wrap">
           <div class="fp-avatar" style="background:linear-gradient(135deg,${tc.c1},${tc.c2});border-color:${tc.c2}88">${logoHTML}</div>
@@ -687,7 +697,13 @@ function openFmModal(enc){
   const logoEl=document.getElementById("fm-logo");
   logoEl.style.background=`linear-gradient(135deg,${tc.c1},${tc.c2})`;
   logoEl.style.borderColor="rgba(255,255,255,.3)";
-  logoEl.innerHTML=tc.logo?`<img src="${tc.logo}" style="width:42px;height:42px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))" alt="${tc.abbr}" onerror="this.parentNode.innerHTML='<span style=font-size:28px>${tc.fb}</span>'">`:`<span style="font-size:28px">${tc.fb}</span>`;
+  const fmImg=p["Image"]&&p["Image"].toString().trim();
+  logoEl.style.overflow="hidden";
+  logoEl.style.padding="0";
+  logoEl.innerHTML=fmImg
+    ?`<img src="${fmImg}" style="width:100%;height:100%;object-fit:cover;object-position:top center;border-radius:14px;" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`+
+     (tc.logo?`<img src="${tc.logo}" style="width:42px;height:42px;object-fit:contain;display:none" alt="${tc.abbr}" onerror="this.style.display='none'"><span style="font-size:28px;display:none">${tc.fb}</span>`:`<span style="font-size:28px;display:none">${tc.fb}</span>`)
+    :(tc.logo?`<img src="${tc.logo}" style="width:42px;height:42px;object-fit:contain;" alt="${tc.abbr}" onerror="this.parentNode.innerHTML='<span style=font-size:28px>${tc.fb}</span>'">`:`<span style="font-size:28px">${tc.fb}</span>`);
   document.getElementById("fm-name").textContent=name;
   document.getElementById("fm-sub").textContent=(p["IPL Team"]||"\u2014")+" \u00b7 "+(p["Role"]||"\u2014")+" \u00b7 \u20b9"+(p["Price Bought"]||"\u2014")+" Cr";
   let bh=`<span class="fmbadge role">${p["Role"]||"\u2014"}</span>`;
