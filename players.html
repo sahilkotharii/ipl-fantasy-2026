@@ -352,6 +352,8 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .pitch-strip{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:38px;height:210px;background:linear-gradient(180deg,#d4b882 0%,#c8a55c 40%,#b89040 60%,#c8a55c 100%);border-radius:5px;border:1px solid rgba(255,255,255,.25);box-shadow:0 0 20px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.2);pointer-events:none;z-index:0;}
 .pitch-strip::before,.pitch-strip::after{content:'';position:absolute;left:-8px;right:-8px;height:2px;background:rgba(255,255,255,.6);border-radius:1px;}
 .pitch-strip::before{top:22px;}.pitch-strip::after{bottom:22px;}
+
+/* Elevated role rows so they sit securely over the pitch strip */
 .role-row{position:relative;z-index:10;display:flex;justify-content:center;align-items:flex-end;gap:12px;padding:6px 8px 4px;flex-wrap:wrap;}
 .role-label{position:relative;z-index:10;text-align:center;font-size:8px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--row-label);text-shadow:0 1px 4px rgba(0,0,0,.6);margin-bottom:2px;margin-top:6px;}
 .fp{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;-webkit-tap-highlight-color:transparent;animation:tokenIn .45s var(--bounce) both;position:relative;z-index:10;}
@@ -362,7 +364,7 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .fp:hover .fp-avatar{transform:scale(1.1);box-shadow:0 8px 24px rgba(0,0,0,.6);}
 .fp-avatar::after{content:'';position:absolute;inset:0;border-radius:50%;background:linear-gradient(145deg,rgba(255,255,255,.18),transparent 60%);pointer-events:none;}
 
-/* Badges for field players - Left and Right constraints */
+/* Split field badges */
 .fp-badge{position:absolute;line-height:1;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;z-index:15;font-family:var(--font-mono);box-shadow:0 2px 6px rgba(0,0,0,.6);}
 .fp-badge.left{top:-4px;left:-4px;}
 .fp-badge.right{top:-4px;right:-4px;}
@@ -381,7 +383,7 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 @keyframes floatBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
 
 /* ════════════════════════════════════
-   FIELD PLAYER DETAIL SHEET (Frameless Ribbon Layout)
+   FIELD PLAYER DETAIL SHEET
 ════════════════════════════════════ */
 .fm-modal{
   display:none;position:fixed;inset:0;z-index:350;
@@ -391,12 +393,10 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .fm-modal.open{display:flex;animation:fmIn .25s var(--ease) both;}
 @keyframes fmIn{from{opacity:0;transform:scale(0.95) translateY(10px);}to{opacity:1;transform:none;}}
 
-/* MIN-HEIGHT 0 fixes internal flex-scroll issues causing chopped stats */
 .fm-wrapper {
   width:100%; max-width:440px; display:flex; flex-direction:column; max-height:92vh; position:relative; min-height:0;
 }
 
-/* Close Button */
 .fm-close{
   position:absolute;top:0;right:0;z-index:30;
   width:36px;height:36px;border-radius:12px;
@@ -406,7 +406,6 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 }
 .fm-close:hover{transform:scale(1.1) rotate(90deg);background:rgba(231,76,60,.7);}
 
-/* Frameless Header: Float Image Left, Ribbons Right */
 .fm-frameless-header {
   display:flex; align-items:flex-end; gap:12px; margin-bottom:12px; padding:0 8px; margin-top:-20px;
   position:relative; z-index:10; flex-shrink: 0;
@@ -436,14 +435,12 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .fm-ribbon-stat span { font-family:var(--font-main); font-size:9px; opacity:0.85; letter-spacing:1px; text-transform:uppercase; display:block; margin-top:2px; font-weight:700;}
 .fmbadge {font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.3);}
 
-/* Bounding Box for Stats. MIN-HEIGHT 0 is required for perfect flex scrolling here */
 .fm-card-body {
   flex:1; background:var(--surf2); border-radius:20px; border:1px solid var(--brd2);
   box-shadow:0 20px 60px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.1);
   display:flex; flex-direction:column; overflow:hidden; position:relative; z-index:1; min-height:0;
 }
 
-/* Scrollable stats */
 .fm-scroll-body{
   flex:1; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch;
   padding:10px 20px 30px;
@@ -641,33 +638,21 @@ function getTeam(n){
   return{abbr:(u.slice(0,3)||"IPL"),color:"#2a3a5a",color2:"#4facfe",c1:"#2a3a5a",c2:"#4facfe",logo:"",fb:"🏏",full:"IPL Team"};
 }
 
-/* ROBUST DATA EXTRACTION HELPERS 
-  Safely matches columns even if Google Sheets adds hidden spaces or changes cases 
-*/
+/* DATA EXTRACTION - RESTORED FROM ORIGINAL EXACT MATCH LOGIC */
 function getPts(p){
-  const targets = ["totalpoints", "currentpoints", "pts", "points"];
-  for(const [k,v] of Object.entries(p)){
-    const normKey = String(k).toLowerCase().replace(/[^a-z0-9]/g, '');
-    if(targets.includes(normKey)){
-      const parsed = parseFloat(v);
-      if(!isNaN(parsed)) return parsed;
-    }
-  }
-  return 0;
+  return parseFloat(p["Total Points"] || p["Current Points"] || 0) || 0;
 }
 
 function gi(p, ...keys){
-  const targets = keys.map(k => String(k).toLowerCase().replace(/[^a-z0-9]/g, ''));
-  for(const [k, v] of Object.entries(p)){
-    const normKey = String(k).toLowerCase().replace(/[^a-z0-9]/g, '');
-    if(targets.includes(normKey)){
+  for(const k of keys){
+    const v=p[k];
+    if(v !== undefined && v !== null && v !== "") {
       const parsed = parseFloat(v);
       if(!isNaN(parsed)) return parsed;
     }
   }
   return 0;
 }
-
 function roleClass(r){return r==="BOWL"?"rb-bowl":r==="AR"?"rb-ar":r==="WK"?"rb-wk":"rb-bat";}
 
 /* STATE */
@@ -680,8 +665,8 @@ function calculateLeaders(players) {
   let maxRuns = -1, maxWkts = -1, maxPts = -1;
   let oc = "", pc = "", pot = "";
   players.forEach(p => {
-    const runs = gi(p, "runs");
-    const wkts = gi(p, "wickets");
+    const runs = gi(p, "Runs", "runs");
+    const wkts = gi(p, "Wickets", "wickets");
     const pts = getPts(p);
     if(runs > maxRuns && runs > 0) { maxRuns = runs; oc = p["Player Name"]; }
     if(wkts > maxWkts && wkts > 0) { maxWkts = wkts; pc = p["Player Name"]; }
@@ -706,10 +691,10 @@ function calcTiersAndRatings(players){
     const pct = 1 - (rank / Math.max(total - 1, 1)); 
     let rating;
     if (rank === 0) rating = 100;
-    else if (pct >= 0.90) rating = Math.floor(95 + ((pct - 0.90) / 0.10) * 4); // 95-99 Elite
-    else if (pct >= 0.60) rating = Math.floor(80 + ((pct - 0.60) / 0.30) * 14); // 80-94 Gold
-    else if (pct >= 0.25) rating = Math.floor(56 + ((pct - 0.25) / 0.35) * 23); // 56-79 Silver
-    else rating = Math.floor(36 + (pct / 0.25) * 19); // 36-55 Bronze
+    else if (pct >= 0.90) rating = Math.floor(95 + ((pct - 0.90) / 0.10) * 4); 
+    else if (pct >= 0.60) rating = Math.floor(80 + ((pct - 0.60) / 0.30) * 14); 
+    else if (pct >= 0.25) rating = Math.floor(56 + ((pct - 0.25) / 0.35) * 23); 
+    else rating = Math.floor(36 + (pct / 0.25) * 19); 
 
     if(rating>100) rating=100;
     
@@ -927,11 +912,11 @@ function openCard(idx){
   const owned=p["Sold To"]&&p["Sold To"].trim();
   const fantasyTeam=owned||"Unsold";
   
-  // Utilising new ultra-safe extractor
-  const runs=gi(p,"runs"),wkts=gi(p,"wickets"),cats=gi(p,"catches");
+  // RESTORED EXACT EXTRACTION FOR CARD DATA
+  const runs=gi(p,"Runs","runs"),wkts=gi(p,"Wickets","wickets"),cats=gi(p,"Catches","catches");
   const fours=gi(p,"4s","fours"),sixes=gi(p,"6s","sixes"),fifties=gi(p,"50s","fifties");
-  const hunds=gi(p,"100s","hundreds"),threeW=gi(p,"3w","threew"),fiveW=gi(p,"5w","fivew");
-  const fourW=gi(p,"4w","fourw","fourv"),maidens=gi(p,"maidens"),dots=gi(p,"dots");
+  const hunds=gi(p,"100s","hundreds"),threeW=gi(p,"3W","threew"),fiveW=gi(p,"5W","fivew");
+  const fourW=gi(p,"fourv","4W","4w"),maidens=gi(p,"Maidens","maidens"),dots=gi(p,"Dots","dots");
 
   const ocName=(leadersGlobal?.orangeCap?.name||"").trim().toLowerCase();
   const pcName=(leadersGlobal?.purpleCap?.name||"").trim().toLowerCase();
@@ -1104,7 +1089,6 @@ function renderField(){
          `<span style="display:none;font-size:22px">${tc.fb}</span>`
         :`<span style="font-size:22px">${tc.fb}</span>`;
 
-      // Determine Left/Right Badges for Field Tokens
       let leftBadge = "";
       if(isC) leftBadge = `<div class="fp-badge left cap-c">C</div>`;
       else if(isVC) leftBadge = `<div class="fp-badge left cap-vc">VC</div>`;
@@ -1128,7 +1112,7 @@ function renderField(){
   const pitchStrip=container.querySelector(".pitch-strip");
   container.innerHTML="";container.appendChild(pitchStrip);
   
-  // Wrap contents with relative position and high z-index to bring above pitch box
+  // Wrap contents with relative position and high z-index to completely float above the pitch strip
   const d=document.createElement("div");
   d.style.position = "relative";
   d.style.zIndex = "10";
@@ -1151,12 +1135,10 @@ function openFmModal(enc){
   const sorted=[...allPlayers].sort((a,b)=>getPts(b)-getPts(a));
   const rank=sorted.findIndex(x=>(x["Player Name"]||"").trim()===name.trim())+1;
 
-  // Header Ribbons Backgrounds (Team gradient)
   const grad = `linear-gradient(115deg, ${tc.color} 0%, ${tc.color2} 100%)`;
   document.getElementById("fm-ribbon-1").style.background=grad;
   document.getElementById("fm-ribbon-2").style.background=grad;
 
-  // Float Image Setup
   const fmImg=p["Image"]&&p["Image"].toString().trim();
   const imgSlot=document.getElementById("fm-img-slot");
   if(fmImg){
@@ -1165,10 +1147,8 @@ function openFmModal(enc){
     imgSlot.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:64px;background:rgba(0,0,0,0.4);border-radius:12px;box-shadow:0 8px 16px rgba(0,0,0,0.5); border: 2px solid ${tc.color2}">${tc.fb}</div>`;
   }
 
-  // Info Text
   document.getElementById("fm-name").textContent=name;
   
-  // Badges inside ribbon sub
   let bh=`<span class="fmbadge">${p["Role"]||"—"}</span>`;
   if(cap===name)bh+=`<span class="fmbadge" style="color:#ffc400; border-color:#ffc400;">👑 CAP</span>`;
   if(vc===name) bh+=`<span class="fmbadge" style="color:#c8d0dc; border-color:#c8d0dc;">⭐ VC</span>`;
@@ -1176,22 +1156,20 @@ function openFmModal(enc){
   if(pcName&&pnl===pcName)bh+=`<span class="fmbadge" style="color:#cc99ff; border-color:#cc99ff;">🎩 PURPLE CAP</span>`;
   document.getElementById("fm-sub").innerHTML=`${tc.abbr} &nbsp;·&nbsp; ${bh}`;
 
-  // Rank / Pts inside ribbon
   document.getElementById("fm-rank").innerHTML=`#${rank}<span>Univ Rank</span>`;
   document.getElementById("fm-pts").innerHTML=`${pts}<span>Total Pts</span>`;
 
-  // Scrollable Stats Grid
+  // RESTORED EXACT EXTRACTION FOR MODAL
   const statDefs={
-    Batting:[{k:"runs",i:"🏃",l:"Runs"},{k:"6s",i:"💥",l:"Sixes"},{k:"4s",i:"4️⃣",l:"Fours"},{k:"50s",i:"⭐",l:"50s"},{k:"100s",i:"💯",l:"100s"}],
-    Bowling:[{k:"wickets",i:"🎯",l:"Wickets"},{k:"maidens",i:"🔵",l:"Maidens"},{k:"dots",i:"⚫",l:"Dots"},{k:"3w",i:"🎳",l:"3W Haul"},{k:"5w",i:"🔥",l:"5W Haul"},{k:"4w",i:"⚡",l:"4W Haul"}],
-    Fielding:[{k:"catches",i:"🧤",l:"Catches"},{k:"runouts",i:"🏃",l:"Run Outs"},{k:"stumpings",i:"🥅",l:"Stumpings"}]
+    Batting:[{k:"Runs",i:"🏃",l:"Runs"},{k:"6s",i:"💥",l:"Sixes"},{k:"4s",i:"4️⃣",l:"Fours"},{k:"50s",i:"⭐",l:"50s"},{k:"100s",i:"💯",l:"100s"}],
+    Bowling:[{k:"Wickets",i:"🎯",l:"Wickets"},{k:"Maidens",i:"🔵",l:"Maidens"},{k:"Dots",i:"⚫",l:"Dots"},{k:"3W",i:"🎳",l:"3W Haul"},{k:"5W",i:"🔥",l:"5W Haul"},{k:"fourv",i:"⚡",l:"4W Haul"}],
+    Fielding:[{k:"Catches",i:"🧤",l:"Catches"},{k:"Run Outs",i:"🏃",l:"Run Outs"},{k:"Stumpings",i:"🥅",l:"Stumpings"}]
   };
   let sh="";
   Object.entries(statDefs).forEach(([title,defs])=>{
     sh+=`<div class="fm-stats-title">${title}</div><div class="fm-stats-grid">`;
     defs.forEach(d=>{
-      // Pass the specific key and aliases to the resilient extractor
-      const v = gi(p, d.k, d.l, d.k==="4w"?"fourv":""); 
+      const v = gi(p, d.k, d.k.toLowerCase(), d.k.toUpperCase()); 
       sh+=`<div class="fm-stat-box"><span class="fm-stat-icon">${d.i}</span><div class="fm-stat-val${v===0?" zero":""}">${v}</div><div class="fm-stat-label">${d.l}</div></div>`;
     });
     sh+="</div>";
