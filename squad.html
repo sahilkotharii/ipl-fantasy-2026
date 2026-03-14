@@ -385,10 +385,10 @@ body{
   flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;transition:color .25s;
 }
 .nav-item.active{color:var(--accent);}
-.nav-icon-wrap{width:36px;height:28px;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:background .25s,transform .2s var(--bounce);}
+.nav-icon-wrap{width:38px;height:29px;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:background .25s,transform .2s var(--bounce);}
 .nav-item.active .nav-icon-wrap{background:var(--accent-soft);box-shadow:0 0 12px rgba(255,107,53,.2);}
 .nav-item:hover .nav-icon-wrap{transform:translateY(-2px);}
-.nav-icon{font-size:16px;line-height:1;}
+.nav-icon{font-size:17px;line-height:1;}
 </style>
 </head>
 <body>
@@ -457,11 +457,11 @@ body{
 
 <nav class="bottom-nav">
   <a href="dashboard.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🏠</span></div>Home</a>
-  <a href="squad.html"     class="nav-item active"><div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad</a>
-  <a href="players.html"   class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🃏</span></div>Cards</a>
-  <a href="teams.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">👥</span></div>Teams</a>
-  <a href="stats.html"     class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">📊</span></div>Stats</a>
-  <a href="settings.html"  class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">⚙️</span></div>Settings</a>
+  <a href="squad.html" class="nav-item active"><div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad</a>
+  <a href="players.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🃏</span></div>Cards</a>
+  <a href="teams.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">👥</span></div>Teams</a>
+  <a href="stats.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">📊</span></div>Stats</a>
+  <a href="settings.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">⚙️</span></div>Settings</a>
 </nav>
 
 <script>
@@ -678,12 +678,17 @@ async function loadMySquad(){
         // inactive badge is locked if that slot is already filled by someone else
         const cLocked = isC || capFilled;   // locked if I AM captain OR slot already taken
         const vcLocked = isVC || vcFilled;  // locked if I AM VC OR slot already taken
+        const playerImg=p["Image"]&&p["Image"].toString().trim();
+        const avatarContent=playerImg
+          ?`<img src="${playerImg}" style="width:100%;height:100%;object-fit:cover;object-position:top center;border-radius:13px;" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`+
+           `<span style="display:none;font-size:22px;width:100%;height:100%;align-items:center;justify-content:center">${icon}</span>`
+          :`${icon}`;
         return`<div class="player-card" style="animation-delay:${i*.05}s">
           <div class="card-bg" style="background:linear-gradient(110deg,${tc.c1}CC 0%,${tc.c2}55 45%,transparent 72%)"></div>
           <div class="card-shimmer"></div>
           <div class="card-accent" style="background:linear-gradient(180deg,${tc.c2},${tc.c1})"></div>
           <div class="card-inner">
-            <div class="p-avatar" style="background:linear-gradient(135deg,${tc.c1}55,${tc.c2}33);border-color:${tc.c2}44">${icon}</div>
+            <div class="p-avatar" style="background:linear-gradient(135deg,${tc.c1}55,${tc.c2}33);border-color:${tc.c2}44;overflow:hidden;padding:0;">${avatarContent}</div>
             <div class="p-info">
               <div class="p-name">${name}</div>
               <div class="p-meta">
