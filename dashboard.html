@@ -363,32 +363,46 @@ body{
 /* ── Stat cells: player image bleeds in from right, stats left ── */
 .stat-cell{position:relative;overflow:hidden;}
 
+/* Team logo — large watermark filling the whole cell behind everything */
+.sc-team-logo-bg{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;z-index:0;overflow:hidden;
+}
+.sc-team-logo-bg img{
+  width:85%;height:85%;object-fit:contain;
+  opacity:.1;
+  filter:drop-shadow(0 0 0 transparent);
+}
+
+/* Player photo — right 75% of cell, full height */
 .sc-bg-photo{
   position:absolute;right:0;top:0;bottom:0;
-  width:60%;pointer-events:none;z-index:0;
+  width:75%;pointer-events:none;z-index:1;
 }
 .sc-bg-photo img{
   width:100%;height:100%;object-fit:cover;object-position:top center;display:block;
 }
-/* Desktop: use contain so full body shows */
-@media(min-width:480px){
-  .sc-bg-photo{width:45%;}
-  .sc-bg-photo img{object-fit:contain;object-position:bottom center;}
-}
-/* Gradient mask — stat text stays readable */
+/* Gradient mask — left side clear for stat text */
 .sc-bg-photo::before{
   content:'';position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to right,var(--bg) 20%,rgba(0,0,0,0) 100%);
+  background:linear-gradient(to right,var(--bg) 5%,rgba(0,0,0,0) 55%);
 }
 [data-theme="light"] .sc-bg-photo::before{
-  background:linear-gradient(to right,var(--bg) 20%,rgba(255,255,255,.0) 100%);
+  background:linear-gradient(to right,var(--bg) 5%,rgba(255,255,255,0) 55%);
 }
-/* Team logo badge — bottom right of cell, small but clear */
+/* Desktop: narrower photo, more of player body visible */
+@media(min-width:480px){
+  .sc-bg-photo{width:50%;}
+  .sc-bg-photo img{object-fit:contain;object-position:bottom center;}
+  .sc-bg-photo::before{background:linear-gradient(to right,var(--bg) 10%,rgba(0,0,0,0) 60%);}
+}
+/* Team logo badge — bottom right corner, visible */
 .sc-team-badge{
-  position:absolute;bottom:7px;right:7px;z-index:2;
+  position:absolute;bottom:7px;right:7px;z-index:3;
   width:22px;height:22px;pointer-events:none;
 }
-.sc-team-badge img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5));}
+.sc-team-badge img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5));opacity:.9;}
 
 /* All text content stays above photos */
 .sc-icon,.sc-label,.sc-val,.sc-name,.sc-team{position:relative;z-index:1;}
@@ -713,14 +727,20 @@ function makeScCellMedia(name, iplTeam){
   const key=(name||"").trim().toLowerCase();
   const d=playerImgMap[key];
   const td=getTeamLogoData(iplTeam||d?.iplTeam||"");
+  // Large team logo watermark — fills whole cell at low opacity
+  const logoWm=td?.logo
+    ?`<div class="sc-team-logo-bg"><img src="${td.logo}" alt=""></div>`
+    :"";
+  // Player photo bleed from right
   let bgHtml="";
   if(d?.img){
     bgHtml=`<div class="sc-bg-photo"><img src="${d.img}" alt="${name}" onerror="this.style.display='none'"></div>`;
-  }else if(td?.logo){
-    // no player image — just the team badge, no bg photo div
   }
-  const badgeHtml=td?.logo?`<div class="sc-team-badge"><img src="${td.logo}" alt="${iplTeam}" onerror="this.parentNode.innerHTML=''"></div>`:"";
-  return bgHtml+badgeHtml;
+  // Small team badge bottom-right corner
+  const badgeHtml=td?.logo
+    ?`<div class="sc-team-badge"><img src="${td.logo}" alt="${iplTeam}" onerror="this.parentNode.innerHTML=''"></div>`
+    :"";
+  return logoWm+bgHtml+badgeHtml;
 }
 
 /* ─── THEME ─── */
