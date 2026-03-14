@@ -266,23 +266,26 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 }
 .cf-team-logo-zone img{width:90%;height:90%;object-fit:contain;}
 
-/* Special Badges & Dual Titles */
+/* Special Badges & Dual Titles - NOW MOVED BELOW NAME */
 .cf-special-badge{
-  position:absolute;top:8%;right:8%;z-index:4;
-  font-size:clamp(7px,2vw,9px);font-weight:900;letter-spacing:.1em;text-transform:uppercase;
-  padding:5px 8px;border-radius:6px;
+  display: inline-block;
+  align-self: center;
+  margin-top: -1%;
+  margin-bottom: 3%;
+  z-index: 4;
+  font-size:clamp(6.5px,1.8vw,8px);font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 10px;border-radius:6px;
   background:rgba(0,0,0,.6);backdrop-filter:blur(6px);
   border:1px solid rgba(255,215,0,.6);color:rgba(255,215,0,1);
-  line-height:1.4;text-align:center;
+  line-height:1.3;text-align:center;
   box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-  max-width: 45%;
 }
 .cf-special-badge.dual-title {
   background: linear-gradient(135deg, #3a2500, #111);
   border: 1px solid #ffd700;
   color: #ffd700;
   font-family: var(--font-display);
-  font-size: clamp(10px, 3vw, 13px);
+  font-size: clamp(9px, 2.5vw, 11px);
   letter-spacing: 0.08em;
   text-shadow: 0 0 5px rgba(255,215,0,0.8);
   animation: dualShine 2s infinite alternate;
@@ -292,10 +295,10 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   to { box-shadow: 0 4px 15px rgba(255,215,0,0.5), inset 0 0 15px rgba(255,215,0,0.7); text-shadow: 0 0 10px rgba(255,215,0,1); }
 }
 
-/* Info zone - safely padded to prevent clip-path masking */
+/* Info zone - flex column handles centering gracefully */
 .cf-info-zone{
   flex:1;display:flex;flex-direction:column; justify-content:flex-end;
-  padding:0 6% 24% 6%; 
+  padding:0 6% 22% 6%; 
   position:relative;z-index:3;
 }
 .cf-name{
@@ -364,7 +367,7 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .fp:hover .fp-avatar{transform:scale(1.1);box-shadow:0 8px 24px rgba(0,0,0,.6);}
 .fp-avatar::after{content:'';position:absolute;inset:0;border-radius:50%;background:linear-gradient(145deg,rgba(255,255,255,.18),transparent 60%);pointer-events:none;}
 
-/* Split field badges */
+/* Badges for field players - Left and Right constraints */
 .fp-badge{position:absolute;line-height:1;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;z-index:15;font-family:var(--font-mono);box-shadow:0 2px 6px rgba(0,0,0,.6);}
 .fp-badge.left{top:-4px;left:-4px;}
 .fp-badge.right{top:-4px;right:-4px;}
@@ -383,7 +386,7 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 @keyframes floatBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
 
 /* ════════════════════════════════════
-   FIELD PLAYER DETAIL SHEET
+   FIELD PLAYER DETAIL SHEET (Frameless Ribbon Layout)
 ════════════════════════════════════ */
 .fm-modal{
   display:none;position:fixed;inset:0;z-index:350;
@@ -393,10 +396,12 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .fm-modal.open{display:flex;animation:fmIn .25s var(--ease) both;}
 @keyframes fmIn{from{opacity:0;transform:scale(0.95) translateY(10px);}to{opacity:1;transform:none;}}
 
+/* MIN-HEIGHT 0 fixes internal flex-scroll issues causing chopped stats */
 .fm-wrapper {
   width:100%; max-width:440px; display:flex; flex-direction:column; max-height:92vh; position:relative; min-height:0;
 }
 
+/* Close Button */
 .fm-close{
   position:absolute;top:0;right:0;z-index:30;
   width:36px;height:36px;border-radius:12px;
@@ -406,6 +411,7 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 }
 .fm-close:hover{transform:scale(1.1) rotate(90deg);background:rgba(231,76,60,.7);}
 
+/* Frameless Header: Float Image Left, Ribbons Right */
 .fm-frameless-header {
   display:flex; align-items:flex-end; gap:12px; margin-bottom:12px; padding:0 8px; margin-top:-20px;
   position:relative; z-index:10; flex-shrink: 0;
@@ -435,12 +441,14 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .fm-ribbon-stat span { font-family:var(--font-main); font-size:9px; opacity:0.85; letter-spacing:1px; text-transform:uppercase; display:block; margin-top:2px; font-weight:700;}
 .fmbadge {font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.3);}
 
+/* Bounding Box for Stats. MIN-HEIGHT 0 is required for perfect flex scrolling here */
 .fm-card-body {
   flex:1; background:var(--surf2); border-radius:20px; border:1px solid var(--brd2);
   box-shadow:0 20px 60px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.1);
   display:flex; flex-direction:column; overflow:hidden; position:relative; z-index:1; min-height:0;
 }
 
+/* Scrollable stats */
 .fm-scroll-body{
   flex:1; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch;
   padding:10px 20px 30px;
@@ -912,7 +920,6 @@ function openCard(idx){
   const owned=p["Sold To"]&&p["Sold To"].trim();
   const fantasyTeam=owned||"Unsold";
   
-  // RESTORED EXACT EXTRACTION FOR CARD DATA
   const runs=gi(p,"Runs","runs"),wkts=gi(p,"Wickets","wickets"),cats=gi(p,"Catches","catches");
   const fours=gi(p,"4s","fours"),sixes=gi(p,"6s","sixes"),fifties=gi(p,"50s","fifties");
   const hunds=gi(p,"100s","hundreds"),threeW=gi(p,"3W","threew"),fiveW=gi(p,"5W","fivew");
@@ -983,11 +990,11 @@ function openCard(idx){
       ${photoHTML}
       <div class="cf-rating-block"><span class="cf-rating">${rating}</span><span class="cf-role-lbl">${role}</span></div>
       <div class="cf-team-logo-zone">${tLogoHTML}</div>
-      ${specialBadge}
     </div>
     <div class="cf-info-zone">
       <div class="cf-name">${name.toUpperCase()}</div>
       <div class="cf-owner-badge">${fantasyTeam}</div>
+      ${specialBadge}
       <div class="cf-divider-line"></div>
       <div class="cf-stats-row">
         <div class="cf-stat-col left">
@@ -1112,7 +1119,6 @@ function renderField(){
   const pitchStrip=container.querySelector(".pitch-strip");
   container.innerHTML="";container.appendChild(pitchStrip);
   
-  // Wrap contents with relative position and high z-index to completely float above the pitch strip
   const d=document.createElement("div");
   d.style.position = "relative";
   d.style.zIndex = "10";
