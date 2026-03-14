@@ -243,7 +243,7 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .cf-canvas{position:absolute;inset:0;z-index:1;pointer-events:none;}
 
 /* Photo zone & Background Logo */
-.cf-photo-zone{position:relative;flex:0 0 46%;overflow:hidden; display:flex; justify-content:center;}
+.cf-photo-zone{position:relative;flex:0 0 42%;overflow:hidden; display:flex; justify-content:center;}
 .cf-bg-logo{position:absolute; inset:-20%; z-index:0; opacity:0.12; display:flex; align-items:center; justify-content:center; pointer-events:none;}
 .cf-bg-logo img{width:100%; height:100%; object-fit:contain; filter:grayscale(30%);}
 
@@ -292,50 +292,50 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   to { box-shadow: 0 4px 15px rgba(255,215,0,0.5), inset 0 0 15px rgba(255,215,0,0.7); text-shadow: 0 0 10px rgba(255,215,0,1); }
 }
 
-/* Info zone */
+/* Info zone - safely padded to prevent clip-path masking */
 .cf-info-zone{
-  flex:1;display:flex;flex-direction:column;
-  padding:0 8% 22% 8%; 
+  flex:1;display:flex;flex-direction:column; justify-content:flex-end;
+  padding:0 6% 24% 6%; 
   position:relative;z-index:3;
 }
 .cf-name{
   font-family:var(--font-display);
-  font-size:clamp(16px,5vw,24px);
+  font-size:clamp(14px,4.5vw,22px);
   letter-spacing:.06em;line-height:1;
   text-align:center;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  text-shadow:0 1px 4px rgba(0,0,0,.3);
-  margin-bottom:2%;
+  text-shadow:0 1px 4px rgba(0,0,0,.4);
+  margin-bottom:1%;
 }
 .cf-owner-badge{
-  font-size:clamp(8px,2.2vw,10px);font-weight:800;letter-spacing:.05em;
-  text-align:center; opacity:0.85; margin-bottom:4%;
+  font-size:clamp(7px,2vw,9px);font-weight:800;letter-spacing:.05em;
+  text-align:center; opacity:0.85; margin-bottom:3%;
   background:rgba(0,0,0,.25);border-radius:10px;padding:3px 12px;
   display:inline-block;align-self:center;
   text-shadow:0 1px 2px rgba(0,0,0,.5);
 }
-.cf-divider-line{height:1px;background:currentColor;opacity:.3;margin:0 0 4%;border-radius:1px;}
+.cf-divider-line{height:1px;background:currentColor;opacity:.3;margin:0 0 3%;border-radius:1px;}
 
 /* 2-col stats */
 .cf-stats-row{display:flex;align-items:stretch;flex:1;}
-.cf-stat-col{flex:1;display:flex;flex-direction:column;gap:clamp(3px,1vw,6px);}
+.cf-stat-col{flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(2px,0.8vw,4px);}
 .cf-stat-col.left{padding-right:8%; border-right: 1px solid rgba(0,0,0,0.2);}
 .cf-stat-col.right{padding-left:8%;}
 .cf-stat-item{display:flex;align-items:baseline;justify-content:space-between;}
-.cf-sv{font-family:var(--font-display);font-size:clamp(14px,4vw,20px);line-height:1;font-weight:400; text-shadow:0 1px 2px rgba(0,0,0,.3);}
-.cf-sl{font-family:var(--font-display);font-size:clamp(9px,2.5vw,13px);opacity:.7;white-space:nowrap; letter-spacing: 0.05em;}
+.cf-sv{font-family:var(--font-display);font-size:clamp(13px,4vw,18px);line-height:1;font-weight:400; text-shadow:0 1px 3px rgba(0,0,0,.5);}
+.cf-sl{font-family:var(--font-display);font-size:clamp(8px,2.2vw,12px);opacity:.8;white-space:nowrap; letter-spacing: 0.05em; text-shadow:0 1px 2px rgba(0,0,0,.5);}
 
 /* ════════════════════════════════════
    CARD BACK FACE
 ════════════════════════════════════ */
-.cb-wrap{position:relative;z-index:2;display:flex;flex-direction:column;height:100%;padding:10% 8% 18% 8%;}
+.cb-wrap{position:relative;z-index:2;display:flex;flex-direction:column;height:100%;padding:10% 8% 22% 8%;}
 .cb-header{text-align:center;margin-bottom:6%;padding-bottom:6%;border-bottom:1px solid rgba(0,0,0,.2);}
 .cb-name{font-family:var(--font-display);font-size:clamp(16px,5vw,24px);letter-spacing:.05em;line-height:1;white-space:nowrap;}
 .cb-sub{font-size:clamp(8px,2.2vw,10px);opacity:.8;margin-top:4px;font-weight:700;letter-spacing:.03em;}
 .cb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(4px,1.5vw,6px);flex:1;}
 .cb-stat{display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.15);border-radius:6px;padding:clamp(4px,1.5vw,8px) 2px;border:1px solid rgba(0,0,0,.15);}
-.cb-sv{font-family:var(--font-display);font-size:clamp(14px,4vw,20px);line-height:1;}
-.cb-sl{font-size:clamp(7px,1.8vw,9px);font-weight:800;text-transform:uppercase;letter-spacing:.04em;opacity:.7;margin-top:2px;text-align:center;}
+.cb-sv{font-family:var(--font-display);font-size:clamp(14px,4vw,20px);line-height:1; text-shadow:0 1px 3px rgba(0,0,0,.5);}
+.cb-sl{font-size:clamp(7px,1.8vw,9px);font-weight:800;text-transform:uppercase;letter-spacing:.04em;opacity:.8;margin-top:2px;text-align:center;}
 .cb-footer{margin-top:6%;text-align:center;font-size:clamp(8px,2.2vw,10px);font-weight:800;opacity:.9;padding:6px 8px;background:rgba(0,0,0,.2);border-radius:6px;border:1px solid rgba(0,0,0,.15);}
 
 /* FIELD VIEW */
@@ -352,9 +352,9 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .pitch-strip{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:38px;height:210px;background:linear-gradient(180deg,#d4b882 0%,#c8a55c 40%,#b89040 60%,#c8a55c 100%);border-radius:5px;border:1px solid rgba(255,255,255,.25);box-shadow:0 0 20px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.2);pointer-events:none;z-index:0;}
 .pitch-strip::before,.pitch-strip::after{content:'';position:absolute;left:-8px;right:-8px;height:2px;background:rgba(255,255,255,.6);border-radius:1px;}
 .pitch-strip::before{top:22px;}.pitch-strip::after{bottom:22px;}
-.role-row{position:relative;z-index:2;display:flex;justify-content:center;align-items:flex-end;gap:12px;padding:6px 8px 4px;flex-wrap:wrap;}
-.role-label{position:relative;z-index:2;text-align:center;font-size:8px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--row-label);text-shadow:0 1px 4px rgba(0,0,0,.6);margin-bottom:2px;margin-top:6px;}
-.fp{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;-webkit-tap-highlight-color:transparent;animation:tokenIn .45s var(--bounce) both;}
+.role-row{position:relative;z-index:10;display:flex;justify-content:center;align-items:flex-end;gap:12px;padding:6px 8px 4px;flex-wrap:wrap;}
+.role-label{position:relative;z-index:10;text-align:center;font-size:8px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--row-label);text-shadow:0 1px 4px rgba(0,0,0,.6);margin-bottom:2px;margin-top:6px;}
+.fp{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;-webkit-tap-highlight-color:transparent;animation:tokenIn .45s var(--bounce) both;position:relative;z-index:10;}
 @keyframes tokenIn{from{opacity:0;transform:translateY(12px) scale(.8);}to{opacity:1;transform:none;}}
 .fp:active .fp-avatar{transform:scale(.9);}
 .fp-avatar-wrap{position:relative;}
@@ -362,8 +362,8 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .fp:hover .fp-avatar{transform:scale(1.1);box-shadow:0 8px 24px rgba(0,0,0,.6);}
 .fp-avatar::after{content:'';position:absolute;inset:0;border-radius:50%;background:linear-gradient(145deg,rgba(255,255,255,.18),transparent 60%);pointer-events:none;}
 
-/* Badges for field players */
-.fp-badge{position:absolute;line-height:1;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;z-index:5;font-family:var(--font-mono);box-shadow:0 2px 6px rgba(0,0,0,.6);}
+/* Badges for field players - Left and Right constraints */
+.fp-badge{position:absolute;line-height:1;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;z-index:15;font-family:var(--font-mono);box-shadow:0 2px 6px rgba(0,0,0,.6);}
 .fp-badge.left{top:-4px;left:-4px;}
 .fp-badge.right{top:-4px;right:-4px;}
 .fp-badge.cap-c{background:#ffc400;color:#1a0f00;}
@@ -391,8 +391,9 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .fm-modal.open{display:flex;animation:fmIn .25s var(--ease) both;}
 @keyframes fmIn{from{opacity:0;transform:scale(0.95) translateY(10px);}to{opacity:1;transform:none;}}
 
+/* MIN-HEIGHT 0 fixes internal flex-scroll issues causing chopped stats */
 .fm-wrapper {
-  width:100%; max-width:440px; display:flex; flex-direction:column; max-height:92vh; position:relative;
+  width:100%; max-width:440px; display:flex; flex-direction:column; max-height:92vh; position:relative; min-height:0;
 }
 
 /* Close Button */
@@ -408,7 +409,7 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 /* Frameless Header: Float Image Left, Ribbons Right */
 .fm-frameless-header {
   display:flex; align-items:flex-end; gap:12px; margin-bottom:12px; padding:0 8px; margin-top:-20px;
-  position:relative; z-index:10;
+  position:relative; z-index:10; flex-shrink: 0;
 }
 .fm-float-img {
   width:140px; height:170px; flex-shrink:0; filter:drop-shadow(0 12px 20px rgba(0,0,0,0.6));
@@ -435,11 +436,11 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .fm-ribbon-stat span { font-family:var(--font-main); font-size:9px; opacity:0.85; letter-spacing:1px; text-transform:uppercase; display:block; margin-top:2px; font-weight:700;}
 .fmbadge {font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.3);}
 
-/* Bounding Box for Stats */
+/* Bounding Box for Stats. MIN-HEIGHT 0 is required for perfect flex scrolling here */
 .fm-card-body {
   flex:1; background:var(--surf2); border-radius:20px; border:1px solid var(--brd2);
   box-shadow:0 20px 60px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.1);
-  display:flex; flex-direction:column; overflow:hidden; position:relative; z-index:1;
+  display:flex; flex-direction:column; overflow:hidden; position:relative; z-index:1; min-height:0;
 }
 
 /* Scrollable stats */
@@ -461,8 +462,8 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 }
 .fm-stat-box:hover{transform:scale(1.05);border-color:var(--brd2);}
 .fm-stat-icon{font-size:16px;margin-bottom:4px;display:block;}
-.fm-stat-val{font-family:var(--font-display);font-size:24px;color:var(--t1);line-height:1;margin-bottom:2px;}
-.fm-stat-val.zero{color:var(--t3);}
+.fm-stat-val{font-family:var(--font-display);font-size:24px;color:var(--t1);line-height:1;margin-bottom:2px; text-shadow:0 1px 2px rgba(0,0,0,0.3);}
+.fm-stat-val.zero{color:var(--t3); text-shadow:none;}
 .fm-stat-label{font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);}
 
 /* BOTTOM NAV */
@@ -640,9 +641,33 @@ function getTeam(n){
   return{abbr:(u.slice(0,3)||"IPL"),color:"#2a3a5a",color2:"#4facfe",c1:"#2a3a5a",c2:"#4facfe",logo:"",fb:"🏏",full:"IPL Team"};
 }
 
-/* HELPERS */
-function getPts(p){return parseFloat(p["Total Points"]||p["Current Points"]||0)||0;}
-function gi(p,...keys){for(const k of keys){const v=p[k];if(v!==undefined&&v!==null&&v!=="")return parseInt(v)||0;}return 0;}
+/* ROBUST DATA EXTRACTION HELPERS 
+  Safely matches columns even if Google Sheets adds hidden spaces or changes cases 
+*/
+function getPts(p){
+  const targets = ["totalpoints", "currentpoints", "pts", "points"];
+  for(const [k,v] of Object.entries(p)){
+    const normKey = String(k).toLowerCase().replace(/[^a-z0-9]/g, '');
+    if(targets.includes(normKey)){
+      const parsed = parseFloat(v);
+      if(!isNaN(parsed)) return parsed;
+    }
+  }
+  return 0;
+}
+
+function gi(p, ...keys){
+  const targets = keys.map(k => String(k).toLowerCase().replace(/[^a-z0-9]/g, ''));
+  for(const [k, v] of Object.entries(p)){
+    const normKey = String(k).toLowerCase().replace(/[^a-z0-9]/g, '');
+    if(targets.includes(normKey)){
+      const parsed = parseFloat(v);
+      if(!isNaN(parsed)) return parsed;
+    }
+  }
+  return 0;
+}
+
 function roleClass(r){return r==="BOWL"?"rb-bowl":r==="AR"?"rb-ar":r==="WK"?"rb-wk":"rb-bat";}
 
 /* STATE */
@@ -655,8 +680,8 @@ function calculateLeaders(players) {
   let maxRuns = -1, maxWkts = -1, maxPts = -1;
   let oc = "", pc = "", pot = "";
   players.forEach(p => {
-    const runs = gi(p, "Runs", "runs");
-    const wkts = gi(p, "Wickets", "wickets");
+    const runs = gi(p, "runs");
+    const wkts = gi(p, "wickets");
     const pts = getPts(p);
     if(runs > maxRuns && runs > 0) { maxRuns = runs; oc = p["Player Name"]; }
     if(wkts > maxWkts && wkts > 0) { maxWkts = wkts; pc = p["Player Name"]; }
@@ -718,7 +743,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
     const r=await res.json();
     if(r.status==="success"){
       allPlayers=r.players;
-      leadersGlobal=calculateLeaders(allPlayers); // Locally calculate caps immediately!
+      leadersGlobal=calculateLeaders(allPlayers);
       calcTiersAndRatings(allPlayers);
       applyFilters();
     }
@@ -766,7 +791,7 @@ function renderList(players){
   
   el.innerHTML=players.map((p,i)=>{
     const name=p["Player Name"]||"";
-    const cardType=getCardType(p, leadersGlobal); // Use getCardType so Caps override list tier!
+    const cardType=getCardType(p, leadersGlobal); 
     const team=getTeam(p["IPL Team"]||""),pts=getPts(p);
     const role=(p["Role"]||"BAT").toUpperCase(),owned=p["Sold To"]&&p["Sold To"].trim();
     const isCap=myCap===name&&p["Sold To"]===myTeam,isVC=myVC===name&&p["Sold To"]===myTeam;
@@ -902,12 +927,12 @@ function openCard(idx){
   const owned=p["Sold To"]&&p["Sold To"].trim();
   const fantasyTeam=owned||"Unsold";
   
-  const runs=gi(p,"Runs","runs"),wkts=gi(p,"Wickets","wickets"),cats=gi(p,"Catches","catches");
+  // Utilising new ultra-safe extractor
+  const runs=gi(p,"runs"),wkts=gi(p,"wickets"),cats=gi(p,"catches");
   const fours=gi(p,"4s","fours"),sixes=gi(p,"6s","sixes"),fifties=gi(p,"50s","fifties");
-  const hunds=gi(p,"100s","hundreds"),threeW=gi(p,"3W","threew"),fiveW=gi(p,"5W","fivew");
-  const fourW=gi(p,"fourv"),maidens=gi(p,"Maidens","maidens"),dots=gi(p,"Dots","dots");
+  const hunds=gi(p,"100s","hundreds"),threeW=gi(p,"3w","threew"),fiveW=gi(p,"5w","fivew");
+  const fourW=gi(p,"4w","fourw","fourv"),maidens=gi(p,"maidens"),dots=gi(p,"dots");
 
-  // Determine Titles and Badges
   const ocName=(leadersGlobal?.orangeCap?.name||"").trim().toLowerCase();
   const pcName=(leadersGlobal?.purpleCap?.name||"").trim().toLowerCase();
   const potName=(leadersGlobal?.highestPts?.name||"").trim().toLowerCase();
@@ -929,7 +954,6 @@ function openCard(idx){
      specialBadge = `<div class="cf-special-badge">🔵 ELITE</div>`;
   }
 
-  // Smooth Glow Rings
   const glowColors={
     grey:"rgba(136,136,136, 0.4)", bronze:"rgba(205,127,50, 0.4)", silver:"rgba(184,200,216, 0.4)", gold:"rgba(255,215,0, 0.5)",
     elite:"rgba(79,172,254, 0.8)", "orange-special":"rgba(255,107,53, 0.8)", "purple-special":"rgba(155,89,182, 0.8)", pot:"rgba(255,215,0, 0.9)"
@@ -951,7 +975,6 @@ function openCard(idx){
   back.className=`card-face card-back-face ${cardType}`;
   document.getElementById("card-flip").classList.remove("flipped");
 
-  // Player photo and Background Logo setup
   const pImg=p["Image"]&&p["Image"].toString().trim();
   const photoHTML=pImg
     ?`<img class="cf-player-photo" src="${pImg}" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`+
@@ -1105,10 +1128,10 @@ function renderField(){
   const pitchStrip=container.querySelector(".pitch-strip");
   container.innerHTML="";container.appendChild(pitchStrip);
   
-  // Wrap contents with relative position and z-index to bring above pitch box
+  // Wrap contents with relative position and high z-index to bring above pitch box
   const d=document.createElement("div");
   d.style.position = "relative";
-  d.style.zIndex = "2";
+  d.style.zIndex = "10";
   d.innerHTML=html;
   container.appendChild(d);
 }
@@ -1159,15 +1182,16 @@ function openFmModal(enc){
 
   // Scrollable Stats Grid
   const statDefs={
-    Batting:[{k:"Runs",i:"🏃",l:"Runs"},{k:"6s",i:"💥",l:"Sixes"},{k:"4s",i:"4️⃣",l:"Fours"},{k:"50s",i:"⭐",l:"50s"},{k:"100s",i:"💯",l:"100s"}],
-    Bowling:[{k:"Wickets",i:"🎯",l:"Wickets"},{k:"Maidens",i:"🔵",l:"Maidens"},{k:"Dots",i:"⚫",l:"Dots"},{k:"3W",i:"🎳",l:"3W Haul"},{k:"5W",i:"🔥",l:"5W Haul"},{k:"fourv",i:"⚡",l:"4W Haul"}],
-    Fielding:[{k:"Catches",i:"🧤",l:"Catches"},{k:"Run Outs",i:"🏃",l:"Run Outs"},{k:"Stumpings",i:"🥅",l:"Stumpings"}]
+    Batting:[{k:"runs",i:"🏃",l:"Runs"},{k:"6s",i:"💥",l:"Sixes"},{k:"4s",i:"4️⃣",l:"Fours"},{k:"50s",i:"⭐",l:"50s"},{k:"100s",i:"💯",l:"100s"}],
+    Bowling:[{k:"wickets",i:"🎯",l:"Wickets"},{k:"maidens",i:"🔵",l:"Maidens"},{k:"dots",i:"⚫",l:"Dots"},{k:"3w",i:"🎳",l:"3W Haul"},{k:"5w",i:"🔥",l:"5W Haul"},{k:"4w",i:"⚡",l:"4W Haul"}],
+    Fielding:[{k:"catches",i:"🧤",l:"Catches"},{k:"runouts",i:"🏃",l:"Run Outs"},{k:"stumpings",i:"🥅",l:"Stumpings"}]
   };
   let sh="";
   Object.entries(statDefs).forEach(([title,defs])=>{
     sh+=`<div class="fm-stats-title">${title}</div><div class="fm-stats-grid">`;
     defs.forEach(d=>{
-      const v=parseFloat(p[d.k])||0;
+      // Pass the specific key and aliases to the resilient extractor
+      const v = gi(p, d.k, d.l, d.k==="4w"?"fourv":""); 
       sh+=`<div class="fm-stat-box"><span class="fm-stat-icon">${d.i}</span><div class="fm-stat-val${v===0?" zero":""}">${v}</div><div class="fm-stat-label">${d.l}</div></div>`;
     });
     sh+="</div>";
