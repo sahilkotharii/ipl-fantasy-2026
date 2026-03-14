@@ -147,8 +147,8 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .card-scene-wrap{position:relative;display:flex;align-items:center;justify-content:center;}
 .card-scene{
   perspective:1400px;
-  width:min(80vw,320px);
-  aspect-ratio:0.64;
+  width:min(80vw,330px); /* Slightly wider to match proportions */
+  aspect-ratio:0.62; /* Taller aspect ratio for more spacing at bottom */
   cursor:pointer;
   animation:cardPop .5s var(--bounce) .05s both;
   position:relative;z-index:1;
@@ -243,7 +243,7 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .cf-canvas{position:absolute;inset:0;z-index:1;pointer-events:none;}
 
 /* Photo zone & Background Logo */
-.cf-photo-zone{position:relative;flex:0 0 42%;overflow:hidden; display:flex; justify-content:center;}
+.cf-photo-zone{position:relative;flex:0 0 43%;overflow:hidden; display:flex; justify-content:center;}
 .cf-bg-logo{position:absolute; inset:-20%; z-index:0; opacity:0.12; display:flex; align-items:center; justify-content:center; pointer-events:none;}
 .cf-bg-logo img{width:100%; height:100%; object-fit:contain; filter:grayscale(30%);}
 
@@ -266,12 +266,12 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 }
 .cf-team-logo-zone img{width:90%;height:90%;object-fit:contain;}
 
-/* Special Badges & Dual Titles - NOW MOVED BELOW NAME */
+/* Special Badges & Dual Titles - Safely Tucked BELOW Name */
 .cf-special-badge{
   display: inline-block;
   align-self: center;
-  margin-top: -1%;
-  margin-bottom: 3%;
+  margin-top: 1%;
+  margin-bottom: 2%;
   z-index: 4;
   font-size:clamp(6.5px,1.8vw,8px);font-weight:900;letter-spacing:.1em;text-transform:uppercase;
   padding:4px 10px;border-radius:6px;
@@ -295,15 +295,15 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
   to { box-shadow: 0 4px 15px rgba(255,215,0,0.5), inset 0 0 15px rgba(255,215,0,0.7); text-shadow: 0 0 10px rgba(255,215,0,1); }
 }
 
-/* Info zone - flex column handles centering gracefully */
+/* Info zone - Increased bottom padding, compact gap */
 .cf-info-zone{
   flex:1;display:flex;flex-direction:column; justify-content:flex-end;
-  padding:0 6% 22% 6%; 
+  padding:0 6% 28% 6%; /* Extra padding protects from bottom clip point */
   position:relative;z-index:3;
 }
 .cf-name{
   font-family:var(--font-display);
-  font-size:clamp(14px,4.5vw,22px);
+  font-size:clamp(15px,4.8vw,24px);
   letter-spacing:.06em;line-height:1;
   text-align:center;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
@@ -312,16 +312,16 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 }
 .cf-owner-badge{
   font-size:clamp(7px,2vw,9px);font-weight:800;letter-spacing:.05em;
-  text-align:center; opacity:0.85; margin-bottom:3%;
+  text-align:center; opacity:0.85; margin-bottom:2%;
   background:rgba(0,0,0,.25);border-radius:10px;padding:3px 12px;
   display:inline-block;align-self:center;
   text-shadow:0 1px 2px rgba(0,0,0,.5);
 }
 .cf-divider-line{height:1px;background:currentColor;opacity:.3;margin:0 0 3%;border-radius:1px;}
 
-/* 2-col stats */
+/* 2-col stats - compacted for breathing room */
 .cf-stats-row{display:flex;align-items:stretch;flex:1;}
-.cf-stat-col{flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(2px,0.8vw,4px);}
+.cf-stat-col{flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(1px,0.5vw,3px);}
 .cf-stat-col.left{padding-right:8%; border-right: 1px solid rgba(0,0,0,0.2);}
 .cf-stat-col.right{padding-left:8%;}
 .cf-stat-item{display:flex;align-items:baseline;justify-content:space-between;}
@@ -646,21 +646,31 @@ function getTeam(n){
   return{abbr:(u.slice(0,3)||"IPL"),color:"#2a3a5a",color2:"#4facfe",c1:"#2a3a5a",c2:"#4facfe",logo:"",fb:"🏏",full:"IPL Team"};
 }
 
-/* DATA EXTRACTION - RESTORED FROM ORIGINAL EXACT MATCH LOGIC */
+/* DATA EXTRACTION - BULLETPROOF FUZZY MATCHER */
 function getPts(p){
-  return parseFloat(p["Total Points"] || p["Current Points"] || 0) || 0;
-}
-
-function gi(p, ...keys){
-  for(const k of keys){
-    const v=p[k];
-    if(v !== undefined && v !== null && v !== "") {
+  const targets = ["totalpoints", "currentpoints", "pts", "points"];
+  for(const [k,v] of Object.entries(p)){
+    const normKey = String(k).toLowerCase().replace(/[^a-z0-9]/g, '');
+    if(targets.includes(normKey)){
       const parsed = parseFloat(v);
       if(!isNaN(parsed)) return parsed;
     }
   }
   return 0;
 }
+
+function gi(p, ...keys){
+  const targets = keys.map(k => String(k).toLowerCase().replace(/[^a-z0-9]/g, ''));
+  for(const [k, v] of Object.entries(p)){
+    const normKey = String(k).toLowerCase().replace(/[^a-z0-9]/g, '');
+    if(targets.includes(normKey)){
+      const parsed = parseFloat(v);
+      if(!isNaN(parsed)) return parsed;
+    }
+  }
+  return 0;
+}
+
 function roleClass(r){return r==="BOWL"?"rb-bowl":r==="AR"?"rb-ar":r==="WK"?"rb-wk":"rb-bat";}
 
 /* STATE */
@@ -673,8 +683,8 @@ function calculateLeaders(players) {
   let maxRuns = -1, maxWkts = -1, maxPts = -1;
   let oc = "", pc = "", pot = "";
   players.forEach(p => {
-    const runs = gi(p, "Runs", "runs");
-    const wkts = gi(p, "Wickets", "wickets");
+    const runs = gi(p, "runs");
+    const wkts = gi(p, "wickets");
     const pts = getPts(p);
     if(runs > maxRuns && runs > 0) { maxRuns = runs; oc = p["Player Name"]; }
     if(wkts > maxWkts && wkts > 0) { maxWkts = wkts; pc = p["Player Name"]; }
@@ -699,10 +709,10 @@ function calcTiersAndRatings(players){
     const pct = 1 - (rank / Math.max(total - 1, 1)); 
     let rating;
     if (rank === 0) rating = 100;
-    else if (pct >= 0.90) rating = Math.floor(95 + ((pct - 0.90) / 0.10) * 4); 
-    else if (pct >= 0.60) rating = Math.floor(80 + ((pct - 0.60) / 0.30) * 14); 
-    else if (pct >= 0.25) rating = Math.floor(56 + ((pct - 0.25) / 0.35) * 23); 
-    else rating = Math.floor(36 + (pct / 0.25) * 19); 
+    else if (pct >= 0.90) rating = Math.floor(95 + ((pct - 0.90) / 0.10) * 4); // 95-99 Elite
+    else if (pct >= 0.60) rating = Math.floor(80 + ((pct - 0.60) / 0.30) * 14); // 80-94 Gold
+    else if (pct >= 0.25) rating = Math.floor(56 + ((pct - 0.25) / 0.35) * 23); // 56-79 Silver
+    else rating = Math.floor(36 + (pct / 0.25) * 19); // 36-55 Bronze
 
     if(rating>100) rating=100;
     
@@ -920,10 +930,11 @@ function openCard(idx){
   const owned=p["Sold To"]&&p["Sold To"].trim();
   const fantasyTeam=owned||"Unsold";
   
-  const runs=gi(p,"Runs","runs"),wkts=gi(p,"Wickets","wickets"),cats=gi(p,"Catches","catches");
-  const fours=gi(p,"4s","fours"),sixes=gi(p,"6s","sixes"),fifties=gi(p,"50s","fifties");
-  const hunds=gi(p,"100s","hundreds"),threeW=gi(p,"3W","threew"),fiveW=gi(p,"5W","fivew");
-  const fourW=gi(p,"fourv","4W","4w"),maidens=gi(p,"Maidens","maidens"),dots=gi(p,"Dots","dots");
+  // Utilising new ultra-safe extractor
+  const runs=gi(p,"runs"),wkts=gi(p,"wickets"),cats=gi(p,"catches");
+  const fours=gi(p,"4s"),sixes=gi(p,"6s"),fifties=gi(p,"50s");
+  const hunds=gi(p,"100s"),threeW=gi(p,"3w"),fiveW=gi(p,"5w");
+  const fourW=gi(p,"4w","fourw","fourv"),maidens=gi(p,"maidens"),dots=gi(p,"dots");
 
   const ocName=(leadersGlobal?.orangeCap?.name||"").trim().toLowerCase();
   const pcName=(leadersGlobal?.purpleCap?.name||"").trim().toLowerCase();
@@ -1165,17 +1176,17 @@ function openFmModal(enc){
   document.getElementById("fm-rank").innerHTML=`#${rank}<span>Univ Rank</span>`;
   document.getElementById("fm-pts").innerHTML=`${pts}<span>Total Pts</span>`;
 
-  // RESTORED EXACT EXTRACTION FOR MODAL
+  // Scrollable Stats Grid
   const statDefs={
-    Batting:[{k:"Runs",i:"🏃",l:"Runs"},{k:"6s",i:"💥",l:"Sixes"},{k:"4s",i:"4️⃣",l:"Fours"},{k:"50s",i:"⭐",l:"50s"},{k:"100s",i:"💯",l:"100s"}],
-    Bowling:[{k:"Wickets",i:"🎯",l:"Wickets"},{k:"Maidens",i:"🔵",l:"Maidens"},{k:"Dots",i:"⚫",l:"Dots"},{k:"3W",i:"🎳",l:"3W Haul"},{k:"5W",i:"🔥",l:"5W Haul"},{k:"fourv",i:"⚡",l:"4W Haul"}],
-    Fielding:[{k:"Catches",i:"🧤",l:"Catches"},{k:"Run Outs",i:"🏃",l:"Run Outs"},{k:"Stumpings",i:"🥅",l:"Stumpings"}]
+    Batting:[{k:"runs",i:"🏃",l:"Runs"},{k:"6s",i:"💥",l:"Sixes"},{k:"4s",i:"4️⃣",l:"Fours"},{k:"50s",i:"⭐",l:"50s"},{k:"100s",i:"💯",l:"100s"}],
+    Bowling:[{k:"wickets",i:"🎯",l:"Wickets"},{k:"maidens",i:"🔵",l:"Maidens"},{k:"dots",i:"⚫",l:"Dots"},{k:"3w",i:"🎳",l:"3W Haul"},{k:"5w",i:"🔥",l:"5W Haul"},{k:"4w",i:"⚡",l:"4W Haul"}],
+    Fielding:[{k:"catches",i:"🧤",l:"Catches"},{k:"runouts",i:"🏃",l:"Run Outs"},{k:"stumpings",i:"🥅",l:"Stumpings"}]
   };
   let sh="";
   Object.entries(statDefs).forEach(([title,defs])=>{
     sh+=`<div class="fm-stats-title">${title}</div><div class="fm-stats-grid">`;
     defs.forEach(d=>{
-      const v = gi(p, d.k, d.k.toLowerCase(), d.k.toUpperCase()); 
+      const v = gi(p, d.k); 
       sh+=`<div class="fm-stat-box"><span class="fm-stat-icon">${d.i}</span><div class="fm-stat-val${v===0?" zero":""}">${v}</div><div class="fm-stat-label">${d.l}</div></div>`;
     });
     sh+="</div>";
