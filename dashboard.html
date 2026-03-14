@@ -255,6 +255,7 @@ body{
 .stat-cell{
   padding:15px 13px;border-right:1px solid var(--div);border-bottom:1px solid var(--div);
   position:relative;overflow:hidden;transition:background .15s;
+  min-height:110px;
 }
 .stat-cell:hover{background:rgba(79,172,254,.025);}
 .stat-cell:nth-child(3n){border-right:none;}
@@ -360,52 +361,58 @@ body{
 }
 .hbp-team-badge img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 1px 4px rgba(0,0,0,.5));}
 
-/* ── Stat cells: player image bleeds in from right, stats left ── */
-.stat-cell{position:relative;overflow:hidden;}
+/* ── Stat cells: full-cell player photo ── */
 
-/* Team logo — large watermark filling the whole cell behind everything */
+/* Team logo watermark — centred, low opacity, behind everything */
 .sc-team-logo-bg{
   position:absolute;inset:0;
   display:flex;align-items:center;justify-content:center;
-  pointer-events:none;z-index:0;overflow:hidden;
+  pointer-events:none;z-index:0;
 }
 .sc-team-logo-bg img{
-  width:85%;height:85%;object-fit:contain;
-  opacity:.1;
-  filter:drop-shadow(0 0 0 transparent);
+  width:75%;height:75%;
+  object-fit:contain;
+  opacity:.08;
 }
 
-/* Player photo — right 75% of cell, full height */
+/* Player photo — fills entire cell, floated from top with 6px padding */
 .sc-bg-photo{
-  position:absolute;right:0;top:0;bottom:0;
-  width:75%;pointer-events:none;z-index:1;
+  position:absolute;
+  left:0;right:0;top:6px;bottom:0;
+  pointer-events:none;z-index:1;
+  display:flex;align-items:flex-end;justify-content:center;
+  overflow:hidden;
 }
 .sc-bg-photo img{
-  width:100%;height:100%;object-fit:cover;object-position:top center;display:block;
+  height:100%;width:auto;
+  max-width:100%;
+  object-fit:contain;
+  object-position:bottom center;
+  display:block;
 }
-/* Gradient mask — left side clear for stat text */
-.sc-bg-photo::before{
-  content:'';position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to right,var(--bg) 5%,rgba(0,0,0,0) 55%);
-}
-[data-theme="light"] .sc-bg-photo::before{
-  background:linear-gradient(to right,var(--bg) 5%,rgba(255,255,255,0) 55%);
-}
-/* Desktop: narrower photo, more of player body visible */
-@media(min-width:480px){
-  .sc-bg-photo{width:50%;}
-  .sc-bg-photo img{object-fit:contain;object-position:bottom center;}
-  .sc-bg-photo::before{background:linear-gradient(to right,var(--bg) 10%,rgba(0,0,0,0) 60%);}
-}
-/* Team logo badge — bottom right corner, visible */
-.sc-team-badge{
-  position:absolute;bottom:7px;right:7px;z-index:3;
-  width:22px;height:22px;pointer-events:none;
-}
-.sc-team-badge img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5));opacity:.9;}
 
-/* All text content stays above photos */
-.sc-icon,.sc-label,.sc-val,.sc-name,.sc-team{position:relative;z-index:1;}
+/* Bottom gradient — keeps stat text readable, blends into cell bg */
+.sc-bg-photo::after{
+  content:'';
+  position:absolute;left:0;right:0;bottom:0;
+  height:65%;
+  background:linear-gradient(to top,
+    var(--bg) 0%,
+    rgba(6,13,26,.6) 35%,
+    transparent 100%
+  );
+  pointer-events:none;z-index:2;
+}
+[data-theme="light"] .sc-bg-photo::after{
+  background:linear-gradient(to top,
+    var(--bg) 0%,
+    rgba(240,236,230,.7) 35%,
+    transparent 100%
+  );
+}
+
+/* All text content floats above photo + gradient */
+.sc-icon,.sc-label,.sc-val,.sc-name,.sc-team{position:relative;z-index:3;}
 .cap-icon,.cap-title,.cap-player,.cap-ipl,.cap-num,.cap-unit{position:relative;z-index:1;}
 </style>
 </head>
@@ -722,25 +729,20 @@ function setHbpPhoto(colId, badgeId, name, iplTeam){
   }
 }
 
-/* Build bleed photo + team badge for a stat cell */
+/* Build full-cell media for a stat cell: team logo watermark + player photo */
 function makeScCellMedia(name, iplTeam){
   const key=(name||"").trim().toLowerCase();
   const d=playerImgMap[key];
   const td=getTeamLogoData(iplTeam||d?.iplTeam||"");
-  // Large team logo watermark — fills whole cell at low opacity
+  // Team logo watermark — centred behind everything
   const logoWm=td?.logo
-    ?`<div class="sc-team-logo-bg"><img src="${td.logo}" alt=""></div>`
+    ?`<div class="sc-team-logo-bg"><img src="${td.logo}" alt="" onerror="this.parentNode.remove()"></div>`
     :"";
-  // Player photo bleed from right
-  let bgHtml="";
-  if(d?.img){
-    bgHtml=`<div class="sc-bg-photo"><img src="${d.img}" alt="${name}" onerror="this.style.display='none'"></div>`;
-  }
-  // Small team badge bottom-right corner
-  const badgeHtml=td?.logo
-    ?`<div class="sc-team-badge"><img src="${td.logo}" alt="${iplTeam}" onerror="this.parentNode.innerHTML=''"></div>`
+  // Player photo — fills the cell from top padding down
+  const photoHtml=d?.img
+    ?`<div class="sc-bg-photo"><img src="${d.img}" alt="${name}" onerror="this.parentNode.remove()"></div>`
     :"";
-  return logoWm+bgHtml+badgeHtml;
+  return logoWm+photoHtml;
 }
 
 /* ─── THEME ─── */
