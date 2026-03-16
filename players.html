@@ -585,6 +585,20 @@ body{font-family:var(--font-main);background:var(--mesh);background-color:var(--
 .field-loading-emoji{font-size:42px;animation:floatBounce 2.5s ease-in-out infinite;}
 @keyframes floatBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
 
+/* ── FIELD VIEW: desktop restore ── */
+@media(min-width:480px){
+  .field{padding:18px 12px 24px;}
+  .fp-avatar{width:60px;height:60px;font-size:24px;border-width:2.5px;}
+  .fp-badge.cap-c{width:20px;height:20px;font-size:10px;top:-5px;right:-5px;}
+  .fp-badge.cap-vc{width:20px;height:20px;font-size:10px;top:-5px;right:-5px;}
+  .fp-badge.orange-cap{width:20px;height:20px;font-size:10px;top:-5px;left:-5px;}
+  .fp-badge.purple-cap{width:20px;height:20px;font-size:10px;bottom:-5px;left:-5px;}
+  .fp-name{font-size:10px;max-width:72px;padding:3px 7px;border-radius:8px;}
+  .fp-pts{font-size:9px;}
+  .role-row{gap:10px;padding:6px 10px 4px;}
+  .pitch-strip{width:40px;height:220px;}
+}
+
 /* ════════════════════════════════════
    FIELD PLAYER DETAIL SHEET
    — Bottom sheet, sticky hero header,
