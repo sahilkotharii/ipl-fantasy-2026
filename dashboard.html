@@ -497,7 +497,6 @@ body{
   </div>
 </div>
 
-
 <p class="sec" style="animation-delay:.09s">🏆 Prize Standings</p>
 <div class="card" style="animation-delay:.1s">
   <div class="podium-wrap" id="podium-wrap"><div class="loading-row">Loading</div></div>
@@ -668,7 +667,6 @@ body{
     </div>
   </div>
 
-
 </div><p class="sec" style="animation-delay:.04s">🤑 Biggest Signing</p>
 <div class="hbp-card" id="hbp-section">
   <div class="hbp-photo-col" id="hbp-photo-col"></div>
@@ -721,9 +719,8 @@ function getTeamLogoData(iplTeam){
 }
 
 /* Build player image + team map from sheet data */
-let playerImgMap={};   // { "player name lowercase": { img, iplTeam } }
+let playerImgMap={};   
 
-/* Set bleed photo in cap card bg slot */
 function setCapBgPhoto(bgId, badgeId, name, iplTeam){
   const bgEl=document.getElementById(bgId);
   const badgeEl=document.getElementById(badgeId);
@@ -731,17 +728,11 @@ function setCapBgPhoto(bgId, badgeId, name, iplTeam){
   const key=(name||"").trim().toLowerCase();
   const d=playerImgMap[key];
   const td=getTeamLogoData(iplTeam||d?.iplTeam||"");
-  if(d?.img){
-    bgEl.innerHTML=`<img src="${d.img}" alt="${name}" onerror="this.style.display='none'">`;
-  }else if(td?.logo){
-    bgEl.innerHTML=`<img src="${td.logo}" style="object-fit:contain;object-position:center" alt="">`;
-  }
-  if(badgeEl&&td?.logo){
-    badgeEl.innerHTML=`<img src="${td.logo}" alt="${iplTeam}" onerror="this.parentNode.innerHTML=''">`;
-  }
+  if(d?.img) bgEl.innerHTML=`<img src="${d.img}" alt="${name}" onerror="this.style.display='none'">`;
+  else if(td?.logo) bgEl.innerHTML=`<img src="${td.logo}" style="object-fit:contain;object-position:center" alt="">`;
+  if(badgeEl&&td?.logo) badgeEl.innerHTML=`<img src="${td.logo}" alt="${iplTeam}" onerror="this.parentNode.innerHTML=''">`;
 }
 
-/* Set bleed photo in HBP photo column */
 function setHbpPhoto(colId, badgeId, name, iplTeam){
   const colEl=document.getElementById(colId);
   const badgeEl=document.getElementById(badgeId);
@@ -755,12 +746,9 @@ function setHbpPhoto(colId, badgeId, name, iplTeam){
     colEl.style.display="flex";colEl.style.alignItems="center";colEl.style.justifyContent="center";
     colEl.innerHTML=`<img src="${td.logo}" style="width:60%;object-fit:contain;" alt="">`;
   }
-  if(badgeEl&&td?.logo){
-    badgeEl.innerHTML=`<img src="${td.logo}" alt="${iplTeam}" onerror="this.parentNode.innerHTML=''">`;
-  }
+  if(badgeEl&&td?.logo) badgeEl.innerHTML=`<img src="${td.logo}" alt="${iplTeam}" onerror="this.parentNode.innerHTML=''">`;
 }
 
-/* Set Player of the Tournament card photo + badge */
 function setPotPhoto(name, iplTeam){
   const bgEl=document.getElementById("pot-bg-photo");
   const badgeEl=document.getElementById("pot-team-badge");
@@ -768,17 +756,11 @@ function setPotPhoto(name, iplTeam){
   const key=(name||"").trim().toLowerCase();
   const d=playerImgMap[key];
   const td=getTeamLogoData(iplTeam||d?.iplTeam||"");
-  if(d?.img){
-    bgEl.innerHTML=`<img src="${d.img}" alt="${name}" onerror="this.style.display='none'">`;
-  }else if(td?.logo){
-    bgEl.innerHTML=`<img src="${td.logo}" style="width:60%;object-fit:contain;margin:auto;" alt="">`;
-  }
-  if(badgeEl&&td?.logo){
-    badgeEl.innerHTML=`<img src="${td.logo}" alt="${iplTeam}" onerror="this.parentNode.innerHTML=''">`;
-  }
+  if(d?.img) bgEl.innerHTML=`<img src="${d.img}" alt="${name}" onerror="this.style.display='none'">`;
+  else if(td?.logo) bgEl.innerHTML=`<img src="${td.logo}" style="width:60%;object-fit:contain;margin:auto;" alt="">`;
+  if(badgeEl&&td?.logo) badgeEl.innerHTML=`<img src="${td.logo}" alt="${iplTeam}" onerror="this.parentNode.innerHTML=''">`;
 }
 
-/* Build full-cell media for a stat cell: team logo watermark + player photo */
 function makeScCellMedia(name, iplTeam){
   const key=(name||"").trim().toLowerCase();
   const d=playerImgMap[key];
@@ -834,19 +816,6 @@ function animateCount(el,target,dur=900){
 const setEl=(id,v)=>{const e=document.getElementById(id);if(e)e.innerText=v??""};
 async function api(body){try{const r=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify(body)});return r.json();}catch{return null;}}
 
-/* 🔥 BULLETPROOF DATA FETCHER 🔥 */
-// This ignores exact spelling/casing from your Google App Script
-const getFuzzyLeader = (L, targets) => {
-  if(!L) return {};
-  const arr = targets.map(t => t.toLowerCase().replace(/[^a-z0-9]/g, ''));
-  for(const [k, v] of Object.entries(L)) {
-    const nk = k.toLowerCase().replace(/[^a-z0-9]/g, '');
-    // Check if the key matches exactly, OR matches if we strip "most" from the start
-    if(arr.includes(nk) || arr.includes(nk.replace(/^most/, ''))) return v || {};
-  }
-  return {};
-};
-
 /* ─── LOAD ─── */
 document.addEventListener("DOMContentLoaded",()=>{
   document.getElementById("team-name-txt").innerText=myTeam||"Dashboard";
@@ -860,8 +829,10 @@ async function loadAll(){
     api({action:"getPlayers"})
   ]);
   
+  window.allPlayers = playersRes?.players || [];
+  
   if(playersRes?.status==="success"){
-    (playersRes.players||[]).forEach(p=>{
+    window.allPlayers.forEach(p=>{
       const key=(p["Player Name"]||"").trim().toLowerCase();
       if(key) playerImgMap[key]={ img:(p["Image"]||"").toString().trim(), iplTeam:p["IPL Team"]||"" };
     });
@@ -939,47 +910,86 @@ function buildLeaderboard(lb){
   }).join("");
 }
 
-/* ─── LEADERS + HBP ─── */
+/* ─── LEADERS + HBP + CLIENT-SIDE FALLBACK CALCULATOR ─── */
 function buildLeaders(L){
-  const s=(id,v)=>setEl(id,v||"—");
+  const s = (id, v) => {
+    const e = document.getElementById(id);
+    if(e) e.innerText = (v !== undefined && v !== null && v !== "") ? v : "—";
+  };
 
-  s("oc-name",L.orangeCap?.name);s("oc-team",L.orangeCap?.iplTeam);s("oc-val",L.orangeCap?.value||0);
-  s("pc-name",L.purpleCap?.name);s("pc-team",L.purpleCap?.iplTeam);s("pc-val",L.purpleCap?.value||0);
+  /* Cap holders */
+  s("oc-name",L.orangeCap?.name || "—"); s("oc-team",L.orangeCap?.iplTeam || "—"); s("oc-val",L.orangeCap?.value||0);
+  s("pc-name",L.purpleCap?.name || "—"); s("pc-team",L.purpleCap?.iplTeam || "—"); s("pc-val",L.purpleCap?.value||0);
   setCapBgPhoto("oc-bg-photo", "oc-team-badge", L.orangeCap?.name, L.orangeCap?.iplTeam);
   setCapBgPhoto("pc-bg-photo", "pc-team-badge", L.purpleCap?.name, L.purpleCap?.iplTeam);
 
-  s("l-runs",  L.orangeCap?.value);  s("l-runs-n",  L.orangeCap?.name);
-  s("l-sixes", L.mostSixes?.value);  s("l-sixes-n", L.mostSixes?.name);
-  s("l-fours", L.mostFours?.value);  s("l-fours-n", L.mostFours?.name);
-  s("l-50",    L.mostFifties?.value);s("l-50-n",    L.mostFifties?.name);
-  s("l-100",   L.mostHundreds?.value);s("l-100-n",  L.mostHundreds?.name);
-  
-  s("l-wkt",   L.purpleCap?.value);  s("l-wkt-n",   L.purpleCap?.name);
-  s("l-maid",  L.mostMaidens?.value);s("l-maid-n",  L.mostMaidens?.name);
+  /* 🔥 Client-Side Calculation Fallback 🔥 
+     If the Google Apps Script forgets to compute a stat, we compute it directly from the raw player data! */
+  const getClientLeader = (targetKeys) => {
+    let max = 0, top = null;
+    const targets = targetKeys.map(t => t.toLowerCase().replace(/[^a-z0-9]/g, ''));
+    (window.allPlayers || []).forEach(p => {
+      let v = 0;
+      for(const [k, val] of Object.entries(p)) {
+        const nk = k.toLowerCase().replace(/[^a-z0-9]/g, '');
+        if(targets.includes(nk)) {
+          v = parseFloat(val) || 0;
+          break;
+        }
+      }
+      if(v > max) { max = v; top = { name: p["Player Name"]||"—", value: v, iplTeam: p["IPL Team"]||"" }; }
+    });
+    // Return '-' values if nobody has scored yet so the UI shows an empty state correctly
+    return top || { name: "—", value: "—", iplTeam: "" };
+  };
 
-  // Safely grab the data regardless of how Google Apps Script formats the headers!
-  const threeW = getFuzzyLeader(L, ["3w", "threew"]);
+  const getFuzz = (targets) => {
+    if(!L) return null;
+    const arr = targets.map(t => t.toLowerCase().replace(/[^a-z0-9]/g, ''));
+    for(const [k, v] of Object.entries(L)) {
+      const nk = k.toLowerCase().replace(/[^a-z0-9]/g, '');
+      if(arr.some(t => nk.includes(t))) {
+         if(v && v.name && v.name !== "—") return v;
+      }
+    }
+    return null;
+  };
+
+  /* Get the hard-to-find stats using Fuzz OR the Client-Side Calculator */
+  const threeW = L.most3W || L.mostThreeW || getFuzz(["3w", "threew"]) || getClientLeader(["3w", "threew"]);
+  const fourW = L.most4W || L.mostfourw || getFuzz(["4w", "fourw"]) || getClientLeader(["4w", "fourw"]);
+  const fiveW = L.most5W || L.mostFiveW || getFuzz(["5w", "fivew"]) || getClientLeader(["5w", "fivew"]);
+  const ro = L.mostRunOuts || L.mostrunouts || getFuzz(["runout", "ro"]) || getClientLeader(["runouts", "runout"]);
+  const stmp = L.mostStumpings || L.moststumpings || getFuzz(["stump", "stmp", "stumpings"]) || getClientLeader(["stumpings", "stumping"]);
+
+  /* Write basic stats to the DOM */
+  s("l-runs",  L.orangeCap?.value);  s("l-runs-n",  L.orangeCap?.name || "—");
+  s("l-sixes", L.mostSixes?.value);  s("l-sixes-n", L.mostSixes?.name || "—");
+  s("l-fours", L.mostFours?.value);  s("l-fours-n", L.mostFours?.name || "—");
+  s("l-50",    L.mostFifties?.value);s("l-50-n",    L.mostFifties?.name || "—");
+  s("l-100",   L.mostHundreds?.value);s("l-100-n",  L.mostHundreds?.name || "—");
+  
+  s("l-wkt",   L.purpleCap?.value);  s("l-wkt-n",   L.purpleCap?.name || "—");
+  s("l-maid",  L.mostMaidens?.value);s("l-maid-n",  L.mostMaidens?.name || "—");
+
+  /* Write the dynamically calculated fallback stats to the DOM */
   s("l-3w", threeW.value); s("l-3w-n", threeW.name);
-  
-  const fourW = getFuzzyLeader(L, ["4w", "fourw"]);
   s("l-4w", fourW.value); s("l-4w-n", fourW.name);
-  
-  const fiveW = getFuzzyLeader(L, ["5w", "fivew"]);
   s("l-5w", fiveW.value); s("l-5w-n", fiveW.name);
-  
-  const ro = getFuzzyLeader(L, ["runouts", "runout"]);
+  s("l-cats",  L.mostCatches?.value); s("l-cats-n",  L.mostCatches?.name || "—");
   s("l-ro", ro.value); s("l-ro-n", ro.name);
-  
-  const stmp = getFuzzyLeader(L, ["stumpings", "stumping"]);
   s("l-stmp", stmp.value); s("l-stmp-n", stmp.name);
 
+  /* Player of Tournament */
   s("l-top",   L.highestPts?.value);
-  s("l-top-n", L.highestPts?.name);
+  s("l-top-n", L.highestPts?.name || "—");
   s("l-top-t", L.highestPts?.iplTeam||"");
   setPotPhoto(L.highestPts?.name, L.highestPts?.iplTeam);
   
-  injectLeaderPhotos(L);
+  // Inject player photos into cells passing along our calculated fallback objects
+  injectLeaderPhotos(L, { threeW, fourW, fiveW, ro, stmp });
 
+  /* Animate numbers */
   const numIds=["l-runs","l-sixes","l-fours","l-50","l-100",
                 "l-wkt","l-maid","l-3w","l-4w","l-5w",
                 "l-cats","l-ro","l-stmp","l-top","oc-val","pc-val"];
@@ -989,6 +999,7 @@ function buildLeaders(L){
     if(el&&!isNaN(n)&&n>0)setTimeout(()=>animateCount(el,n),400);
   });
 
+  /* HBP */
   const hbp=L.highestBought;
   if(hbp?.name){
     setEl("hbp-name",hbp.name);
@@ -1014,13 +1025,7 @@ function buildLeaders(L){
 }
 
 /* ─── INJECT LEADER PHOTOS ─── */
-function injectLeaderPhotos(L){
-  const threeW = getFuzzyLeader(L, ["3w", "threew"]);
-  const fourW = getFuzzyLeader(L, ["4w", "fourw"]);
-  const fiveW = getFuzzyLeader(L, ["5w", "fivew"]);
-  const ro = getFuzzyLeader(L, ["runouts", "runout"]);
-  const stmp = getFuzzyLeader(L, ["stumpings", "stumping"]);
-
+function injectLeaderPhotos(L, comp){
   const cells=[
     ["l-runs",  "l-runs-n",  L.orangeCap?.name,       L.orangeCap?.iplTeam],
     ["l-sixes", "l-sixes-n", L.mostSixes?.name,        L.mostSixes?.iplTeam],
@@ -1029,16 +1034,16 @@ function injectLeaderPhotos(L){
     ["l-100",   "l-100-n",   L.mostHundreds?.name,     L.mostHundreds?.iplTeam],
     ["l-wkt",   "l-wkt-n",   L.purpleCap?.name,        L.purpleCap?.iplTeam],
     ["l-maid",  "l-maid-n",  L.mostMaidens?.name,      L.mostMaidens?.iplTeam],
-    ["l-3w",    "l-3w-n",    threeW.name,              threeW.iplTeam],
-    ["l-4w",    "l-4w-n",    fourW.name,               fourW.iplTeam],
-    ["l-5w",    "l-5w-n",    fiveW.name,               fiveW.iplTeam],
+    ["l-3w",    "l-3w-n",    comp.threeW.name,         comp.threeW.iplTeam],
+    ["l-4w",    "l-4w-n",    comp.fourW.name,          comp.fourW.iplTeam],
+    ["l-5w",    "l-5w-n",    comp.fiveW.name,          comp.fiveW.iplTeam],
     ["l-cats",  "l-cats-n",  L.mostCatches?.name,      L.mostCatches?.iplTeam],
-    ["l-ro",    "l-ro-n",    ro.name,                  ro.iplTeam],
-    ["l-stmp",  "l-stmp-n",  stmp.name,                stmp.iplTeam]
+    ["l-ro",    "l-ro-n",    comp.ro.name,             comp.ro.iplTeam],
+    ["l-stmp",  "l-stmp-n",  comp.stmp.name,           comp.stmp.iplTeam]
   ];
 
   cells.forEach(([valId, nameId, playerName, iplTeam])=>{
-    if(!playerName)return;
+    if(!playerName || playerName === "—") return;
     const nameEl=document.getElementById(nameId);
     if(!nameEl)return;
     const cell=nameEl.closest(".stat-cell");
