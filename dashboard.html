@@ -469,7 +469,6 @@ body{
 <canvas id="pitch-canvas"></canvas>
 <div class="page-wrap">
 
-<!-- ═══ TOPBAR ═══ -->
 <div class="topbar">
   <div class="topbar-left">
     <p class="sub">IPL Fantasy 2026</p>
@@ -480,7 +479,6 @@ body{
   </div>
 </div>
 
-<!-- ═══ HERO — MY RANK & POINTS ═══ -->
 <div class="hero-card">
   <div class="hero-top">
     <div class="rank-ring">
@@ -500,13 +498,11 @@ body{
 </div>
 
 
-<!-- ═══ PRIZE PODIUM ═══ -->
 <p class="sec" style="animation-delay:.09s">🏆 Prize Standings</p>
 <div class="card" style="animation-delay:.1s">
   <div class="podium-wrap" id="podium-wrap"><div class="loading-row">Loading</div></div>
 </div>
 
-<!-- ═══ FULL LEADERBOARD ═══ -->
 <p class="sec" style="animation-delay:.13s">Fantasy Standings</p>
 <div class="card" style="animation-delay:.14s">
   <div class="card-hdr">
@@ -516,7 +512,6 @@ body{
   <div id="lb-body"><div class="loading-row">Loading</div></div>
 </div>
 
-<!-- ═══ PLAYER OF THE TOURNAMENT ═══ -->
 <p class="sec" style="animation-delay:.17s">🏆 Player of the Tournament</p>
 <div class="card" style="animation-delay:.18s">
   <div class="pot-card" id="pot-card">
@@ -534,7 +529,6 @@ body{
   </div>
 </div>
 
-<!-- ═══ CAP HOLDERS ═══ -->
 <p class="sec" style="animation-delay:.19s">Cap Holders</p>
 <div class="card" style="animation-delay:.2s">
   <div class="caps-grid">
@@ -559,11 +553,9 @@ body{
   </div>
 </div>
 
-<!-- ═══ TOURNAMENT LEADERS — ACCORDION ═══ -->
 <p class="sec" style="animation-delay:.25s">Tournament Leaders</p>
 <div class="card" style="animation-delay:.26s">
 
-  <!-- BATTING -->
   <div class="acc-item bat" id="acc-bat">
     <div class="acc-trigger" onclick="toggleAcc('acc-bat')">
       <div class="acc-icon">🏏</div>
@@ -605,13 +597,12 @@ body{
     </div>
   </div>
 
-  <!-- BOWLING -->
   <div class="acc-item bowl" id="acc-bowl">
     <div class="acc-trigger" onclick="toggleAcc('acc-bowl')">
       <div class="acc-icon">🎳</div>
       <div class="acc-meta">
         <div class="acc-title">Bowling</div>
-        <div class="acc-sub">Wickets · Maidens · Dot Balls · 3W · 5W</div>
+        <div class="acc-sub">Wickets · Maidens · 3W · 4W · 5W</div>
       </div>
       <span class="acc-chevron">❯</span>
     </div>
@@ -628,14 +619,14 @@ body{
           <div class="sc-name" id="l-maid-n">—</div>
         </div>
         <div class="stat-cell">
-          <span class="sc-icon">⚫</span><div class="sc-label">Dot Balls</div>
-          <div class="sc-val" id="l-dots">—</div>
-          <div class="sc-name" id="l-dots-n">—</div>
-        </div>
-        <div class="stat-cell no-bot hero-cell" style="border-right:1px solid var(--div)">
           <span class="sc-icon">🎳</span><div class="sc-label">3-Wkt Hauls</div>
           <div class="sc-val" id="l-3w">—</div>
           <div class="sc-name" id="l-3w-n">—</div>
+        </div>
+        <div class="stat-cell no-bot hero-cell" style="border-right:1px solid var(--div)">
+          <span class="sc-icon">⚡</span><div class="sc-label">4-Wkt Hauls</div>
+          <div class="sc-val" id="l-4w">—</div>
+          <div class="sc-name" id="l-4w-n">—</div>
         </div>
         <div class="stat-cell no-bot">
           <span class="sc-icon">🔥</span><div class="sc-label">5-Wkt Hauls</div>
@@ -647,7 +638,6 @@ body{
     </div>
   </div>
 
-  <!-- FIELDING -->
   <div class="acc-item field" id="acc-field">
     <div class="acc-trigger" onclick="toggleAcc('acc-field')">
       <div class="acc-icon">🧤</div>
@@ -679,11 +669,7 @@ body{
   </div>
 
 
-</div><!-- /card -->
-
-
-<!-- ═══ BIGGEST SIGNING — directly below points ═══ -->
-<p class="sec" style="animation-delay:.04s">🤑 Biggest Signing</p>
+</div><p class="sec" style="animation-delay:.04s">🤑 Biggest Signing</p>
 <div class="hbp-card" id="hbp-section">
   <div class="hbp-photo-col" id="hbp-photo-col"></div>
   <div class="hbp-team-badge" id="hbp-team-badge"></div>
@@ -701,10 +687,7 @@ body{
 </div>
 
 <div style="height:10px"></div>
-</div><!-- /page-wrap -->
-
-<!-- ═══ BOTTOM NAV ═══ -->
-<nav class="bottom-nav">
+</div><nav class="bottom-nav">
   <a href="dashboard.html" class="nav-item active"><div class="nav-icon-wrap"><span class="nav-icon">🏠</span></div>Home</a>
   <a href="squad.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🛡️</span></div>Squad</a>
   <a href="players.html" class="nav-item"><div class="nav-icon-wrap"><span class="nav-icon">🃏</span></div>Cards</a>
@@ -972,34 +955,42 @@ function buildLeaders(L){
   s("l-50",    L.mostFifties?.value);s("l-50-n",    L.mostFifties?.name);
   s("l-100",   L.mostHundreds?.value);s("l-100-n",  L.mostHundreds?.name);
 
-  /* Bowling */
+  /* Bowling - Use robust fallbacks */
   s("l-wkt",   L.purpleCap?.value);  s("l-wkt-n",   L.purpleCap?.name);
   s("l-maid",  L.mostMaidens?.value);s("l-maid-n",  L.mostMaidens?.name);
-  s("l-dots",  L.mostDots?.value);   s("l-dots-n",  L.mostDots?.name);
-  const threeW=L.most3W||L.mostThreeW;
-  s("l-3w",threeW?.value);s("l-3w-n",threeW?.name);
-  const fiveW=L.most5W||L.mostFiveW;
-  s("l-5w",fiveW?.value);s("l-5w-n",fiveW?.name);
+  
+  const threeW = L.most3W || L.mostThreeW || {};
+  s("l-3w", threeW.value); s("l-3w-n", threeW.name);
+  
+  const fourW = L.most4W || L.mostFourW || {};
+  s("l-4w", fourW.value); s("l-4w-n", fourW.name);
+  
+  const fiveW = L.most5W || L.mostFiveW || {};
+  s("l-5w", fiveW.value); s("l-5w-n", fiveW.name);
 
-  /* Fielding */
+  /* Fielding - Use robust fallbacks */
   s("l-cats",  L.mostCatches?.value);  s("l-cats-n",  L.mostCatches?.name);
-  const ro=L.mostRunOuts||L.mostRunouts;
-  s("l-ro",ro?.value);s("l-ro-n",ro?.name);
-  s("l-stmp",  L.mostStumpings?.value);s("l-stmp-n",  L.mostStumpings?.name);
+  
+  const ro = L.mostRunOuts || L.mostRunouts || {};
+  s("l-ro", ro.value); s("l-ro-n", ro.name);
+  
+  const stmp = L.mostStumpings || {};
+  s("l-stmp", stmp.value); s("l-stmp-n", stmp.name);
 
   /* Player of the Tournament */
   s("l-top",   L.highestPts?.value);
   s("l-top-n", L.highestPts?.name);
   s("l-top-t", L.highestPts?.iplTeam||"");
   setPotPhoto(L.highestPts?.name, L.highestPts?.iplTeam);
+  
   // Inject player photos for all leader cells
   injectLeaderPhotos(L);
 
   /* Animate all numeric cells */
   const numIds=["l-runs","l-sixes","l-fours","l-50","l-100",
-                "l-wkt","l-maid","l-dots","l-3w","l-5w",
+                "l-wkt","l-maid","l-3w","l-4w","l-5w",
                 "l-cats","l-ro","l-stmp","l-top","oc-val","pc-val"];
-  // Also animate POT pts (same id, standalone card)
+  
   numIds.forEach(id=>{
     const el=document.getElementById(id);
     const n=Number(el?.textContent);
@@ -1037,6 +1028,13 @@ function buildLeaders(L){
 
 /* ─── INJECT LEADER PHOTOS ─── */
 function injectLeaderPhotos(L){
+  // Safely assign properties first to avoid optional chaining failures within the array
+  const threeW = L.most3W || L.mostThreeW || {};
+  const fourW = L.most4W || L.mostFourW || {};
+  const fiveW = L.most5W || L.mostFiveW || {};
+  const ro = L.mostRunOuts || L.mostRunouts || {};
+  const stmp = L.mostStumpings || {};
+
   // Each entry: [statId, nameId, playerNameValue, iplTeamValue, fallbackEmoji]
   const cells=[
     ["l-runs",  "l-runs-n",  L.orangeCap?.name,       L.orangeCap?.iplTeam,     "🏏"],
@@ -1046,13 +1044,12 @@ function injectLeaderPhotos(L){
     ["l-100",   "l-100-n",   L.mostHundreds?.name,     L.mostHundreds?.iplTeam,  "💯"],
     ["l-wkt",   "l-wkt-n",   L.purpleCap?.name,        L.purpleCap?.iplTeam,     "🎯"],
     ["l-maid",  "l-maid-n",  L.mostMaidens?.name,      L.mostMaidens?.iplTeam,   "🔵"],
-    ["l-dots",  "l-dots-n",  L.mostDots?.name,         L.mostDots?.iplTeam,      "⚫"],
-    ["l-3w",    "l-3w-n",    L.most3W?.name||L.mostThreeW?.name, L.most3W?.iplTeam||L.mostThreeW?.iplTeam, "🎳"],
-    ["l-5w",    "l-5w-n",    L.most5W?.name||L.mostFiveW?.name,  L.most5W?.iplTeam||L.mostFiveW?.iplTeam,  "🔥"],
+    ["l-3w",    "l-3w-n",    threeW.name,              threeW.iplTeam,           "🎳"],
+    ["l-4w",    "l-4w-n",    fourW.name,               fourW.iplTeam,            "⚡"],
+    ["l-5w",    "l-5w-n",    fiveW.name,               fiveW.iplTeam,            "🔥"],
     ["l-cats",  "l-cats-n",  L.mostCatches?.name,      L.mostCatches?.iplTeam,   "🧤"],
-    ["l-ro",    "l-ro-n",    (L.mostRunOuts||L.mostRunouts)?.name,  (L.mostRunOuts||L.mostRunouts)?.iplTeam, "🏃"],
-    ["l-stmp",  "l-stmp-n",  L.mostStumpings?.name,    L.mostStumpings?.iplTeam, "🥅"],
-    // l-top is now the standalone POT card, not a stat cell
+    ["l-ro",    "l-ro-n",    ro.name,                  ro.iplTeam,               "🏃"],
+    ["l-stmp",  "l-stmp-n",  stmp.name,                stmp.iplTeam,             "🥅"]
   ];
 
   cells.forEach(([valId, nameId, playerName, iplTeam, fb])=>{
