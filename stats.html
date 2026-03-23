@@ -43,11 +43,8 @@ body{
   min-height:100vh;color:var(--t1);padding-bottom:calc(68px + 14px + 28px);
   overflow-x:hidden;transition:background-color .3s,color .3s;
 }
-
-/* ── PARTICLES ── */
 #pitch-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.3;}
 
-/* ── TOPBAR ── */
 .topbar{
   position:relative;z-index:1;
   display:flex;justify-content:space-between;align-items:flex-start;padding:24px 20px 10px;
@@ -72,7 +69,18 @@ body{
 }
 .theme-btn:active{transform:scale(.86);}
 
-/* ── SEARCH ── */
+/* ── WK BANNER ── */
+.wk-banner{
+  margin:0 16px 10px;padding:11px 16px;border-radius:14px;
+  background:rgba(57,255,133,.1);border:1px solid rgba(57,255,133,.28);
+  display:flex;align-items:center;gap:9px;
+  position:relative;z-index:1;animation:fadeUp .4s var(--ease) both;
+}
+.wk-banner-icon{font-size:18px;flex-shrink:0;}
+.wk-banner-name{font-size:13px;font-weight:800;color:#39ff85;flex:1;}
+.wk-banner-sub{font-size:10px;color:rgba(57,255,133,.55);font-weight:700;letter-spacing:.06em;}
+.wk-banner-lock{font-size:14px;flex-shrink:0;}
+
 .search-wrap{
   margin:0 16px 14px;position:relative;z-index:1;
   animation:fadeUp .4s var(--ease) .1s both;
@@ -88,7 +96,6 @@ body{
 .search-bar:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,107,53,.12);}
 .search-bar::placeholder{color:var(--t3);}
 
-/* ── LIST WRAPPER ── */
 .list-wrap{
   position:relative;z-index:1;margin:0 16px 16px;
   background:rgba(255,255,255,.03);
@@ -99,66 +106,34 @@ body{
 }
 [data-theme="light"] .list-wrap{background:rgba(255,255,255,.6);}
 
-/* ── PLAYER ROW ── */
 .player-row{
-  display:flex;align-items:center;padding:0;
-  border-bottom:1px solid var(--div);
-  position:relative;overflow:hidden;
-  animation:rowIn .35s var(--ease) both;
-  transition:transform .2s var(--bounce);
-  cursor:pointer;
+  display:flex;align-items:center;padding:0;border-bottom:1px solid var(--div);
+  position:relative;overflow:hidden;animation:rowIn .35s var(--ease) both;
+  transition:transform .2s var(--bounce);cursor:pointer;
 }
 .player-row:last-child{border-bottom:none;}
 .player-row:active{transform:scale(.99);}
-
-/* Team gradient BG */
-.row-bg{
-  position:absolute;inset:0;pointer-events:none;opacity:.18;transition:opacity .25s;
-}
+.row-bg{position:absolute;inset:0;pointer-events:none;opacity:.18;transition:opacity .25s;}
 [data-theme="light"] .row-bg{opacity:.09;}
 .player-row:hover .row-bg{opacity:.3;}
 [data-theme="light"] .player-row:hover .row-bg{opacity:.16;}
-
-/* Shimmer */
-.row-shimmer{
-  position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
-  transform:translateX(-100%);
-}
+.row-shimmer{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);transform:translateX(-100%);}
 .player-row:hover .row-shimmer{animation:shimmerSlide .55s var(--ease);}
 @keyframes shimmerSlide{to{transform:translateX(100%);}}
-
-/* Left accent */
-.row-accent{
-  position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:0 2px 2px 0;
-  transition:width .2s var(--bounce);
-}
+.row-accent{position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:0 2px 2px 0;transition:width .2s var(--bounce);}
 .player-row:hover .row-accent{width:5px;}
+.row-content{position:relative;z-index:1;display:flex;align-items:center;gap:12px;padding:13px 16px 13px 20px;width:100%;}
 
-/* Row content */
-.row-content{
-  position:relative;z-index:1;display:flex;align-items:center;
-  gap:12px;padding:13px 16px 13px 20px;width:100%;
-}
-
-/* Avatar */
 .p-avatar{
   width:44px;height:44px;border-radius:14px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;font-size:22px;
-  border:1px solid rgba(255,255,255,.08);
-  transition:transform .2s var(--bounce);
+  border:1px solid rgba(255,255,255,.08);transition:transform .2s var(--bounce);
 }
 [data-theme="light"] .p-avatar{border-color:rgba(0,0,0,.07);}
 .player-row:hover .p-avatar{transform:scale(1.1) rotate(-4deg);}
-
 .p-info{flex:1;min-width:0;}
-.p-name{
-  font-size:14px;font-weight:800;margin-bottom:4px;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
+.p-name{font-size:14px;font-weight:800;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .p-meta{display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
-
-/* Badges */
 .badge{font-size:9px;font-weight:800;padding:2px 7px;border-radius:6px;letter-spacing:.05em;text-transform:uppercase;}
 .badge.bat{background:rgba(79,172,254,.15);color:#4facfe;}
 .badge.bowl{background:rgba(231,76,60,.15);color:#e74c3c;}
@@ -167,20 +142,17 @@ body{
 .badge.owned{background:rgba(79,172,254,.1);color:var(--blue);}
 .badge.unsold{background:rgba(255,255,255,.05);color:var(--t3);}
 [data-theme="light"] .badge.unsold{background:rgba(0,0,0,.05);}
+.badge.is-wk-badge{background:rgba(57,255,133,.15);color:#39ff85;border:1px solid rgba(57,255,133,.3);}
 
 .p-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
-
-/* Points pill */
 .pts-pill{
   background:var(--accent-soft);border:1px solid var(--accent-glow);border-radius:12px;
-  padding:6px 10px;text-align:center;
-  transition:transform .2s var(--bounce);
+  padding:6px 10px;text-align:center;transition:transform .2s var(--bounce);
 }
 .player-row:hover .pts-pill{transform:scale(1.06);}
 .pts-pill .pv{font-family:var(--font-mono);font-size:15px;font-weight:600;color:var(--accent);display:block;line-height:1;}
 .pts-pill .pl{font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);opacity:.65;margin-top:2px;}
 
-/* Action buttons */
 .p-actions{display:flex;gap:5px;}
 .act-btn{
   width:36px;height:36px;border-radius:11px;border:1px solid var(--brd);
@@ -191,15 +163,52 @@ body{
 }
 .act-btn:hover{transform:scale(1.08);}
 .act-btn:active{transform:scale(.88);}
-.act-btn.add{
-  background:var(--accent-soft);border-color:var(--accent-glow);color:var(--accent);font-size:18px;font-weight:700;
-  box-shadow:0 2px 10px rgba(255,107,53,.2);
-}
+.act-btn.add{background:var(--accent-soft);border-color:var(--accent-glow);color:var(--accent);font-size:18px;font-weight:700;box-shadow:0 2px 10px rgba(255,107,53,.2);}
 .act-btn.add:hover{box-shadow:0 4px 16px rgba(255,107,53,.35);}
 .act-btn.edit{background:var(--blue-soft);border-color:var(--blue-glow);color:var(--blue);}
 
+/* ── WK BUTTON ── */
+.act-btn.wk-btn{background:rgba(57,255,133,.1);border-color:rgba(57,255,133,.3);color:#39ff85;font-size:12px;font-weight:900;letter-spacing:.01em;}
+.act-btn.wk-btn.is-wk{background:rgba(57,255,133,.22);border-color:#39ff85;box-shadow:0 0 12px rgba(57,255,133,.3);animation:wkGlow 2.2s ease infinite;}
+.act-btn.wk-btn.wk-locked{opacity:.28;cursor:not-allowed;pointer-events:none;filter:grayscale(1);}
+.act-btn.wk-btn.is-wk.wk-locked{opacity:1;filter:none;pointer-events:none;}
+@keyframes wkGlow{0%,100%{box-shadow:0 0 0 0 rgba(57,255,133,.4);}60%{box-shadow:0 0 0 6px rgba(57,255,133,0);}}
+
 @keyframes rowIn{from{opacity:0;transform:translateX(-14px);}to{opacity:1;transform:none;}}
 .empty-state{padding:40px 20px;text-align:center;color:var(--t3);font-size:14px;}
+
+/* ══════════════════════════════════
+   WK CONFIRM OVERLAY
+══════════════════════════════════ */
+.wk-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  z-index:500;align-items:center;justify-content:center;padding:24px;
+}
+.wk-overlay.open{display:flex;animation:overlayIn .25s var(--ease);}
+@keyframes overlayIn{from{opacity:0;}to{opacity:1;}}
+.wk-card{
+  background:var(--surf2);border:1px solid rgba(57,255,133,.3);border-radius:28px;
+  padding:32px 28px 28px;width:100%;max-width:340px;
+  box-shadow:0 24px 80px rgba(0,0,0,.7);
+  animation:cardPop .4s var(--bounce) both;
+  position:relative;overflow:hidden;text-align:center;
+}
+@keyframes cardPop{from{opacity:0;transform:scale(.8) translateY(24px);}to{opacity:1;transform:none;}}
+.wk-card::before{content:'';position:absolute;inset:0;border-radius:28px;background:radial-gradient(circle at 50% 0%,rgba(57,255,133,.18),transparent 60%);pointer-events:none;}
+.wk-icon{font-size:52px;margin-bottom:14px;display:block;animation:iconBounce .6s var(--bounce) .1s both;}
+@keyframes iconBounce{from{transform:scale(0) rotate(-20deg);}to{transform:none;}}
+.wk-title{font-family:var(--font-display);font-size:28px;letter-spacing:.06em;margin-bottom:6px;color:#39ff85;text-shadow:0 0 20px rgba(57,255,133,.4);}
+.wk-player-name{font-size:18px;font-weight:800;margin-bottom:6px;color:var(--t1);}
+.wk-sub{font-size:12px;color:var(--t3);margin-bottom:16px;line-height:1.5;}
+.wk-bonus{display:inline-flex;align-items:center;gap:6px;border-radius:12px;padding:8px 16px;margin-bottom:22px;font-size:12px;font-weight:700;background:rgba(57,255,133,.13);border:1px solid rgba(57,255,133,.28);color:#39ff85;}
+.wk-actions{display:flex;gap:10px;}
+.wk-cancel{flex:1;padding:13px;border-radius:14px;background:var(--tog);border:1px solid var(--brd);color:var(--t2);font-family:var(--font-main);font-size:14px;font-weight:700;cursor:pointer;transition:transform .2s var(--bounce),background .2s;}
+.wk-cancel:hover{transform:scale(1.03);}
+.wk-cancel:active{transform:scale(.96);}
+.wk-ok{flex:1.3;padding:13px;border-radius:14px;border:none;font-family:var(--font-main);font-size:14px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#39ff85,#22c55e);color:#051a0a;box-shadow:0 4px 18px rgba(57,255,133,.35);transition:transform .2s var(--bounce),box-shadow .2s;letter-spacing:.03em;}
+.wk-ok:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(57,255,133,.5);}
+.wk-ok:active{transform:scale(.95);}
 
 /* ══════════════════════════════════
    BOTTOM SHEET / MODAL
@@ -213,12 +222,9 @@ body{
 .modal-sheet{
   background:var(--sheet);border:1px solid var(--brd2);border-radius:28px 28px 0 0;
   width:100%;max-height:93vh;display:flex;flex-direction:column;
-  animation:sheetUp .32s var(--ease);
-  box-shadow:0 -20px 60px rgba(0,0,0,.55);
+  animation:sheetUp .32s var(--ease);box-shadow:0 -20px 60px rgba(0,0,0,.55);
 }
 @keyframes sheetUp{from{transform:translateY(100%);}to{transform:none;}}
-
-/* Sheet top */
 .sheet-top{flex-shrink:0;padding:14px 20px 0;border-bottom:1px solid var(--div);}
 .sheet-handle{width:36px;height:4px;border-radius:2px;background:var(--t3);margin:0 auto 14px;opacity:.4;}
 .sheet-title-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
@@ -234,140 +240,67 @@ body{
   transition:transform .2s var(--bounce),background .2s;
 }
 .close-btn:hover{transform:scale(1.1) rotate(90deg);background:rgba(255,60,40,.2);}
-
-/* Mode tabs */
-.mode-row{
-  display:flex;gap:5px;margin-bottom:14px;
-  background:var(--inp);border:1px solid var(--ibrd);border-radius:14px;padding:4px;
-}
-.mode-tab{
-  flex:1;padding:9px;border-radius:10px;border:none;background:transparent;
-  color:var(--t3);font-family:var(--font-main);font-size:11px;font-weight:800;cursor:pointer;
-  transition:all .22s var(--bounce);letter-spacing:.04em;text-transform:uppercase;
-}
-.mode-tab.active.add-tab{
-  background:linear-gradient(135deg,var(--accent),#ff8c5a);color:#fff;
-  box-shadow:0 3px 14px rgba(255,107,53,.35);
-}
-.mode-tab.active.edit-tab{
-  background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;
-  box-shadow:0 3px 14px rgba(231,76,60,.3);
-}
-
-/* Sheet body */
+.mode-row{display:flex;gap:5px;margin-bottom:14px;background:var(--inp);border:1px solid var(--ibrd);border-radius:14px;padding:4px;}
+.mode-tab{flex:1;padding:9px;border-radius:10px;border:none;background:transparent;color:var(--t3);font-family:var(--font-main);font-size:11px;font-weight:800;cursor:pointer;transition:all .22s var(--bounce);letter-spacing:.04em;text-transform:uppercase;}
+.mode-tab.active.add-tab{background:linear-gradient(135deg,var(--accent),#ff8c5a);color:#fff;box-shadow:0 3px 14px rgba(255,107,53,.35);}
+.mode-tab.active.edit-tab{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;box-shadow:0 3px 14px rgba(231,76,60,.3);}
 .sheet-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .sheet-body::-webkit-scrollbar{display:none;}
-
-/* Current stats table */
 .cur-stats-wrap{padding:14px 16px 8px;}
-.cur-stats-label{
-  font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--t3);margin-bottom:8px;display:flex;align-items:center;gap:6px;
-}
+.cur-stats-label{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
 .cur-stats-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--div),transparent);}
 .tbl-scroll{overflow-x:auto;border-radius:14px;border:1px solid var(--brd);background:var(--cur);scrollbar-width:thin;}
 .tbl-scroll::-webkit-scrollbar{height:3px;}
 .tbl-scroll::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px;}
 .cur-tbl{border-collapse:collapse;width:100%;}
-.cur-tbl th{
-  padding:8px 12px;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--t3);background:var(--th);text-align:center;white-space:nowrap;
-}
-.cur-tbl td{
-  padding:10px 12px;font-family:var(--font-mono);font-size:14px;font-weight:600;
-  text-align:center;color:var(--t2);border-top:1px solid var(--div);white-space:nowrap;
-}
+.cur-tbl th{padding:8px 12px;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);background:var(--th);text-align:center;white-space:nowrap;}
+.cur-tbl td{padding:10px 12px;font-family:var(--font-mono);font-size:14px;font-weight:600;text-align:center;color:var(--t2);border-top:1px solid var(--div);white-space:nowrap;}
 .cur-tbl td.hi{color:var(--blue);}
 .cur-tbl td.pts-cell{font-size:17px;font-weight:700;color:var(--accent);background:rgba(255,107,53,.07);}
 .scroll-hint{text-align:center;font-size:10px;color:var(--t3);margin:5px 0 0;letter-spacing:.05em;}
-
-/* Mode hint */
-.mode-hint{
-  margin:4px 16px 0;padding:10px 14px;border-radius:12px;border:1px solid;
-  font-size:12px;line-height:1.55;
-}
+.mode-hint{margin:4px 16px 0;padding:10px 14px;border-radius:12px;border:1px solid;font-size:12px;line-height:1.55;}
 .mode-hint.add-hint{background:var(--accent-soft);border-color:rgba(255,107,53,.2);color:var(--t2);}
 .mode-hint.add-hint b{color:var(--accent);}
 .mode-hint.edit-hint{background:rgba(231,76,60,.08);border-color:rgba(231,76,60,.2);color:var(--t2);}
 .mode-hint.edit-hint b{color:#e74c3c;}
-
-/* Stat sections */
 .stat-section{padding:16px 16px 0;}
-.sec-title{
-  font-size:10px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;
-  margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(--div);
-  display:flex;align-items:center;gap:7px;
-}
+.sec-title{font-size:10px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(--div);display:flex;align-items:center;gap:7px;}
 .sec-title::before{content:'';width:12px;height:12px;border-radius:3px;flex-shrink:0;}
 .sec-title.c-bat{color:#4facfe;}.sec-title.c-bat::before{background:#4facfe;}
 .sec-title.c-bowl{color:#e74c3c;}.sec-title.c-bowl::before{background:#e74c3c;}
 .sec-title.c-field{color:#52c8ff;}.sec-title.c-field::before{background:#52c8ff;}
 .sec-title.c-ms{color:#f1c40f;}.sec-title.c-ms::before{background:#f1c40f;}
 .sec-title.c-custom{color:#a29bfe;}.sec-title.c-custom::before{background:#a29bfe;}
-
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;}
 .sig{display:flex;flex-direction:column;}
-.sig label{
-  font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
-  color:var(--t2);margin-bottom:7px;line-height:1.3;min-height:22px;
-}
-
-/* Stepper control */
-.sig-ctrl{
-  display:grid;grid-template-columns:42px 1fr 42px;
-  border:1px solid var(--ibrd);border-radius:13px;overflow:hidden;
-  background:var(--inp);
-  transition:border-color .25s,box-shadow .25s;
-}
+.sig label{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--t2);margin-bottom:7px;line-height:1.3;min-height:22px;}
+.sig-ctrl{display:grid;grid-template-columns:42px 1fr 42px;border:1px solid var(--ibrd);border-radius:13px;overflow:hidden;background:var(--inp);transition:border-color .25s,box-shadow .25s;}
 .sig-ctrl:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,107,53,.12);}
-.step-btn{
-  background:transparent;border:none;color:var(--t3);font-size:22px;font-weight:300;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-  padding:0;height:50px;
-  transition:background .2s,color .2s;touch-action:manipulation;
-}
+.step-btn{background:transparent;border:none;color:var(--t3);font-size:22px;font-weight:300;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;height:50px;transition:background .2s,color .2s;touch-action:manipulation;}
 .step-btn.minus{border-right:1px solid var(--ibrd);}
 .step-btn.plus{border-left:1px solid var(--ibrd);}
 .step-btn:active{background:var(--accent-soft);color:var(--accent);}
-.sig input{
-  width:100%;padding:8px 4px;border:none;background:transparent;
-  color:var(--t1);font-family:var(--font-mono);font-size:20px;font-weight:700;
-  text-align:center;outline:none;-webkit-appearance:none;min-width:0;
-}
+.sig input{width:100%;padding:8px 4px;border:none;background:transparent;color:var(--t1);font-family:var(--font-mono);font-size:20px;font-weight:700;text-align:center;outline:none;-webkit-appearance:none;min-width:0;}
 .sig input::-webkit-outer-spin-button,.sig input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
 .sig input[type=number]{-moz-appearance:textfield;}
 
-/* Sheet footer */
-.sheet-footer{
-  flex-shrink:0;padding:14px 20px 36px;border-top:1px solid var(--div);
-  background:var(--sheet);
-}
+/* WK-only disabled stat */
+.sig.wk-only-disabled .sig-ctrl{opacity:.3;pointer-events:none;}
+.sig.wk-only-disabled label .wk-only-tag{display:inline;}
+.wk-only-tag{display:none;font-size:8px;font-weight:800;color:#e74c3c;letter-spacing:.06em;text-transform:uppercase;}
+
+.sheet-footer{flex-shrink:0;padding:14px 20px 36px;border-top:1px solid var(--div);background:var(--sheet);}
 .footer-note{font-size:11px;color:var(--t3);text-align:center;margin-bottom:10px;line-height:1.5;}
 .footer-note b{color:var(--accent);}
 .footer-note b.red{color:#e74c3c;}
-.submit-btn{
-  width:100%;padding:16px;color:#fff;border:none;border-radius:16px;
-  font-family:var(--font-main);font-size:15px;font-weight:800;cursor:pointer;
-  letter-spacing:.03em;
-  transition:transform .15s var(--bounce),opacity .2s,box-shadow .2s;
-}
+.submit-btn{width:100%;padding:16px;color:#fff;border:none;border-radius:16px;font-family:var(--font-main);font-size:15px;font-weight:800;cursor:pointer;letter-spacing:.03em;transition:transform .15s var(--bounce),opacity .2s,box-shadow .2s;}
 .submit-btn:active{transform:scale(.97);}
 .submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-.btn-add{
-  background:linear-gradient(135deg,var(--accent),#ff8c5a);
-  box-shadow:0 6px 22px rgba(255,107,53,.4);
-}
+.btn-add{background:linear-gradient(135deg,var(--accent),#ff8c5a);box-shadow:0 6px 22px rgba(255,107,53,.4);}
 .btn-add:hover:not(:disabled){box-shadow:0 8px 28px rgba(255,107,53,.5);transform:translateY(-1px);}
-.btn-edit{
-  background:linear-gradient(135deg,#e74c3c,#c0392b);
-  box-shadow:0 6px 22px rgba(231,76,60,.35);
-}
+.btn-edit{background:linear-gradient(135deg,#e74c3c,#c0392b);box-shadow:0 6px 22px rgba(231,76,60,.35);}
 .btn-edit:hover:not(:disabled){box-shadow:0 8px 28px rgba(231,76,60,.45);transform:translateY(-1px);}
 
-/* ── TEAM COLOURS ── */
-/* (shared with other pages for consistent row gradients) */
-
-/* ── BOTTOM NAV ── */
 .bottom-nav{
   position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
   width:calc(100% - 28px);max-width:480px;height:68px;
@@ -376,10 +309,7 @@ body{
   display:flex;justify-content:space-around;align-items:center;
   padding:6px 2px;box-shadow:0 8px 40px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04);z-index:100;
 }
-.nav-item{
-  text-align:center;color:var(--t3);text-decoration:none;font-size:8px;font-weight:700;letter-spacing:.05em;
-  flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;transition:color .25s;
-}
+.nav-item{text-align:center;color:var(--t3);text-decoration:none;font-size:8px;font-weight:700;letter-spacing:.05em;flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;transition:color .25s;}
 .nav-item.active{color:var(--accent);}
 .nav-icon-wrap{width:38px;height:29px;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:background .25s,transform .2s var(--bounce);}
 .nav-item.active .nav-icon-wrap{background:var(--accent-soft);box-shadow:0 0 12px rgba(255,107,53,.2);}
@@ -399,6 +329,14 @@ body{
   <button class="theme-btn" onclick="toggleTheme()"><span id="theme-icon">☀️</span></button>
 </div>
 
+<!-- WK Banner (shown when WK is selected) -->
+<div class="wk-banner" id="wk-banner" style="display:none">
+  <span class="wk-banner-icon">🧤</span>
+  <span class="wk-banner-name" id="wk-banner-name">—</span>
+  <span class="wk-banner-sub">WICKET KEEPER</span>
+  <span class="wk-banner-lock">🔒</span>
+</div>
+
 <div class="search-wrap">
   <span class="search-icon">🔍</span>
   <input class="search-bar" id="search-bar" type="text" placeholder="Search players…" oninput="renderList()">
@@ -408,7 +346,22 @@ body{
   <div id="player-list"><div class="empty-state">Loading players…</div></div>
 </div>
 
-<!-- BOTTOM SHEET -->
+<!-- WK CONFIRMATION OVERLAY -->
+<div class="wk-overlay" id="wk-overlay">
+  <div class="wk-card">
+    <span class="wk-icon">🧤</span>
+    <div class="wk-title">SET WICKET KEEPER</div>
+    <div class="wk-player-name" id="wk-confirm-name">Player Name</div>
+    <div class="wk-sub">This is a <strong>permanent</strong> selection.<br>You cannot change your WK after confirming.</div>
+    <div class="wk-bonus">🧤 Only your WK can earn Stumping points</div>
+    <div class="wk-actions">
+      <button class="wk-cancel" onclick="closeWKConfirm()">Cancel</button>
+      <button class="wk-ok" onclick="doSetWK()">✓ Set as WK</button>
+    </div>
+  </div>
+</div>
+
+<!-- STATS BOTTOM SHEET -->
 <div id="stat-modal" class="modal" onclick="handleOverlay(event)">
   <div class="modal-sheet">
     <div class="sheet-top">
@@ -462,6 +415,7 @@ const myTeam=localStorage.getItem("teamName")||"";
 if(!myTeam){window.location.href="index.html";}
 const isAdmin=myTeam==="Admin";
 let allPlayers=[],pointsConfig=[],curPlayer=null,curMode="add";
+let pendingWK=null;
 
 /* ── THEME ── */
 const savedTheme=localStorage.getItem("theme")||"dark";
@@ -493,7 +447,7 @@ function toggleTheme(){
   window.addEventListener("resize",()=>{resize();init();});resize();init();tick();
 })();
 
-/* ── TEAM COLOURS for row gradients ── */
+/* ── TEAM COLOURS ── */
 const TEAMS={
   MI:{c1:"#004BA0",c2:"#1a6fd4"},CSK:{c1:"#c07c08",c2:"#FFD700"},RCB:{c1:"#8B0000",c2:"#ff4560"},
   KKR:{c1:"#3A225D",c2:"#8b5cf6"},DC:{c1:"#17479E",c2:"#4facfe"},PBKS:{c1:"#c41920",c2:"#ff6b6b"},
@@ -516,12 +470,36 @@ function keyAlias(key){
 }
 function roleClass(r){return{BOWL:"bowl",AR:"ar",WK:"wk"}[r]||"bat";}
 const roleEmoji={BAT:"🏏",BOWL:"🎳",AR:"⚡",WK:"🧤"};
-const TIER_COLOR={gold:"#FFD700",silver:"#C0C8D8",bronze:"#CD7F32"};
+
+/* ── WK HELPERS ── */
+function getWK(){return localStorage.getItem("wicketKeeper")||"";}
+function updateWKBanner(){
+  const wk=getWK();
+  const banner=document.getElementById("wk-banner");
+  if(!banner) return;
+  if(wk&&!isAdmin){
+    banner.style.display="flex";
+    document.getElementById("wk-banner-name").textContent=wk;
+  } else {
+    banner.style.display="none";
+  }
+}
 
 /* ── INIT ── */
 document.addEventListener("DOMContentLoaded",async()=>{
   document.getElementById("role-label").innerText=isAdmin?"Admin Panel":"My Squad";
   document.getElementById("role-desc").innerText=isAdmin?"Update stats for any player":"Your players only";
+  // Load WK from backend for non-admin
+  if(!isAdmin){
+    try{
+      const wkRes=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"getWK",teamName:myTeam})});
+      const wkData=await wkRes.json();
+      if(wkData.status==="success"&&wkData.wicketKeeper){
+        localStorage.setItem("wicketKeeper",wkData.wicketKeeper);
+      }
+    }catch(e){console.warn("WK fetch:",e);}
+    updateWKBanner();
+  }
   await Promise.all([loadConfig(),loadPlayers()]);
 });
 
@@ -556,30 +534,37 @@ function renderList(){
   const fl=allPlayers.filter(p=>p["Player Name"].toLowerCase().includes(q));
   const el=document.getElementById("player-list");
   if(!fl.length){el.innerHTML='<div class="empty-state">No players found 🔍</div>';return;}
-
-  // Store globally for openModal to use index
   window._statPlayers=fl;
+  const curWK=getWK();
+  const wkFilled=!!curWK;
 
   el.innerHTML=fl.map((p,i)=>{
     const rc=roleClass(p["Role"]);
     const pts=getPts(p);
     const icon=roleEmoji[p["Role"]]||"👤";
+    const name=p["Player Name"];
+    const isWK=(curWK===name);
     const own=p["Sold To"]
       ?`<span class="badge owned">${p["Sold To"]}</span>`
       :`<span class="badge unsold">Unsold</span>`;
+    const wkBadge=isWK?`<span class="badge is-wk-badge">🧤 WK</span>`:"";
     const tc=getTC(p["IPL Team"]||"");
+
+    // WK button: only show for non-admin
+    const wkLocked=isWK||wkFilled;
+    const wkBtnHTML=!isAdmin?`<button class="act-btn wk-btn ${isWK?"is-wk":""} ${wkLocked?"wk-locked":""}" onclick="askSetWK(${i})" title="${isWK?"🧤 Wicket Keeper (locked)":wkFilled?"WK already set — locked":"Set as Wicket Keeper"}">🧤</button>`:"";
 
     return`<div class="player-row" style="animation-delay:${Math.min(i*.04,.5)}s">
       <div class="row-bg" style="background:linear-gradient(110deg,${tc.c1}CC 0%,${tc.c2}55 40%,transparent 70%)"></div>
       <div class="row-shimmer"></div>
       <div class="row-accent" style="background:linear-gradient(180deg,${tc.c2},${tc.c1})"></div>
       <div class="row-content">
-        ${(()=>{const img=p["Image"]&&p["Image"].toString().trim();return img?`<div class="p-avatar" style="background:linear-gradient(135deg,${tc.c1}55,${tc.c2}33);border-color:${tc.c2}44;overflow:hidden;padding:0;"><img src="${img}" style="width:100%;height:100%;object-fit:cover;object-position:top center;border-radius:13px;" alt="${p["Player Name"]}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span style="display:none;font-size:22px;width:100%;height:100%;align-items:center;justify-content:center">${icon}</span></div>`:`<div class="p-avatar" style="background:linear-gradient(135deg,${tc.c1}55,${tc.c2}33);border-color:${tc.c2}44">${icon}</div>`})()}
+        ${(()=>{const img=p["Image"]&&p["Image"].toString().trim();return img?`<div class="p-avatar" style="background:linear-gradient(135deg,${tc.c1}55,${tc.c2}33);border-color:${tc.c2}44;overflow:hidden;padding:0;"><img src="${img}" style="width:100%;height:100%;object-fit:cover;object-position:top center;border-radius:13px;" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span style="display:none;font-size:22px;width:100%;height:100%;align-items:center;justify-content:center">${icon}</span></div>`:`<div class="p-avatar" style="background:linear-gradient(135deg,${tc.c1}55,${tc.c2}33);border-color:${tc.c2}44">${icon}</div>`})()}
         <div class="p-info" onclick="openModal(${i},'add')">
-          <div class="p-name">${p["Player Name"]}</div>
+          <div class="p-name">${name}</div>
           <div class="p-meta">
             <span class="badge ${rc}">${p["Role"]}</span>
-            ${own}
+            ${own}${wkBadge}
           </div>
         </div>
         <div class="p-right">
@@ -590,11 +575,62 @@ function renderList(){
           <div class="p-actions">
             <button class="act-btn add" title="Add stats" onclick="openModal(${i},'add')">＋</button>
             <button class="act-btn edit" title="Edit stats" onclick="openModal(${i},'edit')">✏️</button>
+            ${wkBtnHTML}
           </div>
         </div>
       </div>
     </div>`;
   }).join("");
+}
+
+/* ── WK CONFIRM ── */
+function askSetWK(idx){
+  if(isAdmin) return;
+  const p=window._statPlayers&&window._statPlayers[idx];
+  if(!p) return;
+  const name=p["Player Name"];
+  const curWK=getWK();
+  if(curWK){
+    if(curWK===name) showToast("🧤 "+name+" is locked as Wicket Keeper!","info");
+    else showToast("🔒 WK is locked — "+curWK+" cannot be replaced.","warn");
+    return;
+  }
+  pendingWK=name;
+  document.getElementById("wk-confirm-name").textContent=name;
+  document.getElementById("wk-overlay").classList.add("open");
+}
+function closeWKConfirm(){
+  document.getElementById("wk-overlay").classList.remove("open");
+  pendingWK=null;
+}
+async function doSetWK(){
+  if(!pendingWK) return;
+  const name=pendingWK;
+  closeWKConfirm();
+  localStorage.setItem("wicketKeeper",name);
+  updateWKBanner();
+  showToast("🧤 "+name+" is your Wicket Keeper!","success");
+  renderList();
+  try{
+    await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify({action:"setWK",teamName:myTeam,wicketKeeper:name})});
+  }catch(e){console.warn("setWK failed:",e);}
+}
+
+/* ── TOAST ── */
+function showToast(msg,type="info"){
+  const colors={success:"#22c55e",warn:"#f1c40f",info:"#4facfe"};
+  const t=document.createElement("div");
+  t.style.cssText=`position:fixed;bottom:calc(68px + 28px);left:50%;transform:translateX(-50%);
+    background:rgba(10,20,38,.96);border:1px solid ${colors[type]||"#4facfe"};color:#fff;
+    padding:10px 20px;border-radius:14px;font-size:13px;font-weight:700;z-index:600;
+    box-shadow:0 4px 24px rgba(0,0,0,.5);backdrop-filter:blur(12px);
+    animation:toastIn .35s cubic-bezier(.34,1.56,.64,1) both;white-space:nowrap;`;
+  t.textContent=msg;
+  const style=document.createElement("style");
+  style.textContent=`@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(12px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}`;
+  document.head.appendChild(style);
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),2600);
 }
 
 /* ── MODAL ── */
@@ -639,8 +675,8 @@ function buildForm(){
     let h=`<div class="stat-section"><p class="sec-title ${meta.cls}">${meta.title}</p><div class="stat-grid">`;
     groups[cat].forEach(attr=>{
       const sid="si-"+attr.key;
-      h+=`<div class="sig">
-        <label>${attr.label}<br><span style="color:var(--t3);font-size:8px;font-weight:600">${attr.points} pts each</span></label>
+      h+=`<div class="sig" id="sig-wrap-${attr.key}">
+        <label>${attr.label}<br><span style="color:var(--t3);font-size:8px;font-weight:600">${attr.points} pts each</span><span class="wk-only-tag"> · 🔒 WK ONLY</span></label>
         <div class="sig-ctrl">
           <button type="button" class="step-btn minus" onclick="stepVal('${sid}',-1)">−</button>
           <input type="number" id="${sid}" value="0" min="0" inputmode="numeric" data-key="${attr.key}">
@@ -655,6 +691,29 @@ function buildForm(){
   Object.keys(groups).forEach(cat=>{if(!catOrder.includes(cat)) html+=buildSection(cat,{title:cat,cls:"c-custom"});});
   if(!html) html='<div class="stat-section"><p style="color:var(--t3);font-size:13px;padding:20px 0;text-align:center">No scoring attributes configured.</p></div>';
   document.getElementById("dynamic-form").innerHTML=html;
+
+  // ── STUMPING RESTRICTION: disable for non-WK players ──
+  if(!isAdmin){
+    const curWK=getWK();
+    const playerName=curPlayer["Player Name"];
+    const playerIsWK=(curWK&&curWK===playerName);
+    // Find stumpings key — could be "stumpings" or similar
+    const stumpKeys=["stumpings","stumping"];
+    stumpKeys.forEach(key=>{
+      const wrap=document.getElementById("sig-wrap-"+key);
+      if(wrap){
+        if(!playerIsWK){
+          wrap.classList.add("wk-only-disabled");
+          // Reset value to 0 and disable inputs
+          const inp=wrap.querySelector("input");
+          if(inp){inp.value=0;inp.disabled=true;}
+          wrap.querySelectorAll(".step-btn").forEach(b=>{b.disabled=true;b.style.pointerEvents="none";});
+        } else {
+          wrap.classList.remove("wk-only-disabled");
+        }
+      }
+    });
+  }
 }
 
 function setMode(mode){
@@ -681,18 +740,44 @@ function setMode(mode){
     prefillInputs();
   }
   btn.disabled=false;
+  // Re-apply WK restriction after mode switch (resets inputs)
+  if(!isAdmin && curPlayer){
+    const curWK=getWK();
+    const playerIsWK=(curWK&&curWK===curPlayer["Player Name"]);
+    ["stumpings","stumping"].forEach(key=>{
+      const wrap=document.getElementById("sig-wrap-"+key);
+      if(wrap){
+        if(!playerIsWK){
+          const inp=wrap.querySelector("input");
+          if(inp){inp.value=0;inp.disabled=true;}
+          wrap.querySelectorAll(".step-btn").forEach(b=>{b.disabled=true;b.style.pointerEvents="none";});
+        }
+      }
+    });
+  }
 }
-function resetInputs(v){document.querySelectorAll("#dynamic-form input[data-key]").forEach(i=>i.value=v);}
+function resetInputs(v){document.querySelectorAll("#dynamic-form input[data-key]").forEach(i=>{if(!i.disabled)i.value=v;});}
 function prefillInputs(){
   if(!curPlayer) return;
   document.querySelectorAll("#dynamic-form input[data-key]").forEach(inp=>{
+    if(inp.disabled) return; // don't prefill locked stumpings for non-WK
     const key=inp.getAttribute("data-key");
     inp.value=n(curPlayer[key])||n(curPlayer[keyAlias(key)]);
   });
+  // For WK: always prefill stumpings even from edit mode
+  if(!isAdmin && curPlayer){
+    const curWK=getWK();
+    if(curWK&&curWK===curPlayer["Player Name"]){
+      ["stumpings","stumping"].forEach(key=>{
+        const inp=document.getElementById("si-"+key);
+        if(inp) inp.value=n(curPlayer[key])||n(curPlayer[keyAlias(key)]);
+      });
+    }
+  }
 }
 function stepVal(id,delta){
   const inp=document.getElementById(id);
-  if(inp) inp.value=Math.max(0,(parseInt(inp.value)||0)+delta);
+  if(inp&&!inp.disabled) inp.value=Math.max(0,(parseInt(inp.value)||0)+delta);
 }
 function closeModal(){document.getElementById("stat-modal").classList.remove("open");}
 function handleOverlay(e){if(e.target===document.getElementById("stat-modal")) closeModal();}
@@ -702,6 +787,8 @@ async function submitStats(){
   btn.textContent="Calculating…";btn.disabled=true;
   const stats={};
   document.querySelectorAll("#dynamic-form input[data-key]").forEach(inp=>{
+    // Skip disabled stumpings for non-WK (value stays 0, don't send garbage)
+    if(inp.disabled) return;
     stats[inp.getAttribute("data-key")]=inp.value;
   });
   try{
