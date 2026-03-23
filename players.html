@@ -1648,14 +1648,20 @@ function openFmModal(enc){
   document.getElementById("fm-pts").innerHTML=`${pts}<span>Total Pts</span>`;
   const statDefs={
     Batting:[{k:"runs",i:"🏃",l:"Runs"},{k:"6s",i:"💥",l:"Sixes"},{k:"4s",i:"4️⃣",l:"Fours"},{k:"50s",i:"⭐",l:"50s"},{k:"100s",i:"💯",l:"100s"}],
-    Bowling:[{k:"wickets",i:"🎯",l:"Wickets"},{k:"maidens",i:"🔵",l:"Maidens"},{k:"dots",i:"⚫",l:"Dots"},{k:"3w",i:"🎳",l:"3W Haul"},{k:"5w",i:"🔥",l:"5W Haul"},{k:"4w",i:"⚡",l:"4W Haul"}],
+    Bowling:[{k:"wickets",i:"🎯",l:"Wickets"},{k:"maidens",i:"🔵",l:"Maidens"},{k:"dots",i:"⚫",l:"Dots"},{k:"3w",i:"🎳",l:"3W Haul"},{k:"5w",i:"🔥",l:"5W Haul"},{k:["4w","fourw","fourv"],i:"⚡",l:"4W Haul"}],
     Fielding:[{k:"catches",i:"🧤",l:"Catches"},{k:"runouts",i:"🏃",l:"Run Outs"},{k:"stumpings",i:"🥅",l:"Stumpings"}]
   };
+  
   let sh="";
   Object.entries(statDefs).forEach(([title,defs])=>{
     sh+=`<div class="fm-stats-title">${title}</div><div class="fm-stats-grid">`;
     defs.forEach(d=>{
-      const v = gi(p, d.k);
+      // Check if the key is an array (like our new 4w), otherwise wrap it in one
+      const keys = Array.isArray(d.k) ? d.k : [d.k];
+      
+      // Spread the keys into the fuzzy matcher
+      const v = gi(p, ...keys);
+      
       sh+=`<div class="fm-stat-box"><span class="fm-stat-icon">${d.i}</span><div class="fm-stat-val${v===0?" zero":""}">${v}</div><div class="fm-stat-label">${d.l}</div></div>`;
     });
     sh+="</div>";
